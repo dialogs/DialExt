@@ -1,6 +1,5 @@
 # DialExt
 
-[![CI Status](http://img.shields.io/travis/Vladlex/DialExt.svg?style=flat)](https://travis-ci.org/Vladlex/DialExt)
 [![Version](https://img.shields.io/cocoapods/v/DialExt.svg?style=flat)](http://cocoapods.org/pods/DialExt)
 [![License](https://img.shields.io/cocoapods/l/DialExt.svg?style=flat)](http://cocoapods.org/pods/DialExt)
 [![Platform](https://img.shields.io/cocoapods/p/DialExt.svg?style=flat)](http://cocoapods.org/pods/DialExt)

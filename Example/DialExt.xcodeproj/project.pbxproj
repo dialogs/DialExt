@@ -14,6 +14,16 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
+		748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316681E72962500E4ADA8 /* DialExtTests.swift */; };
+		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
+		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7483167D1E72978300E4ADA8 /* DEKeychainResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7483167C1E72978300E4ADA8 /* DEKeychainResult.swift */; };
+		7483167F1E72981300E4ADA8 /* DEKeychainQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7483167E1E72981300E4ADA8 /* DEKeychainQuery.swift */; };
+		748316821E72990D00E4ADA8 /* Dictionary+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */; };
+		748316841E729A1B00E4ADA8 /* DEKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316831E729A1B00E4ADA8 /* DEKeychainDataProvider.swift */; };
+		748316861E729B8B00E4ADA8 /* DEKeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316851E729B8B00E4ADA8 /* DEKeychainWrapper.swift */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +35,42 @@
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = DialExt;
 		};
+		748316631E72962500E4ADA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 748316581E72962500E4ADA8;
+			remoteInfo = DialExt;
+		};
+		748316651E72962500E4ADA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = DialExt_Example;
+		};
+		7483166C1E72962500E4ADA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 748316581E72962500E4ADA8;
+			remoteInfo = DialExt;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		748316751E72962500E4ADA8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03A9B86D79A61DF8A8A08345 /* Pods_DialExt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +89,17 @@
 		607FACE51AFB9204008FA782 /* DialExt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialExt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
+		7483165C1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		748316611E72962500E4ADA8 /* DialExtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialExtTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		748316681E72962500E4ADA8 /* DialExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialExtTests.swift; sourceTree = "<group>"; };
+		7483166A1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7483167C1E72978300E4ADA8 /* DEKeychainResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainResult.swift; sourceTree = "<group>"; };
+		7483167E1E72981300E4ADA8 /* DEKeychainQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainQuery.swift; sourceTree = "<group>"; };
+		748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+DialExt.swift"; sourceTree = "<group>"; };
+		748316831E729A1B00E4ADA8 /* DEKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DEKeychainDataProvider.swift; path = DialExt/Extensions/DEKeychainDataProvider.swift; sourceTree = SOURCE_ROOT; };
+		748316851E729B8B00E4ADA8 /* DEKeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainWrapper.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
@@ -54,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */,
 				C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +120,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				54F60F3021DF43BD7B33C3D0 /* Pods_DialExt_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		748316551E72962500E4ADA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7483165E1E72962500E4ADA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +158,8 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for DialExt */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				7483165A1E72962500E4ADA8 /* DialExt */,
+				748316671E72962500E4ADA8 /* DialExtTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1948707F82FA2C4E025C8CCF /* Pods */,
 				9AD9753F518E79F85801B0FB /* Frameworks */,
@@ -97,6 +171,8 @@
 			children = (
 				607FACD01AFB9204008FA782 /* DialExt_Example.app */,
 				607FACE51AFB9204008FA782 /* DialExt_Tests.xctest */,
+				748316591E72962500E4ADA8 /* DialExt.framework */,
+				748316611E72962500E4ADA8 /* DialExtTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,6 +226,45 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		7483165A1E72962500E4ADA8 /* DialExt */ = {
+			isa = PBXGroup;
+			children = (
+				748316801E72990100E4ADA8 /* Extensions */,
+				7483167B1E72975C00E4ADA8 /* Keychain */,
+				7483165B1E72962500E4ADA8 /* DialExt.h */,
+				7483165C1E72962500E4ADA8 /* Info.plist */,
+			);
+			path = DialExt;
+			sourceTree = "<group>";
+		};
+		748316671E72962500E4ADA8 /* DialExtTests */ = {
+			isa = PBXGroup;
+			children = (
+				748316681E72962500E4ADA8 /* DialExtTests.swift */,
+				7483166A1E72962500E4ADA8 /* Info.plist */,
+			);
+			path = DialExtTests;
+			sourceTree = "<group>";
+		};
+		7483167B1E72975C00E4ADA8 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				7483167C1E72978300E4ADA8 /* DEKeychainResult.swift */,
+				7483167E1E72981300E4ADA8 /* DEKeychainQuery.swift */,
+				748316831E729A1B00E4ADA8 /* DEKeychainDataProvider.swift */,
+				748316851E729B8B00E4ADA8 /* DEKeychainWrapper.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
+		748316801E72990100E4ADA8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		9AD9753F518E79F85801B0FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +275,17 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		748316561E72962500E4ADA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7483166B1E72962500E4ADA8 /* DialExt.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		607FACCF1AFB9204008FA782 /* DialExt_Example */ = {
@@ -172,10 +298,12 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				381FA7D060BB5C7D07847188 /* [CP] Embed Pods Frameworks */,
 				C6D024FE886AFCA23C99BA41 /* [CP] Copy Pods Resources */,
+				748316751E72962500E4ADA8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7483166D1E72962500E4ADA8 /* PBXTargetDependency */,
 			);
 			name = DialExt_Example;
 			productName = DialExt;
@@ -203,13 +331,50 @@
 			productReference = 607FACE51AFB9204008FA782 /* DialExt_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		748316581E72962500E4ADA8 /* DialExt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 748316741E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExt" */;
+			buildPhases = (
+				748316541E72962500E4ADA8 /* Sources */,
+				748316551E72962500E4ADA8 /* Frameworks */,
+				748316561E72962500E4ADA8 /* Headers */,
+				748316571E72962500E4ADA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DialExt;
+			productName = DialExt;
+			productReference = 748316591E72962500E4ADA8 /* DialExt.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		748316601E72962500E4ADA8 /* DialExtTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 748316761E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExtTests" */;
+			buildPhases = (
+				7483165D1E72962500E4ADA8 /* Sources */,
+				7483165E1E72962500E4ADA8 /* Frameworks */,
+				7483165F1E72962500E4ADA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				748316641E72962500E4ADA8 /* PBXTargetDependency */,
+				748316661E72962500E4ADA8 /* PBXTargetDependency */,
+			);
+			name = DialExtTests;
+			productName = DialExtTests;
+			productReference = 748316611E72962500E4ADA8 /* DialExtTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -222,6 +387,18 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 928Y9276U3;
 						LastSwiftMigration = 0820;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					748316581E72962500E4ADA8 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 928Y9276U3;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+					748316601E72962500E4ADA8 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = E9NX44V4VR;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -239,7 +416,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				748316581E72962500E4ADA8 /* DialExt */,
 				607FACCF1AFB9204008FA782 /* DialExt_Example */,
+				748316601E72962500E4ADA8 /* DialExtTests */,
 				607FACE41AFB9204008FA782 /* DialExt_Tests */,
 			);
 		};
@@ -257,6 +436,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		748316571E72962500E4ADA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7483165F1E72962500E4ADA8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -376,6 +569,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		748316541E72962500E4ADA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				748316861E729B8B00E4ADA8 /* DEKeychainWrapper.swift in Sources */,
+				748316821E72990D00E4ADA8 /* Dictionary+DialExt.swift in Sources */,
+				748316841E729A1B00E4ADA8 /* DEKeychainDataProvider.swift in Sources */,
+				7483167D1E72978300E4ADA8 /* DEKeychainResult.swift in Sources */,
+				7483167F1E72981300E4ADA8 /* DEKeychainQuery.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7483165D1E72962500E4ADA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -383,6 +596,21 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* DialExt_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+		748316641E72962500E4ADA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 748316581E72962500E4ADA8 /* DialExt */;
+			targetProxy = 748316631E72962500E4ADA8 /* PBXContainerItemProxy */;
+		};
+		748316661E72962500E4ADA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* DialExt_Example */;
+			targetProxy = 748316651E72962500E4ADA8 /* PBXContainerItemProxy */;
+		};
+		7483166D1E72962500E4ADA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 748316581E72962500E4ADA8 /* DialExt */;
+			targetProxy = 7483166C1E72962500E4ADA8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -497,6 +725,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
@@ -512,6 +741,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
@@ -561,6 +791,99 @@
 			};
 			name = Release;
 		};
+		748316701E72962500E4ADA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 928Y9276U3;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = DialExt/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = im.dlg.DialExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		748316711E72962500E4ADA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 928Y9276U3;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = DialExt/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = im.dlg.DialExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		748316721E72962500E4ADA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = E9NX44V4VR;
+				INFOPLIST_FILE = DialExtTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = im.dlg.DialExtTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DialExt_Example.app/DialExt_Example";
+			};
+			name = Debug;
+		};
+		748316731E72962500E4ADA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = E9NX44V4VR;
+				INFOPLIST_FILE = DialExtTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = im.dlg.DialExtTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DialExt_Example.app/DialExt_Example";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -590,6 +913,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		748316741E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				748316701E72962500E4ADA8 /* Debug */,
+				748316711E72962500E4ADA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		748316761E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExtTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				748316721E72962500E4ADA8 /* Debug */,
+				748316731E72962500E4ADA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
