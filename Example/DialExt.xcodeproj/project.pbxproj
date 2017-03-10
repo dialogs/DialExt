@@ -32,8 +32,8 @@
 		2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Example/Pods-DialExt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Example/Pods-DialExt_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		4E1792AF413C6F41D9B5617B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		5120CC07B297BEE14BBDC6DD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		4E1792AF413C6F41D9B5617B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		5120CC07B297BEE14BBDC6DD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* DialExt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DialExt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
+		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,10 +215,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 928Y9276U3;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 928Y9276U3;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -496,6 +498,7 @@
 			baseConfigurationReference = 4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -510,6 +513,7 @@
 			baseConfigurationReference = 2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -523,6 +527,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 928Y9276U3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -543,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 928Y9276U3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
