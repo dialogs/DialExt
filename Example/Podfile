@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DialExt_Example' do
+  pod 'DialExt', :path => '../'
+
+  target 'DialExt_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
