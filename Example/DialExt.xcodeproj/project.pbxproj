@@ -24,6 +24,11 @@
 		748316821E72990D00E4ADA8 /* Dictionary+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */; };
 		748316841E729A1B00E4ADA8 /* DEKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316831E729A1B00E4ADA8 /* DEKeychainDataProvider.swift */; };
 		748316861E729B8B00E4ADA8 /* DEKeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316851E729B8B00E4ADA8 /* DEKeychainWrapper.swift */; };
+		748316891E72AFC100E4ADA8 /* DEGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316881E72AFC100E4ADA8 /* DEGroupContainer.swift */; };
+		7483168B1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7483168A1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift */; };
+		74CDE2B61E72EF8D00F7A561 /* DispatchQueue+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */; };
+		74CDE2B91E72F39500F7A561 /* DEInterappMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */; };
+		74CDE2BB1E73016600F7A561 /* DESimpleInterappMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +105,11 @@
 		748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+DialExt.swift"; sourceTree = "<group>"; };
 		748316831E729A1B00E4ADA8 /* DEKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DEKeychainDataProvider.swift; path = DialExt/Extensions/DEKeychainDataProvider.swift; sourceTree = SOURCE_ROOT; };
 		748316851E729B8B00E4ADA8 /* DEKeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainWrapper.swift; sourceTree = "<group>"; };
+		748316881E72AFC100E4ADA8 /* DEGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainer.swift; sourceTree = "<group>"; };
+		7483168A1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItem.swift; sourceTree = "<group>"; };
+		74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+DialExt.swift"; sourceTree = "<group>"; };
+		74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInterappMessenger.swift; sourceTree = "<group>"; };
+		74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESimpleInterappMessenger.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
@@ -229,6 +239,8 @@
 		7483165A1E72962500E4ADA8 /* DialExt */ = {
 			isa = PBXGroup;
 			children = (
+				74CDE2B71E72F38600F7A561 /* InterappMesenger */,
+				748316871E72A99D00E4ADA8 /* GroupContainer */,
 				748316801E72990100E4ADA8 /* Extensions */,
 				7483167B1E72975C00E4ADA8 /* Keychain */,
 				7483165B1E72962500E4ADA8 /* DialExt.h */,
@@ -261,8 +273,27 @@
 			isa = PBXGroup;
 			children = (
 				748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */,
+				74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		748316871E72A99D00E4ADA8 /* GroupContainer */ = {
+			isa = PBXGroup;
+			children = (
+				748316881E72AFC100E4ADA8 /* DEGroupContainer.swift */,
+				7483168A1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift */,
+			);
+			path = GroupContainer;
+			sourceTree = "<group>";
+		};
+		74CDE2B71E72F38600F7A561 /* InterappMesenger */ = {
+			isa = PBXGroup;
+			children = (
+				74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */,
+				74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */,
+			);
+			path = InterappMesenger;
 			sourceTree = "<group>";
 		};
 		9AD9753F518E79F85801B0FB /* Frameworks */ = {
@@ -574,7 +605,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				748316861E729B8B00E4ADA8 /* DEKeychainWrapper.swift in Sources */,
+				74CDE2BB1E73016600F7A561 /* DESimpleInterappMessenger.swift in Sources */,
+				74CDE2B61E72EF8D00F7A561 /* DispatchQueue+DialExt.swift in Sources */,
+				7483168B1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift in Sources */,
+				748316891E72AFC100E4ADA8 /* DEGroupContainer.swift in Sources */,
 				748316821E72990D00E4ADA8 /* Dictionary+DialExt.swift in Sources */,
+				74CDE2B91E72F39500F7A561 /* DEInterappMessenger.swift in Sources */,
 				748316841E729A1B00E4ADA8 /* DEKeychainDataProvider.swift in Sources */,
 				7483167D1E72978300E4ADA8 /* DEKeychainResult.swift in Sources */,
 				7483167F1E72981300E4ADA8 /* DEKeychainQuery.swift in Sources */,
@@ -921,6 +957,7 @@
 				748316711E72962500E4ADA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		748316761E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExtTests" */ = {
 			isa = XCConfigurationList;
@@ -929,6 +966,7 @@
 				748316731E72962500E4ADA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
