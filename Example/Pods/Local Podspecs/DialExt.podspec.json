@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "summary": "A short description of DialExt.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Vladlex/DialExt",
+  "homepage": "https://bitbucket.transmit.im/projects/DLG/repos/dialext",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,10 @@
     "Vladlex": "vladlexion@gmail.com"
   },
   "source": {
-    "git": "https://github.com/Vladlex/DialExt.git",
-    "tag": "0.1.0"
+    "git": "https://bitbucket.transmit.im/scm/dlg/dialext.git"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "DialExt/Classes/**/*"
 }

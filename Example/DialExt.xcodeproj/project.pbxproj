@@ -14,6 +14,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		7401572F1E76BC5600ECF237 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316681E72962500E4ADA8 /* DialExtTests.swift */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -111,8 +112,11 @@
 		74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInterappMessenger.swift; sourceTree = "<group>"; };
 		74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESimpleInterappMessenger.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		8B5F0D8623DB53124410B898 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
+		E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE120F7DEBAA34B3062A5443 /* Pods-DialExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7401572F1E76BC5600ECF237 /* Pods_DialExt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +163,8 @@
 				2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */,
 				7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */,
 				8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */,
+				FE120F7DEBAA34B3062A5443 /* Pods-DialExt.debug.xcconfig */,
+				8B5F0D8623DB53124410B898 /* Pods-DialExt.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -301,6 +308,7 @@
 			children = (
 				34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */,
 				03A9B86D79A61DF8A8A08345 /* Pods_DialExt_Tests.framework */,
+				E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -366,10 +374,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 748316741E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExt" */;
 			buildPhases = (
+				DCD4054FAF36B352178B4CBB /* [CP] Check Pods Manifest.lock */,
 				748316541E72962500E4ADA8 /* Sources */,
 				748316551E72962500E4ADA8 /* Frameworks */,
 				748316561E72962500E4ADA8 /* Headers */,
 				748316571E72962500E4ADA8 /* Resources */,
+				E293D22E3A97CB83AFABEBDE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -563,6 +573,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DialExt_Example/Pods-DialExt_Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DCD4054FAF36B352178B4CBB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E293D22E3A97CB83AFABEBDE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DialExt/Pods-DialExt-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F52AD660CC891AEF6238B944 /* [CP] Copy Pods Resources */ = {
@@ -761,7 +801,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
@@ -777,7 +816,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 928Y9276U3;
 				INFOPLIST_FILE = DialExt/Info.plist;
@@ -829,6 +867,7 @@
 		};
 		748316701E72962500E4ADA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE120F7DEBAA34B3062A5443 /* Pods-DialExt.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -859,6 +898,7 @@
 		};
 		748316711E72962500E4ADA8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B5F0D8623DB53124410B898 /* Pods-DialExt.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;

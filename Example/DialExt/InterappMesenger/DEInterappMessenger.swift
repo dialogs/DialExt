@@ -10,9 +10,10 @@ import Foundation
 
 
 /**
- *
+ * An instance responsible to enconding/decoging messages to/from data.
+ * You must subclass this class and overrid *encode:* and *decode* methods without calling *super*.
  */
-public class DEInterappMessengeEncoder<DEInterappMessage> {
+public class DEInterappMessageEncoder<DEInterappMessage> {
     
     func encode(message: DEInterappMessage) throws -> Data {
         fatalError()
@@ -24,10 +25,16 @@ public class DEInterappMessengeEncoder<DEInterappMessage> {
     
 }
 
+// MARK: -
 
+/**
+ * Messenger, providing interface for interapp message exchange.
+ * To work properly nees a message encoder.
+ * Initializes with a file container (which through apps can exchange messages).
+ */
 public class DEInterappMessenger<Message> {
     
-    public typealias Encoder = DEInterappMessengeEncoder<Message>
+    public typealias Encoder = DEInterappMessageEncoder<Message>
     
     private let item: DEGroupContainerItem
     
@@ -47,14 +54,25 @@ public class DEInterappMessenger<Message> {
         }
     }
     
+    /**
+     * Set you handler to receive messages. Thread is undefined.
+     */
     public var onRecieveMessage:((Message?)->())? = nil
     
+    /**
+     * Set you handler to handle receiving failures. Thread is undefined.
+     */
     public var onDidFailToEncodeMessage:((Error?) -> ())? = nil
     
+    /**
+     * Set you handler to receive messages. onFinish closure thread is undefined.
+     */
     public func sendMessage(_ message: Message, onFinish:(Bool, Error?)) throws {
         let data = try self.encoder.encode(message: message)
         item.writeData(data, onFinish: onFinish)
     }
+    
+    // MARK: Private
     
     private func checkMessage() {
         self.item.readData({ [weak self] data in

@@ -10,21 +10,24 @@ import Foundation
 
 public typealias DESimpleInterappMessengerMessage = Dictionary<String, Any>
 
-public class DESimpleInterappMessenger: DEInterappMessenger<DESimpleInterappMessengerMessage> {
-    
-    init(sharedItem: DEGroupContainerItem) {
-        let encoder = Encoder.init()
-        super.init(sharedItem: sharedItem, encoder: encoder)
-    }
-    
-    private class Encoder: DEInterappMessengeEncoder<DESimpleInterappMessengerMessage> {
-        
-        override func encode(message: DESimpleInterappMessengerMessage) throws -> Data {
-            return try PropertyListSerialization.data(fromPropertyList: message, format: .binary, options: 0)
-        }
-        
-        override func decode(data: Data) throws -> DESimpleInterappMessengerMessage {
-            return try PropertyListSerialization.propertyList(from: data, options: .init(rawValue: 0), format: nil) as! DESimpleInterappMessengerMessage
-        }
+typealias DESimpleInterappMessenger = DEInterappMessenger<DESimpleInterappMessengerMessage>
+
+extension DEInterappMessenger {
+    static func createSimpleMessenger(sharedItem: DEGroupContainerItem) -> DESimpleInterappMessenger {
+        let encoder = DESimpleMessageEncoder.init()
+        let messenger = DESimpleInterappMessenger.init(sharedItem: sharedItem, encoder: encoder)
+        return messenger
     }
 }
+
+public class DESimpleMessageEncoder: DEInterappMessageEncoder<DESimpleInterappMessengerMessage> {
+    
+    override func encode(message: DESimpleInterappMessengerMessage) throws -> Data {
+        return try PropertyListSerialization.data(fromPropertyList: message, format: .binary, options: 0)
+    }
+    
+    override func decode(data: Data) throws -> DESimpleInterappMessengerMessage {
+        return try PropertyListSerialization.propertyList(from: data, options: .init(rawValue: 0), format: nil) as! DESimpleInterappMessengerMessage
+    }
+}
+ 
