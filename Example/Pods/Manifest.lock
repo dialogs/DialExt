@@ -1,27 +1,19 @@
 PODS:
   - DialExt (0.1.0)
-  - SwiftProtobuf (0.9.24)
+  - ProtocolBuffers-Swift (3.0.13)
 
 DEPENDENCIES:
   - DialExt (from `../`)
-  - SwiftProtobuf (from `https://github.com/apple/swift-protobuf.git`, tag `0.9.24`)
+  - ProtocolBuffers-Swift
 
 EXTERNAL SOURCES:
   DialExt:
     :path: ../
-  SwiftProtobuf:
-    :git: https://github.com/apple/swift-protobuf.git
-    :tag: 0.9.24
-
-CHECKOUT OPTIONS:
-  SwiftProtobuf:
-    :git: https://github.com/apple/swift-protobuf.git
-    :tag: 0.9.24
 
 SPEC CHECKSUMS:
   DialExt: 8281865ff4aca9312bcfd88f75952c667ff99353
-  SwiftProtobuf: 06ee8152e44a46f50bb5c3d40697c49930a69c6d
+  ProtocolBuffers-Swift: b1962dbfbd2ccb61b57d6a1825cddf6a03c0dd09
 
-PODFILE CHECKSUM: f0347316b59e22b5d4b99853a5541030c28b0f96
+PODFILE CHECKSUM: 8c2834dce87a687ba3378d9d5deda3b7f24b6cdf
 
 COCOAPODS: 1.2.0

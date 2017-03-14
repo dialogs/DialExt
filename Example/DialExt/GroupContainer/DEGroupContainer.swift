@@ -31,3 +31,17 @@ public class DEGroupContainer {
     }
     
 }
+
+public extension DEGroupContainer {
+    
+    public func item(forUserWithId id: Int) -> DEGroupContainerItem {
+        let filename = "uid_\(id).png"
+        return item(forFileNamed: filename)
+    }
+    
+    public func item(forGroupWithId id: Int) -> DEGroupContainerItem {
+        let filename = "gid_\(id).png"
+        return item(forFileNamed: filename)
+    }
+    
+}

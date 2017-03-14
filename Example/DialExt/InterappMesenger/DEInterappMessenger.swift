@@ -72,7 +72,7 @@ public class DEInterappMessenger<Message> {
         item.writeData(data, onFinish: onFinish)
     }
     
-    // MARK: Private
+    // MARK: - Private
     
     private func checkMessage() {
         self.item.readData({ [weak self] data in
