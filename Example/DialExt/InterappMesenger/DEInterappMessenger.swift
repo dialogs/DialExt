@@ -67,7 +67,7 @@ public class DEInterappMessenger<Message> {
     /**
      * Set you handler to receive messages. onFinish closure thread is undefined.
      */
-    public func sendMessage(_ message: Message, onFinish:(Bool, Error?)) throws {
+    public func sendMessage(_ message: Message, onFinish:((Bool, Error?) -> ())?) throws {
         let data = try self.encoder.encode(message: message)
         item.writeData(data, onFinish: onFinish)
     }

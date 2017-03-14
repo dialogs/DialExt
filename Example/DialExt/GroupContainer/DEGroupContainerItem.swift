@@ -12,7 +12,7 @@ public  protocol DEGroupContainerItem {
     
     func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?)
     
-    func writeData(_ date: Data, onFinish:((Bool, Error?))?)
+    func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?)
     
     var onDidChange:(() -> ())? {get set}
 }
@@ -88,8 +88,37 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
         }
     }
     
-    public func writeData(_ date: Data, onFinish: ((Bool, Error?))?) {
-        
+    public func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?) {
+        let callbackQueue = self.callbackQueue
+        self.workQueue.addOperation {
+            var resultError: Error? = nil
+            var isSuccess = false
+            
+            var accessError: NSError? = nil
+            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+                do {
+                    try data.write(to: url, options: [])
+                    isSuccess = true
+                }
+                catch let error {
+                    resultError = error
+                }
+            })
+            if accessError != nil {
+                resultError = accessError
+            }
+            
+            de_perform(code: {
+                if isSuccess {
+                    onFinish?(true, nil)
+                }
+                else {
+                    onFinish?(false, resultError)
+                }
+            }, on: callbackQueue)
+            
+        }
+
     }
     
 }
