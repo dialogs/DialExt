@@ -1,5 +1,5 @@
 //
-//  DEDialogCell.swift
+//  DEImageToShareCell.swift
 //  DialExt
 //
 //  Created by Aleksei Gordeev on 14/03/2017.
@@ -8,11 +8,9 @@
 
 import UIKit
 
-class DEDialogCell: UITableViewCell {
+class DEImageToShareCell: UITableViewCell {
     
-    @IBOutlet public private(set) var nameLabel: UILabel!
-    
-    @IBOutlet public private(set) var avatarView: UIImageView!
+    @IBOutlet public private(set) var imageToShareView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

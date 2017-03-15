@@ -22,7 +22,7 @@ public class DEKeychainWrapper {
     /// - Returns: New instance of DEKeychainWrapper
     public class func createSharedGroupKeychainWrapper(group: String,
                                                        account: String) -> DEKeychainWrapper {
-        return DEKeychainWrapper.init(dataProvider: KeychainDataProvider.init(),
+        return DEKeychainWrapper.init(dataProvider: DEKeychainDataProvider.init(),
                                       account: account,
                                       group: group)
     }

@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="-589" y="135"/>
         </scene>
-        <!--View Controller-->
+        <!--Shared Dialogs View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="DialExt_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="DESharedDialogsViewController" customModule="DialExt" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -42,7 +42,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DialogCell" id="WVO-UR-pTb" customClass="DialogCell" customModule="DialExt_Example" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DEDialogCell" id="WVO-UR-pTb" customClass="DEDialogCell" customModule="DialExt">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WVO-UR-pTb" id="AP9-M0-XuE">
@@ -57,7 +57,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUR-8f-ejS">
-                                                    <rect key="frame" x="48" y="11.5" width="256" height="21"/>
+                                                    <rect key="frame" x="48" y="12" width="256" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -74,6 +74,30 @@
                                         <connections>
                                             <outlet property="avatarView" destination="JG5-Ki-tkA" id="awp-xV-o9k"/>
                                             <outlet property="nameLabel" destination="nUR-8f-ejS" id="dOh-ae-F2n"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DEImageToShareCell" rowHeight="70" id="pd3-e0-whi" customClass="DEImageToShareCell" customModule="DialExt">
+                                        <rect key="frame" x="0.0" y="72" width="320" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pd3-e0-whi" id="Qms-3d-xZt">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="37w-ZN-cgB">
+                                                    <rect key="frame" x="138" y="13" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="OJh-YF-xT4"/>
+                                                        <constraint firstAttribute="height" constant="44" id="xme-iK-kJD"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="37w-ZN-cgB" firstAttribute="centerY" secondItem="Qms-3d-xZt" secondAttribute="centerY" id="U9Q-kw-f7J"/>
+                                                <constraint firstItem="37w-ZN-cgB" firstAttribute="centerX" secondItem="Qms-3d-xZt" secondAttribute="centerX" id="Uy4-ms-etG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageToShareView" destination="37w-ZN-cgB" id="EDM-J9-xK7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -98,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="246" y="128"/>
+            <point key="canvasLocation" x="245.625" y="127.5"/>
         </scene>
     </scenes>
 </document>

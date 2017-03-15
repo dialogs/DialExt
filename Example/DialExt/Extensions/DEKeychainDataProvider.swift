@@ -68,7 +68,7 @@ public extension DEKeychainQueryPerformerable {
     }
 }
 
-public class KeychainDataProvider: DEKeychainQueryPerformerable {
+public class DEKeychainDataProvider: DEKeychainQueryPerformerable {
     public func perform(query: DEKeychainQuery) ->  DEKeychainQueryResult {
         let representation = query.dictionaryRepresentation()
         let attributes = representation as CFDictionary
