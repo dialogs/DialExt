@@ -10,13 +10,14 @@
 		54F60F3021DF43BD7B33C3D0 /* Pods_DialExt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A9B86D79A61DF8A8A08345 /* Pods_DialExt_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7401573B1E76F84700ECF237 /* Dialog.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401573A1E76F84700ECF237 /* Dialog.proto.swift */; };
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		743D24601E7A9FF5006E922C /* FrameworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D245F1E7A9FF5006E922C /* FrameworkProvider.swift */; };
+		743D24621E7ABA10006E922C /* DESharedDataUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D24611E7ABA10006E922C /* DESharedDataUploader.swift */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316681E72962500E4ADA8 /* DialExtTests.swift */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,12 +33,22 @@
 		7496AFAE1E793D37004DC2D9 /* DESharedDialogsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496AFAD1E793D37004DC2D9 /* DESharedDialogsManager.swift */; };
 		7496AFB01E794A73004DC2D9 /* DialogListContext+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496AFAF1E794A73004DC2D9 /* DialogListContext+DialExt.swift */; };
 		7496AFB61E795F87004DC2D9 /* DESharedDialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496AFB51E795F87004DC2D9 /* DESharedDialogsViewController.swift */; };
-		7496AFB71E795FDB004DC2D9 /* ImageToShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747A9E811E784B2D00AF50A0 /* ImageToShareCell.swift */; };
-		7496AFB81E795FDD004DC2D9 /* DialogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745CBE0B1E77F66200923ACF /* DialogCell.swift */; };
+		7496AFB81E795FDD004DC2D9 /* DEDialogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745CBE0B1E77F66200923ACF /* DEDialogCell.swift */; };
 		7496AFBA1E7962A1004DC2D9 /* DESharedDialogsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7496AFB91E7962A1004DC2D9 /* DESharedDialogsViewController.storyboard */; };
+		74A2A8551E798C1900E3D04D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
+		74A2A85A1E799E6A00E3D04D /* Dialog+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8591E799E6A00E3D04D /* Dialog+DialExt.swift */; };
+		74AC3E741E7AC4AA00205A2E /* DEAvatarPlaceholderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AC3E731E7AC4AA00205A2E /* DEAvatarPlaceholderRenderer.swift */; };
+		74AC3E761E7AD23700205A2E /* DEAvatarImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AC3E751E7AD23700205A2E /* DEAvatarImageProvider.swift */; };
+		74AC3E781E7AD97100205A2E /* DESharedAvatarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AC3E771E7AD97100205A2E /* DESharedAvatarLoader.swift */; };
 		74CDE2B61E72EF8D00F7A561 /* DispatchQueue+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */; };
 		74CDE2B91E72F39500F7A561 /* DEInterappMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */; };
 		74CDE2BB1E73016600F7A561 /* DESimpleInterappMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */; };
+		74FC75501E7C17A200096A92 /* KeyboardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FC754B1E7C17A200096A92 /* KeyboardEvent.swift */; };
+		74FC75511E7C17A200096A92 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FC754C1E7C17A200096A92 /* KeyboardListener.swift */; };
+		74FC75531E7C17A200096A92 /* UIView+KeyboardAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FC754E1E7C17A200096A92 /* UIView+KeyboardAnimation.swift */; };
+		74FC75541E7C17A200096A92 /* UIViewAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FC754F1E7C17A200096A92 /* UIViewAnimationOptions.swift */; };
+		74FC75561E7C17B900096A92 /* KeyboardDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FC75551E7C17B900096A92 /* KeyboardDetector.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
 /* End PBXBuildFile section */
@@ -126,9 +137,10 @@
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		74170F2B1E79805B00E88FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		745CBE0B1E77F66200923ACF /* DialogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogCell.swift; path = ../DialogCell.swift; sourceTree = "<group>"; };
+		743D245F1E7A9FF5006E922C /* FrameworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkProvider.swift; sourceTree = "<group>"; };
+		743D24611E7ABA10006E922C /* DESharedDataUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataUploader.swift; sourceTree = "<group>"; };
+		745CBE0B1E77F66200923ACF /* DEDialogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DEDialogCell.swift; path = ../DEDialogCell.swift; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
-		747A9E811E784B2D00AF50A0 /* ImageToShareCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageToShareCell.swift; path = ../ImageToShareCell.swift; sourceTree = "<group>"; };
 		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
 		7483165C1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,9 +159,19 @@
 		7496AFB51E795F87004DC2D9 /* DESharedDialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsViewController.swift; sourceTree = "<group>"; };
 		7496AFB91E7962A1004DC2D9 /* DESharedDialogsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DESharedDialogsViewController.storyboard; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
+		74A2A8561E79911E00E3D04D /* DialogsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsController.swift; sourceTree = "<group>"; };
+		74A2A8591E799E6A00E3D04D /* Dialog+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dialog+DialExt.swift"; sourceTree = "<group>"; };
+		74AC3E731E7AC4AA00205A2E /* DEAvatarPlaceholderRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarPlaceholderRenderer.swift; sourceTree = "<group>"; };
+		74AC3E751E7AD23700205A2E /* DEAvatarImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarImageProvider.swift; sourceTree = "<group>"; };
+		74AC3E771E7AD97100205A2E /* DESharedAvatarLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedAvatarLoader.swift; sourceTree = "<group>"; };
 		74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+DialExt.swift"; sourceTree = "<group>"; };
 		74CDE2B81E72F39500F7A561 /* DEInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInterappMessenger.swift; sourceTree = "<group>"; };
 		74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESimpleInterappMessenger.swift; sourceTree = "<group>"; };
+		74FC754B1E7C17A200096A92 /* KeyboardEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardEvent.swift; sourceTree = "<group>"; };
+		74FC754C1E7C17A200096A92 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
+		74FC754E1E7C17A200096A92 /* UIView+KeyboardAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+KeyboardAnimation.swift"; sourceTree = "<group>"; };
+		74FC754F1E7C17A200096A92 /* UIViewAnimationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewAnimationOptions.swift; sourceTree = "<group>"; };
+		74FC75551E7C17B900096A92 /* KeyboardDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardDetector.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
@@ -247,8 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				74A2A8561E79911E00E3D04D /* DialogsController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -310,9 +332,22 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		743D245E1E7A9FE9006E922C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				743D245F1E7A9FF5006E922C /* FrameworkProvider.swift */,
+				74AC3E731E7AC4AA00205A2E /* DEAvatarPlaceholderRenderer.swift */,
+				74AC3E751E7AD23700205A2E /* DEAvatarImageProvider.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		7483165A1E72962500E4ADA8 /* DialExt */ = {
 			isa = PBXGroup;
 			children = (
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				743D245E1E7A9FE9006E922C /* Other */,
+				74FC754A1E7C17A200096A92 /* KeyboardManager */,
 				7496AFB21E795F5D004DC2D9 /* ViewControllers */,
 				7496AFAC1E793D26004DC2D9 /* SharedDataManager */,
 				740157331E76E17F00ECF237 /* Protobuf */,
@@ -352,6 +387,7 @@
 				748316811E72990D00E4ADA8 /* Dictionary+DialExt.swift */,
 				74CDE2B51E72EF8D00F7A561 /* DispatchQueue+DialExt.swift */,
 				7496AFAF1E794A73004DC2D9 /* DialogListContext+DialExt.swift */,
+				74A2A8591E799E6A00E3D04D /* Dialog+DialExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -369,6 +405,8 @@
 			isa = PBXGroup;
 			children = (
 				7496AFAD1E793D37004DC2D9 /* DESharedDialogsManager.swift */,
+				743D24611E7ABA10006E922C /* DESharedDataUploader.swift */,
+				74AC3E771E7AD97100205A2E /* DESharedAvatarLoader.swift */,
 			);
 			path = SharedDataManager;
 			sourceTree = "<group>";
@@ -376,8 +414,7 @@
 		7496AFB21E795F5D004DC2D9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				745CBE0B1E77F66200923ACF /* DialogCell.swift */,
-				747A9E811E784B2D00AF50A0 /* ImageToShareCell.swift */,
+				745CBE0B1E77F66200923ACF /* DEDialogCell.swift */,
 				7496AFB51E795F87004DC2D9 /* DESharedDialogsViewController.swift */,
 				7496AFB91E7962A1004DC2D9 /* DESharedDialogsViewController.storyboard */,
 			);
@@ -391,6 +428,18 @@
 				74CDE2BA1E73016600F7A561 /* DESimpleInterappMessenger.swift */,
 			);
 			path = InterappMesenger;
+			sourceTree = "<group>";
+		};
+		74FC754A1E7C17A200096A92 /* KeyboardManager */ = {
+			isa = PBXGroup;
+			children = (
+				74FC754B1E7C17A200096A92 /* KeyboardEvent.swift */,
+				74FC75551E7C17B900096A92 /* KeyboardDetector.swift */,
+				74FC754C1E7C17A200096A92 /* KeyboardListener.swift */,
+				74FC754E1E7C17A200096A92 /* UIView+KeyboardAnimation.swift */,
+				74FC754F1E7C17A200096A92 /* UIViewAnimationOptions.swift */,
+			);
+			path = KeyboardManager;
 			sourceTree = "<group>";
 		};
 		9AD9753F518E79F85801B0FB /* Frameworks */ = {
@@ -605,7 +654,6 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +677,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7496AFBA1E7962A1004DC2D9 /* DESharedDialogsViewController.storyboard in Resources */,
+				74A2A8551E798C1900E3D04D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,19 +846,29 @@
 				748316861E729B8B00E4ADA8 /* DEKeychainWrapper.swift in Sources */,
 				74CDE2BB1E73016600F7A561 /* DESimpleInterappMessenger.swift in Sources */,
 				74CDE2B61E72EF8D00F7A561 /* DispatchQueue+DialExt.swift in Sources */,
+				74FC75531E7C17A200096A92 /* UIView+KeyboardAnimation.swift in Sources */,
 				7483168B1E72BBFF00E4ADA8 /* DEGroupContainerItem.swift in Sources */,
-				7496AFB71E795FDB004DC2D9 /* ImageToShareCell.swift in Sources */,
+				743D24601E7A9FF5006E922C /* FrameworkProvider.swift in Sources */,
+				74AC3E761E7AD23700205A2E /* DEAvatarImageProvider.swift in Sources */,
+				74AC3E741E7AC4AA00205A2E /* DEAvatarPlaceholderRenderer.swift in Sources */,
+				743D24621E7ABA10006E922C /* DESharedDataUploader.swift in Sources */,
 				7496AFB61E795F87004DC2D9 /* DESharedDialogsViewController.swift in Sources */,
 				748316891E72AFC100E4ADA8 /* DEGroupContainer.swift in Sources */,
+				74FC75511E7C17A200096A92 /* KeyboardListener.swift in Sources */,
 				748316821E72990D00E4ADA8 /* Dictionary+DialExt.swift in Sources */,
 				74CDE2B91E72F39500F7A561 /* DEInterappMessenger.swift in Sources */,
 				7401573B1E76F84700ECF237 /* Dialog.proto.swift in Sources */,
 				748316841E729A1B00E4ADA8 /* DEKeychainDataProvider.swift in Sources */,
-				7496AFB81E795FDD004DC2D9 /* DialogCell.swift in Sources */,
+				7496AFB81E795FDD004DC2D9 /* DEDialogCell.swift in Sources */,
+				74FC75501E7C17A200096A92 /* KeyboardEvent.swift in Sources */,
+				74FC75541E7C17A200096A92 /* UIViewAnimationOptions.swift in Sources */,
 				7483167D1E72978300E4ADA8 /* DEKeychainResult.swift in Sources */,
 				7496AFB01E794A73004DC2D9 /* DialogListContext+DialExt.swift in Sources */,
 				7496AFAE1E793D37004DC2D9 /* DESharedDialogsManager.swift in Sources */,
+				74FC75561E7C17B900096A92 /* KeyboardDetector.swift in Sources */,
 				7483167F1E72981300E4ADA8 /* DEKeychainQuery.swift in Sources */,
+				74A2A85A1E799E6A00E3D04D /* Dialog+DialExt.swift in Sources */,
+				74AC3E781E7AD97100205A2E /* DESharedAvatarLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

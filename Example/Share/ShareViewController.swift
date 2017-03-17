@@ -10,14 +10,18 @@ import UIKit
 import Social
 import DialExt
 
+public enum FakeError: Error {
+    case noError
+}
+
 class ShareViewController: UIViewController {
     
     private var dialogsController: DESharedDialogsViewController? = nil
+    
     private var navController: UINavigationController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.green
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -28,10 +32,22 @@ class ShareViewController: UIViewController {
         let navController = UINavigationController(rootViewController: dialogsController)
         self.navController = navController
         
+        self.dialogsController?.onDidFinish = { [unowned self] in
+            if let context = self.extensionContext {
+                self.navController!.dismiss(animated: true, completion: { 
+                    context.cancelRequest(withError: FakeError.noError)
+                })
+            }
+        }
+        
         self.present(navController, animated: true, completion: nil)
     }
-    
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+    }
+    
 //    override func isContentValid() -> Bool {
 //        // Do validation of contentText and/or NSExtensionContext attachments here
 //        return true
