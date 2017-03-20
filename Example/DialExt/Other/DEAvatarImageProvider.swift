@@ -11,7 +11,7 @@ import Foundation
 public typealias DEAvatarImageProviderCompletion = ((UIImage?, Bool) -> ())
 
 public protocol DEAvatarImageProvidable {
-    func provideImage(dialog: Dialog, completion: @escaping DEAvatarImageProviderCompletion)
+    func provideImage(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion)
 }
 
 public class DEAvatarImageProvider: DEAvatarImageProvidable {
@@ -28,7 +28,7 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
     
     public private(set) var placeholderRenderer: DEAvatarPlaceholderRendererable? = nil
     
-    public func provideImage(dialog: Dialog, completion: @escaping DEAvatarImageProviderCompletion) {
+    public func provideImage(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) {
         self.localLoader.load(dialog: dialog) { (result) in
             switch result {
             case let .loaded(image): completion(image, false)
@@ -37,7 +37,7 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
         }
     }
     
-    public func requestPlaceholder(dialog: Dialog, completion: @escaping DEAvatarImageProviderCompletion) {
+    public func requestPlaceholder(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) {
         guard let renderer = self.placeholderRenderer else {
             completion(nil, true)
             return

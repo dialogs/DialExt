@@ -7,24 +7,28 @@
 //
 
 import UIKit
-
+import MobileCoreServices
 
 public protocol DESharedDialogsViewControllerPresenter {
     
-    func shouldShowDialog(_ dialog: Dialog) -> Bool
+    func shouldShowDialog(_ dialog: AppSharedDialog) -> Bool
     
-    func isSelectionAllowedForDialog(_ dialog: Dialog) -> Bool
+    func isSelectionAllowedForDialog(_ dialog: AppSharedDialog) -> Bool
     
+}
+
+public protocol DESharedDialogsViewControllerExtensionContextProvider {
+    func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext?
 }
 
 public class DEDefaultSharedDialogsViewControllerPresenter: DESharedDialogsViewControllerPresenter {
     
-    public func shouldShowDialog(_ dialog: Dialog) -> Bool {
+    public func shouldShowDialog(_ dialog: AppSharedDialog) -> Bool {
         return true
     }
     
-    public func isSelectionAllowedForDialog(_ dialog: Dialog) -> Bool {
-        return true
+    public func isSelectionAllowedForDialog(_ dialog: AppSharedDialog) -> Bool {
+        return !dialog.isReadOnly
     }
 }
 
@@ -37,14 +41,14 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         return controller
     }
     
-    var dialogs: [Dialog] = [] {
+    var dialogs: [AppSharedDialog] = [] {
         didSet {
             updatePresentedDialogs()
         }
     }
     
     /// Dialogs to presented (filtered by search if any search in progress)
-    var presentedDialogs: [Dialog] = [] {
+    var presentedDialogs: [AppSharedDialog] = [] {
         didSet {
             if presentedDialogs != oldValue {
                 self.tableView.reloadData()
@@ -58,6 +62,10 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                                                      keychainGroup: "")
     public var avatarProvider: DEAvatarImageProvidable!
     
+    public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
+    
+    public var uploader: DESharedDataUploader = DEDebugSharedDataUploader.init()
+    
     private var hasSelectedDialogs: Bool = false {
         didSet {
             if hasSelectedDialogs != oldValue {
@@ -66,14 +74,14 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
-    private var selectedDialogIds: Set<Dialog.Id> = Set() {
+    private var selectedDialogIds: Set<AppSharedDialog.Id> = Set() {
         didSet {
             updateBottomPanelContent()
             self.hasSelectedDialogs = selectedDialogIds.count > 0
         }
     }
     
-    private var selectedDialogs: [Dialog] {
+    private var selectedDialogs: [AppSharedDialog] {
         return self.dialogs.filter({selectedDialogIds.contains($0.id)})
     }
     
@@ -154,13 +162,31 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction private func sendAction(_ sender: AnyObject) {
+        if let provider = self.extensionContextProvider,
+            let context = provider.extensionContextForSharedDialogsViewController(self) {
+            for inputItem in context.inputItems {
+                if let item = inputItem as? NSExtensionItem,
+                    let attachments = item.attachments {
+                    for attachment in attachments {
+                        if let item = attachment as? NSItemProvider {
+                            for id in item.registeredTypeIdentifiers {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private func handleDialogsState(_ state: DESharedDialogsManager.DialogsState) {
         switch state {
         case let .failed(error):
             fatalError("Totally failed: \(error)")
             
         case .loaded:
-            self.dialogs = self.manager.context!.dialog.filter({self.isSelectionAllowedForDialog($0)})
+            self.dialogs = self.manager.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})
             
         default:
             break
@@ -177,7 +203,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
-    private func isSearchTestPassingDialog(_ dialog: Dialog, query: String) -> Bool {
+    private func isSearchTestPassingDialog(_ dialog: AppSharedDialog, query: String) -> Bool {
         return dialog.title.lowercased().contains(query)
     }
     
@@ -185,27 +211,39 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         updatePresentedDialogs()
     }
     
-    private func shouldShowDialog(_ dialog: Dialog) -> Bool {
+    private func shouldShowDialog(_ dialog: AppSharedDialog) -> Bool {
         guard let presenter = self.presenter else {
             return true
         }
         return presenter.shouldShowDialog(dialog)
     }
     
-    private func isSelectionAllowedForDialog(_ dialog: Dialog) -> Bool {
+    private func isSelectionAllowed(for dialog: AppSharedDialog) -> Bool {
         guard let presenter = self.presenter else {
             return true
         }
         return presenter.isSelectionAllowedForDialog(dialog)
     }
     
-    private func loadImage(dialog: Dialog) {
+    private func dialog(at: IndexPath) -> AppSharedDialog? {
+        if at.row < presentedDialogs.count {
+            return self.presentedDialogs[at.row]
+        }
+        return nil
+    }
+    
+    private func isSelectionAllowed(at indexPath: IndexPath) -> Bool {
+        let dialog = self.dialog(at: indexPath)!
+        return isSelectionAllowed(for: dialog)
+    }
+    
+    private func loadImage(dialog: AppSharedDialog) {
         self.avatarProvider!.provideImage(dialog: dialog) { [unowned self] (image, isPlaceholder) in
             self.updateAvatarForDialog(dialog, image: image)
         }
     }
     
-    private func updateAvatarForDialog(_ dialog: Dialog, image: UIImage?) {
+    private func updateAvatarForDialog(_ dialog: AppSharedDialog, image: UIImage?) {
         if let index = self.presentedDialogs.index(where: { $0.id == dialog.id }) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) as? DEDialogCell {
@@ -214,7 +252,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
-    private func updateSelectedDialogs(dialogId: Dialog.Id, selected: Bool) {
+    private func updateSelectedDialogs(dialogId: AppSharedDialog.Id, selected: Bool) {
         if selected {
             selectedDialogIds.insert(dialogId)
         }

@@ -19,9 +19,9 @@ public struct DialogRoot {
     }
 }
 
-final public class Dialog : GeneratedMessage {
+final public class AppSharedDialog : GeneratedMessage {
 
-    public static func == (lhs: Dialog, rhs: Dialog) -> Bool {
+    public static func == (lhs: AppSharedDialog, rhs: AppSharedDialog) -> Bool {
         if lhs === rhs {
             return true
         }
@@ -30,6 +30,7 @@ final public class Dialog : GeneratedMessage {
         fieldCheck = fieldCheck && (lhs.hasIsGroup == rhs.hasIsGroup) && (!lhs.hasIsGroup || lhs.isGroup == rhs.isGroup)
         fieldCheck = fieldCheck && (lhs.hasTitle == rhs.hasTitle) && (!lhs.hasTitle || lhs.title == rhs.title)
         fieldCheck = fieldCheck && (lhs.uid == rhs.uid)
+        fieldCheck = fieldCheck && (lhs.hasIsReadOnly == rhs.hasIsReadOnly) && (!lhs.hasIsReadOnly || lhs.isReadOnly == rhs.isReadOnly)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
@@ -45,6 +46,9 @@ final public class Dialog : GeneratedMessage {
 
     public fileprivate(set) var uid:Array<Int32> = Array<Int32>()
     private var uidMemoizedSerializedSize:Int32 = -1
+    public fileprivate(set) var isReadOnly:Bool = false
+    public fileprivate(set) var hasIsReadOnly:Bool = false
+
     required public init() {
         super.init()
     }
@@ -67,6 +71,9 @@ final public class Dialog : GeneratedMessage {
             for oneValueuid in uid {
                 try codedOutputStream.writeInt32NoTag(value: oneValueuid)
             }
+        }
+        if hasIsReadOnly {
+            try codedOutputStream.writeBool(fieldNumber: 5, value:isReadOnly)
         }
         try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
@@ -96,27 +103,30 @@ final public class Dialog : GeneratedMessage {
             serialize_size += dataSizeUid.computeInt32SizeNoTag()
         }
         uidMemoizedSerializedSize = dataSizeUid
+        if hasIsReadOnly {
+            serialize_size += isReadOnly.computeBoolSize(fieldNumber: 5)
+        }
         serialize_size += unknownFields.serializedSize()
         memoizedSerializedSize = serialize_size
         return serialize_size
     }
-    public class func getBuilder() -> Dialog.Builder {
-        return Dialog.classBuilder() as! Dialog.Builder
+    public class func getBuilder() -> AppSharedDialog.Builder {
+        return AppSharedDialog.classBuilder() as! AppSharedDialog.Builder
     }
-    public func getBuilder() -> Dialog.Builder {
-        return classBuilder() as! Dialog.Builder
+    public func getBuilder() -> AppSharedDialog.Builder {
+        return classBuilder() as! AppSharedDialog.Builder
     }
     override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return Dialog.Builder()
+        return AppSharedDialog.Builder()
     }
     override public func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return Dialog.Builder()
+        return AppSharedDialog.Builder()
     }
-    public func toBuilder() throws -> Dialog.Builder {
-        return try Dialog.builderWithPrototype(prototype:self)
+    public func toBuilder() throws -> AppSharedDialog.Builder {
+        return try AppSharedDialog.builderWithPrototype(prototype:self)
     }
-    public class func builderWithPrototype(prototype:Dialog) throws -> Dialog.Builder {
-        return try Dialog.Builder().mergeFrom(other:prototype)
+    public class func builderWithPrototype(prototype:AppSharedDialog) throws -> AppSharedDialog.Builder {
+        return try AppSharedDialog.Builder().mergeFrom(other:prototype)
     }
     override public func encode() throws -> Dictionary<String,Any> {
         guard isInitialized() else {
@@ -140,13 +150,16 @@ final public class Dialog : GeneratedMessage {
             }
             jsonMap["uid"] = jsonArrayUid
         }
+        if hasIsReadOnly {
+            jsonMap["isReadOnly"] = isReadOnly
+        }
         return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Dialog {
-        return try Dialog.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
-    override class public func fromJSON(data:Data) throws -> Dialog {
-        return try Dialog.Builder.fromJSONToBuilder(data:data).build()
+    override class public func fromJSON(data:Data) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder.fromJSONToBuilder(data:data).build()
     }
     override public func getDescription(indent:String) throws -> String {
         var output = ""
@@ -163,6 +176,9 @@ final public class Dialog : GeneratedMessage {
         for oneValueUid in uid  {
             output += "\(indent) uid[\(uidElementIndex)]: \(oneValueUid)\n"
             uidElementIndex += 1
+        }
+        if hasIsReadOnly {
+            output += "\(indent) isReadOnly: \(isReadOnly) \n"
         }
         output += unknownFields.getDescription(indent: indent)
         return output
@@ -182,6 +198,9 @@ final public class Dialog : GeneratedMessage {
             for oneValueUid in uid {
                 hashCode = (hashCode &* 31) &+ oneValueUid.hashValue
             }
+            if hasIsReadOnly {
+                hashCode = (hashCode &* 31) &+ isReadOnly.hashValue
+            }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
         }
@@ -191,16 +210,16 @@ final public class Dialog : GeneratedMessage {
     //Meta information declaration start
 
     override public class func className() -> String {
-        return "Dialog"
+        return "AppSharedDialog"
     }
     override public func className() -> String {
-        return "Dialog"
+        return "AppSharedDialog"
     }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-        fileprivate var builderResult:Dialog = Dialog()
-        public func getMessage() -> Dialog {
+        fileprivate var builderResult:AppSharedDialog = AppSharedDialog()
+        public func getMessage() -> AppSharedDialog {
             return builderResult
         }
 
@@ -222,12 +241,12 @@ final public class Dialog : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setId(_ value:Int64) -> Dialog.Builder {
+        public func setId(_ value:Int64) -> AppSharedDialog.Builder {
             self.id = value
             return self
         }
         @discardableResult
-        public func clearId() -> Dialog.Builder{
+        public func clearId() -> AppSharedDialog.Builder{
             builderResult.hasId = false
             builderResult.id = Int64(0)
             return self
@@ -247,12 +266,12 @@ final public class Dialog : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setIsGroup(_ value:Bool) -> Dialog.Builder {
+        public func setIsGroup(_ value:Bool) -> AppSharedDialog.Builder {
             self.isGroup = value
             return self
         }
         @discardableResult
-        public func clearIsGroup() -> Dialog.Builder{
+        public func clearIsGroup() -> AppSharedDialog.Builder{
             builderResult.hasIsGroup = false
             builderResult.isGroup = false
             return self
@@ -272,12 +291,12 @@ final public class Dialog : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setTitle(_ value:String) -> Dialog.Builder {
+        public func setTitle(_ value:String) -> AppSharedDialog.Builder {
             self.title = value
             return self
         }
         @discardableResult
-        public func clearTitle() -> Dialog.Builder{
+        public func clearTitle() -> AppSharedDialog.Builder{
             builderResult.hasTitle = false
             builderResult.title = ""
             return self
@@ -291,13 +310,38 @@ final public class Dialog : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setUid(_ value:Array<Int32>) -> Dialog.Builder {
+        public func setUid(_ value:Array<Int32>) -> AppSharedDialog.Builder {
             self.uid = value
             return self
         }
         @discardableResult
-        public func clearUid() -> Dialog.Builder {
+        public func clearUid() -> AppSharedDialog.Builder {
             builderResult.uid.removeAll(keepingCapacity: false)
+            return self
+        }
+        public var isReadOnly:Bool {
+            get {
+                return builderResult.isReadOnly
+            }
+            set (value) {
+                builderResult.hasIsReadOnly = true
+                builderResult.isReadOnly = value
+            }
+        }
+        public var hasIsReadOnly:Bool {
+            get {
+                return builderResult.hasIsReadOnly
+            }
+        }
+        @discardableResult
+        public func setIsReadOnly(_ value:Bool) -> AppSharedDialog.Builder {
+            self.isReadOnly = value
+            return self
+        }
+        @discardableResult
+        public func clearIsReadOnly() -> AppSharedDialog.Builder{
+            builderResult.hasIsReadOnly = false
+            builderResult.isReadOnly = false
             return self
         }
         override public var internalGetResult:GeneratedMessage {
@@ -306,24 +350,24 @@ final public class Dialog : GeneratedMessage {
             }
         }
         @discardableResult
-        override public func clear() -> Dialog.Builder {
-            builderResult = Dialog()
+        override public func clear() -> AppSharedDialog.Builder {
+            builderResult = AppSharedDialog()
             return self
         }
-        override public func clone() throws -> Dialog.Builder {
-            return try Dialog.builderWithPrototype(prototype:builderResult)
+        override public func clone() throws -> AppSharedDialog.Builder {
+            return try AppSharedDialog.builderWithPrototype(prototype:builderResult)
         }
-        override public func build() throws -> Dialog {
+        override public func build() throws -> AppSharedDialog {
             try checkInitialized()
             return buildPartial()
         }
-        public func buildPartial() -> Dialog {
-            let returnMe:Dialog = builderResult
+        public func buildPartial() -> AppSharedDialog {
+            let returnMe:AppSharedDialog = builderResult
             return returnMe
         }
         @discardableResult
-        public func mergeFrom(other:Dialog) throws -> Dialog.Builder {
-            if other == Dialog() {
+        public func mergeFrom(other:AppSharedDialog) throws -> AppSharedDialog.Builder {
+            if other == AppSharedDialog() {
                 return self
             }
             if other.hasId {
@@ -338,15 +382,18 @@ final public class Dialog : GeneratedMessage {
             if !other.uid.isEmpty {
                 builderResult.uid += other.uid
             }
+            if other.hasIsReadOnly {
+                isReadOnly = other.isReadOnly
+            }
             try merge(unknownField: other.unknownFields)
             return self
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Dialog.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialog.Builder {
             return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Dialog.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialog.Builder {
             let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
@@ -372,6 +419,9 @@ final public class Dialog : GeneratedMessage {
                     }
                     codedInputStream.popLimit(oldLimit: limit)
 
+                case 40:
+                    isReadOnly = try codedInputStream.readBool()
+
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -380,8 +430,8 @@ final public class Dialog : GeneratedMessage {
                 }
             }
         }
-        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Dialog.Builder {
-            let resultDecodedBuilder = Dialog.Builder()
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialog.Builder {
+            let resultDecodedBuilder = AppSharedDialog.Builder()
             if let jsonValueId = jsonMap["id"] as? String {
                 resultDecodedBuilder.id = Int64(jsonValueId)!
             } else if let jsonValueId = jsonMap["id"] as? Int {
@@ -400,22 +450,25 @@ final public class Dialog : GeneratedMessage {
                 }
                 resultDecodedBuilder.uid = jsonArrayUid
             }
+            if let jsonValueIsReadOnly = jsonMap["isReadOnly"] as? Bool {
+                resultDecodedBuilder.isReadOnly = jsonValueIsReadOnly
+            }
             return resultDecodedBuilder
         }
-        override class public func fromJSONToBuilder(data:Data) throws -> Dialog.Builder {
+        override class public func fromJSONToBuilder(data:Data) throws -> AppSharedDialog.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
               throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
-            return try Dialog.Builder.decodeToBuilder(jsonMap:jsDataCast)
+            return try AppSharedDialog.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
 
 }
 
-final public class User : GeneratedMessage {
+final public class AppSharedUser : GeneratedMessage {
 
-    public static func == (lhs: User, rhs: User) -> Bool {
+    public static func == (lhs: AppSharedUser, rhs: AppSharedUser) -> Bool {
         if lhs === rhs {
             return true
         }
@@ -464,23 +517,23 @@ final public class User : GeneratedMessage {
         memoizedSerializedSize = serialize_size
         return serialize_size
     }
-    public class func getBuilder() -> User.Builder {
-        return User.classBuilder() as! User.Builder
+    public class func getBuilder() -> AppSharedUser.Builder {
+        return AppSharedUser.classBuilder() as! AppSharedUser.Builder
     }
-    public func getBuilder() -> User.Builder {
-        return classBuilder() as! User.Builder
+    public func getBuilder() -> AppSharedUser.Builder {
+        return classBuilder() as! AppSharedUser.Builder
     }
     override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return User.Builder()
+        return AppSharedUser.Builder()
     }
     override public func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return User.Builder()
+        return AppSharedUser.Builder()
     }
-    public func toBuilder() throws -> User.Builder {
-        return try User.builderWithPrototype(prototype:self)
+    public func toBuilder() throws -> AppSharedUser.Builder {
+        return try AppSharedUser.builderWithPrototype(prototype:self)
     }
-    public class func builderWithPrototype(prototype:User) throws -> User.Builder {
-        return try User.Builder().mergeFrom(other:prototype)
+    public class func builderWithPrototype(prototype:AppSharedUser) throws -> AppSharedUser.Builder {
+        return try AppSharedUser.Builder().mergeFrom(other:prototype)
     }
     override public func encode() throws -> Dictionary<String,Any> {
         guard isInitialized() else {
@@ -496,11 +549,11 @@ final public class User : GeneratedMessage {
         }
         return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> User {
-        return try User.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedUser {
+        return try AppSharedUser.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
-    override class public func fromJSON(data:Data) throws -> User {
-        return try User.Builder.fromJSONToBuilder(data:data).build()
+    override class public func fromJSON(data:Data) throws -> AppSharedUser {
+        return try AppSharedUser.Builder.fromJSONToBuilder(data:data).build()
     }
     override public func getDescription(indent:String) throws -> String {
         var output = ""
@@ -531,16 +584,16 @@ final public class User : GeneratedMessage {
     //Meta information declaration start
 
     override public class func className() -> String {
-        return "User"
+        return "AppSharedUser"
     }
     override public func className() -> String {
-        return "User"
+        return "AppSharedUser"
     }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-        fileprivate var builderResult:User = User()
-        public func getMessage() -> User {
+        fileprivate var builderResult:AppSharedUser = AppSharedUser()
+        public func getMessage() -> AppSharedUser {
             return builderResult
         }
 
@@ -562,12 +615,12 @@ final public class User : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setId(_ value:Int32) -> User.Builder {
+        public func setId(_ value:Int32) -> AppSharedUser.Builder {
             self.id = value
             return self
         }
         @discardableResult
-        public func clearId() -> User.Builder{
+        public func clearId() -> AppSharedUser.Builder{
             builderResult.hasId = false
             builderResult.id = Int32(0)
             return self
@@ -587,12 +640,12 @@ final public class User : GeneratedMessage {
             }
         }
         @discardableResult
-        public func setName(_ value:String) -> User.Builder {
+        public func setName(_ value:String) -> AppSharedUser.Builder {
             self.name = value
             return self
         }
         @discardableResult
-        public func clearName() -> User.Builder{
+        public func clearName() -> AppSharedUser.Builder{
             builderResult.hasName = false
             builderResult.name = ""
             return self
@@ -603,24 +656,24 @@ final public class User : GeneratedMessage {
             }
         }
         @discardableResult
-        override public func clear() -> User.Builder {
-            builderResult = User()
+        override public func clear() -> AppSharedUser.Builder {
+            builderResult = AppSharedUser()
             return self
         }
-        override public func clone() throws -> User.Builder {
-            return try User.builderWithPrototype(prototype:builderResult)
+        override public func clone() throws -> AppSharedUser.Builder {
+            return try AppSharedUser.builderWithPrototype(prototype:builderResult)
         }
-        override public func build() throws -> User {
+        override public func build() throws -> AppSharedUser {
             try checkInitialized()
             return buildPartial()
         }
-        public func buildPartial() -> User {
-            let returnMe:User = builderResult
+        public func buildPartial() -> AppSharedUser {
+            let returnMe:AppSharedUser = builderResult
             return returnMe
         }
         @discardableResult
-        public func mergeFrom(other:User) throws -> User.Builder {
-            if other == User() {
+        public func mergeFrom(other:AppSharedUser) throws -> AppSharedUser.Builder {
+            if other == AppSharedUser() {
                 return self
             }
             if other.hasId {
@@ -633,11 +686,11 @@ final public class User : GeneratedMessage {
             return self
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> User.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> AppSharedUser.Builder {
             return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> User.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedUser.Builder {
             let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
@@ -660,8 +713,8 @@ final public class User : GeneratedMessage {
                 }
             }
         }
-        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> User.Builder {
-            let resultDecodedBuilder = User.Builder()
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> AppSharedUser.Builder {
+            let resultDecodedBuilder = AppSharedUser.Builder()
             if let jsonValueId = jsonMap["id"] as? Int {
                 resultDecodedBuilder.id = Int32(jsonValueId)
             } else if let jsonValueId = jsonMap["id"] as? String {
@@ -672,32 +725,39 @@ final public class User : GeneratedMessage {
             }
             return resultDecodedBuilder
         }
-        override class public func fromJSONToBuilder(data:Data) throws -> User.Builder {
+        override class public func fromJSONToBuilder(data:Data) throws -> AppSharedUser.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
               throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
-            return try User.Builder.decodeToBuilder(jsonMap:jsDataCast)
+            return try AppSharedUser.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
 
 }
 
-final public class DialogListContext : GeneratedMessage {
+final public class AppSharedDialogListContext : GeneratedMessage {
 
-    public static func == (lhs: DialogListContext, rhs: DialogListContext) -> Bool {
+    public static func == (lhs: AppSharedDialogListContext, rhs: AppSharedDialogListContext) -> Bool {
         if lhs === rhs {
             return true
         }
         var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
-        fieldCheck = fieldCheck && (lhs.dialog == rhs.dialog)
-        fieldCheck = fieldCheck && (lhs.user == rhs.user)
+        fieldCheck = fieldCheck && (lhs.dialogs == rhs.dialogs)
+        fieldCheck = fieldCheck && (lhs.users == rhs.users)
+        fieldCheck = fieldCheck && (lhs.hasMainUser == rhs.hasMainUser) && (!lhs.hasMainUser || lhs.mainUser == rhs.mainUser)
+        fieldCheck = fieldCheck && (lhs.hasVersion == rhs.hasVersion) && (!lhs.hasVersion || lhs.version == rhs.version)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
 
-    public fileprivate(set) var dialog:Array<Dialog>  = Array<Dialog>()
-    public fileprivate(set) var user:Array<User>  = Array<User>()
+    public fileprivate(set) var dialogs:Array<AppSharedDialog>  = Array<AppSharedDialog>()
+    public fileprivate(set) var users:Array<AppSharedUser>  = Array<AppSharedUser>()
+    public fileprivate(set) var mainUser:AppSharedUser!
+    public fileprivate(set) var hasMainUser:Bool = false
+    public fileprivate(set) var version:String = ""
+    public fileprivate(set) var hasVersion:Bool = false
+
     required public init() {
         super.init()
     }
@@ -705,11 +765,17 @@ final public class DialogListContext : GeneratedMessage {
         return true
     }
     override public func writeTo(codedOutputStream: CodedOutputStream) throws {
-        for oneElementDialog in dialog {
-              try codedOutputStream.writeMessage(fieldNumber: 1, value:oneElementDialog)
+        for oneElementDialogs in dialogs {
+              try codedOutputStream.writeMessage(fieldNumber: 1, value:oneElementDialogs)
         }
-        for oneElementUser in user {
-              try codedOutputStream.writeMessage(fieldNumber: 2, value:oneElementUser)
+        for oneElementUsers in users {
+              try codedOutputStream.writeMessage(fieldNumber: 2, value:oneElementUsers)
+        }
+        if hasMainUser {
+            try codedOutputStream.writeMessage(fieldNumber: 3, value:mainUser)
+        }
+        if hasVersion {
+            try codedOutputStream.writeString(fieldNumber: 4, value:version)
         }
         try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
@@ -720,33 +786,41 @@ final public class DialogListContext : GeneratedMessage {
         }
 
         serialize_size = 0
-        for oneElementDialog in dialog {
-            serialize_size += oneElementDialog.computeMessageSize(fieldNumber: 1)
+        for oneElementDialogs in dialogs {
+            serialize_size += oneElementDialogs.computeMessageSize(fieldNumber: 1)
         }
-        for oneElementUser in user {
-            serialize_size += oneElementUser.computeMessageSize(fieldNumber: 2)
+        for oneElementUsers in users {
+            serialize_size += oneElementUsers.computeMessageSize(fieldNumber: 2)
+        }
+        if hasMainUser {
+            if let varSizemainUser = mainUser?.computeMessageSize(fieldNumber: 3) {
+                serialize_size += varSizemainUser
+            }
+        }
+        if hasVersion {
+            serialize_size += version.computeStringSize(fieldNumber: 4)
         }
         serialize_size += unknownFields.serializedSize()
         memoizedSerializedSize = serialize_size
         return serialize_size
     }
-    public class func getBuilder() -> DialogListContext.Builder {
-        return DialogListContext.classBuilder() as! DialogListContext.Builder
+    public class func getBuilder() -> AppSharedDialogListContext.Builder {
+        return AppSharedDialogListContext.classBuilder() as! AppSharedDialogListContext.Builder
     }
-    public func getBuilder() -> DialogListContext.Builder {
-        return classBuilder() as! DialogListContext.Builder
+    public func getBuilder() -> AppSharedDialogListContext.Builder {
+        return classBuilder() as! AppSharedDialogListContext.Builder
     }
     override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return DialogListContext.Builder()
+        return AppSharedDialogListContext.Builder()
     }
     override public func classBuilder() -> ProtocolBuffersMessageBuilder {
-        return DialogListContext.Builder()
+        return AppSharedDialogListContext.Builder()
     }
-    public func toBuilder() throws -> DialogListContext.Builder {
-        return try DialogListContext.builderWithPrototype(prototype:self)
+    public func toBuilder() throws -> AppSharedDialogListContext.Builder {
+        return try AppSharedDialogListContext.builderWithPrototype(prototype:self)
     }
-    public class func builderWithPrototype(prototype:DialogListContext) throws -> DialogListContext.Builder {
-        return try DialogListContext.Builder().mergeFrom(other:prototype)
+    public class func builderWithPrototype(prototype:AppSharedDialogListContext) throws -> AppSharedDialogListContext.Builder {
+        return try AppSharedDialogListContext.Builder().mergeFrom(other:prototype)
     }
     override public func encode() throws -> Dictionary<String,Any> {
         guard isInitialized() else {
@@ -754,45 +828,61 @@ final public class DialogListContext : GeneratedMessage {
         }
 
         var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
-        if !dialog.isEmpty {
-            var jsonArrayDialog:Array<Dictionary<String,Any>> = []
-            for oneValueDialog in dialog {
-                let ecodedMessageDialog = try oneValueDialog.encode()
-                jsonArrayDialog.append(ecodedMessageDialog)
+        if !dialogs.isEmpty {
+            var jsonArrayDialogs:Array<Dictionary<String,Any>> = []
+            for oneValueDialogs in dialogs {
+                let ecodedMessageDialogs = try oneValueDialogs.encode()
+                jsonArrayDialogs.append(ecodedMessageDialogs)
             }
-            jsonMap["dialog"] = jsonArrayDialog
+            jsonMap["dialogs"] = jsonArrayDialogs
         }
-        if !user.isEmpty {
-            var jsonArrayUser:Array<Dictionary<String,Any>> = []
-            for oneValueUser in user {
-                let ecodedMessageUser = try oneValueUser.encode()
-                jsonArrayUser.append(ecodedMessageUser)
+        if !users.isEmpty {
+            var jsonArrayUsers:Array<Dictionary<String,Any>> = []
+            for oneValueUsers in users {
+                let ecodedMessageUsers = try oneValueUsers.encode()
+                jsonArrayUsers.append(ecodedMessageUsers)
             }
-            jsonMap["user"] = jsonArrayUser
+            jsonMap["users"] = jsonArrayUsers
+        }
+        if hasMainUser {
+            jsonMap["mainUser"] = try mainUser.encode()
+        }
+        if hasVersion {
+            jsonMap["version"] = version
         }
         return jsonMap
     }
-    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> DialogListContext {
-        return try DialogListContext.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder.decodeToBuilder(jsonMap:jsonMap).build()
     }
-    override class public func fromJSON(data:Data) throws -> DialogListContext {
-        return try DialogListContext.Builder.fromJSONToBuilder(data:data).build()
+    override class public func fromJSON(data:Data) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder.fromJSONToBuilder(data:data).build()
     }
     override public func getDescription(indent:String) throws -> String {
         var output = ""
-        var dialogElementIndex:Int = 0
-        for oneElementDialog in dialog {
-            output += "\(indent) dialog[\(dialogElementIndex)] {\n"
-            output += try oneElementDialog.getDescription(indent: "\(indent)  ")
+        var dialogsElementIndex:Int = 0
+        for oneElementDialogs in dialogs {
+            output += "\(indent) dialogs[\(dialogsElementIndex)] {\n"
+            output += try oneElementDialogs.getDescription(indent: "\(indent)  ")
             output += "\(indent)}\n"
-            dialogElementIndex += 1
+            dialogsElementIndex += 1
         }
-        var userElementIndex:Int = 0
-        for oneElementUser in user {
-            output += "\(indent) user[\(userElementIndex)] {\n"
-            output += try oneElementUser.getDescription(indent: "\(indent)  ")
+        var usersElementIndex:Int = 0
+        for oneElementUsers in users {
+            output += "\(indent) users[\(usersElementIndex)] {\n"
+            output += try oneElementUsers.getDescription(indent: "\(indent)  ")
             output += "\(indent)}\n"
-            userElementIndex += 1
+            usersElementIndex += 1
+        }
+        if hasMainUser {
+            output += "\(indent) mainUser {\n"
+            if let outDescMainUser = mainUser {
+                output += try outDescMainUser.getDescription(indent: "\(indent)  ")
+            }
+            output += "\(indent) }\n"
+        }
+        if hasVersion {
+            output += "\(indent) version: \(version) \n"
         }
         output += unknownFields.getDescription(indent: indent)
         return output
@@ -800,11 +890,19 @@ final public class DialogListContext : GeneratedMessage {
     override public var hashValue:Int {
         get {
             var hashCode:Int = 7
-            for oneElementDialog in dialog {
-                hashCode = (hashCode &* 31) &+ oneElementDialog.hashValue
+            for oneElementDialogs in dialogs {
+                hashCode = (hashCode &* 31) &+ oneElementDialogs.hashValue
             }
-            for oneElementUser in user {
-                hashCode = (hashCode &* 31) &+ oneElementUser.hashValue
+            for oneElementUsers in users {
+                hashCode = (hashCode &* 31) &+ oneElementUsers.hashValue
+            }
+            if hasMainUser {
+                if let hashValuemainUser = mainUser?.hashValue {
+                    hashCode = (hashCode &* 31) &+ hashValuemainUser
+                }
+            }
+            if hasVersion {
+                hashCode = (hashCode &* 31) &+ version.hashValue
             }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
@@ -815,56 +913,135 @@ final public class DialogListContext : GeneratedMessage {
     //Meta information declaration start
 
     override public class func className() -> String {
-        return "DialogListContext"
+        return "AppSharedDialogListContext"
     }
     override public func className() -> String {
-        return "DialogListContext"
+        return "AppSharedDialogListContext"
     }
     //Meta information declaration end
 
     final public class Builder : GeneratedMessageBuilder {
-        fileprivate var builderResult:DialogListContext = DialogListContext()
-        public func getMessage() -> DialogListContext {
+        fileprivate var builderResult:AppSharedDialogListContext = AppSharedDialogListContext()
+        public func getMessage() -> AppSharedDialogListContext {
             return builderResult
         }
 
         required override public init () {
             super.init()
         }
-        public var dialog:Array<Dialog> {
+        public var dialogs:Array<AppSharedDialog> {
             get {
-                return builderResult.dialog
+                return builderResult.dialogs
             }
             set (value) {
-                builderResult.dialog = value
+                builderResult.dialogs = value
             }
         }
         @discardableResult
-        public func setDialog(_ value:Array<Dialog>) -> DialogListContext.Builder {
-            self.dialog = value
+        public func setDialogs(_ value:Array<AppSharedDialog>) -> AppSharedDialogListContext.Builder {
+            self.dialogs = value
             return self
         }
         @discardableResult
-        public func clearDialog() -> DialogListContext.Builder {
-            builderResult.dialog.removeAll(keepingCapacity: false)
+        public func clearDialogs() -> AppSharedDialogListContext.Builder {
+            builderResult.dialogs.removeAll(keepingCapacity: false)
             return self
         }
-        public var user:Array<User> {
+        public var users:Array<AppSharedUser> {
             get {
-                return builderResult.user
+                return builderResult.users
             }
             set (value) {
-                builderResult.user = value
+                builderResult.users = value
             }
         }
         @discardableResult
-        public func setUser(_ value:Array<User>) -> DialogListContext.Builder {
-            self.user = value
+        public func setUsers(_ value:Array<AppSharedUser>) -> AppSharedDialogListContext.Builder {
+            self.users = value
             return self
         }
         @discardableResult
-        public func clearUser() -> DialogListContext.Builder {
-            builderResult.user.removeAll(keepingCapacity: false)
+        public func clearUsers() -> AppSharedDialogListContext.Builder {
+            builderResult.users.removeAll(keepingCapacity: false)
+            return self
+        }
+        public var mainUser:AppSharedUser! {
+            get {
+                if mainUserBuilder_ != nil {
+                    builderResult.mainUser = mainUserBuilder_.getMessage()
+                }
+                return builderResult.mainUser
+            }
+            set (value) {
+                builderResult.hasMainUser = true
+                builderResult.mainUser = value
+            }
+        }
+        public var hasMainUser:Bool {
+            get {
+                return builderResult.hasMainUser
+            }
+        }
+        fileprivate var mainUserBuilder_:AppSharedUser.Builder! {
+            didSet {
+                builderResult.hasMainUser = true
+            }
+        }
+        public func getMainUserBuilder() -> AppSharedUser.Builder {
+            if mainUserBuilder_ == nil {
+                mainUserBuilder_ = AppSharedUser.Builder()
+                builderResult.mainUser = mainUserBuilder_.getMessage()
+                if mainUser != nil {
+                    try! mainUserBuilder_.mergeFrom(other: mainUser)
+                }
+            }
+            return mainUserBuilder_
+        }
+        @discardableResult
+        public func setMainUser(_ value:AppSharedUser!) -> AppSharedDialogListContext.Builder {
+            self.mainUser = value
+            return self
+        }
+        @discardableResult
+        public func mergeMainUser(value:AppSharedUser) throws -> AppSharedDialogListContext.Builder {
+            if builderResult.hasMainUser {
+                builderResult.mainUser = try AppSharedUser.builderWithPrototype(prototype:builderResult.mainUser).mergeFrom(other: value).buildPartial()
+            } else {
+                builderResult.mainUser = value
+            }
+            builderResult.hasMainUser = true
+            return self
+        }
+        @discardableResult
+        public func clearMainUser() -> AppSharedDialogListContext.Builder {
+            mainUserBuilder_ = nil
+            builderResult.hasMainUser = false
+            builderResult.mainUser = nil
+            return self
+        }
+        public var version:String {
+            get {
+                return builderResult.version
+            }
+            set (value) {
+                builderResult.hasVersion = true
+                builderResult.version = value
+            }
+        }
+        public var hasVersion:Bool {
+            get {
+                return builderResult.hasVersion
+            }
+        }
+        @discardableResult
+        public func setVersion(_ value:String) -> AppSharedDialogListContext.Builder {
+            self.version = value
+            return self
+        }
+        @discardableResult
+        public func clearVersion() -> AppSharedDialogListContext.Builder{
+            builderResult.hasVersion = false
+            builderResult.version = ""
             return self
         }
         override public var internalGetResult:GeneratedMessage {
@@ -873,41 +1050,47 @@ final public class DialogListContext : GeneratedMessage {
             }
         }
         @discardableResult
-        override public func clear() -> DialogListContext.Builder {
-            builderResult = DialogListContext()
+        override public func clear() -> AppSharedDialogListContext.Builder {
+            builderResult = AppSharedDialogListContext()
             return self
         }
-        override public func clone() throws -> DialogListContext.Builder {
-            return try DialogListContext.builderWithPrototype(prototype:builderResult)
+        override public func clone() throws -> AppSharedDialogListContext.Builder {
+            return try AppSharedDialogListContext.builderWithPrototype(prototype:builderResult)
         }
-        override public func build() throws -> DialogListContext {
+        override public func build() throws -> AppSharedDialogListContext {
             try checkInitialized()
             return buildPartial()
         }
-        public func buildPartial() -> DialogListContext {
-            let returnMe:DialogListContext = builderResult
+        public func buildPartial() -> AppSharedDialogListContext {
+            let returnMe:AppSharedDialogListContext = builderResult
             return returnMe
         }
         @discardableResult
-        public func mergeFrom(other:DialogListContext) throws -> DialogListContext.Builder {
-            if other == DialogListContext() {
+        public func mergeFrom(other:AppSharedDialogListContext) throws -> AppSharedDialogListContext.Builder {
+            if other == AppSharedDialogListContext() {
                 return self
             }
-            if !other.dialog.isEmpty  {
-                 builderResult.dialog += other.dialog
+            if !other.dialogs.isEmpty  {
+                 builderResult.dialogs += other.dialogs
             }
-            if !other.user.isEmpty  {
-                 builderResult.user += other.user
+            if !other.users.isEmpty  {
+                 builderResult.users += other.users
+            }
+            if (other.hasMainUser) {
+                try mergeMainUser(value: other.mainUser)
+            }
+            if other.hasVersion {
+                version = other.version
             }
             try merge(unknownField: other.unknownFields)
             return self
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> DialogListContext.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialogListContext.Builder {
             return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
         }
         @discardableResult
-        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> DialogListContext.Builder {
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogListContext.Builder {
             let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
@@ -917,14 +1100,25 @@ final public class DialogListContext : GeneratedMessage {
                     return self
 
                 case 10:
-                    let subBuilder = Dialog.Builder()
+                    let subBuilder = AppSharedDialog.Builder()
                     try codedInputStream.readMessage(builder: subBuilder,extensionRegistry:extensionRegistry)
-                    dialog.append(subBuilder.buildPartial())
+                    dialogs.append(subBuilder.buildPartial())
 
                 case 18:
-                    let subBuilder = User.Builder()
+                    let subBuilder = AppSharedUser.Builder()
                     try codedInputStream.readMessage(builder: subBuilder,extensionRegistry:extensionRegistry)
-                    user.append(subBuilder.buildPartial())
+                    users.append(subBuilder.buildPartial())
+
+                case 26:
+                    let subBuilder:AppSharedUser.Builder = AppSharedUser.Builder()
+                    if hasMainUser {
+                        try subBuilder.mergeFrom(other: mainUser)
+                    }
+                    try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
+                    mainUser = subBuilder.buildPartial()
+
+                case 34:
+                    version = try codedInputStream.readString()
 
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
@@ -934,67 +1128,74 @@ final public class DialogListContext : GeneratedMessage {
                 }
             }
         }
-        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> DialogListContext.Builder {
-            let resultDecodedBuilder = DialogListContext.Builder()
-            if let jsonValueDialog = jsonMap["dialog"] as? Array<Dictionary<String,Any>> {
-                var jsonArrayDialog:Array<Dialog> = []
-                for oneValueDialog in jsonValueDialog {
-                    let messageFromStringDialog = try Dialog.Builder.decodeToBuilder(jsonMap:oneValueDialog).build()
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialogListContext.Builder {
+            let resultDecodedBuilder = AppSharedDialogListContext.Builder()
+            if let jsonValueDialogs = jsonMap["dialogs"] as? Array<Dictionary<String,Any>> {
+                var jsonArrayDialogs:Array<AppSharedDialog> = []
+                for oneValueDialogs in jsonValueDialogs {
+                    let messageFromStringDialogs = try AppSharedDialog.Builder.decodeToBuilder(jsonMap:oneValueDialogs).build()
 
-                    jsonArrayDialog.append(messageFromStringDialog)
+                    jsonArrayDialogs.append(messageFromStringDialogs)
                 }
-                resultDecodedBuilder.dialog = jsonArrayDialog
+                resultDecodedBuilder.dialogs = jsonArrayDialogs
             }
-            if let jsonValueUser = jsonMap["user"] as? Array<Dictionary<String,Any>> {
-                var jsonArrayUser:Array<User> = []
-                for oneValueUser in jsonValueUser {
-                    let messageFromStringUser = try User.Builder.decodeToBuilder(jsonMap:oneValueUser).build()
+            if let jsonValueUsers = jsonMap["users"] as? Array<Dictionary<String,Any>> {
+                var jsonArrayUsers:Array<AppSharedUser> = []
+                for oneValueUsers in jsonValueUsers {
+                    let messageFromStringUsers = try AppSharedUser.Builder.decodeToBuilder(jsonMap:oneValueUsers).build()
 
-                    jsonArrayUser.append(messageFromStringUser)
+                    jsonArrayUsers.append(messageFromStringUsers)
                 }
-                resultDecodedBuilder.user = jsonArrayUser
+                resultDecodedBuilder.users = jsonArrayUsers
+            }
+            if let jsonValueMainUser = jsonMap["mainUser"] as? Dictionary<String,Any> {
+                resultDecodedBuilder.mainUser = try AppSharedUser.Builder.decodeToBuilder(jsonMap:jsonValueMainUser).build()
+
+            }
+            if let jsonValueVersion = jsonMap["version"] as? String {
+                resultDecodedBuilder.version = jsonValueVersion
             }
             return resultDecodedBuilder
         }
-        override class public func fromJSONToBuilder(data:Data) throws -> DialogListContext.Builder {
+        override class public func fromJSONToBuilder(data:Data) throws -> AppSharedDialogListContext.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
               throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
-            return try DialogListContext.Builder.decodeToBuilder(jsonMap:jsDataCast)
+            return try AppSharedDialogListContext.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
 
 }
 
-extension Dialog: GeneratedMessageProtocol {
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Dialog> {
-        var mergedArray = Array<Dialog>()
+extension AppSharedDialog: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AppSharedDialog> {
+        var mergedArray = Array<AppSharedDialog>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
           mergedArray.append(value)
         }
         return mergedArray
     }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> Dialog? {
-        return try Dialog.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> AppSharedDialog? {
+        return try AppSharedDialog.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
     }
-    public class func parseFrom(data: Data) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
+    public class func parseFrom(data: Data) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
     }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(inputStream: InputStream) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(inputStream: inputStream).build()
+    public class func parseFrom(inputStream: InputStream) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(inputStream: inputStream).build()
     }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(codedInputStream: codedInputStream).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Dialog {
-        return try Dialog.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialog {
+        return try AppSharedDialog.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
     }
     public subscript(key: String) -> Any? {
         switch key {
@@ -1002,11 +1203,12 @@ extension Dialog: GeneratedMessageProtocol {
         case "isGroup": return self.isGroup
         case "title": return self.title
         case "uid": return self.uid
+        case "isReadOnly": return self.isReadOnly
         default: return nil
         }
     }
 }
-extension Dialog.Builder: GeneratedMessageBuilderProtocol {
+extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
     public subscript(key: String) -> Any? {
         get { 
             switch key {
@@ -1014,6 +1216,7 @@ extension Dialog.Builder: GeneratedMessageBuilderProtocol {
             case "isGroup": return self.isGroup
             case "title": return self.title
             case "uid": return self.uid
+            case "isReadOnly": return self.isReadOnly
             default: return nil
             }
         }
@@ -1039,39 +1242,44 @@ extension Dialog.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.uid = newSubscriptValue
+            case "isReadOnly":
+                guard let newSubscriptValue = newSubscriptValue as? Bool else {
+                    return
+                }
+                self.isReadOnly = newSubscriptValue
             default: return
             }
         }
     }
 }
-extension User: GeneratedMessageProtocol {
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<User> {
-        var mergedArray = Array<User>()
+extension AppSharedUser: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AppSharedUser> {
+        var mergedArray = Array<AppSharedUser>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
           mergedArray.append(value)
         }
         return mergedArray
     }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> User? {
-        return try User.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> AppSharedUser? {
+        return try AppSharedUser.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
     }
-    public class func parseFrom(data: Data) throws -> User {
-        return try User.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
+    public class func parseFrom(data: Data) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
     }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> User {
-        return try User.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(inputStream: InputStream) throws -> User {
-        return try User.Builder().mergeFrom(inputStream: inputStream).build()
+    public class func parseFrom(inputStream: InputStream) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(inputStream: inputStream).build()
     }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> User {
-        return try User.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> User {
-        return try User.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(codedInputStream: codedInputStream).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> User {
-        return try User.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedUser {
+        return try AppSharedUser.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
     }
     public subscript(key: String) -> Any? {
         switch key {
@@ -1081,7 +1289,7 @@ extension User: GeneratedMessageProtocol {
         }
     }
 }
-extension User.Builder: GeneratedMessageBuilderProtocol {
+extension AppSharedUser.Builder: GeneratedMessageBuilderProtocol {
     public subscript(key: String) -> Any? {
         get { 
             switch key {
@@ -1107,64 +1315,78 @@ extension User.Builder: GeneratedMessageBuilderProtocol {
         }
     }
 }
-extension DialogListContext: GeneratedMessageProtocol {
-    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<DialogListContext> {
-        var mergedArray = Array<DialogListContext>()
+extension AppSharedDialogListContext: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AppSharedDialogListContext> {
+        var mergedArray = Array<AppSharedDialogListContext>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
           mergedArray.append(value)
         }
         return mergedArray
     }
-    public class func parseDelimitedFrom(inputStream: InputStream) throws -> DialogListContext? {
-        return try DialogListContext.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> AppSharedDialogListContext? {
+        return try AppSharedDialogListContext.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
     }
-    public class func parseFrom(data: Data) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
+    public class func parseFrom(data: Data) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
     }
-    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(inputStream: InputStream) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(inputStream: inputStream).build()
+    public class func parseFrom(inputStream: InputStream) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(inputStream: inputStream).build()
     }
-    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(codedInputStream: codedInputStream).build()
     }
-    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> DialogListContext {
-        return try DialogListContext.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogListContext {
+        return try AppSharedDialogListContext.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
     }
     public subscript(key: String) -> Any? {
         switch key {
-        case "dialog": return self.dialog
-        case "user": return self.user
+        case "dialogs": return self.dialogs
+        case "users": return self.users
+        case "mainUser": return self.mainUser
+        case "version": return self.version
         default: return nil
         }
     }
 }
-extension DialogListContext.Builder: GeneratedMessageBuilderProtocol {
+extension AppSharedDialogListContext.Builder: GeneratedMessageBuilderProtocol {
     public subscript(key: String) -> Any? {
         get { 
             switch key {
-            case "dialog": return self.dialog
-            case "user": return self.user
+            case "dialogs": return self.dialogs
+            case "users": return self.users
+            case "mainUser": return self.mainUser
+            case "version": return self.version
             default: return nil
             }
         }
         set (newSubscriptValue) { 
             switch key {
-            case "dialog":
-                guard let newSubscriptValue = newSubscriptValue as? Array<Dialog> else {
+            case "dialogs":
+                guard let newSubscriptValue = newSubscriptValue as? Array<AppSharedDialog> else {
                     return
                 }
-                self.dialog = newSubscriptValue
-            case "user":
-                guard let newSubscriptValue = newSubscriptValue as? Array<User> else {
+                self.dialogs = newSubscriptValue
+            case "users":
+                guard let newSubscriptValue = newSubscriptValue as? Array<AppSharedUser> else {
                     return
                 }
-                self.user = newSubscriptValue
+                self.users = newSubscriptValue
+            case "mainUser":
+                guard let newSubscriptValue = newSubscriptValue as? AppSharedUser else {
+                    return
+                }
+                self.mainUser = newSubscriptValue
+            case "version":
+                guard let newSubscriptValue = newSubscriptValue as? String else {
+                    return
+                }
+                self.version = newSubscriptValue
             default: return
             }
         }

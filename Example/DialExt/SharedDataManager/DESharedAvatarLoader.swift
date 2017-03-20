@@ -30,7 +30,7 @@ public class DESharedAvatarLoader {
         self.container = groupContainer
     }
     
-    public func load(dialog: Dialog, completion: Completion?) {
+    public func load(dialog: AppSharedDialog, completion: Completion?) {
         let filename = dialog.avatarSharedItemName
         let item = container.item(forFileNamed: filename)
         item.readData({ (fileData) in

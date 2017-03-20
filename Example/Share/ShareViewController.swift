@@ -14,7 +14,7 @@ public enum FakeError: Error {
     case noError
 }
 
-class ShareViewController: UIViewController {
+class ShareViewController: UIViewController, DESharedDialogsViewControllerExtensionContextProvider {
     
     private var dialogsController: DESharedDialogsViewController? = nil
     
@@ -28,7 +28,9 @@ class ShareViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard()
+        dialogsController.extensionContextProvider = self
         self.dialogsController = dialogsController
+        
         let navController = UINavigationController(rootViewController: dialogsController)
         self.navController = navController
         
@@ -46,6 +48,10 @@ class ShareViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+    }
+    
+    func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext? {
+        return self.extensionContext
     }
     
 //    override func isContentValid() -> Bool {

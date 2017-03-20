@@ -39,7 +39,7 @@ public class DESharedDialogsManager {
     
     private var dialogsFileItem: DEGroupContainerItem? = nil
     
-    public private(set) var context: DialogListContext? = nil
+    public private(set) var context: AppSharedDialogListContext? = nil
     
     public private(set) var dialogsState: DialogsState = .idle {
         didSet {
@@ -59,7 +59,7 @@ public class DESharedDialogsManager {
         self.reloadDialogListContext()
     }
     
-    public func saveDialogListContext(_ context: DialogListContext, completion:((Bool, Error?) -> ())?) {
+    public func saveDialogListContext(_ context: AppSharedDialogListContext, completion:((Bool, Error?) -> ())?) {
         let data = context.data()
         dialogsFileItem!.writeData(data) { [weak self] (success, error) in
             withExtendedLifetime(self, {
@@ -99,7 +99,7 @@ public class DESharedDialogsManager {
     }
     
     private func handleLoadingFailure(_ error:Error?) {
-        let emptyContext = DialogListContext.createEmptyContext()
+        let emptyContext = AppSharedDialogListContext.createEmptyContext()
         saveDialogListContext(emptyContext, completion: { [weak self] success, error in
             guard success else {
                 self!.handleUnfixableFailure(error)
@@ -133,7 +133,7 @@ public class DESharedDialogsManager {
         }
         
         do {
-            self.context = try DialogListContext.parseFrom(data: data)
+            self.context = try AppSharedDialogListContext.parseFrom(data: data)
             self.dialogsState = .loaded
         }
         catch {
@@ -143,7 +143,7 @@ public class DESharedDialogsManager {
     }
     
     private func setupEmptyContext(resetState:Bool = true) {
-        self.context = DialogListContext.createEmptyContext()
+        self.context = AppSharedDialogListContext.createEmptyContext()
         if resetState {
             self.dialogsState = .loaded
         }

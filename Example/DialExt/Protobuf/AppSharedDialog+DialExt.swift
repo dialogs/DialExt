@@ -9,7 +9,7 @@
 import Foundation
 
 
-public extension Dialog {
+public extension AppSharedDialog {
     
     public typealias Id = Int64
     

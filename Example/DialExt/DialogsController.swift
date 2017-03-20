@@ -26,13 +26,13 @@ class DialogsController: DESharedDialogsViewController {
         
         if let context = self.manager.context {
             let contextBuilder = context.getBuilder()
-            let dialogBuilder = Dialog.getBuilder()
+            let dialogBuilder = AppSharedDialog.getBuilder()
             dialogBuilder.title = UUID.init().uuidString
             dialogBuilder.isGroup = false
             dialogBuilder.uid = []
             let dialog = try! dialogBuilder.build()
             
-            contextBuilder.dialog.insert(dialog, at: 0)
+            contextBuilder.dialogs.insert(dialog, at: 0)
             
             let newContext = try! contextBuilder.build()
             self.manager.saveDialogListContext(newContext, completion: { (success, error) in
