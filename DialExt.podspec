@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'Example/*'
+  s.source_files = 'Example/**/*'
 
   s.dependency 'ProtocolBuffers-Swift'
   
