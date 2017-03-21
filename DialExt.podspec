@@ -32,9 +32,9 @@ TODO: Add long description of the pod here.
 
   s.dependency 'ProtocolBuffers-Swift'
   
-  # s.resource_bundles = {
-  #   'DialExt' => ['DialExt/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'DialExt' => ['Example/DialExt/Resources/**/*']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

@@ -32,14 +32,15 @@
 		74065EFF1E8113A900C535B6 /* FrameworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE01E8113A900C535B6 /* FrameworkProvider.swift */; };
 		74065F001E8113A900C535B6 /* AppSharedDialog+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE21E8113A900C535B6 /* AppSharedDialog+DialExt.swift */; };
 		74065F011E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE31E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift */; };
-		74065F021E8113A900C535B6 /* dialog.proto in Resources */ = {isa = PBXBuildFile; fileRef = 74065EE41E8113A900C535B6 /* dialog.proto */; };
 		74065F031E8113A900C535B6 /* Dialog.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE51E8113A900C535B6 /* Dialog.proto.swift */; };
 		74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE71E8113A900C535B6 /* DESharedAvatarLoader.swift */; };
 		74065F051E8113A900C535B6 /* DESharedDataUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE81E8113A900C535B6 /* DESharedDataUploader.swift */; };
 		74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE91E8113A900C535B6 /* DESharedDialogsManager.swift */; };
 		74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EEB1E8113A900C535B6 /* DEDialogCell.swift */; };
-		74065F081E8113A900C535B6 /* DESharedDialogsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74065EEC1E8113A900C535B6 /* DESharedDialogsViewController.storyboard */; };
 		74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */; };
+		74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */; };
+		74065F111E8115A700C535B6 /* dialog.proto in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0E1E8115A700C535B6 /* dialog.proto */; };
+		74065F121E8115A700C535B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0F1E8115A700C535B6 /* Images.xcassets */; };
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -48,7 +49,6 @@
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74A2A8551E798C1900E3D04D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
@@ -128,7 +128,6 @@
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* DialExt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialExt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,14 +152,15 @@
 		74065EE01E8113A900C535B6 /* FrameworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkProvider.swift; sourceTree = "<group>"; };
 		74065EE21E8113A900C535B6 /* AppSharedDialog+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppSharedDialog+DialExt.swift"; sourceTree = "<group>"; };
 		74065EE31E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppSharedDialogListContext+DialExt.swift"; sourceTree = "<group>"; };
-		74065EE41E8113A900C535B6 /* dialog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dialog.proto; sourceTree = "<group>"; };
 		74065EE51E8113A900C535B6 /* Dialog.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.proto.swift; sourceTree = "<group>"; };
 		74065EE71E8113A900C535B6 /* DESharedAvatarLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedAvatarLoader.swift; sourceTree = "<group>"; };
 		74065EE81E8113A900C535B6 /* DESharedDataUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataUploader.swift; sourceTree = "<group>"; };
 		74065EE91E8113A900C535B6 /* DESharedDialogsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsManager.swift; sourceTree = "<group>"; };
 		74065EEB1E8113A900C535B6 /* DEDialogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEDialogCell.swift; sourceTree = "<group>"; };
-		74065EEC1E8113A900C535B6 /* DESharedDialogsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DESharedDialogsViewController.storyboard; sourceTree = "<group>"; };
 		74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsViewController.swift; sourceTree = "<group>"; };
+		74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DESharedDialogsViewController.storyboard; sourceTree = "<group>"; };
+		74065F0E1E8115A700C535B6 /* dialog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dialog.proto; sourceTree = "<group>"; };
+		74065F0F1E8115A700C535B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		74170F241E79805B00E88FA8 /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -396,7 +396,6 @@
 			children = (
 				74065EE21E8113A900C535B6 /* AppSharedDialog+DialExt.swift */,
 				74065EE31E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift */,
-				74065EE41E8113A900C535B6 /* dialog.proto */,
 				74065EE51E8113A900C535B6 /* Dialog.proto.swift */,
 			);
 			path = Protobuf;
@@ -416,10 +415,19 @@
 			isa = PBXGroup;
 			children = (
 				74065EEB1E8113A900C535B6 /* DEDialogCell.swift */,
-				74065EEC1E8113A900C535B6 /* DESharedDialogsViewController.storyboard */,
 				74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		74065F0C1E8115A700C535B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */,
+				74065F0E1E8115A700C535B6 /* dialog.proto */,
+				74065F0F1E8115A700C535B6 /* Images.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		74170F251E79805B00E88FA8 /* Share */ = {
@@ -436,8 +444,8 @@
 		7483165A1E72962500E4ADA8 /* DialExt */ = {
 			isa = PBXGroup;
 			children = (
+				74065F0C1E8115A700C535B6 /* Resources */,
 				74065EC81E8113A900C535B6 /* Code */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				7483165B1E72962500E4ADA8 /* DialExt.h */,
 				7483165C1E72962500E4ADA8 /* Info.plist */,
 			);
@@ -687,9 +695,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74065F021E8113A900C535B6 /* dialog.proto in Resources */,
-				74065F081E8113A900C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
-				74A2A8551E798C1900E3D04D /* Images.xcassets in Resources */,
+				74065F121E8115A700C535B6 /* Images.xcassets in Resources */,
+				74065F111E8115A700C535B6 /* dialog.proto in Resources */,
+				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
