@@ -18,6 +18,7 @@ public  protocol DEGroupContainerItem {
     
     func copyFile(to: URL, onFinish:((Bool, Error?) -> ())?)
 
+    func removeFile(onFinish:((Bool, Error?) -> ())?)
     
     var onDidChange:(() -> ())? {get set}
 }
@@ -191,7 +192,41 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
             }, on: callbackQueue)
             
         }
-
+    }
+    
+    func removeFile(onFinish: ((Bool, Error?) -> ())?) {
+        let callbackQueue = self.callbackQueue
+        self.workQueue.addOperation {
+            var resultError: Error? = nil
+            var isSuccess = false
+            
+            var accessError: NSError? = nil
+            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+                do {
+                    let manager = FileManager.default
+                    if manager.fileExists(atPath: self.url.path) {
+                        try manager.removeItem(at: self.url)
+                    }
+                    isSuccess = true
+                }
+                catch let error {
+                    resultError = error
+                }
+            })
+            if accessError != nil {
+                resultError = accessError
+            }
+            
+            de_perform(code: {
+                if isSuccess {
+                    onFinish?(true, nil)
+                }
+                else {
+                    onFinish?(false, resultError)
+                }
+            }, on: callbackQueue)
+            
+        }
     }
     
 }
