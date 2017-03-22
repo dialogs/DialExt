@@ -29,7 +29,7 @@ class DialogsController: DESharedDialogsViewController {
             let dialogBuilder = AppSharedDialog.getBuilder()
             dialogBuilder.title = UUID.init().uuidString
             dialogBuilder.isGroup = false
-            dialogBuilder.uid = []
+            dialogBuilder.uids = []
             let dialog = try! dialogBuilder.build()
             
             contextBuilder.dialogs.insert(dialog, at: 0)

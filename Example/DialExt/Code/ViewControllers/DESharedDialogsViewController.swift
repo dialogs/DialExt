@@ -313,7 +313,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         let dialog = self.presentedDialogs[indexPath.row]
         cell.nameLabel.text = dialog.title
         
-        let names: [String] = dialog.uid.map({
+        let names: [String] = dialog.uids.map({
             return "\($0)"
         })
         cell.statusLabel.text = names.joined(separator: ", ")
