@@ -14,6 +14,11 @@ public  protocol DEGroupContainerItem {
     
     func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?)
     
+    func copyFile(from: URL, onFinish:((Bool, Error?) -> ())?)
+    
+    func copyFile(to: URL, onFinish:((Bool, Error?) -> ())?)
+
+    
     var onDidChange:(() -> ())? {get set}
 }
 
@@ -60,7 +65,6 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
         de_perform(code:self.onDidChange, on: self.callbackQueue)
     }
     
-    
     public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
@@ -86,6 +90,75 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
             }, on: callbackQueue)
             
         }
+    }
+    
+    func copyFile(from: URL, onFinish: ((Bool, Error?) -> ())?) {
+        let callbackQueue = self.callbackQueue
+        self.workQueue.addOperation {
+            var resultError: Error? = nil
+            var isSuccess = false
+            
+            var accessError: NSError? = nil
+            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+                do {
+                    let manager = FileManager.default
+                    if manager.fileExists(atPath: self.url.path) {
+                        try manager.removeItem(at: self.url)
+                    }
+                    try manager.copyItem(at: from, to: self.url)
+                    isSuccess = true
+                }
+                catch let error {
+                    resultError = error
+                }
+            })
+            if accessError != nil {
+                resultError = accessError
+            }
+            
+            de_perform(code: {
+                if isSuccess {
+                    onFinish?(true, nil)
+                }
+                else {
+                    onFinish?(false, resultError)
+                }
+            }, on: callbackQueue)
+            
+        }
+    }
+    
+    func copyFile(to: URL, onFinish: ((Bool, Error?) -> ())?) {
+        let callbackQueue = self.callbackQueue
+        self.workQueue.addOperation {
+            var resultError: Error? = nil
+            var isSuccess = false
+            
+            var accessError: NSError? = nil
+            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+                do {
+                    try FileManager.default.copyItem(at: self.url, to: to)
+                    isSuccess = true
+                }
+                catch let error {
+                    resultError = error
+                }
+            })
+            if accessError != nil {
+                resultError = accessError
+            }
+            
+            de_perform(code: {
+                if isSuccess {
+                    onFinish?(true, nil)
+                }
+                else {
+                    onFinish?(false, resultError)
+                }
+            }, on: callbackQueue)
+            
+        }
+
     }
     
     public func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?) {
