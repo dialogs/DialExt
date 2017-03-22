@@ -11,7 +11,7 @@ message AppSharedDialog {
    int64 id = 1;
    bool isGroup = 2;
    string title = 3;
-   repeated int32 uid = 4;
+   repeated int32 uids = 4;
    bool isReadOnly = 5;
 }
 

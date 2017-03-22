@@ -29,7 +29,7 @@ final public class AppSharedDialog : GeneratedMessage {
         fieldCheck = fieldCheck && (lhs.hasId == rhs.hasId) && (!lhs.hasId || lhs.id == rhs.id)
         fieldCheck = fieldCheck && (lhs.hasIsGroup == rhs.hasIsGroup) && (!lhs.hasIsGroup || lhs.isGroup == rhs.isGroup)
         fieldCheck = fieldCheck && (lhs.hasTitle == rhs.hasTitle) && (!lhs.hasTitle || lhs.title == rhs.title)
-        fieldCheck = fieldCheck && (lhs.uid == rhs.uid)
+        fieldCheck = fieldCheck && (lhs.uids == rhs.uids)
         fieldCheck = fieldCheck && (lhs.hasIsReadOnly == rhs.hasIsReadOnly) && (!lhs.hasIsReadOnly || lhs.isReadOnly == rhs.isReadOnly)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
@@ -44,8 +44,8 @@ final public class AppSharedDialog : GeneratedMessage {
     public fileprivate(set) var title:String = ""
     public fileprivate(set) var hasTitle:Bool = false
 
-    public fileprivate(set) var uid:Array<Int32> = Array<Int32>()
-    private var uidMemoizedSerializedSize:Int32 = -1
+    public fileprivate(set) var uids:Array<Int32> = Array<Int32>()
+    private var uidsMemoizedSerializedSize:Int32 = -1
     public fileprivate(set) var isReadOnly:Bool = false
     public fileprivate(set) var hasIsReadOnly:Bool = false
 
@@ -65,11 +65,11 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasTitle {
             try codedOutputStream.writeString(fieldNumber: 3, value:title)
         }
-        if !uid.isEmpty {
+        if !uids.isEmpty {
             try codedOutputStream.writeRawVarint32(value: 34)
-            try codedOutputStream.writeRawVarint32(value: uidMemoizedSerializedSize)
-            for oneValueuid in uid {
-                try codedOutputStream.writeInt32NoTag(value: oneValueuid)
+            try codedOutputStream.writeRawVarint32(value: uidsMemoizedSerializedSize)
+            for oneValueuids in uids {
+                try codedOutputStream.writeInt32NoTag(value: oneValueuids)
             }
         }
         if hasIsReadOnly {
@@ -93,16 +93,16 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasTitle {
             serialize_size += title.computeStringSize(fieldNumber: 3)
         }
-        var dataSizeUid:Int32 = 0
-        for oneValueuid in uid {
-            dataSizeUid += oneValueuid.computeInt32SizeNoTag()
+        var dataSizeUids:Int32 = 0
+        for oneValueuids in uids {
+            dataSizeUids += oneValueuids.computeInt32SizeNoTag()
         }
-        serialize_size += dataSizeUid
-        if !uid.isEmpty {
+        serialize_size += dataSizeUids
+        if !uids.isEmpty {
             serialize_size += 1
-            serialize_size += dataSizeUid.computeInt32SizeNoTag()
+            serialize_size += dataSizeUids.computeInt32SizeNoTag()
         }
-        uidMemoizedSerializedSize = dataSizeUid
+        uidsMemoizedSerializedSize = dataSizeUids
         if hasIsReadOnly {
             serialize_size += isReadOnly.computeBoolSize(fieldNumber: 5)
         }
@@ -143,12 +143,12 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasTitle {
             jsonMap["title"] = title
         }
-        if !uid.isEmpty {
-            var jsonArrayUid:Array<Int> = []
-            for oneValueUid in uid {
-                jsonArrayUid.append(Int(oneValueUid))
+        if !uids.isEmpty {
+            var jsonArrayUids:Array<Int> = []
+            for oneValueUids in uids {
+                jsonArrayUids.append(Int(oneValueUids))
             }
-            jsonMap["uid"] = jsonArrayUid
+            jsonMap["uids"] = jsonArrayUids
         }
         if hasIsReadOnly {
             jsonMap["isReadOnly"] = isReadOnly
@@ -172,10 +172,10 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasTitle {
             output += "\(indent) title: \(title) \n"
         }
-        var uidElementIndex:Int = 0
-        for oneValueUid in uid  {
-            output += "\(indent) uid[\(uidElementIndex)]: \(oneValueUid)\n"
-            uidElementIndex += 1
+        var uidsElementIndex:Int = 0
+        for oneValueUids in uids  {
+            output += "\(indent) uids[\(uidsElementIndex)]: \(oneValueUids)\n"
+            uidsElementIndex += 1
         }
         if hasIsReadOnly {
             output += "\(indent) isReadOnly: \(isReadOnly) \n"
@@ -195,8 +195,8 @@ final public class AppSharedDialog : GeneratedMessage {
             if hasTitle {
                 hashCode = (hashCode &* 31) &+ title.hashValue
             }
-            for oneValueUid in uid {
-                hashCode = (hashCode &* 31) &+ oneValueUid.hashValue
+            for oneValueUids in uids {
+                hashCode = (hashCode &* 31) &+ oneValueUids.hashValue
             }
             if hasIsReadOnly {
                 hashCode = (hashCode &* 31) &+ isReadOnly.hashValue
@@ -301,22 +301,22 @@ final public class AppSharedDialog : GeneratedMessage {
             builderResult.title = ""
             return self
         }
-        public var uid:Array<Int32> {
+        public var uids:Array<Int32> {
             get {
-                return builderResult.uid
+                return builderResult.uids
             }
             set (array) {
-                builderResult.uid = array
+                builderResult.uids = array
             }
         }
         @discardableResult
-        public func setUid(_ value:Array<Int32>) -> AppSharedDialog.Builder {
-            self.uid = value
+        public func setUids(_ value:Array<Int32>) -> AppSharedDialog.Builder {
+            self.uids = value
             return self
         }
         @discardableResult
-        public func clearUid() -> AppSharedDialog.Builder {
-            builderResult.uid.removeAll(keepingCapacity: false)
+        public func clearUids() -> AppSharedDialog.Builder {
+            builderResult.uids.removeAll(keepingCapacity: false)
             return self
         }
         public var isReadOnly:Bool {
@@ -379,8 +379,8 @@ final public class AppSharedDialog : GeneratedMessage {
             if other.hasTitle {
                 title = other.title
             }
-            if !other.uid.isEmpty {
-                builderResult.uid += other.uid
+            if !other.uids.isEmpty {
+                builderResult.uids += other.uids
             }
             if other.hasIsReadOnly {
                 isReadOnly = other.isReadOnly
@@ -415,7 +415,7 @@ final public class AppSharedDialog : GeneratedMessage {
                     let length = Int(try codedInputStream.readRawVarint32())
                     let limit = try codedInputStream.pushLimit(byteLimit: length)
                     while (codedInputStream.bytesUntilLimit() > 0) {
-                        builderResult.uid.append(try codedInputStream.readInt32())
+                        builderResult.uids.append(try codedInputStream.readInt32())
                     }
                     codedInputStream.popLimit(oldLimit: limit)
 
@@ -443,12 +443,12 @@ final public class AppSharedDialog : GeneratedMessage {
             if let jsonValueTitle = jsonMap["title"] as? String {
                 resultDecodedBuilder.title = jsonValueTitle
             }
-            if let jsonValueUid = jsonMap["uid"] as? Array<Int> {
-                var jsonArrayUid:Array<Int32> = []
-                for oneValueUid in jsonValueUid {
-                    jsonArrayUid.append(Int32(oneValueUid))
+            if let jsonValueUids = jsonMap["uids"] as? Array<Int> {
+                var jsonArrayUids:Array<Int32> = []
+                for oneValueUids in jsonValueUids {
+                    jsonArrayUids.append(Int32(oneValueUids))
                 }
-                resultDecodedBuilder.uid = jsonArrayUid
+                resultDecodedBuilder.uids = jsonArrayUids
             }
             if let jsonValueIsReadOnly = jsonMap["isReadOnly"] as? Bool {
                 resultDecodedBuilder.isReadOnly = jsonValueIsReadOnly
@@ -1202,7 +1202,7 @@ extension AppSharedDialog: GeneratedMessageProtocol {
         case "id": return self.id
         case "isGroup": return self.isGroup
         case "title": return self.title
-        case "uid": return self.uid
+        case "uids": return self.uids
         case "isReadOnly": return self.isReadOnly
         default: return nil
         }
@@ -1215,7 +1215,7 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
             case "id": return self.id
             case "isGroup": return self.isGroup
             case "title": return self.title
-            case "uid": return self.uid
+            case "uids": return self.uids
             case "isReadOnly": return self.isReadOnly
             default: return nil
             }
@@ -1237,11 +1237,11 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.title = newSubscriptValue
-            case "uid":
+            case "uids":
                 guard let newSubscriptValue = newSubscriptValue as? Array<Int32> else {
                     return
                 }
-                self.uid = newSubscriptValue
+                self.uids = newSubscriptValue
             case "isReadOnly":
                 guard let newSubscriptValue = newSubscriptValue as? Bool else {
                     return

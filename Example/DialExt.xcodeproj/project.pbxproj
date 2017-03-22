@@ -39,11 +39,11 @@
 		74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EEB1E8113A900C535B6 /* DEDialogCell.swift */; };
 		74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */; };
 		74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */; };
-		74065F111E8115A700C535B6 /* dialog.proto in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0E1E8115A700C535B6 /* dialog.proto */; };
 		74065F121E8115A700C535B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74065F0F1E8115A700C535B6 /* Images.xcassets */; };
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */ = {isa = PBXBuildFile; fileRef = 742FCF691E8266C9003D1FBC /* dialog.proto */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316681E72962500E4ADA8 /* DialExtTests.swift */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -159,12 +159,12 @@
 		74065EEB1E8113A900C535B6 /* DEDialogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEDialogCell.swift; sourceTree = "<group>"; };
 		74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsViewController.swift; sourceTree = "<group>"; };
 		74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DESharedDialogsViewController.storyboard; sourceTree = "<group>"; };
-		74065F0E1E8115A700C535B6 /* dialog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dialog.proto; sourceTree = "<group>"; };
 		74065F0F1E8115A700C535B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		74170F241E79805B00E88FA8 /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		74170F2B1E79805B00E88FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		742FCF691E8266C9003D1FBC /* dialog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dialog.proto; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
 		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
@@ -424,7 +424,6 @@
 			isa = PBXGroup;
 			children = (
 				74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */,
-				74065F0E1E8115A700C535B6 /* dialog.proto */,
 				74065F0F1E8115A700C535B6 /* Images.xcassets */,
 			);
 			path = Resources;
@@ -441,9 +440,18 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		742FCF681E8266B2003D1FBC /* Protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				742FCF691E8266C9003D1FBC /* dialog.proto */,
+			);
+			path = Protobuf;
+			sourceTree = "<group>";
+		};
 		7483165A1E72962500E4ADA8 /* DialExt */ = {
 			isa = PBXGroup;
 			children = (
+				742FCF681E8266B2003D1FBC /* Protobuf */,
 				74065F0C1E8115A700C535B6 /* Resources */,
 				74065EC81E8113A900C535B6 /* Code */,
 				7483165B1E72962500E4ADA8 /* DialExt.h */,
@@ -696,7 +704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74065F121E8115A700C535B6 /* Images.xcassets in Resources */,
-				74065F111E8115A700C535B6 /* dialog.proto in Resources */,
+				742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */,
 				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
