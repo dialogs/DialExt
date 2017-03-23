@@ -13,10 +13,18 @@ public extension AppSharedDialog {
     
     public typealias Id = Int64
     
-    public var avatarSharedItemName: String {
-        let prefix = self.isGroup ? "g" : "u"
-        let name = "\(prefix)\(id)"
+    public class func avatarSharedItemName(for dialog: AppSharedDialog) -> String {
+        return self.avatarSharedItemName(for: dialog.id, isGroup: dialog.isGroup)
+    }
+    
+    public class func avatarSharedItemName(for dialogId: Id, isGroup: Bool) -> String {
+        let prefix = isGroup ? "g" : "u"
+        let name = "\(prefix)\(dialogId)"
         return name
+    }
+    
+    public var avatarSharedItemName: String {
+        return AppSharedDialog.avatarSharedItemName(for: self)
     }
     
     public var placeholderTitle: String {
