@@ -33,7 +33,7 @@ public class DESharedDialogsManager {
         }
     }
     
-    private let container: DEGroupContainer
+    public let container: DEGroupContainer
     
     private let keychainDataGroup: String
     
@@ -49,8 +49,13 @@ public class DESharedDialogsManager {
     
     public var onDidChangeDialogsState:((DialogsState)->())? = nil
     
-    public init(groupContainerId: String, keychainGroup: String) {
-        self.container = DEGroupContainer.init(groupId:groupContainerId)
+    public convenience init(groupContainerId: String, keychainGroup: String) {
+        let container = DEGroupContainer.init(groupId:groupContainerId)
+        self.init(groupContainer: container, keychainGroup: keychainGroup)
+    }
+    
+    public init(groupContainer: DEGroupContainer, keychainGroup: String) {
+        self.container = groupContainer
         self.keychainDataGroup = keychainGroup
     }
     
