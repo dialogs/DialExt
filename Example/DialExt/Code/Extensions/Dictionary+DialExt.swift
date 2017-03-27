@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension Dictionary {
-    mutating func de_merge(with dictionary: Dictionary) {
+public extension Dictionary {
+    public mutating func de_merge(with dictionary: Dictionary) {
         for (key, value) in dictionary {
             self.updateValue(value, forKey: key)
         }
