@@ -138,6 +138,12 @@ public struct DEKeychainQuery {
             
             return representation
         }
+        
+        public init(service: String, account: String, group: String? = nil) {
+            self.service = service
+            self.account = account
+            self.group = group
+        }
     }
     
     /// Operation desribes keychain query type and details
