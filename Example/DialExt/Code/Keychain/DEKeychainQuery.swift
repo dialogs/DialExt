@@ -26,7 +26,7 @@ public struct DEKeychainQuery {
     /// Describes entry synchronization and access details
     public var synchronizable: Synchronizable?
     
-    init(access: Access, operation: Operation) {
+    public init(access: Access, operation: Operation) {
         self.access = access
         self.operation = operation
     }
