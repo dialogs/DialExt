@@ -50,6 +50,7 @@
 		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
+		74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
 /* End PBXBuildFile section */
@@ -174,6 +175,7 @@
 		7483166A1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		74A2A8561E79911E00E3D04D /* DialogsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsController.swift; sourceTree = "<group>"; };
+		74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAuthIdProvider.swift; sourceTree = "<group>"; };
 		7F6C8537E0E8B912477E0F70 /* Pods-DialExt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Tests/Pods-DialExt_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				74065ECA1E8113A900C535B6 /* DEKeychainDataProvider.swift */,
 				74065ECB1E8113A900C535B6 /* Dictionary+DialExt.swift */,
 				74065ECC1E8113A900C535B6 /* DispatchQueue+DialExt.swift */,
+				74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 				74065EFA1E8113A900C535B6 /* DEKeychainQuery.swift in Sources */,
 				74065EF71E8113A900C535B6 /* KeyboardListener.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
+				74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */,
 				74065EFF1E8113A900C535B6 /* FrameworkProvider.swift in Sources */,
 				74065EF01E8113A900C535B6 /* DispatchQueue+DialExt.swift in Sources */,
 				74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */,
