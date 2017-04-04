@@ -874,6 +874,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74065F031E8113A900C535B6 /* Dialog.proto.swift in Sources */,
 				74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */,
 				74065EEE1E8113A900C535B6 /* DEKeychainDataProvider.swift in Sources */,
 				74065EF41E8113A900C535B6 /* DESimpleInterappMessenger.swift in Sources */,
@@ -898,7 +899,6 @@
 				74065EF91E8113A900C535B6 /* UIViewAnimationOptions.swift in Sources */,
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
-				74065F031E8113A900C535B6 /* Dialog.proto.swift in Sources */,
 				74065EF31E8113A900C535B6 /* DEInterappMessenger.swift in Sources */,
 				74065EF61E8113A900C535B6 /* KeyboardEvent.swift in Sources */,
 			);
