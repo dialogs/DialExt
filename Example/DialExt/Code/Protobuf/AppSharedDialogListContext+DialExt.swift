@@ -9,7 +9,7 @@
 import Foundation
 
 public extension AppSharedDialogListContext {
-    static public func createEmptyContext() -> AppSharedDialogListContext {
+    static public let empty: AppSharedDialogListContext = {
         let contextBuilder = AppSharedDialogListContext.getBuilder()
         contextBuilder.dialogs = []
         contextBuilder.users = []
@@ -24,7 +24,7 @@ public extension AppSharedDialogListContext {
         contextBuilder.mainUser = user
         let context = try! contextBuilder.build()
         return context
-    }
+    }()
     
     static public let version: String = {
         let bundle = Bundle.dialExtBundle
@@ -36,6 +36,14 @@ public extension AppSharedDialogListContext {
         let versionLineComponents = versionLine.components(separatedBy: .whitespaces)
         let version = versionLineComponents.last!
         return version
+    }()
+}
+
+public extension AppSharedDialogList {
+    static public let empty: AppSharedDialogList = {
+        let builder = AppSharedDialogList.getBuilder()
+        builder.ids = []
+        return try! builder.build()
     }()
 }
 

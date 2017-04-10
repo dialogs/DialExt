@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DESharedAvatarLoader {
+final public class DESharedAvatarLoader {
     
     private typealias AvatarCache = NSCache<NSString, UIImage>
     

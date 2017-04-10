@@ -15,7 +15,7 @@ public protocol DESharedDataUploader {
 }
 
 
-public class DEBasicSharedDataUploader: DESharedDataUploader {
+final public class DEBasicSharedDataUploader: DESharedDataUploader {
     
     public func upload(_ data: Data, token: String, targetId: Int, completion: DESharedDataUploadCompletion?) {
         fatalError("Unprepared yet")
@@ -23,7 +23,7 @@ public class DEBasicSharedDataUploader: DESharedDataUploader {
     
 }
 
-public class DEDebugSharedDataUploader: DESharedDataUploader {
+final public class DEDebugSharedDataUploader: DESharedDataUploader {
     
     public enum Config {
         case performWithSuccess

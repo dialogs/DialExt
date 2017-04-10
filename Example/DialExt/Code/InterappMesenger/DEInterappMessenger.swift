@@ -11,7 +11,7 @@ import Foundation
 
 /**
  * An instance responsible to enconding/decoging messages to/from data.
- * You must subclass this class and overrid *encode:* and *decode* methods without calling *super*.
+ * You must subclass this class and override *encode:* and *decode* methods without calling *super*.
  */
 public class DEInterappMessageEncoder<DEInterappMessage> {
     

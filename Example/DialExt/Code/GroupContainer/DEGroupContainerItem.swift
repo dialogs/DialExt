@@ -8,7 +8,8 @@
 
 import Foundation
 
-public  protocol DEGroupContainerItem {
+
+public protocol DEGroupContainerItem {
     
     func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?)
     
@@ -17,9 +18,12 @@ public  protocol DEGroupContainerItem {
     func copyFile(from: URL, onFinish:((Bool, Error?) -> ())?)
     
     func copyFile(to: URL, onFinish:((Bool, Error?) -> ())?)
-
+    
     func removeFile(onFinish:((Bool, Error?) -> ())?)
     
+    /**
+     * Does not being called if changes are initiated by this item
+     */
     var onDidChange:(() -> ())? {get set}
 }
 
@@ -69,10 +73,13 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
     public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
-            var resultError: NSError? = nil
+            var resultError: Error? = nil
             var isSuccess = false
             var data: Data? = nil
-            self.coordinator.coordinate(readingItemAt: self.url, options: [], error: &resultError, byAccessor: { url in
+            
+            var coordinatorError: NSError? = nil
+            
+            self.coordinator.coordinate(readingItemAt: self.url, options: [], error: &coordinatorError, byAccessor: { url in
                 do {
                     data = try Data.init(contentsOf: url)
                     isSuccess = true
@@ -89,6 +96,8 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     onFailure?(resultError)
                 }
             }, on: callbackQueue)
+            
+            resultError = coordinatorError
             
         }
     }
@@ -159,7 +168,7 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
             }, on: callbackQueue)
             
         }
-
+        
     }
     
     public func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?) {

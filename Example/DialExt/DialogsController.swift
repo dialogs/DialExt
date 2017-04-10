@@ -35,9 +35,7 @@ class DialogsController: DESharedDialogsViewController {
             contextBuilder.dialogs.insert(dialog, at: 0)
             
             let newContext = try! contextBuilder.build()
-            self.manager.saveDialogListContext(newContext, completion: { (success, error) in
-                
-            })
+            // do nothing
         }
     }
 }

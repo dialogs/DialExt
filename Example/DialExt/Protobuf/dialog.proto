@@ -26,3 +26,7 @@ message AppSharedDialogListContext {
 	AppSharedUser mainUser = 3;
 	string version = 4;
 }
+
+message AppSharedDialogList {
+    repeated int64 ids = 1;
+}

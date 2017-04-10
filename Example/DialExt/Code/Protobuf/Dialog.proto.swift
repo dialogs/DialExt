@@ -1168,6 +1168,239 @@ final public class AppSharedDialogListContext : GeneratedMessage {
 
 }
 
+final public class AppSharedDialogList : GeneratedMessage {
+
+    public static func == (lhs: AppSharedDialogList, rhs: AppSharedDialogList) -> Bool {
+        if lhs === rhs {
+            return true
+        }
+        var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+        fieldCheck = fieldCheck && (lhs.ids == rhs.ids)
+        fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+        return fieldCheck
+    }
+
+    public fileprivate(set) var ids:Array<Int64> = Array<Int64>()
+    private var idsMemoizedSerializedSize:Int32 = -1
+    required public init() {
+        super.init()
+    }
+    override public func isInitialized() -> Bool {
+        return true
+    }
+    override public func writeTo(codedOutputStream: CodedOutputStream) throws {
+        if !ids.isEmpty {
+            try codedOutputStream.writeRawVarint32(value: 10)
+            try codedOutputStream.writeRawVarint32(value: idsMemoizedSerializedSize)
+            for oneValueids in ids {
+                try codedOutputStream.writeInt64NoTag(value: oneValueids)
+            }
+        }
+        try unknownFields.writeTo(codedOutputStream: codedOutputStream)
+    }
+    override public func serializedSize() -> Int32 {
+        var serialize_size:Int32 = memoizedSerializedSize
+        if serialize_size != -1 {
+         return serialize_size
+        }
+
+        serialize_size = 0
+        var dataSizeIds:Int32 = 0
+        for oneValueids in ids {
+            dataSizeIds += oneValueids.computeInt64SizeNoTag()
+        }
+        serialize_size += dataSizeIds
+        if !ids.isEmpty {
+            serialize_size += 1
+            serialize_size += dataSizeIds.computeInt32SizeNoTag()
+        }
+        idsMemoizedSerializedSize = dataSizeIds
+        serialize_size += unknownFields.serializedSize()
+        memoizedSerializedSize = serialize_size
+        return serialize_size
+    }
+    public class func getBuilder() -> AppSharedDialogList.Builder {
+        return AppSharedDialogList.classBuilder() as! AppSharedDialogList.Builder
+    }
+    public func getBuilder() -> AppSharedDialogList.Builder {
+        return classBuilder() as! AppSharedDialogList.Builder
+    }
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return AppSharedDialogList.Builder()
+    }
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return AppSharedDialogList.Builder()
+    }
+    public func toBuilder() throws -> AppSharedDialogList.Builder {
+        return try AppSharedDialogList.builderWithPrototype(prototype:self)
+    }
+    public class func builderWithPrototype(prototype:AppSharedDialogList) throws -> AppSharedDialogList.Builder {
+        return try AppSharedDialogList.Builder().mergeFrom(other:prototype)
+    }
+    override public func encode() throws -> Dictionary<String,Any> {
+        guard isInitialized() else {
+            throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
+        }
+
+        var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
+        if !ids.isEmpty {
+            var jsonArrayIds:Array<String> = []
+            for oneValueIds in ids {
+                jsonArrayIds.append("\(oneValueIds)")
+            }
+            jsonMap["ids"] = jsonArrayIds
+        }
+        return jsonMap
+    }
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    }
+    override class public func fromJSON(data:Data) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder.fromJSONToBuilder(data:data).build()
+    }
+    override public func getDescription(indent:String) throws -> String {
+        var output = ""
+        var idsElementIndex:Int = 0
+        for oneValueIds in ids  {
+            output += "\(indent) ids[\(idsElementIndex)]: \(oneValueIds)\n"
+            idsElementIndex += 1
+        }
+        output += unknownFields.getDescription(indent: indent)
+        return output
+    }
+    override public var hashValue:Int {
+        get {
+            var hashCode:Int = 7
+            for oneValueIds in ids {
+                hashCode = (hashCode &* 31) &+ oneValueIds.hashValue
+            }
+            hashCode = (hashCode &* 31) &+  unknownFields.hashValue
+            return hashCode
+        }
+    }
+
+
+    //Meta information declaration start
+
+    override public class func className() -> String {
+        return "AppSharedDialogList"
+    }
+    override public func className() -> String {
+        return "AppSharedDialogList"
+    }
+    //Meta information declaration end
+
+    final public class Builder : GeneratedMessageBuilder {
+        fileprivate var builderResult:AppSharedDialogList = AppSharedDialogList()
+        public func getMessage() -> AppSharedDialogList {
+            return builderResult
+        }
+
+        required override public init () {
+            super.init()
+        }
+        public var ids:Array<Int64> {
+            get {
+                return builderResult.ids
+            }
+            set (array) {
+                builderResult.ids = array
+            }
+        }
+        @discardableResult
+        public func setIds(_ value:Array<Int64>) -> AppSharedDialogList.Builder {
+            self.ids = value
+            return self
+        }
+        @discardableResult
+        public func clearIds() -> AppSharedDialogList.Builder {
+            builderResult.ids.removeAll(keepingCapacity: false)
+            return self
+        }
+        override public var internalGetResult:GeneratedMessage {
+            get {
+                return builderResult
+            }
+        }
+        @discardableResult
+        override public func clear() -> AppSharedDialogList.Builder {
+            builderResult = AppSharedDialogList()
+            return self
+        }
+        override public func clone() throws -> AppSharedDialogList.Builder {
+            return try AppSharedDialogList.builderWithPrototype(prototype:builderResult)
+        }
+        override public func build() throws -> AppSharedDialogList {
+            try checkInitialized()
+            return buildPartial()
+        }
+        public func buildPartial() -> AppSharedDialogList {
+            let returnMe:AppSharedDialogList = builderResult
+            return returnMe
+        }
+        @discardableResult
+        public func mergeFrom(other:AppSharedDialogList) throws -> AppSharedDialogList.Builder {
+            if other == AppSharedDialogList() {
+                return self
+            }
+            if !other.ids.isEmpty {
+                builderResult.ids += other.ids
+            }
+            try merge(unknownField: other.unknownFields)
+            return self
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialogList.Builder {
+            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogList.Builder {
+            let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
+            while (true) {
+                let protobufTag = try codedInputStream.readTag()
+                switch protobufTag {
+                case 0: 
+                    self.unknownFields = try unknownFieldsBuilder.build()
+                    return self
+
+                case 10:
+                    let length = Int(try codedInputStream.readRawVarint32())
+                    let limit = try codedInputStream.pushLimit(byteLimit: length)
+                    while (codedInputStream.bytesUntilLimit() > 0) {
+                        builderResult.ids.append(try codedInputStream.readInt64())
+                    }
+                    codedInputStream.popLimit(oldLimit: limit)
+
+                default:
+                    if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
+                        unknownFields = try unknownFieldsBuilder.build()
+                        return self
+                    }
+                }
+            }
+        }
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialogList.Builder {
+            let resultDecodedBuilder = AppSharedDialogList.Builder()
+            if let jsonValueIds = jsonMap["ids"] as? Array<String> {
+                var jsonArrayIds:Array<Int64> = []
+                for oneValueIds in jsonValueIds {
+                    jsonArrayIds.append(Int64(oneValueIds)!)
+                }
+                resultDecodedBuilder.ids = jsonArrayIds
+            }
+            return resultDecodedBuilder
+        }
+        override class public func fromJSONToBuilder(data:Data) throws -> AppSharedDialogList.Builder {
+            let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
+            guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
+              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+            }
+            return try AppSharedDialogList.Builder.decodeToBuilder(jsonMap:jsDataCast)
+        }
+    }
+
+}
+
 extension AppSharedDialog: GeneratedMessageProtocol {
     public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AppSharedDialog> {
         var mergedArray = Array<AppSharedDialog>()
@@ -1387,6 +1620,62 @@ extension AppSharedDialogListContext.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.version = newSubscriptValue
+            default: return
+            }
+        }
+    }
+}
+extension AppSharedDialogList: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AppSharedDialogList> {
+        var mergedArray = Array<AppSharedDialogList>()
+        while let value = try parseDelimitedFrom(inputStream: inputStream) {
+          mergedArray.append(value)
+        }
+        return mergedArray
+    }
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> AppSharedDialogList? {
+        return try AppSharedDialogList.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    }
+    public class func parseFrom(data: Data) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(data: data, extensionRegistry:DialogRoot.default.extensionRegistry).build()
+    }
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(inputStream: InputStream) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(inputStream: inputStream).build()
+    }
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> AppSharedDialogList {
+        return try AppSharedDialogList.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public subscript(key: String) -> Any? {
+        switch key {
+        case "ids": return self.ids
+        default: return nil
+        }
+    }
+}
+extension AppSharedDialogList.Builder: GeneratedMessageBuilderProtocol {
+    public subscript(key: String) -> Any? {
+        get { 
+            switch key {
+            case "ids": return self.ids
+            default: return nil
+            }
+        }
+        set (newSubscriptValue) { 
+            switch key {
+            case "ids":
+                guard let newSubscriptValue = newSubscriptValue as? Array<Int64> else {
+                    return
+                }
+                self.ids = newSubscriptValue
             default: return
             }
         }

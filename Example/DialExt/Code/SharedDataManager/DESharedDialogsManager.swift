@@ -12,12 +12,17 @@ public enum DialogsError: Error {
     
 }
 
+public enum UpdateReason: Int {
+    case order
+    case content
+    case other
+}
+
 /**
  * Class providing data in prepared state for using.
  * Won't work untill you call start() method.
- *
  */
-public class DESharedDialogsManager {
+final public class DESharedDialogsManager {
     
     public enum DialogsState {
         case idle
@@ -35,11 +40,9 @@ public class DESharedDialogsManager {
     
     public let container: DEGroupContainer
     
-    private let keychainDataGroup: String
-    
-    private var dialogsFileItem: DEGroupContainerItem? = nil
-    
     public private(set) var context: AppSharedDialogListContext? = nil
+    
+    public private(set) var dialogIds: [Int64] = []
     
     public private(set) var dialogsState: DialogsState = .idle {
         didSet {
@@ -60,20 +63,21 @@ public class DESharedDialogsManager {
     }
     
     public func start() {
-        self.dialogsFileItem = container.item(forFileNamed: "dialogs")
+        self.resetConfig()
         self.reloadDialogListContext()
     }
     
-    public func saveDialogListContext(_ context: AppSharedDialogListContext, completion:((Bool, Error?) -> ())?) {
-        let data = context.data()
-        dialogsFileItem!.writeData(data) { [weak self] (success, error) in
+    public func save(list: AppSharedDialogList, context: AppSharedDialogListContext, completion:((Bool, Error?) -> ())?) {
+        guard let config = self.config else {
+            return
+        }
+        config.dataLoader.store(list: list, context: context, handler: completion)
+    }
+    
+    public func saveData(_ data: Data, item: DEGroupContainerItem, completion: ((Bool, Error?) -> ())?) {
+        item.writeData(data) { [weak self] (success, error) in
             withExtendedLifetime(self, {
                 guard self != nil else { return }
-                
-                if success {
-                    self!.context = context
-                    self!.dialogsState = .loaded
-                }
                 
                 completion?(success, error)
             })
@@ -85,72 +89,63 @@ public class DESharedDialogsManager {
             return
         }
         
-        guard let item = self.dialogsFileItem else {
-            fatalError("File item is not prepared!")
+        guard let config = self.config else {
+            return
         }
         
         self.dialogsState = .loading
-        item.readData({ [weak self] (data) in
+        
+        config.dataLoader.start()
+    }
+    
+    private func resetConfig() {
+        let config = Config.init(container: self.container)
+        config.dataLoader.onDidChangeState = { [weak self] state in
             withExtendedLifetime(self, {
-                guard self != nil else { return }
-                self!.handleLoadedData(data)
+                self?.handleChangeDataState(state)
             })
-        }) { [weak self] (error) in
-            withExtendedLifetime(self, {
-                guard self != nil else { return }
-                self!.handleLoadingFailure(error)
-            })
+        }
+        
+        self.config = config
+    }
+    
+    private func handleChangeDataState(_ state: DESharedDialogsDataLoader.DataState) {
+        switch state {
+        case let .failured(error): handleLoadingFailure(error)
+        case let .loaded(context):
+            self.context = context
+            self.dialogsState = .loaded
+        case .idle: break
         }
     }
     
     private func handleLoadingFailure(_ error:Error?) {
-        let emptyContext = AppSharedDialogListContext.createEmptyContext()
-        saveDialogListContext(emptyContext, completion: { [weak self] success, error in
-            guard success else {
-                self!.handleUnfixableFailure(error)
-                return
-            }
-        })
-        let data = emptyContext.data()
-        dialogsFileItem!.writeData(data) { [weak self] (success, error) in
-            withExtendedLifetime(self, {
-                guard self != nil else { return }
-                if success {
-                    self!.context = emptyContext
-                    self!.dialogsState = .loaded
-                }
-                else {
-                    self!.handleUnfixableFailure(error)
-                }
-            })
-        }
+        print("Error occured: \(error)")
+        
         self.dialogsState = .failed(error)
     }
     
+    private let keychainDataGroup: String
+    
+    private class Config {
+        
+        let dialogsContextFileItem: DEGroupContainerItem
+        let dialogListFileItem: DEGroupContainerItem
+        
+        let dataLoader: DESharedDialogsDataLoader
+        
+        init(container: DEGroupContainer) {
+            self.dialogsContextFileItem = container.item(forFileNamed: "dialogs")
+            self.dialogListFileItem = container.item(forFileNamed: "dialogs_list")
+            
+            self.dataLoader = DESharedDialogsDataLoader.init(contextFile: self.dialogsContextFileItem,
+                                                             listFile: self.dialogListFileItem)
+        }
+    }
+    
+    private var config: Config? = nil
+    
     private func handleUnfixableFailure(_ error: Error?) {
         fatalError("Could not neither read, neither write to group container. Please, check entitlement. \(error)")
-    }
-    
-    private func handleLoadedData(_ loadedData: Data?) {
-        guard let data = loadedData else {
-            self.setupEmptyContext()
-            return
-        }
-        
-        do {
-            self.context = try AppSharedDialogListContext.parseFrom(data: data)
-            self.dialogsState = .loaded
-        }
-        catch {
-            self.setupEmptyContext(resetState: false)
-            self.dialogsState = .failed(error)
-        }
-    }
-    
-    private func setupEmptyContext(resetState:Bool = true) {
-        self.context = AppSharedDialogListContext.createEmptyContext()
-        if resetState {
-            self.dialogsState = .loaded
-        }
     }
 }
