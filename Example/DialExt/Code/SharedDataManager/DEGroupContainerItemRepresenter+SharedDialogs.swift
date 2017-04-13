@@ -8,20 +8,29 @@
 
 import Foundation
 
+import ProtocolBuffers
 
-public class AppSharedDialogListRepresenter: DEGroupContainerItemRepresenter<AppSharedDialogList> {
+
+public class DEProtobufContainerItemRepresenter<Proto: GeneratedMessageProtocol>: DEGroupContainerItemRepresenter<Proto> {
     
-    override init(item: DEGroupContainerItem,
-                  encoder: DEGroupContainerItemDataEncoder<AppSharedDialogList> = DEProtobufItemDataEncoder.init()) {
-        super.init(item: item, encoder: encoder)
+    public class func createDefaultEncoder() -> DEGroupContainerItemDataEncoder<Proto> {
+        return DEProtobufItemDataEncoder<Proto>.init()
+    }
+    
+    public init(item: DEGroupContainerItem) {
+        super.init(item: item, encoder: type(of: self).createDefaultEncoder())
+    }
+    
+}
+
+public class DEProtobufContainterItemBindedRepresenter<Proto: GeneratedMessageProtocol>: DEGroupContainerItemBindedRepresenter<Proto> {
+    
+    init(item: DEGroupContainerItem) {
+        let representer = DEProtobufContainerItemRepresenter<Proto>.init(item: item)
+        super.init(unbindableRepresenter: representer, storePolicy: .onSuccessOnly)
     }
 }
 
+public typealias AppSharedDialogListBindedRepresenter = DEProtobufContainterItemBindedRepresenter<AppSharedDialogList>
 
-public class AppSharedDialogListContextItemRepresenter: DEGroupContainerItemRepresenter<AppSharedDialogListContext> {
-    
-    override init(item: DEGroupContainerItem,
-                  encoder: DEGroupContainerItemDataEncoder<AppSharedDialogListContext> = DEProtobufItemDataEncoder.init()) {
-        super.init(item: item, encoder: encoder)
-    }
-}
+public typealias AppSharedDialogListContextBindedRepresenter = DEProtobufContainterItemBindedRepresenter<AppSharedDialogListContext>

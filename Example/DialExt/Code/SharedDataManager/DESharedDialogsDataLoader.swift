@@ -8,6 +8,7 @@
 
 import UIKit
 
+import ProtocolBuffers
 
 final public class DESharedDialogsDataLoader {
     
@@ -21,38 +22,78 @@ final public class DESharedDialogsDataLoader {
         return composer.state
     }
     
+    
+    public let listQueuer: DEGroupContainerItemBindedRepresenterQueuer<AppSharedDialogList>
+    
+    public let contextQueuer: DEGroupContainerItemBindedRepresenterQueuer<AppSharedDialogListContext>
+    
+    
+    public var list: AppSharedDialogList? {
+        return listRepresenter.representation
+    }
+    
+    public var context: AppSharedDialogListContext? {
+        return contextRepresenter.representation
+    }
+    
+    public private(set) var started: Bool = false
+    
     public var overwriteOnFail: Bool = false
     
     public var onDidChangeState: ((DataState) -> ())?
     
     public init(contextFile: DEGroupContainerItem, listFile: DEGroupContainerItem) {
-        listRepresenter = AppSharedDialogListRepresenter.init(item: listFile)
-        contextRepresenter = AppSharedDialogListContextItemRepresenter.init(item: contextFile)
+        listRepresenter = AppSharedDialogListBindedRepresenter.init(item: listFile)
+        listQueuer = listRepresenter.creatQueuer()
+        
+        contextRepresenter = AppSharedDialogListContextBindedRepresenter.init(item: contextFile)
+        contextQueuer = contextRepresenter.creatQueuer()
     }
     
     public func start() {
+        guard !self.started else {
+            return
+        }
+        
+        self.started = true
+        
         composer.onDidChangeState = { [unowned self] state in
             self.handleComposerStateChange(state: state)
         }
         
-        listRepresenter.startObserving { [weak self] (result, _) in
+        listRepresenter.onDidChangeRepresentation = { [weak self] list, reason in
             withExtendedLifetime(self, {
-                switch result {
-                case let .success(list): self?.composer.list = list
-                case let .failure(error): self?.composer.resetState(error: error)
-                }
+                self?.composer.list = list
+            })
+        }
+        listRepresenter.onFailToSyncRepresentation = { [weak self] error in
+            withExtendedLifetime(self, {
+                self?.handleListRepresentationFailure(error: error)
             })
         }
         
-        contextRepresenter.startObserving { [weak self] (result, _) in
+        contextRepresenter.onDidChangeRepresentation = { [weak self] context, reason in
             withExtendedLifetime(self, {
-                switch result {
-                case let .success(context): self?.composer.context = context
-                case let .failure(error): self?.composer.resetState(error: error)
-                }
+                self?.composer.context = context
             })
         }
+        contextRepresenter.onFailToSyncRepresentation = { [weak self] error in
+            withExtendedLifetime(self, {
+                self?.handleContextRepresentationFailure(error: error)
+            })
+        }
+        
+        listRepresenter.bind()
+        contextRepresenter.bind()
     }
+
+    
+    private let composer = DataComposer.init()
+    
+    private let contextRepresenter: AppSharedDialogListContextBindedRepresenter
+    
+    private let listRepresenter: AppSharedDialogListBindedRepresenter
+    
     
     private struct StoreComposedResult {
         
@@ -74,58 +115,44 @@ final public class DESharedDialogsDataLoader {
         }
     }
     
-    public func store(list: AppSharedDialogList,
-                      context: AppSharedDialogListContext,
-                      handler: ((Bool, Error?) -> ())?) {
-        
-        let group = DispatchGroup.init()
-        
-        var composedResult = StoreComposedResult()
-        
-        group.enter()
-        listRepresenter.store(representation: list) { (result) in
-            switch result {
-            case let .failure(error): composedResult.setFailed(error: error)
-            case .success(_): composedResult.storedList = list
-            }
-            group.leave()
+    private func handleListRepresentationFailure(error: Error?) {
+        if self.shouldResetRepresentationForError(error) {
+            self.listRepresenter.representation = AppSharedDialogList.empty
+        }
+    }
+    
+    private func handleContextRepresentationFailure(error: Error?) {
+        if self.shouldResetRepresentationForError(error) {
+            self.contextRepresenter.representation = AppSharedDialogListContext.empty
+        }
+    }
+    
+    private func shouldResetRepresentationForError(_ error: Error?) -> Bool {
+        guard self.overwriteOnFail else {
+            return false
         }
         
-        group.enter()
-        contextRepresenter.store(representation: context) { (result) in
-            switch result {
-            case let .failure(error): composedResult.setFailed(error: error)
-            case .success(_): composedResult.storedContext = context
-            }
-            group.leave()
+        guard let reasonError = error else {
+            return true
         }
         
-        group.notify(queue: .main) { 
-            handler?(!composedResult.failed, composedResult.error)
+        if error is ProtocolBuffersError {
+            return true
         }
+        
+        let cocoaError = reasonError as NSError
+        if cocoaError.domain == NSCocoaErrorDomain &&
+            (cocoaError.code == NSFileNoSuchFileError || cocoaError.code == NSFileReadNoSuchFileError) {
+            return true
+        }
+        
+        return false
     }
     
     private func handleComposerStateChange(state: DataState) {
         switch state {
-        case .failured(_):
-            if overwriteOnFail {
-                self.resetRepresentations()
-            }
-            handleComposerStateChange(state: state)
-
+        case .failured(_): handleComposerStateChange(state: state)
         default: onDidChangeState?(state)
         }
     }
-    
-    private func resetRepresentations() {
-        listRepresenter.store(representation: AppSharedDialogList.empty)
-        contextRepresenter.store(representation: AppSharedDialogListContext.empty)
-    }
-    
-    private let composer = DataComposer.init()
-    
-    private let contextRepresenter: AppSharedDialogListContextItemRepresenter
-    
-    private let listRepresenter: AppSharedDialogListRepresenter
-    
 }

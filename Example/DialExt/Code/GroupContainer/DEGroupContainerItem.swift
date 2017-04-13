@@ -27,7 +27,16 @@ public protocol DEGroupContainerItem {
     var onDidChange:(() -> ())? {get set}
 }
 
-internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NSFilePresenter {
+public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
+    
+    public static let commonWorkOperationQueue: OperationQueue = {
+        let queue = OperationQueue.init()
+        queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .background
+        queue.name = "im.dlg.group.file.presenter.commonQueue"
+        return queue
+    }()
+    
     private static let commonOperationQueue: OperationQueue = {
         let queue = OperationQueue.init()
         queue.qualityOfService = .background
@@ -39,36 +48,46 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
     
     private var coordinator: NSFileCoordinator!
     
+    private var presenter: Presenter!
+    
     private let workQueue: OperationQueue
     
     public var callbackQueue: DispatchQueue? = .main
     
-    var onDidChange: (() -> ())?
+    public var onDidChange: (() -> ())? = nil
     
-    init(url: URL) {
+    init(url: URL, workQueue: OperationQueue = DEGroupContainerFilePresenter.commonWorkOperationQueue) {
         self.url = url
         
         let queue = OperationQueue.init()
-        queue.qualityOfService = .background
-        queue.name = "im.dlg.group.file.coordinator.private"
+        queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .utility
+        queue.name = "im.dlg.group.file.coordinator.private.\(url.absoluteString)"
         self.workQueue = queue
-        
+   
         super.init()
         
-        self.coordinator = NSFileCoordinator.init(filePresenter: self)
+        self.presenter = Presenter.init(url: self.url,
+                                        queue: DEGroupContainerFilePresenter.commonOperationQueue,
+                                        changeHandler: { [weak self] in
+                                            withExtendedLifetime(self, {
+                                                self?.presentedItemDidChange()
+                                            })
+        })
+        
+        self.coordinator = NSFileCoordinator.init(filePresenter: self.presenter)
     }
     
-    var presentedItemOperationQueue: OperationQueue {
-        return DEGroupContainerFilePresenter.commonOperationQueue
+    deinit {
+        self.coordinator = nil
+        self.presenter = nil
     }
     
-    var presentedItemURL: URL? {
-        return self.url
-    }
-    
-    func presentedItemDidChange() {
+    public func presentedItemDidChange() {
         de_perform(code:self.onDidChange, on: self.callbackQueue)
     }
+    
+    // MARK: - Public
     
     public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
@@ -77,6 +96,7 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
             var isSuccess = false
             var data: Data? = nil
             
+            var isDataCreationFailure = false
             var coordinatorError: NSError? = nil
             
             self.coordinator.coordinate(readingItemAt: self.url, options: [], error: &coordinatorError, byAccessor: { url in
@@ -85,9 +105,15 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     isSuccess = true
                 }
                 catch let error as NSError {
+                    isDataCreationFailure = true
                     resultError = error
                 }
             })
+            
+            if !isSuccess && !isDataCreationFailure {
+                resultError = coordinatorError
+            }
+
             de_perform(code: {
                 if isSuccess {
                     onSuccess(data)
@@ -97,19 +123,18 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                 }
             }, on: callbackQueue)
             
-            resultError = coordinatorError
-            
         }
     }
     
-    func copyFile(from: URL, onFinish: ((Bool, Error?) -> ())?) {
+    public func copyFile(from: URL, onFinish: ((Bool, Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
             var resultError: Error? = nil
             var isSuccess = false
             
+            var isInBlockError = false
             var accessError: NSError? = nil
-            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+            self.coordinator.coordinate(writingItemAt: self.url, options: [.forReplacing], error: &accessError, byAccessor: { url in
                 do {
                     let manager = FileManager.default
                     if manager.fileExists(atPath: self.url.path) {
@@ -119,10 +144,12 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     isSuccess = true
                 }
                 catch let error {
+                    isInBlockError = true
                     resultError = error
                 }
             })
-            if accessError != nil {
+            
+            if !isSuccess && !isInBlockError {
                 resultError = accessError
             }
             
@@ -138,12 +165,13 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
         }
     }
     
-    func copyFile(to: URL, onFinish: ((Bool, Error?) -> ())?) {
+    public func copyFile(to: URL, onFinish: ((Bool, Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
             var resultError: Error? = nil
             var isSuccess = false
             
+            var isInBlockError = false
             var accessError: NSError? = nil
             self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
                 do {
@@ -151,10 +179,11 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     isSuccess = true
                 }
                 catch let error {
+                    isInBlockError = true
                     resultError = error
                 }
             })
-            if accessError != nil {
+            if !isSuccess && !isInBlockError {
                 resultError = accessError
             }
             
@@ -176,6 +205,7 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
         self.workQueue.addOperation {
             var resultError: Error? = nil
             var isSuccess = false
+            var isInBlockError = false
             
             var accessError: NSError? = nil
             self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
@@ -184,10 +214,11 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     isSuccess = true
                 }
                 catch let error {
+                    isInBlockError = true
                     resultError = error
                 }
             })
-            if accessError != nil {
+            if !isSuccess && !isInBlockError {
                 resultError = accessError
             }
             
@@ -203,14 +234,14 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
         }
     }
     
-    func removeFile(onFinish: ((Bool, Error?) -> ())?) {
+    public func removeFile(onFinish: ((Bool, Error?) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
             var resultError: Error? = nil
             var isSuccess = false
-            
+            var isInBlockError = false
             var accessError: NSError? = nil
-            self.coordinator.coordinate(writingItemAt: self.url, options: [], error: &accessError, byAccessor: { url in
+            self.coordinator.coordinate(writingItemAt: self.url, options: [.forDeleting], error: &accessError, byAccessor: { url in
                 do {
                     let manager = FileManager.default
                     if manager.fileExists(atPath: self.url.path) {
@@ -219,10 +250,11 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                     isSuccess = true
                 }
                 catch let error {
+                    isInBlockError = true
                     resultError = error
                 }
             })
-            if accessError != nil {
+            if !isSuccess && !isInBlockError {
                 resultError = accessError
             }
             
@@ -235,6 +267,38 @@ internal class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem, NS
                 }
             }, on: callbackQueue)
             
+        }
+    }
+    
+    
+    // MARK: Presenter
+    
+    class Presenter: NSObject, NSFilePresenter {
+        
+        typealias ChangeHandler = () -> ()
+        
+        let url: URL
+        
+        let queue: OperationQueue
+        
+        let changeHandler: ChangeHandler
+        
+        init(url: URL, queue: OperationQueue, changeHandler: @escaping ChangeHandler) {
+            self.url = url
+            self.queue = queue
+            self.changeHandler = changeHandler
+        }
+        
+        public var presentedItemOperationQueue: OperationQueue {
+            return self.queue
+        }
+        
+        public var presentedItemURL: URL? {
+            return self.url
+        }
+        
+        public func presentedItemDidChange() {
+            self.changeHandler()
         }
     }
     

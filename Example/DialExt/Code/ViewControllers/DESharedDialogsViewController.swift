@@ -125,13 +125,14 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             self.avatarProvider = provider
         }
         
-        self.manager.onDidChangeDialogsState = { [weak self] state in
+        self.manager.dataLoader.onDidChangeState = { [weak self] state in
             withExtendedLifetime(self){
                 guard self != nil else { return }
                 self!.handleDialogsState(state)
             }
         }
-        self.manager.start()
+        
+        self.manager.dataLoader.start()
         
         searchController.searchResultsUpdater = self
         self.tableView.tableHeaderView = searchController.searchBar
@@ -151,6 +152,10 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                                                 let event = notification.userInfo![KeyboardListener.eventUserInfoKey] as! KeyboardEvent
                                                 self.view.animateKeyboardEvent(event, bottomConstraint: self.contentBottomConstraint)
         }
+    }
+    
+    public func resetDialogs(_ dialogs: [AppSharedDialog]) {
+        self.dialogs = dialogs
     }
     
     @objc private func close(sender: AnyObject) {
@@ -180,13 +185,13 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
-    private func handleDialogsState(_ state: DESharedDialogsManager.DialogsState) {
+    private func handleDialogsState(_ state: DESharedDialogsDataLoader.DataState) {
         switch state {
-        case let .failed(error):
+        case let .failured(error):
             fatalError("Totally failed: \(error)")
             
         case .loaded:
-            self.dialogs = self.manager.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})
+            self.dialogs = self.manager.dataLoader.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})
             
         default:
             break
@@ -323,8 +328,9 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         selectionState.selected = self.selectedDialogIds.contains(dialog.id)
         cell.setSelectionState(selectionState, animated: false)
         
-        // Just for having an image. Remove it.
-        cell.avatarView.image = DEDialogCell.SelectionState.default.deselectedImage
+        cell.avatarView.image = self.avatarProvider.provideImage(dialog: dialog, completion: { (image, placeholder) in
+            
+        })
         
         return cell
     }

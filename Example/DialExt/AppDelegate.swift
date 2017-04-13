@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window.makeKeyAndVisible()
         
+        controller.loadViewIfNeeded()
+        controller.setupAddButton()
+        
         return true
     }
 

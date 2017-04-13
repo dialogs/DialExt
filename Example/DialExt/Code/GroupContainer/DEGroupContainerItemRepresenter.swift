@@ -28,11 +28,12 @@ public class DEGroupContainerItemDataEncoder<Representation> {
     
 }
 
+/// Binds to container file and autoupdate it's representation.
 public class DEGroupContainerItemRepresenter<Representation> {
     
     public typealias DecodeResult = DEGroupContainerItemRepresenterResult<Representation>
     
-    public typealias DecodeHandler = ((_ result: DecodeResult, _ isUpdate: Bool) -> ())
+    public typealias DecodeHandler = ((_ result: DecodeResult) -> ())
     
     
     public typealias EncodeResult = DEGroupContainerItemRepresenterResult<Data>
@@ -40,7 +41,7 @@ public class DEGroupContainerItemRepresenter<Representation> {
     public typealias EncodeHandler =  ((_ result: EncodeResult) -> ())
     
     
-    public let item: DEGroupContainerItem
+    internal let item: DEGroupContainerItem
     
     public let encoder: DEGroupContainerItemDataEncoder<Representation>
     
@@ -49,19 +50,8 @@ public class DEGroupContainerItemRepresenter<Representation> {
     public init(item: DEGroupContainerItem, encoder: DEGroupContainerItemDataEncoder<Representation>) {
         self.item = item
         self.encoder = encoder
-        
-        self.item.onDidChange = { [weak self] in
-            withExtendedLifetime(self, {
-                self?.handleChanges()
-            })
-        }
     }
 
-    public func startObserving(handler: @escaping DecodeHandler) {
-        self.permanentHandler = handler
-        self.redoRepresent(dueUpdate: false)
-    }
-    
     /// Instance is guaranteed to live untill completion executed and handler performed.
     /// 'isUpdate' in handler is always false.
     public func represent(handler: @escaping DecodeHandler ) {
@@ -69,14 +59,14 @@ public class DEGroupContainerItemRepresenter<Representation> {
             withExtendedLifetime(self, {
                 let result = self.buildDecodeResult(data: data)
                 self.performOnTargetQueue {
-                    handler(result, false)
+                    handler(result)
                 }
             })
         }) { (error) in
             withExtendedLifetime(self, {
                 let result = DecodeResult.failure(error)
                 self.performOnTargetQueue {
-                    handler(result, false)
+                    handler(result)
                 }
             })
         }
@@ -141,22 +131,6 @@ public class DEGroupContainerItemRepresenter<Representation> {
         }
         
         return result
-    }
-    
-    private var permanentHandler: DecodeHandler? = nil
-    
-    private func redoRepresent(dueUpdate: Bool) {
-        self.represent { (result, _) in
-            self.performPermanentHandler(result: result, isUpdate: dueUpdate)
-        }
-    }
-    
-    private func performPermanentHandler(result: DecodeResult, isUpdate: Bool) {
-        self.permanentHandler?(result, isUpdate)
-    }
-    
-    private func handleChanges() {
-        redoRepresent(dueUpdate: true)
     }
     
 }
