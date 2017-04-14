@@ -24,9 +24,10 @@ public class DEGroupContainer {
         self.groupId = groupId
     }
     
-    public func item(forFileNamed name: String) -> DEGroupContainerItem {
+    public func item(forFileNamed name: String, callbackQueue: DispatchQueue = .main) -> DEGroupContainerItem {
         let fileUrl = self.containerUrl.appendingPathComponent(name)
         let presenter = DEGroupContainerFilePresenter.init(url: fileUrl)
+        presenter.callbackQueue = callbackQueue
         return presenter
     }
     
