@@ -12,7 +12,7 @@ public enum FakeError: Error {
     case noError
 }
 
-class DESharedDialogsPresentationViewController: UIViewController,
+public class DESharedDialogsPresentationViewController: UIViewController,
 DESharedDialogsViewControllerExtensionContextProvider {
     
     private var dialogsController: DESharedDialogsViewController? = nil
