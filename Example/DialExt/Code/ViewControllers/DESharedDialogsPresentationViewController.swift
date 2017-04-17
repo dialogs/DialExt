@@ -45,11 +45,11 @@ DESharedDialogsViewControllerExtensionContextProvider {
         self.present(navController, animated: true, completion: nil)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
-    func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext? {
+    public func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext? {
         return self.extensionContext
     }
 }
