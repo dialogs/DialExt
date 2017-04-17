@@ -19,12 +19,13 @@ DESharedDialogsViewControllerExtensionContextProvider {
     
     private var navController: UINavigationController? = nil
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         
         let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard()
         dialogsController.extensionContextProvider = self
