@@ -12,18 +12,18 @@ public enum FakeError: Error {
     case noError
 }
 
-public class DESharedDialogsPresentationViewController: UIViewController,
+open class DESharedDialogsPresentationViewController: UIViewController,
 DESharedDialogsViewControllerExtensionContextProvider {
     
     private var dialogsController: DESharedDialogsViewController? = nil
     
     private var navController: UINavigationController? = nil
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override public func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         
@@ -45,7 +45,7 @@ DESharedDialogsViewControllerExtensionContextProvider {
         self.present(navController, animated: true, completion: nil)
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
