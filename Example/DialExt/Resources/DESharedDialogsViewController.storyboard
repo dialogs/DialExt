@@ -32,7 +32,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="68"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9E3-AI-dcI" id="XOM-hi-Pch">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="67.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4hB-Ip-6Xp">

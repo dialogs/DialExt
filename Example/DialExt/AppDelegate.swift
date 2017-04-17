@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         controller.loadViewIfNeeded()
         controller.setupAddButton()
-        
+                
         return true
     }
 

@@ -64,8 +64,6 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
     
-    public var uploader: DESharedDataUploader = DEDebugSharedDataUploader.init()
-    
     private var hasSelectedDialogs: Bool = false {
         didSet {
             if hasSelectedDialogs != oldValue {
