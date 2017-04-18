@@ -77,31 +77,6 @@ public extension DEKeychainDataProvider {
             return data
         }
     }
-    
-    func setAccessHash(_ data: Data, groupId: String) throws {
-        let query = DEKeychainQuery.accessHashWriteQuery(data: data as NSData, groupId: groupId)
-        let result = self.performAddOrUpdate(query: query)
-        
-        if case let DEKeychainQueryResult.failure(status: status) = result {
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        }
-    }
-    
-    func accessHash(groupId: String) throws -> Data {
-        let query = DEKeychainQuery.accessHashReadQuery(groupId: groupId)
-        let result = self.perform(query: query)
-        
-        switch result {
-        case let .failure(status: status):
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        case let .success(values: values):
-            let data = values!.first! as! Data
-            return data
-        }
-    }
-    
 }
 
 
@@ -110,8 +85,6 @@ public extension DEKeychainQuery.Access {
     public static let defaultAuthIdService = "auth_id"
     
     public static let defaultSignedIdAuthIdService = "auth_id"
-    
-    public static let defaultAccessHashService = "access_hash"
     
     public static let defaultAuthIdAccount = "im.dlg.shared"
     
@@ -126,12 +99,7 @@ public extension DEKeychainQuery.Access {
                                       account: defaultAuthIdAccount,
                                       group: groupId)
     }
-    
-    public static func createAccessHashAccess(groupId: String) -> DEKeychainQuery.Access {
-        return DEKeychainQuery.Access(service: defaultAccessHashService,
-                                      account: defaultAuthIdAccount,
-                                      group: groupId)
-    }
+
 }
 
 
@@ -145,18 +113,6 @@ public extension DEKeychainQuery {
     
     public static func signedAuthIdWriteQuery(data: NSData, groupId: String) -> DEKeychainQuery {
         let access = DEKeychainQuery.Access.createSignedAuthIdAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.add(value: data)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func accessHashReadQuery(groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createAccessHashAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.read(config: nil)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func accessHashWriteQuery(data: NSData, groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createAccessHashAccess(groupId: groupId)
         let operation = DEKeychainQuery.Operation.add(value: data)
         return self.init(access: access, operation: operation)
     }

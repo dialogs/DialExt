@@ -31,6 +31,7 @@ final public class AppSharedDialog : GeneratedMessage {
         fieldCheck = fieldCheck && (lhs.hasTitle == rhs.hasTitle) && (!lhs.hasTitle || lhs.title == rhs.title)
         fieldCheck = fieldCheck && (lhs.uids == rhs.uids)
         fieldCheck = fieldCheck && (lhs.hasIsReadOnly == rhs.hasIsReadOnly) && (!lhs.hasIsReadOnly || lhs.isReadOnly == rhs.isReadOnly)
+        fieldCheck = fieldCheck && (lhs.hasAccessHash == rhs.hasAccessHash) && (!lhs.hasAccessHash || lhs.accessHash == rhs.accessHash)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
@@ -48,6 +49,9 @@ final public class AppSharedDialog : GeneratedMessage {
     private var uidsMemoizedSerializedSize:Int32 = -1
     public fileprivate(set) var isReadOnly:Bool = false
     public fileprivate(set) var hasIsReadOnly:Bool = false
+
+    public fileprivate(set) var accessHash:Int64 = Int64(0)
+    public fileprivate(set) var hasAccessHash:Bool = false
 
     required public init() {
         super.init()
@@ -74,6 +78,9 @@ final public class AppSharedDialog : GeneratedMessage {
         }
         if hasIsReadOnly {
             try codedOutputStream.writeBool(fieldNumber: 5, value:isReadOnly)
+        }
+        if hasAccessHash {
+            try codedOutputStream.writeInt64(fieldNumber: 6, value:accessHash)
         }
         try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
@@ -105,6 +112,9 @@ final public class AppSharedDialog : GeneratedMessage {
         uidsMemoizedSerializedSize = dataSizeUids
         if hasIsReadOnly {
             serialize_size += isReadOnly.computeBoolSize(fieldNumber: 5)
+        }
+        if hasAccessHash {
+            serialize_size += accessHash.computeInt64Size(fieldNumber: 6)
         }
         serialize_size += unknownFields.serializedSize()
         memoizedSerializedSize = serialize_size
@@ -153,6 +163,9 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasIsReadOnly {
             jsonMap["isReadOnly"] = isReadOnly
         }
+        if hasAccessHash {
+            jsonMap["accessHash"] = "\(accessHash)"
+        }
         return jsonMap
     }
     override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialog {
@@ -180,6 +193,9 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasIsReadOnly {
             output += "\(indent) isReadOnly: \(isReadOnly) \n"
         }
+        if hasAccessHash {
+            output += "\(indent) accessHash: \(accessHash) \n"
+        }
         output += unknownFields.getDescription(indent: indent)
         return output
     }
@@ -200,6 +216,9 @@ final public class AppSharedDialog : GeneratedMessage {
             }
             if hasIsReadOnly {
                 hashCode = (hashCode &* 31) &+ isReadOnly.hashValue
+            }
+            if hasAccessHash {
+                hashCode = (hashCode &* 31) &+ accessHash.hashValue
             }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
@@ -344,6 +363,31 @@ final public class AppSharedDialog : GeneratedMessage {
             builderResult.isReadOnly = false
             return self
         }
+        public var accessHash:Int64 {
+            get {
+                return builderResult.accessHash
+            }
+            set (value) {
+                builderResult.hasAccessHash = true
+                builderResult.accessHash = value
+            }
+        }
+        public var hasAccessHash:Bool {
+            get {
+                return builderResult.hasAccessHash
+            }
+        }
+        @discardableResult
+        public func setAccessHash(_ value:Int64) -> AppSharedDialog.Builder {
+            self.accessHash = value
+            return self
+        }
+        @discardableResult
+        public func clearAccessHash() -> AppSharedDialog.Builder{
+            builderResult.hasAccessHash = false
+            builderResult.accessHash = Int64(0)
+            return self
+        }
         override public var internalGetResult:GeneratedMessage {
             get {
                 return builderResult
@@ -385,6 +429,9 @@ final public class AppSharedDialog : GeneratedMessage {
             if other.hasIsReadOnly {
                 isReadOnly = other.isReadOnly
             }
+            if other.hasAccessHash {
+                accessHash = other.accessHash
+            }
             try merge(unknownField: other.unknownFields)
             return self
         }
@@ -422,6 +469,9 @@ final public class AppSharedDialog : GeneratedMessage {
                 case 40:
                     isReadOnly = try codedInputStream.readBool()
 
+                case 48:
+                    accessHash = try codedInputStream.readInt64()
+
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -452,6 +502,11 @@ final public class AppSharedDialog : GeneratedMessage {
             }
             if let jsonValueIsReadOnly = jsonMap["isReadOnly"] as? Bool {
                 resultDecodedBuilder.isReadOnly = jsonValueIsReadOnly
+            }
+            if let jsonValueAccessHash = jsonMap["accessHash"] as? String {
+                resultDecodedBuilder.accessHash = Int64(jsonValueAccessHash)!
+            } else if let jsonValueAccessHash = jsonMap["accessHash"] as? Int {
+                resultDecodedBuilder.accessHash = Int64(jsonValueAccessHash)
             }
             return resultDecodedBuilder
         }
@@ -1437,6 +1492,7 @@ extension AppSharedDialog: GeneratedMessageProtocol {
         case "title": return self.title
         case "uids": return self.uids
         case "isReadOnly": return self.isReadOnly
+        case "accessHash": return self.accessHash
         default: return nil
         }
     }
@@ -1450,6 +1506,7 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
             case "title": return self.title
             case "uids": return self.uids
             case "isReadOnly": return self.isReadOnly
+            case "accessHash": return self.accessHash
             default: return nil
             }
         }
@@ -1480,6 +1537,11 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.isReadOnly = newSubscriptValue
+            case "accessHash":
+                guard let newSubscriptValue = newSubscriptValue as? Int64 else {
+                    return
+                }
+                self.accessHash = newSubscriptValue
             default: return
             }
         }

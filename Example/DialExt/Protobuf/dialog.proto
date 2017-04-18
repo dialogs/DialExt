@@ -13,6 +13,7 @@ message AppSharedDialog {
    string title = 3;
    repeated int32 uids = 4;
    bool isReadOnly = 5;
+   int64 accessHash = 6;
 }
 
 message AppSharedUser {
