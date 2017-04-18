@@ -11,7 +11,7 @@ public extension DEGroupContainerItemBindedRepresenter {
     
     public typealias Queuer = DEGroupContainerItemBindedRepresenterQueuer<Representation>
     
-    public func creatQueuer() -> Queuer {
+    public func createQueuer() -> Queuer {
         return Queuer.init(representer: self)
     }
 }

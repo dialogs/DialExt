@@ -16,6 +16,8 @@ public enum FakeError: Error {
 
 class ShareViewController: UIViewController, DESharedDialogsViewControllerExtensionContextProvider {
     
+    public var config: DESharedDataConfig!
+    
     private var dialogsController: DESharedDialogsViewController? = nil
     
     private var navController: UINavigationController? = nil
@@ -27,7 +29,11 @@ class ShareViewController: UIViewController, DESharedDialogsViewControllerExtens
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard()
+        guard config != nil else {
+            fatalError("No shared data config found!")
+        }
+        
+        let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard(config: config)
         dialogsController.extensionContextProvider = self
         self.dialogsController = dialogsController
         

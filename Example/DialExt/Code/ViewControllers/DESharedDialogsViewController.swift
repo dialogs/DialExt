@@ -34,10 +34,11 @@ public class DEDefaultSharedDialogsViewControllerPresenter: DESharedDialogsViewC
 
 open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
     
-    static public func createFromDefaultStoryboard() -> DESharedDialogsViewController {
+    static public func createFromDefaultStoryboard(config: DESharedDataConfig) -> DESharedDialogsViewController {
         let bundle = Bundle(for: self )
         let storyboard = UIStoryboard(name: "DESharedDialogsViewController", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! DESharedDialogsViewController
+        controller.config = config
         return controller
     }
     
@@ -46,6 +47,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             updatePresentedDialogs()
         }
     }
+    
+    private var config: DESharedDataConfig!
     
     /// Dialogs to presented (filtered by search if any search in progress)
     var presentedDialogs: [AppSharedDialog] = [] {
@@ -58,8 +61,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     public var onDidFinish:(()->())? = nil
     
-    public let manager = DESharedDialogsManager.init(groupContainerId: "group.im.dlg.DialExtApp",
-                                                     keychainGroup: "")
+    public var manager: DESharedDialogsManager!
     public var avatarProvider: DEAvatarImageProvidable!
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
@@ -117,6 +119,12 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard config != nil else {
+            fatalError("No shared data config set")
+        }
+        
+        self.manager = DESharedDialogsManager.init(sharedDataConfig: self.config)
         
         if self.avatarProvider == nil {
             let provider = DEAvatarImageProvider.init(localLoader: .createWithContainerGroupId("group.im.dlg.DialExtApp"))

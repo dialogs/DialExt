@@ -11,9 +11,9 @@ import Foundation
 /**
  * Queuer is repsonsible for put representations into item-binded representer.
  * You can pass not only prepared representation, but representer-blocks, which are called when representer become free for writing.
- * Moreover, while representer is busy, you can put representatation items any time and only last one be stored.
+ * Moreover, while representer is busy, you can put representatation items any time and only last one will be stored.
  * Also, if any representer block being put into queuer while previous representer-block is preparing representation -
- *  the representation of previous repreosenter-blocj will not be stored to avoid of unnecessary file writing.
+ *  the representation of previous repreosenter-block will not be stored to avoid of unnecessary file writing.
  *
  * Scheme is next.
  * Condition: Queuer is preparing rep 1, while developer pushes Rep2, then Rep3 and then Rep4 (no matter, whether it prepared representations or preparator-blocks)
@@ -22,7 +22,8 @@ import Foundation
  *  [Rep4 ✓]-[Rep3 x]-[Rep2 x] → [ QUEUER ] → [Representer]
  *
  * Rep1 will not be store, because when it preparing finished - there will be another RepN, that should be prepared and stored.
- * While Rep1 is preparing – Rep2 will be placed
+ * While Rep1 is preparing – Rep2 will be replaced by Rep3 and Rep3 will be replaced by Rep4
+ * So there is only one rep will be stored – the Rep4.
  *
  * Not being tested.
  */
@@ -31,7 +32,6 @@ public class DEGroupContainerItemBindedRepresenterQueuer<Representation> {
     public typealias RepresentationPreparator = (() -> (Representation?))
     
     public typealias Representer = DEGroupContainerItemBindedRepresenter<Representation>
-    
     
     public func put(representation: Representation) {
         put(item: Item.init(content: .prepared(representation)))

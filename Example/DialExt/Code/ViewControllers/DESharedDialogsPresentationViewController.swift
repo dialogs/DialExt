@@ -15,6 +15,8 @@ public enum FakeError: Error {
 open class DESharedDialogsPresentationViewController: UIViewController,
 DESharedDialogsViewControllerExtensionContextProvider {
     
+    public var config: DESharedDataConfig!
+    
     private var dialogsController: DESharedDialogsViewController? = nil
     
     private var navController: UINavigationController? = nil
@@ -27,7 +29,7 @@ DESharedDialogsViewControllerExtensionContextProvider {
         super.viewDidAppear(animated)
         
         
-        let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard()
+        let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard(config: self.config)
         dialogsController.extensionContextProvider = self
         self.dialogsController = dialogsController
         

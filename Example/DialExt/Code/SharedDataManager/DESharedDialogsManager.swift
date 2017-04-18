@@ -30,6 +30,10 @@ final public class DESharedDialogsManager {
         return self.config.dataLoader
     }
     
+    public convenience init(sharedDataConfig: DESharedDataConfig) {
+        self.init(groupContainerId: sharedDataConfig.appGroup, keychainGroup: sharedDataConfig.keychainGroup)
+    }
+    
     public convenience init(groupContainerId: String, keychainGroup: String) {
         let container = DEGroupContainer.init(groupId:groupContainerId)
         self.init(groupContainer: container, keychainGroup: keychainGroup)

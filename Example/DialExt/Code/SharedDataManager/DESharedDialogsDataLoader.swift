@@ -44,10 +44,10 @@ final public class DESharedDialogsDataLoader {
     
     public init(contextFile: DEGroupContainerItem, listFile: DEGroupContainerItem) {
         listRepresenter = AppSharedDialogListBindedRepresenter.init(item: listFile)
-        listQueuer = listRepresenter.creatQueuer()
+        listQueuer = listRepresenter.createQueuer()
         
         contextRepresenter = AppSharedDialogListContextBindedRepresenter.init(item: contextFile)
-        contextQueuer = contextRepresenter.creatQueuer()
+        contextQueuer = contextRepresenter.createQueuer()
     }
     
     public func start() {
