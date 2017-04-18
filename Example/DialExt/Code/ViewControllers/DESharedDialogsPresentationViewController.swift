@@ -15,7 +15,10 @@ public enum FakeError: Error {
 open class DESharedDialogsPresentationViewController: UIViewController,
 DESharedDialogsViewControllerExtensionContextProvider {
     
-    open var config: DESharedDataConfig!
+    /// Override value in your subclass
+    open var config: DESharedDataConfig! {
+        return nil
+    }
     
     private var dialogsController: DESharedDialogsViewController? = nil
     
