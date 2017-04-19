@@ -7,7 +7,7 @@ end
 target 'DialExt_Example' do
   pod 'DialExt', :path => '../'
 
-  target 'DialExt_Tests' do
+  target 'DialExtTests' do
     inherit! :search_paths
 
     

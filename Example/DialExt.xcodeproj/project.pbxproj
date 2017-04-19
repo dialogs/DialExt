@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		073C63C2F0698EF6DC3FC501 /* Pods_DialExtTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -137,8 +138,10 @@
 
 /* Begin PBXFileReference section */
 		03A9B86D79A61DF8A8A08345 /* Pods_DialExt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11D7F17DF94EF3F51A4AE223 /* Pods-DialExtTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExtTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExtTests/Pods-DialExtTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Example/Pods-DialExt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46103DE39655F13CE052BBAA /* Pods-DialExtTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExtTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExtTests/Pods-DialExtTests.release.xcconfig"; sourceTree = "<group>"; };
 		4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt_Example/Pods-DialExt_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4E1792AF413C6F41D9B5617B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5120CC07B297BEE14BBDC6DD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -224,6 +227,7 @@
 		B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.debug.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
 		E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExtTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */,
+				073C63C2F0698EF6DC3FC501 /* Pods_DialExtTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +276,8 @@
 				8EF5960D42B12F840A85154D /* Pods-DialExt_Tests.release.xcconfig */,
 				B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */,
 				9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */,
+				11D7F17DF94EF3F51A4AE223 /* Pods-DialExtTests.debug.xcconfig */,
+				46103DE39655F13CE052BBAA /* Pods-DialExtTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -553,6 +560,7 @@
 				34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */,
 				03A9B86D79A61DF8A8A08345 /* Pods_DialExt_Tests.framework */,
 				E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */,
+				F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -636,9 +644,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 748316761E72962500E4ADA8 /* Build configuration list for PBXNativeTarget "DialExtTests" */;
 			buildPhases = (
+				552E2CF22F0A57654139C5E4 /* [CP] Check Pods Manifest.lock */,
 				7483165D1E72962500E4ADA8 /* Sources */,
 				7483165E1E72962500E4ADA8 /* Frameworks */,
 				7483165F1E72962500E4ADA8 /* Resources */,
+				BB778CFB38DC39288B134327 /* [CP] Embed Pods Frameworks */,
+				F9B41508C5CB68A9D02C37EE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -791,6 +802,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		552E2CF22F0A57654139C5E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		8BC8DD364E3CC3FBB5F27632 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -804,6 +830,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DialExt/Pods-DialExt-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB778CFB38DC39288B134327 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DialExtTests/Pods-DialExtTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C6D024FE886AFCA23C99BA41 /* [CP] Copy Pods Resources */ = {
@@ -834,6 +875,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F9B41508C5CB68A9D02C37EE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DialExtTests/Pods-DialExtTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1200,6 +1256,7 @@
 		};
 		748316721E72962500E4ADA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11D7F17DF94EF3F51A4AE223 /* Pods-DialExtTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1219,6 +1276,7 @@
 		};
 		748316731E72962500E4ADA8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46103DE39655F13CE052BBAA /* Pods-DialExtTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;

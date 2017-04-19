@@ -14,9 +14,11 @@ public enum FakeError: Error {
     case noError
 }
 
-class ShareViewController: UIViewController, DESharedDialogsViewControllerExtensionContextProvider {
+class ShareViewController: DESharedDialogsPresentationViewController {
     
-    public var config: DESharedDataConfig!
+    override var config: DESharedDataConfig! {
+        return DESharedDataConfig.init(keychainGroup: "", appGroup: "")
+    }
     
     private var dialogsController: DESharedDialogsViewController? = nil
     
@@ -55,10 +57,7 @@ class ShareViewController: UIViewController, DESharedDialogsViewControllerExtens
         super.viewDidDisappear(animated)
         
     }
-    
-    func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext? {
-        return self.extensionContext
-    }
+
     
 //    override func isContentValid() -> Bool {
 //        // Do validation of contentText and/or NSExtensionContext attachments here

@@ -36,7 +36,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     static public func createFromDefaultStoryboard(config: DESharedDataConfig) -> DESharedDialogsViewController {
         let bundle = Bundle(for: self )
-        let storyboard = UIStoryboard(name: "DESharedDialogsViewController", bundle: bundle)
+        let storyboard = UIStoryboard.loadFirstFound(name: "DESharedDialogsViewController", bundles: [bundle])!
         let controller = storyboard.instantiateInitialViewController() as! DESharedDialogsViewController
         controller.config = config
         return controller
@@ -127,7 +127,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         self.manager = DESharedDialogsManager.init(sharedDataConfig: self.config)
         
         if self.avatarProvider == nil {
-            let provider = DEAvatarImageProvider.init(localLoader: .createWithContainerGroupId("group.im.dlg.DialExtApp"))
+            let provider = DEAvatarImageProvider.init(localLoader: .createWithContainerGroupId(config.appGroup))
             self.avatarProvider = provider
         }
         
