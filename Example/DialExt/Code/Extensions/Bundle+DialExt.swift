@@ -27,4 +27,8 @@ extension Bundle {
         return filePaths
     }
     
+    func hasStoryboard(named: String) -> Bool {
+        return self.path(forResource: named, ofType: "storyboardc") != nil
+    }
+    
 }
