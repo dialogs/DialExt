@@ -22,6 +22,8 @@ class DEDialogCell: UITableViewCell {
     
     public private(set) var selectionState: SelectionState = .default
     
+    public private(set) var initiallyConfigured: Bool = false
+    
     public func setSelectionState(_ state: SelectionState, animated: Bool = true) {
         self.selectionState = state
         
@@ -50,6 +52,16 @@ class DEDialogCell: UITableViewCell {
         public var proposedImage: UIImage? {
             return selected ? selectedImage : deselectedImage
         }
+    }
+    
+    public func initiallyConfigure(code: (() -> ())) {
+        guard !initiallyConfigured else {
+            return
+        }
+        
+        code()
+        
+        initiallyConfigured = true
     }
     
     private func updateSelectionState(animated: Bool) {

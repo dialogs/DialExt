@@ -335,8 +335,10 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         cell.setSelectionState(selectionState, animated: false)
         
         cell.avatarView.image = self.avatarProvider.provideImage(dialog: dialog, completion: { (image, placeholder) in
-            
         })
+        
+        let cellSide = min(cell.frame.size.width, cell.frame.size.height)
+        cell.avatarView.layer.cornerRadius = cellSide / 2.0
         
         return cell
     }
