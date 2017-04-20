@@ -35,7 +35,7 @@ public class DEDefaultSharedDialogsViewControllerPresenter: DESharedDialogsViewC
 open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdating, UITableViewDataSource, UITableViewDelegate {
     
     static public func createFromDefaultStoryboard(config: DESharedDataConfig) -> DESharedDialogsViewController {
-        let bundle = Bundle(for: self )
+        let bundle = Bundle.dialExtResourcesBundle
         let storyboard = UIStoryboard.loadFirstFound(name: "DESharedDialogsViewController", bundles: [bundle])!
         let controller = storyboard.instantiateInitialViewController() as! DESharedDialogsViewController
         controller.config = config
