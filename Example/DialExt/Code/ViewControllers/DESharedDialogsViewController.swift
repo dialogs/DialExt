@@ -59,9 +59,16 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
+    public lazy var uploader: DEFileUploaderable = {
+        let tokenProvider = DEFileUploadTokenInfoProvider.init(keychainGroupId: self.config.keychainGroup)
+        let uploader = DEFileUploader.init(tokenProvider: tokenProvider, endpoints: self.config.endpointUploadMethodURLs)
+        return uploader
+    }()
+    
     public var onDidFinish:(()->())? = nil
     
     public var manager: DESharedDialogsManager!
+    
     public var avatarProvider: DEAvatarImageProvidable!
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
@@ -94,7 +101,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }()
     
     private var searchController: UISearchController = {
-       let controller = UISearchController.init(searchResultsController: nil)
+        let controller = UISearchController.init(searchResultsController: nil)
         return controller
     }()
     
@@ -124,7 +131,9 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             fatalError("No shared data config set")
         }
         
-        self.manager = DESharedDialogsManager.init(sharedDataConfig: self.config)
+        if self.manager == nil {
+            self.manager = DESharedDialogsManager.init(sharedDataConfig: self.config)
+        }
         
         if self.avatarProvider == nil {
             let provider = DEAvatarImageProvider.init(localLoader: .createWithContainerGroupId(config.appGroup))
@@ -174,21 +183,66 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }
     
     @IBAction private func sendAction(_ sender: AnyObject) {
-        if let provider = self.extensionContextProvider,
-            let context = provider.extensionContextForSharedDialogsViewController(self) {
-            for inputItem in context.inputItems {
-                if let item = inputItem as? NSExtensionItem,
-                    let attachments = item.attachments {
-                    for attachment in attachments {
-                        if let item = attachment as? NSItemProvider {
-                            for id in item.registeredTypeIdentifiers {
-                                
-                            }
-                        }
-                    }
-                }
+         uploadFiles()
+    }
+    
+    
+    private func uploadFiles() {
+        /*
+        if let item = self.currentItems().first,
+            let attachment = item.item.firstFoundDataRepresentableAttachment {
+            attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: nil, completionHandler: { (coder, error) in
+                
+            })
+        }
+ */
+        
+    }
+    
+    private func preferredFileExtension(forItem item: NSExtensionItem) -> String? {
+        
+        var dict = ["123":"321"]
+        dict.de_merge(with: ["555":"455"])
+        
+        let myitem = item.attachments!.first as! NSItemProvider
+        let testTest = "321".testTest()
+        
+        if let attachments = item.attachments {
+            for case let attachment as NSItemProvider in attachments {
+//                if let ext = attachment.supposedFileExtension {
+//                    return ext
+//                }
             }
         }
+        
+        return nil
+    }
+    
+    private func currentItems() -> [UploadItem] {
+        guard let provider = self.extensionContextProvider,
+            let context = provider.extensionContextForSharedDialogsViewController(self) else {
+                return []
+        }
+        
+        var uploadItems: [UploadItem] = []
+        for case let item as NSExtensionItem in context.inputItems {
+            guard let attachments = item.attachments else {
+                continue
+            }
+            
+            let itemAttachments: [NSItemProvider] = attachments.flatMap({ $0 as? NSItemProvider})
+            if itemAttachments.count > 0 {
+                var uploadItem = UploadItem(item: item, attachments: itemAttachments)
+                uploadItems.append(uploadItem)
+            }
+        }
+        return uploadItems
+    }
+    
+    
+    private struct UploadItem {
+        var item: NSExtensionItem!
+        var attachments: [NSItemProvider]!
     }
     
     private func handleDialogsState(_ state: DESharedDialogsDataLoader.DataState) {
@@ -276,7 +330,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         let shouldBeShown = self.hasSelectedDialogs
         let options: UIViewAnimationOptions = [UIViewAnimationOptions.curveEaseInOut,
                                                UIViewAnimationOptions.beginFromCurrentState]
-        UIView.animate(withDuration: 0.15, delay: 0.0, options: options, animations: { 
+        UIView.animate(withDuration: 0.15, delay: 0.0, options: options, animations: {
             self.sendView.isHidden = !shouldBeShown
         }, completion: nil)
     }
@@ -339,6 +393,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         
         let cellSide = min(cell.frame.size.width, cell.frame.size.height)
         cell.avatarView.layer.cornerRadius = cellSide / 2.0
+        cell.avatarView.layer.masksToBounds = true
         
         return cell
     }

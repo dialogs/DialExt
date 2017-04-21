@@ -14,6 +14,50 @@ public protocol DEAvatarImageProvidable {
     func provideImage(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) -> UIImage?
 }
 
+public extension DEAvatarPlaceholderRendererable {
+    func renderAsync(workQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated),
+                     callbackQueue: DispatchQueue = .main,
+                     size: CGSize = CGSize(width: 44.0, height: 44.0),
+                     dialog: AppSharedDialog,
+                     completion: @escaping ((_ image: UIImage) -> ())) {
+        workQueue.async {
+            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+            let graphicsContext = UIGraphicsGetCurrentContext()!
+            let placeholderContext = DEAvatarPlaceholderConfig.Context(graphicsContext: graphicsContext,
+                                                                       size: size,
+                                                                       isCanceled: nil)
+            let config = DEAvatarPlaceholderConfig(context: placeholderContext)
+            config.placeholder = dialog.placeholderTitle
+            
+            self.render(config: config)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()!
+            
+            UIGraphicsEndImageContext()
+            
+            callbackQueue.async {
+                completion(image)
+            }
+        }
+    }
+}
+
+public class DEDebugAvatarImageProvider: DEAvatarImageProvidable {
+    
+    private let placeholderRenderer = DEAvatarPlaceholderRenderer.init()
+    
+    public func provideImage(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) -> UIImage? {
+        placeholderRenderer.renderAsync(dialog: dialog) { (image) in
+            completion(image, true)
+        }
+        return nil
+    }
+    
+    public init() {
+        
+    }
+}
+
 public class DEAvatarImageProvider: DEAvatarImageProvidable {
     
     private typealias AvatarCache = NSCache<NSNumber, UIImage>
@@ -42,7 +86,7 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
         return nil
     }
     
-    public func handleImageLoaded(_ image: UIImage,
+    private func handleImageLoaded(_ image: UIImage,
                                   dialog: AppSharedDialog,
                                   isPlaceholder: Bool,
                                   completion: DEAvatarImageProviderCompletion) {
@@ -50,30 +94,14 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
         completion(image, isPlaceholder)
     }
     
-    public func requestPlaceholder(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) {
+    private func requestPlaceholder(dialog: AppSharedDialog, completion: @escaping DEAvatarImageProviderCompletion) {
         guard let renderer = self.placeholderRenderer else {
             completion(nil, false)
             return
         }
-        DispatchQueue.global(qos: .userInitiated).async {
-            let size = CGSize(width: 44.0, height: 44.0)
-            UIGraphicsBeginImageContextWithOptions(size,
-                                                   false,
-                                                   UIScreen.main.scale)
-            let graphicsContext = UIGraphicsGetCurrentContext()!
-            let placeholderContext = DEAvatarPlaceholderConfig.Context(graphicsContext: graphicsContext,
-                                                                       size: size,
-                                                                       isCanceled: nil)
-            let config = DEAvatarPlaceholderConfig(context: placeholderContext)
-            config.placeholder = dialog.placeholderTitle
-            
-            renderer.render(config: config)
-            
-            let image = UIGraphicsGetImageFromCurrentImageContext()!
-            
-            DispatchQueue.main.async {
-                self.handleImageLoaded(image, dialog: dialog, isPlaceholder: true, completion: completion)
-            }
+        
+        renderer.renderAsync(dialog: dialog) { (image) in
+            self.handleImageLoaded(image, dialog: dialog, isPlaceholder: true, completion: completion)
         }
     }
     

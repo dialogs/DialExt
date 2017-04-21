@@ -27,6 +27,61 @@ public protocol DEGroupContainerItem {
     var onDidChange:(() -> ())? {get set}
 }
 
+public enum DEDebugContainerItemError: Error {
+    
+    /// Operation is unavailable because item is debug
+    case unavailable
+}
+
+public class DEDebugContainerItem: DEGroupContainerItem {
+    
+    private var data: Data
+    
+    private let queue = DispatchQueue.global(qos: .utility)
+    
+    public var onDidChange: (() -> ())? = nil
+    
+    public init(data: Data) {
+        self.data = data
+    }
+    
+    public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
+        self.queue.async {
+            let data = self.data
+            DispatchQueue.main.async {
+                onSuccess(data)
+            }
+        }
+    }
+    
+    public func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?) {
+        self.queue.async {
+            self.data = data
+            DispatchQueue.main.async {
+                onFinish?(true, nil)
+            }
+        }
+    }
+    
+    public func copyFile(to: URL, onFinish: ((Bool, Error?) -> ())?) {
+        DispatchQueue.main.async {
+            onFinish?(false, DEDebugContainerItemError.unavailable)
+        }
+    }
+    
+    public func copyFile(from: URL, onFinish: ((Bool, Error?) -> ())?) {
+        DispatchQueue.main.async {
+            onFinish?(false, DEDebugContainerItemError.unavailable)
+        }
+    }
+    
+    public func removeFile(onFinish: ((Bool, Error?) -> ())?) {
+        DispatchQueue.main.async {
+            onFinish?(false, DEDebugContainerItemError.unavailable)
+        }
+    }
+}
+
 public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
     
     public static let commonWorkOperationQueue: OperationQueue = {
@@ -52,18 +107,22 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
     
     private let workQueue: OperationQueue
     
-    public var callbackQueue: DispatchQueue? = .main
+    public let callbackQueue: DispatchQueue?
     
     public var onDidChange: (() -> ())? = nil
     
-    init(url: URL, workQueue: OperationQueue = DEGroupContainerFilePresenter.commonWorkOperationQueue) {
+    init(url: URL,
+         workQueue: OperationQueue = DEGroupContainerFilePresenter.commonWorkOperationQueue,
+         callbackQueue: DispatchQueue? = DispatchQueue.main) {
         self.url = url
         
         let queue = OperationQueue.init()
         queue.maxConcurrentOperationCount = 1
         queue.qualityOfService = .utility
         queue.name = "im.dlg.group.file.coordinator.private.\(url.absoluteString)"
+        
         self.workQueue = queue
+        self.callbackQueue = callbackQueue
    
         super.init()
         

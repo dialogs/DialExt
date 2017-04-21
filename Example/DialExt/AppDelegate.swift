@@ -22,7 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         
         
-        let config = DESharedDataConfig.init(keychainGroup: "928Y9276U3.im.dlg.DialExtApp", appGroup: "group.im.dlg.DialExtApp")
+        let config = DESharedDataConfig.init(keychainGroup: "928Y9276U3.im.dlg.DialExtApp",
+                                             appGroup: "group.im.dlg.DialExtApp",
+                                             uploadURLs: [])
         let controller = DESharedDialogsViewController.createFromDefaultStoryboard(config: config)
         let navController = UINavigationController(rootViewController: controller)
         navController.view.frame = window.bounds

@@ -28,6 +28,10 @@ DESharedDialogsViewControllerExtensionContextProvider {
         super.viewDidLoad()
     }
     
+    open func configureDialogsViewController(_ viewController: DESharedDialogsViewController) {
+        // do nothing
+    }
+    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -35,6 +39,8 @@ DESharedDialogsViewControllerExtensionContextProvider {
         let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard(config: self.config)
         dialogsController.extensionContextProvider = self
         self.dialogsController = dialogsController
+        
+        configureDialogsViewController(dialogsController)
         
         let navController = UINavigationController(rootViewController: dialogsController)
         self.navController = navController

@@ -24,7 +24,7 @@ public enum UpdateReason: Int {
  */
 final public class DESharedDialogsManager {
 
-    public let container: DEGroupContainer
+    public let container: DEGroupContainerable
     
     public var dataLoader: DESharedDialogsDataLoader {
         return self.config.dataLoader
@@ -39,7 +39,7 @@ final public class DESharedDialogsManager {
         self.init(groupContainer: container, keychainGroup: keychainGroup)
     }
     
-    public init(groupContainer: DEGroupContainer, keychainGroup: String) {
+    public init(groupContainer: DEGroupContainerable, keychainGroup: String) {
         self.container = groupContainer
         self.keychainDataGroup = keychainGroup
         self.config = Config.init(container: self.container)
@@ -52,9 +52,9 @@ final public class DESharedDialogsManager {
         
         let dataLoader: DESharedDialogsDataLoader
         
-        init(container: DEGroupContainer) {
-            self.dialogsContextFileItem = container.item(forFileNamed: "dialogs")
-            self.dialogListFileItem = container.item(forFileNamed: "dialogs_list")
+        init(container: DEGroupContainerable) {
+            self.dialogsContextFileItem = container.dialogsContextItem()
+            self.dialogListFileItem = container.dialogListFileItem()
             
             self.dataLoader = DESharedDialogsDataLoader.init(contextFile: self.dialogsContextFileItem,
                                                              listFile: self.dialogListFileItem)

@@ -17,7 +17,7 @@ public enum FakeError: Error {
 class ShareViewController: DESharedDialogsPresentationViewController {
     
     override var config: DESharedDataConfig! {
-        return DESharedDataConfig.init(keychainGroup: "", appGroup: "")
+        return DESharedDataConfig.init(keychainGroup: "", appGroup: "", uploadURLs: [])
     }
     
     private var dialogsController: DESharedDialogsViewController? = nil

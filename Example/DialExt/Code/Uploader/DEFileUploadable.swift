@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public extension DEFileUploader {
     
     public struct File {
@@ -27,6 +26,4 @@ public extension DEFileUploader {
         
     }   
 }
-
-
 

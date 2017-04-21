@@ -16,6 +16,10 @@ public protocol DEFileUploaderable {
     
     var isUploading: Bool { get }
     
+    var currentTaskProgressCallback: DEFileUploadProgressCallback? { get set }
+    
+    func cancel()
+    
     func upload(_ file: DEFileUploader.File,
                 recipient: DEFileUploader.Recipient,
                 progressCallback: DEFileUploadProgressCallback?,
@@ -35,8 +39,10 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
         return self.currentTask != nil
     }
     
+    public var currentTaskProgressCallback: DEFileUploadProgressCallback? = nil
+    
     public init(tokenProvider: DEFileUploadTokenInfoProvidable,
-                endpoints: [String]) {
+                endpoints: [URL]) {
         self.tokenProvider = tokenProvider
         self.endpoints = endpoints
         
@@ -46,6 +52,10 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
     }
     
     deinit {
+        cancel()
+    }
+    
+    public func cancel() {
         if let task = self.currentTask {
             task.cancel()
         }
@@ -60,7 +70,7 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
             throw DEFileUploadError.busy
         }
         
-        guard let url = URL(string: endpoints.first!) else {
+        guard let url = self.endpoints.first else {
             throw NSError(domain: NSURLErrorDomain, code: NSURLErrorBadURL, userInfo: nil)
         }
         
@@ -105,11 +115,9 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
     
     private let requestBuilder = RequestBuilder.init()
     
-    private let endpoints: [String]
+    private let endpoints: [URL]
     
     private var currentTask: URLSessionDataTask? = nil
-    
-    private var currentTaskProgressCallback: DEFileUploadProgressCallback? = nil
     
     // MARK: - Private Funcs
     

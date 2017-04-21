@@ -17,9 +17,13 @@ public struct DESharedDataConfig {
     /// Provide one of the values from "Capabilities -> AppGroups" as is.
     let appGroup: String
     
-    public init(keychainGroup: String, appGroup: String) {
+    /// Should contain at least one endpoint supporting file uploading.
+    let endpointUploadMethodURLs: [URL]
+    
+    public init(keychainGroup: String, appGroup: String, uploadURLs: [URL]) {
         self.keychainGroup = keychainGroup
         self.appGroup = appGroup
+        self.endpointUploadMethodURLs = uploadURLs
     }
     
 }
