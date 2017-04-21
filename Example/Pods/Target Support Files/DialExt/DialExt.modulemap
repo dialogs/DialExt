@@ -1,6 +1,0 @@
-framework module DialExt {
-  umbrella header "DialExt-umbrella.h"
-
-  export *
-  module * { export * }
-}
