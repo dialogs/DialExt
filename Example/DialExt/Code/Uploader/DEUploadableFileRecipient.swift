@@ -14,11 +14,26 @@ public extension DEFileUploader {
         
         public let id: Int64
         
+        public var idString: String {
+            return String(describing: self.id)
+        }
+        
         public let peerType: PeerType
         
-        public init(id: Int64, peerType: PeerType) {
+        public let accessHash: Int64
+        
+        public var accessHashString: String {
+            return String(describing: self.accessHash)
+        }
+        
+        public init(id: Int64, peerType: PeerType, accessHash: Int64) {
             self.id = id
             self.peerType = peerType
+            self.accessHash = accessHash
+        }
+        
+        public init(dialog: AppSharedDialog) {
+            self.init(id: dialog.id, peerType : dialog.isGroup ? .group : .private, accessHash: dialog.accessHash)
         }
         
         public enum PeerType {

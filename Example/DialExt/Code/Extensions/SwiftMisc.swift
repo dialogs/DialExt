@@ -22,6 +22,15 @@ public func withOptionalExtendedLifetime<T, Result>(_ x: T?,
     })
 }
 
+public func withOptionalExtendedLifetime<T>(_ x: T?, body: (() -> ()) ) {
+    withExtendedLifetime(x) {
+        guard x != nil else {
+            return
+        }
+        return body()
+    }
+}
+
 /// Performs block only if instance is not nil. Does not pass instance into performing block.
 public func withOptionalExtendedLifetime<T, Result>(_ x: T?,
                                      _ ifNilResult: Result? = nil,

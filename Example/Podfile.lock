@@ -1,20 +1,12 @@
 PODS:
-  - DialExt (0.1.0):
-    - ProtocolBuffers-Swift
   - ProtocolBuffers-Swift (3.0.13)
 
 DEPENDENCIES:
-  - DialExt (from `../`)
   - ProtocolBuffers-Swift
 
-EXTERNAL SOURCES:
-  DialExt:
-    :path: "../"
-
 SPEC CHECKSUMS:
-  DialExt: 074ad3130b4900cab3bb70f2527db776a633339b
   ProtocolBuffers-Swift: b1962dbfbd2ccb61b57d6a1825cddf6a03c0dd09
 
-PODFILE CHECKSUM: 0436620ca16d1c65a3ccf1ea3f4029d543f58d13
+PODFILE CHECKSUM: 07b09ce841cb7ac3da407300f34ff536d074d969
 
 COCOAPODS: 1.2.0

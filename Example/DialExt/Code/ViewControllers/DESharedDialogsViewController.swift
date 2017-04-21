@@ -59,17 +59,13 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
-    public lazy var uploader: DEFileUploaderable = {
-        let tokenProvider = DEFileUploadTokenInfoProvider.init(keychainGroupId: self.config.keychainGroup)
-        let uploader = DEFileUploader.init(tokenProvider: tokenProvider, endpoints: self.config.endpointUploadMethodURLs)
-        return uploader
-    }()
-    
     public var onDidFinish:(()->())? = nil
     
     public var manager: DESharedDialogsManager!
     
     public var avatarProvider: DEAvatarImageProvidable!
+    
+    public var uploader: DEExtensionItemUploader!
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
     
@@ -135,6 +131,13 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             self.manager = DESharedDialogsManager.init(sharedDataConfig: self.config)
         }
         
+        if self.uploader == nil {
+            let tokenProvider = DEFileUploadTokenInfoProvider.init(keychainGroupId: self.config.keychainGroup)
+            let fileUploader = DEFileUploader.init(tokenProvider: tokenProvider,
+                                                   endpoints: self.config.endpointUploadMethodURLs)
+            self.uploader = DEExtensionItemUploader.init(fileUploader: fileUploader)
+        }
+        
         if self.avatarProvider == nil {
             let provider = DEAvatarImageProvider.init(localLoader: .createWithContainerGroupId(config.appGroup))
             self.avatarProvider = provider
@@ -167,6 +170,28 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                                                 let event = notification.userInfo![KeyboardListener.eventUserInfoKey] as! KeyboardEvent
                                                 self.view.animateKeyboardEvent(event, bottomConstraint: self.contentBottomConstraint)
         }
+        
+        self.uploader.onDidChangeProgress = { [unowned self] progress in
+            if let alert = self.alert {
+                alert.message = "Progress: \(progress)"
+            }
+        }
+        
+        self.uploader.onDidFinish = { [unowned self] success, error in
+            if let alert = self.alert {
+                if success {
+                    alert.message = "Finshed!"
+                }
+                else {
+                    alert.message = "Error: \(error)"
+                }
+                alert.actions.first?.isEnabled = false
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: { [unowned self] in
+                self.dismissAlert()
+            })
+        }
     }
     
     public func resetDialogs(_ dialogs: [AppSharedDialog]) {
@@ -186,63 +211,36 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
          uploadFiles()
     }
     
+    private var alert: UIAlertController? = nil
+    
+    private func dismissAlert() {
+        self.alert?.dismiss(animated: true, completion: { [unowned self] in
+            self.alert = nil
+        })
+    }
     
     private func uploadFiles() {
-        /*
-        if let item = self.currentItems().first,
-            let attachment = item.item.firstFoundDataRepresentableAttachment {
-            attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: nil, completionHandler: { (coder, error) in
-                
-            })
+        guard let context = self.extensionContextProvider?.extensionContextForSharedDialogsViewController(self),
+            let items = context.inputItems as? [NSExtensionItem] else {
+            return
         }
- */
         
+        let alert = UIAlertController.init(title: "Uploading...",
+                                           message: "Preparing", preferredStyle: .alert)
+        let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel) { _ in
+            self.cancel()
+        }
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true) { 
+            let task = DEExtensionItemUploader.Task(items: items, dialogs: self.selectedDialogs)
+            self.uploader.upload(task: task)
+        }
+        self.alert = alert
     }
     
-    private func preferredFileExtension(forItem item: NSExtensionItem) -> String? {
-        
-        var dict = ["123":"321"]
-        dict.de_merge(with: ["555":"455"])
-        
-        let myitem = item.attachments!.first as! NSItemProvider
-        let testTest = "321".testTest()
-        
-        if let attachments = item.attachments {
-            for case let attachment as NSItemProvider in attachments {
-//                if let ext = attachment.supposedFileExtension {
-//                    return ext
-//                }
-            }
-        }
-        
-        return nil
-    }
-    
-    private func currentItems() -> [UploadItem] {
-        guard let provider = self.extensionContextProvider,
-            let context = provider.extensionContextForSharedDialogsViewController(self) else {
-                return []
-        }
-        
-        var uploadItems: [UploadItem] = []
-        for case let item as NSExtensionItem in context.inputItems {
-            guard let attachments = item.attachments else {
-                continue
-            }
-            
-            let itemAttachments: [NSItemProvider] = attachments.flatMap({ $0 as? NSItemProvider})
-            if itemAttachments.count > 0 {
-                var uploadItem = UploadItem(item: item, attachments: itemAttachments)
-                uploadItems.append(uploadItem)
-            }
-        }
-        return uploadItems
-    }
-    
-    
-    private struct UploadItem {
-        var item: NSExtensionItem!
-        var attachments: [NSItemProvider]!
+    private func cancel() {
+        self.uploader.cancel()
     }
     
     private func handleDialogsState(_ state: DESharedDialogsDataLoader.DataState) {
@@ -302,8 +300,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         return isSelectionAllowed(for: dialog)
     }
     
-    private func loadImage(dialog: AppSharedDialog) {
-        self.avatarProvider!.provideImage(dialog: dialog) { [unowned self] (image, isPlaceholder) in
+    private func loadImage(dialog: AppSharedDialog) -> UIImage? {
+        return self.avatarProvider!.provideImage(dialog: dialog) { [unowned self] (image, isPlaceholder) in
             self.updateAvatarForDialog(dialog, image: image)
         }
     }
@@ -368,11 +366,6 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let dialog = self.presentedDialogs[indexPath.row]
-        self.loadImage(dialog: dialog)
-    }
-    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DEDialogCell", for: indexPath) as! DEDialogCell
         let dialog = self.presentedDialogs[indexPath.row]
@@ -394,6 +387,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         let cellSide = min(cell.frame.size.width, cell.frame.size.height)
         cell.avatarView.layer.cornerRadius = cellSide / 2.0
         cell.avatarView.layer.masksToBounds = true
+        
+        cell.avatarView.image = self.loadImage(dialog: dialog)
         
         return cell
     }

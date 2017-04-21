@@ -46,13 +46,10 @@ public extension DEFileUploader {
         }
         
         private func buildQueryItems(info: UploadInfo) -> [URLQueryItem] {
-            let value = info.authInfo.httpQueryValue
-            let authItem = URLQueryItem.init(preservedName: .signedAuthId, value: value)
-            
-            let peerItem = URLQueryItem.init(preservedName: .peerId, value: String(describing: info.recipient.id))
+            let authItem = URLQueryItem.init(preservedName: .signedAuthId, value: info.authInfo.httpQueryValue)
+            let peerItem = URLQueryItem.init(preservedName: .peerId, value: info.recipient.idString)
             let peerTypeItem = URLQueryItem.init(preservedName: .peerType, value: info.recipient.peerType.string)
-            
-            let accessHashItem = URLQueryItem.init(preservedName: .accessHash, value: info.sender.accessHashString!)
+            let accessHashItem = URLQueryItem.init(preservedName: .accessHash, value: info.recipient.accessHashString)
             
             return [authItem, peerItem, peerTypeItem, accessHashItem]
         }
@@ -107,33 +104,16 @@ public extension DEFileUploader {
             let url: URL
             let file: File
             let recipient: Recipient
-            let sender: Sender
             let authInfo: AuthInfo
             
             public init(url: URL,
                         file: File,
-                        sender: Sender,
                         recipient: Recipient,
                         authInfo: AuthInfo) {
                 self.url = url
                 self.file = file
-                self.sender = sender
                 self.recipient = recipient
                 self.authInfo = authInfo
-            }
-            
-        }
-        
-        public struct Sender {
-            
-            public let accessHash: Data
-            
-            var accessHashString: String? {
-                return String(data: self.accessHash, encoding: .utf8)
-            }
-            
-            public init(accessHash: Data) {
-                self.accessHash = accessHash
             }
             
         }

@@ -14,8 +14,6 @@ public protocol DEFileUploadTokenInfoProvidable {
     
     var signedAuthId: Data? { get }
     
-    var accessHash: Data? { get }
-    
 }
 
 extension DEFileUploadTokenInfoProvidable {
@@ -50,7 +48,4 @@ class DEFileUploadTokenInfoProvider: DEFileUploadTokenInfoProvidable {
         return try? keychain.signedAuthId(groupId: groupId)
     }
     
-    var accessHash: Data? {
-        return nil
-    }
 }
