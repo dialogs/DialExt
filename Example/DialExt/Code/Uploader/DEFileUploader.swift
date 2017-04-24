@@ -136,7 +136,7 @@ final public class DEDebugFileUploader: DEFileUploaderable {
         
         var duration: TimeInterval = 3.0
         
-        var progressCallbackPerformCount: Int = 20
+        var progressCallbackPerformCount: Int = 10
         
         var progressFragmentValue: Float {
             return 1.0 / Float(progressCallbackPerformCount + 1)
@@ -154,7 +154,7 @@ final public class DEDebugFileUploader: DEFileUploaderable {
     }
     
     public func cancel() {
-        self.currentTaskUuid = nil
+        self.resetCurrentTask()
     }
     
     public var currentTaskProgressCallback: DEFileUploadProgressCallback?
@@ -163,7 +163,7 @@ final public class DEDebugFileUploader: DEFileUploaderable {
         return self.currentTaskUuid != nil
     }
     
-    public var progress: Float = 0.0
+    public var progress = LimitedValueType<Float>.init(value: 0.0, minValue: 0.0, maxValue: 1.0)
     
     public var config: Config = Config.init()
     
@@ -198,17 +198,10 @@ final public class DEDebugFileUploader: DEFileUploaderable {
         let result = config.result
         let duration: TimeInterval = max(0.0, config.duration)
             
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [unowned self] in
-            guard self.hasCurrentTaskUuid(uuid) else {
-                return
-            }
-            
-            switch result {
-            case .success:
-                completion?(true, nil)
-            case let .failure(error):
-                completion?(false, error)
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            withOptionalExtendedLifetime(self, body: {
+                self?.handleTaskCompletion(uuid, result: result, completion: completion)
+            })
         }
         
         let progressFragment = config.progressFragmentValue
@@ -218,15 +211,36 @@ final public class DEDebugFileUploader: DEFileUploaderable {
     
     private var currentTaskUuid: UUID? = nil
     
+    private func handleTaskCompletion(_ taskUuid: UUID, result: Config.Result, completion: DEFileUploadCompletion?) {
+        guard self.hasCurrentTaskUuid(taskUuid) else {
+            return
+        }
+        
+        self.resetCurrentTask()
+        
+        switch result {
+        case .success:
+            completion?(true, nil)
+        case let .failure(error):
+            completion?(false, error)
+        }
+    }
+    
+    private func resetCurrentTask() {
+        self.currentTaskUuid = nil
+        self.currentTaskProgressCallback = nil
+        self.progress.value = 0.0
+    }
+    
     private func increaseProgress(by progressFragment: Float, uuid: UUID, nextCallInterval: TimeInterval) {
         guard self.hasCurrentTaskUuid(uuid) else {
             return
         }
         
-        self.progress = max(1.0, self.progress + progressFragment)
-        self.currentTaskProgressCallback?(self.progress)
+        self.progress.value += progressFragment
+        self.currentTaskProgressCallback?(self.progress.value)
         
-        let shouldRecall = self.progress < 1.0
+        let shouldRecall = self.progress.value < 1.0
         
         if shouldRecall {
             DispatchQueue.main.asyncAfter(deadline: .now() + nextCallInterval ) { [weak self] in

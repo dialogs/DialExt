@@ -50,6 +50,9 @@
 		74313A5F1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74313A5E1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift */; };
 		74313A621E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74313A611E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift */; };
 		74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74313A651E9E60A5002AAF55 /* DLGAsyncOperation.swift */; };
+		74326E071EADFAB80016A1F1 /* LimitedValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74326E061EADFAB80016A1F1 /* LimitedValueType.swift */; };
+		74326E0B1EAE12CF0016A1F1 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74326E0A1EAE12CF0016A1F1 /* Localization.swift */; };
+		74326E101EAE42200016A1F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74326E121EAE42200016A1F1 /* Localizable.strings */; };
 		74401D161EA0FF7500200770 /* DEFileUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74401D151EA0FF7500200770 /* DEFileUploader.swift */; };
 		74401D1A1EA1000500200770 /* DEFileUploadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74401D191EA1000500200770 /* DEFileUploadable.swift */; };
 		74401D1C1EA1018D00200770 /* DEFileUploadTokenInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74401D1B1EA1018D00200770 /* DEFileUploadTokenInfoProvider.swift */; };
@@ -193,6 +196,14 @@
 		74313A5E1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeRepresentationState.swift; sourceTree = "<group>"; };
 		74313A611E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEGroupContainerItemBindedRepresenter+Queuer.swift"; sourceTree = "<group>"; };
 		74313A651E9E60A5002AAF55 /* DLGAsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLGAsyncOperation.swift; sourceTree = "<group>"; };
+		74326E061EADFAB80016A1F1 /* LimitedValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LimitedValueType.swift; sourceTree = "<group>"; };
+		74326E0A1EAE12CF0016A1F1 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		74326E111EAE42200016A1F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74326E131EAE422D0016A1F1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74326E141EAE425B0016A1F1 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		74326E151EAE42690016A1F1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74326E161EAE42700016A1F1 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74326E171EAE42780016A1F1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		74401D151EA0FF7500200770 /* DEFileUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEFileUploader.swift; sourceTree = "<group>"; };
 		74401D191EA1000500200770 /* DEFileUploadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEFileUploadable.swift; sourceTree = "<group>"; };
 		74401D1B1EA1018D00200770 /* DEFileUploadTokenInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEFileUploadTokenInfoProvider.swift; sourceTree = "<group>"; };
@@ -349,6 +360,7 @@
 				74065ED01E8113A900C535B6 /* InterappMesenger */,
 				74065ED31E8113A900C535B6 /* KeyboardManager */,
 				74065ED91E8113A900C535B6 /* Keychain */,
+				74326E091EAE12B90016A1F1 /* Localization */,
 				74065EDD1E8113A900C535B6 /* Other */,
 				74065EE11E8113A900C535B6 /* Protobuf */,
 				74065EE61E8113A900C535B6 /* SharedDataManager */,
@@ -427,12 +439,13 @@
 			isa = PBXGroup;
 			children = (
 				74313A641E9E6091002AAF55 /* Operations */,
+				74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */,
 				74065EDE1E8113A900C535B6 /* DEAvatarImageProvider.swift */,
 				74065EDF1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift */,
-				74065EE01E8113A900C535B6 /* FrameworkProvider.swift */,
-				74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */,
-				74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */,
 				74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */,
+				74065EE01E8113A900C535B6 /* FrameworkProvider.swift */,
+				74326E061EADFAB80016A1F1 /* LimitedValueType.swift */,
+				74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -475,6 +488,7 @@
 			children = (
 				74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */,
 				74065F0F1E8115A700C535B6 /* Images.xcassets */,
+				74326E121EAE42200016A1F1 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -504,6 +518,14 @@
 				74313A651E9E60A5002AAF55 /* DLGAsyncOperation.swift */,
 			);
 			name = Operations;
+			sourceTree = "<group>";
+		};
+		74326E091EAE12B90016A1F1 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				74326E0A1EAE12CF0016A1F1 /* Localization.swift */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		74401D141EA0FF7500200770 /* Uploader */ = {
@@ -706,6 +728,11 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				"pt-PT",
+				es,
+				tr,
+				"zh-Hans",
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
@@ -743,6 +770,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74065F121E8115A700C535B6 /* Images.xcassets in Resources */,
+				74326E101EAE42200016A1F1 /* Localizable.strings in Resources */,
 				742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */,
 				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
@@ -919,6 +947,7 @@
 				742DC8D41EA9FE6B00ABDA55 /* String+Test.swift in Sources */,
 				74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
+				74326E071EADFAB80016A1F1 /* LimitedValueType.swift in Sources */,
 				74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */,
 				749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */,
 				748B1B441E951A0D00BAB63D /* Dialog.proto.swift in Sources */,
@@ -941,6 +970,7 @@
 				74065EFB1E8113A900C535B6 /* DEKeychainResult.swift in Sources */,
 				74401D161EA0FF7500200770 /* DEFileUploader.swift in Sources */,
 				74065EF81E8113A900C535B6 /* UIView+KeyboardAnimation.swift in Sources */,
+				74326E0B1EAE12CF0016A1F1 /* Localization.swift in Sources */,
 				74065EEF1E8113A900C535B6 /* Dictionary+DialExt.swift in Sources */,
 				74065F011E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift in Sources */,
 				744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */,
@@ -1020,6 +1050,19 @@
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
+		74326E121EAE42200016A1F1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74326E111EAE42200016A1F1 /* Base */,
+				74326E131EAE422D0016A1F1 /* ru */,
+				74326E141EAE425B0016A1F1 /* pt-PT */,
+				74326E151EAE42690016A1F1 /* es */,
+				74326E161EAE42700016A1F1 /* tr */,
+				74326E171EAE42780016A1F1 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1027,6 +1070,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1074,6 +1118,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

@@ -13,15 +13,16 @@ public extension AppSharedDialogListContext {
         let contextBuilder = AppSharedDialogListContext.getBuilder()
         contextBuilder.dialogs = []
         contextBuilder.users = []
-        
-        let user: AppSharedUser = {
-           let builder = AppSharedUser.getBuilder()
-            builder.name = "Me"
-            builder.id = 123456
-            return try! builder.build()
-        }()
-        
-        contextBuilder.mainUser = user
+        /*
+         let user: AppSharedUser = {
+         let builder = AppSharedUser.getBuilder()
+         builder.name = "Me"
+         builder.id = 123456
+         return try! builder.build()
+         }()
+         
+         contextBuilder.mainUser = user
+         */
         let context = try! contextBuilder.build()
         return context
     }()

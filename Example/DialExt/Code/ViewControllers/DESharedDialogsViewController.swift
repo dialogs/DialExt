@@ -67,6 +67,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     public var uploader: DEExtensionItemUploader!
     
+    public var multipleSelectionAllowed: Bool = false
+    
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
     
     private var hasSelectedDialogs: Bool = false {
@@ -173,17 +175,18 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         
         self.uploader.onDidChangeProgress = { [unowned self] progress in
             if let alert = self.alert {
-                alert.message = "Progress: \(progress)"
+                let message = DELocalizable.alertUploadProgress(progress: progress)
+                alert.message = message
             }
         }
         
         self.uploader.onDidFinish = { [unowned self] success, error in
             if let alert = self.alert {
                 if success {
-                    alert.message = "Finshed!"
+                    alert.message = DELocalize(.alertUploadFinished)
                 }
                 else {
-                    alert.message = "Error: \(error)"
+                    alert.message = "\(error)"
                 }
                 alert.actions.first?.isEnabled = false
             }
@@ -208,7 +211,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }
     
     @IBAction private func sendAction(_ sender: AnyObject) {
-         uploadFiles()
+        uploadFiles()
     }
     
     private var alert: UIAlertController? = nil
@@ -222,17 +225,18 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     private func uploadFiles() {
         guard let context = self.extensionContextProvider?.extensionContextForSharedDialogsViewController(self),
             let items = context.inputItems as? [NSExtensionItem] else {
-            return
+                return
         }
         
-        let alert = UIAlertController.init(title: "Uploading...",
-                                           message: "Preparing", preferredStyle: .alert)
-        let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel) { _ in
+        let alert = UIAlertController.init(title: DELocalize(.alertUploadTitle),
+                                           message: DELocalize(.alertUploadPreparing),
+                                           preferredStyle: .alert)
+        let cancelAction = UIAlertAction.init(title: DELocalize(.alertCancel), style: .cancel) { _ in
             self.cancel()
         }
         alert.addAction(cancelAction)
         
-        self.present(alert, animated: true) { 
+        self.present(alert, animated: true) {
             let task = DEExtensionItemUploader.Task(items: items, dialogs: self.selectedDialogs)
             self.uploader.upload(task: task)
         }
@@ -307,17 +311,41 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }
     
     private func updateAvatarForDialog(_ dialog: AppSharedDialog, image: UIImage?) {
-        if let index = self.presentedDialogs.index(where: { $0.id == dialog.id }) {
+        updateCell(forDialogId: dialog.id) { (cell) in
+            self.updateAvatarInCell(cell, image: image)
+        }
+    }
+    
+    private func updateCell(forDialogId id: AppSharedDialog.Id, code:((DEDialogCell)->()) ) {
+        if let index = self.presentedDialogs.index(where: { $0.id == id }) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) as? DEDialogCell {
-                self.updateAvatarInCell(cell, image: image)
+                code(cell)
             }
+        }
+
+    }
+    
+    private func unselectDialogs(with ids: [AppSharedDialog.Id], animated: Bool = false) {
+        for id in ids {
+            self.updateCell(forDialogId: id, code: { (cell) in
+                var state = cell.selectionState
+                state.selected = false
+                cell.setSelectionState(state, animated: animated)
+            })
         }
     }
     
     private func updateSelectedDialogs(dialogId: AppSharedDialog.Id, selected: Bool) {
         if selected {
-            selectedDialogIds.insert(dialogId)
+            if self.multipleSelectionAllowed {
+                selectedDialogIds.insert(dialogId)
+            }
+            else {
+                let unselectedDialogIds = Array(self.selectedDialogIds)
+                unselectDialogs(with: unselectedDialogIds)
+                selectedDialogIds = [dialogId]
+            }
         }
         else {
             selectedDialogIds.remove(dialogId)
