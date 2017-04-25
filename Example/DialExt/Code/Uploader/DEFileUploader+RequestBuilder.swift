@@ -31,15 +31,15 @@ public extension DEFileUploader {
             var components = URLComponents(url: info.url, resolvingAgainstBaseURL: false)!
             components.queryItems = buildQueryItems(info: info)
             
-            let boundary = "Boundary-\(UUID.init().uuidString)"
+            let boundary = self.boundary
             
             let url = components.url!
             let request = NSMutableURLRequest.init(url: url)
-            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            request.setValue("multipart/form-data; boundary=\(boundary.string)", forHTTPHeaderField: "Content-Type")
             
             request.httpMethod = "POST"
             
-            let body = buildBody(parameters: [:], boundary: self.boundary, file: info.file)
+            let body = buildBody(parameters: [:], boundary: boundary, file: info.file)
             request.httpBody = body
             
             return request.copy() as! URLRequest
@@ -54,9 +54,7 @@ public extension DEFileUploader {
             return [authItem, peerItem, peerTypeItem, accessHashItem]
         }
         
-        private func buildBody(parameters: [String: String],
-                               boundary: Boundary = Boundary.init(),
-                               file: File) -> Data {
+        private func buildBody(parameters: [String: String], boundary: Boundary, file: File) -> Data {
             return buildBody(parameters: [:], data: file.data, mimeType: file.mimetype, filename: file.name)
         }
         
@@ -68,7 +66,7 @@ public extension DEFileUploader {
             
             let body = NSMutableData.init()
             
-            let boundaryPrefix = "--\(boundary)\r\n"
+            let boundaryPrefix = boundary.prefixedString.appending(byNewLines: 1)
             
             func appendBody(string: String) {
                 let data = string.data(using: .utf8, allowLossyConversion: false)!
