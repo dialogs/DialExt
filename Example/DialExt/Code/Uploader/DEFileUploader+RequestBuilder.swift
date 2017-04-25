@@ -66,8 +66,6 @@ public extension DEFileUploader {
             
             let body = NSMutableData.init()
             
-            let boundaryPrefix = boundary.prefixedString.appending(byNewLines: 1)
-            
             func appendBody(string: String) {
                 let data = string.data(using: .utf8, allowLossyConversion: false)!
                 body.append(data)
@@ -85,7 +83,7 @@ public extension DEFileUploader {
                 appendBody(string: value.appending(byNewLines: 1))
             }
             
-            appendBody(string: boundary.prefixedString)
+            appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
             appendBody(contentDispositionSuffix: "name=\"file\"; filename=\"\(filename)\"".appending(byNewLines: 1))
             appendBody(string: "Content-Type: \(mimeType)".appending(byNewLines: 2))
             
