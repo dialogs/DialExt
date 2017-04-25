@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Bundle {
+public extension Bundle {
     
-    func allResources() -> [URL] {
+    public func allResources() -> [URL] {
         // Enumerators are recursive
         guard let enumerator = FileManager.default.enumerator(atPath: self.bundlePath) else {
             return []
@@ -27,7 +27,7 @@ extension Bundle {
         return filePaths
     }
     
-    func hasStoryboard(named: String) -> Bool {
+    public func hasStoryboard(named: String) -> Bool {
         return self.path(forResource: named, ofType: "storyboardc") != nil
     }
     
