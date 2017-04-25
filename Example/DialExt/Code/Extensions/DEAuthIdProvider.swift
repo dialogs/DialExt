@@ -84,7 +84,7 @@ public extension DEKeychainQuery.Access {
     
     public static let defaultAuthIdService = "auth_id"
     
-    public static let defaultSignedIdAuthIdService = "auth_id"
+    public static let defaultSignedIdAuthIdService = "signed_auth_id"
     
     public static let defaultAuthIdAccount = "im.dlg.shared"
     
