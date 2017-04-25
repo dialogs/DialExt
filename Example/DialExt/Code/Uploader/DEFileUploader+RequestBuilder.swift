@@ -126,7 +126,7 @@ public extension DEFileUploader {
             
             public var httpQueryValue: String {
                 let signedAuthIdString = String.init(data: self.signedAuthId, encoding: .utf8)
-                return "\(self.authId)|\(signedAuthIdString)"
+                return "\(self.authId)|\(String(describing: signedAuthIdString))"
             }
             
             internal init(authId: DEAuthId, signedAuthId: Data) {

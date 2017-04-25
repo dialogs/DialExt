@@ -6,7 +6,7 @@ protocol KeyboardDetectorDelegate: class {
     func keyboardDetector(_ keyboardDetector:KeyboardDetector, detectEvent event:KeyboardEvent)
 }
 
-protocol KeyboardDetector {
+protocol KeyboardDetector: class {
     weak var delegate: KeyboardDetectorDelegate? {get set}
 }
 

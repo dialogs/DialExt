@@ -186,7 +186,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                     alert.message = DELocalize(.alertUploadFinished)
                 }
                 else {
-                    alert.message = "\(error)"
+                    alert.message = "\(String(describing: error))"
                 }
                 alert.actions.first?.isEnabled = false
             }
@@ -250,7 +250,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     private func handleDialogsState(_ state: DESharedDialogsDataLoader.DataState) {
         switch state {
         case let .failured(error):
-            fatalError("Totally failed: \(error)")
+            fatalError("Totally failed: \(String(describing: error))")
             
         case .loaded:
             self.dialogs = self.manager.dataLoader.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})

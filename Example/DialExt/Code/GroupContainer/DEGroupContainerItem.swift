@@ -9,7 +9,7 @@
 import Foundation
 
 
-public protocol DEGroupContainerItem {
+public protocol DEGroupContainerItem: class {
     
     func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?)
     

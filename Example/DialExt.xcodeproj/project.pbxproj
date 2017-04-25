@@ -677,7 +677,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -1159,7 +1159,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D288812AF4CDE6DB549AF93 /* Pods-DialExt_Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DialExt_Example.entitlements;
 				DEVELOPMENT_TEAM = 928Y9276U3;
@@ -1178,7 +1177,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EE199AAC6FE189527752788 /* Pods-DialExt_Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DialExt_Example.entitlements;
 				DEVELOPMENT_TEAM = 928Y9276U3;
@@ -1237,7 +1235,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -1293,7 +1291,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 11D7F17DF94EF3F51A4AE223 /* Pods-DialExtTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1313,7 +1310,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 46103DE39655F13CE052BBAA /* Pods-DialExtTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = "";
