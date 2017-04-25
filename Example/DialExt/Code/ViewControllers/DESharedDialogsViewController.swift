@@ -186,7 +186,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                     alert.message = DELocalize(.alertUploadFinished)
                 }
                 else {
-                    alert.message = "\(String(describing: error))"
+                    let message = error?.localizedDescription ?? String(describing: error)
+                    alert.message = message
                 }
                 alert.actions.first?.isEnabled = false
             }
