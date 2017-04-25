@@ -85,11 +85,8 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
         let request = requestBuilder.buildRequest(info: info)
         
         let task = session.dataTask(with: request) { [weak self] (data, response, error) in
-            withExtendedLifetime(self, {
-                guard self != nil else { return }
-                
-                self?.handleTaskCompleted(data: data, response: response, error: error)
-                completion?(data != nil, error)
+            withOptionalExtendedLifetime(self, body: {
+                self?.handleTaskCompleted(data: data, response: response, error: error, completion: completion)
             })
         }
         
@@ -112,9 +109,14 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
     
     // MARK: - Private Funcs
     
-    private func handleTaskCompleted(data: Data?, response: URLResponse?, error: Error?) {
+    private func handleTaskCompleted(data: Data?,
+                                     response: URLResponse?,
+                                     error: Error?,
+                                     completion: DEFileUploadCompletion?) {
         self.currentTask = nil
         self.currentTaskProgressCallback = nil
+        
+        completion?(data != nil, error)
     }
     
     // MARK: - URLSessionDataDelegate

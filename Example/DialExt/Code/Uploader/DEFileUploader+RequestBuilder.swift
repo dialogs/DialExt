@@ -37,7 +37,7 @@ public extension DEFileUploader {
             let request = NSMutableURLRequest.init(url: url)
             request.setValue("multipart/form-data; boundary=\(boundary.string)", forHTTPHeaderField: "Content-Type")
             
-            request.httpMethod = "POST"
+            request.httpMethod = "PUT"
             
             let body = buildBody(parameters: [:], boundary: boundary, file: info.file)
             request.httpBody = body
