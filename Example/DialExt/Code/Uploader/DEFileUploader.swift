@@ -31,6 +31,15 @@ public enum DEFileUploadError: Error {
     case busy
 }
 
+public extension NSError {
+    public static let unexpectedHttpResponseStatusCodeErrorDomain = "im.dlg.error.http_response"
+    
+    public var isUnexpectedHttpResponseStatusCodeError: Bool {
+        return self.domain == NSError.unexpectedHttpResponseStatusCodeErrorDomain
+    }
+    
+}
+
 final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataDelegate {
     
     public var isUploading: Bool {
@@ -113,10 +122,30 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
                                      response: URLResponse?,
                                      error: Error?,
                                      completion: DEFileUploadCompletion?) {
+        
+        var success = (data != nil)
+        var resultError = error
+        
+        if success || resultError == nil {
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode != 200 {
+                    success = false
+                    
+                    let errorUserInfo =  [
+                        NSLocalizedDescriptionKey : "Unexpected response status code: \(httpResponse.statusCode)"
+                    ]
+                    resultError = NSError(domain: NSError.unexpectedHttpResponseStatusCodeErrorDomain,
+                                          code: httpResponse.statusCode,
+                                          userInfo:errorUserInfo)
+                }
+            }
+        }
+        
+        
         self.currentTask = nil
         self.currentTaskProgressCallback = nil
         
-        completion?(data != nil, error)
+        completion?(success, resultError)
     }
     
     // MARK: - URLSessionDataDelegate
