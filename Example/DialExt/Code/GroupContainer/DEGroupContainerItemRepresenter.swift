@@ -18,11 +18,11 @@ public enum DEGroupContainerItemRepresenterResult<Representation> {
 
 open class DEGroupContainerItemDataEncoder<Representation> {
     
-    public func decode(data: Data) throws -> Representation {
+    open func decode(data: Data) throws -> Representation {
         fatalError("Should be implemented in subclass")
     }
     
-    public func encode(representation: Representation) throws -> Data {
+    open func encode(representation: Representation) throws -> Data {
         fatalError("Should be implemented in subclass")
     }
     
