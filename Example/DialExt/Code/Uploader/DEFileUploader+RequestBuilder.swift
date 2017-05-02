@@ -37,7 +37,7 @@ public extension DEFileUploader {
             let request = NSMutableURLRequest.init(url: url)
             request.setValue("multipart/form-data; boundary=\(boundary.string)", forHTTPHeaderField: "Content-Type")
             
-            request.httpMethod = "PUT"
+            request.httpMethod = "POST"
             
             let recipients = [info.recipient]
             let body = buildBody(recipients: recipients, boundary: boundary, file: info.file)
@@ -84,9 +84,11 @@ public extension DEFileUploader {
             for recipient in recipients {
                 appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
                 let peerDescription = recipient.mulitpartFormPeerDescription
-                appendBody(contentDispositionSuffix: "name=\"peer\"; \(peerDescription);".appending(byNewLines: 2))
+                appendBody(contentDispositionSuffix: "name=\"peer\"".appending(byNewLines: 2))
+                appendBody(string: "\(recipient.mulitpartFormPeerDescription)".appending(byNewLines: 1))
             }
             appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
+            appendBody(string: "Content-Type: text/plain; charset=UTF-8".appending(byNewLines: 1))
             appendBody(contentDispositionSuffix: "name=\"file\"; filename=\"\(filename)\"".appending(byNewLines: 1))
             appendBody(string: "Content-Type: \(mimeType)".appending(byNewLines: 2))
             
