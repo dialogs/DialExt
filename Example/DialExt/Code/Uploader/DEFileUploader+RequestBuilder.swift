@@ -48,11 +48,7 @@ public extension DEFileUploader {
         
         private func buildQueryItems(info: UploadInfo) -> [URLQueryItem] {
             let authItem = URLQueryItem.init(preservedName: .signedAuthId, value: info.authInfo.httpQueryValue)
-            let peerItem = URLQueryItem.init(preservedName: .peerId, value: info.recipient.idString)
-            let peerTypeItem = URLQueryItem.init(preservedName: .peerType, value: info.recipient.peerType.string)
-            let accessHashItem = URLQueryItem.init(preservedName: .accessHash, value: info.recipient.accessHashString)
-            
-            return [authItem, peerItem, peerTypeItem, accessHashItem]
+            return [authItem]
         }
         
         private func buildBody(parameters: [String: String] = [:], recipients: [Recipient], boundary: Boundary, file: File) -> Data {
