@@ -47,6 +47,21 @@ public extension DEFileUploader {
             }
         }
         
+        var multipartFormPeerKey: String {
+            let key: String
+            switch self.peerType {
+            case .group:
+                key = "GROUP_\(self.id)"
+            case .private:
+                key = "PRIVATE_\(self.id)"
+            }
+            return key
+        }
+        
+        var mulitpartFormPeerDescription: String {
+            return "\(self.multipartFormPeerKey):\(self.accessHashString)"
+        }
+        
     }
     
 }

@@ -39,7 +39,8 @@ public extension DEFileUploader {
             
             request.httpMethod = "PUT"
             
-            let body = buildBody(parameters: [:], boundary: boundary, file: info.file)
+            let recipients = [info.recipient]
+            let body = buildBody(recipients: recipients, boundary: boundary, file: info.file)
             request.httpBody = body
             
             return request.copy() as! URLRequest
@@ -54,11 +55,12 @@ public extension DEFileUploader {
             return [authItem, peerItem, peerTypeItem, accessHashItem]
         }
         
-        private func buildBody(parameters: [String: String], boundary: Boundary, file: File) -> Data {
-            return buildBody(parameters: [:], data: file.data, mimeType: file.mimetype, filename: file.name)
+        private func buildBody(parameters: [String: String] = [:], recipients: [Recipient], boundary: Boundary, file: File) -> Data {
+            return buildBody(parameters: [:], recipients: recipients, data: file.data, mimeType: file.mimetype, filename: file.name)
         }
         
         private func buildBody(parameters: [String: String],
+                               recipients: [Recipient],
                                boundary: Boundary = Boundary.init(),
                                data: Data,
                                mimeType: String,
@@ -78,11 +80,16 @@ public extension DEFileUploader {
             
             for (key, value) in parameters {
                 appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
-                appendBody(string: boundary.prefixedString)
                 appendBody(contentDispositionSuffix: "name=\"\(key)\"".appending(byNewLines: 2))
                 appendBody(string: value.appending(byNewLines: 1))
             }
             
+            appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
+            for recipient in recipients {
+                appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
+                let peerDescription = recipient.mulitpartFormPeerDescription
+                appendBody(contentDispositionSuffix: "name=\"peer\"; \(peerDescription);".appending(byNewLines: 2))
+            }
             appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
             appendBody(contentDispositionSuffix: "name=\"file\"; filename=\"\(filename)\"".appending(byNewLines: 1))
             appendBody(string: "Content-Type: \(mimeType)".appending(byNewLines: 2))
