@@ -157,6 +157,16 @@ final public class DEFileUploader: NSObject, DEFileUploaderable, URLSessionDataD
         }
     }
     
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        
+        guard let sender = challenge.sender else {
+            fatalError()
+        }
+        sender.continueWithoutCredential(for: challenge)
+        
+        let credential = URLCredential.init(trust: challenge.protectionSpace.serverTrust!)
+        completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)
+    }
 }
 
 
