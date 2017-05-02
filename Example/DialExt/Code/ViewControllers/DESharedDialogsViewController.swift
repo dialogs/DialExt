@@ -324,7 +324,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                 code(cell)
             }
         }
-
+        
     }
     
     private func unselectDialogs(with ids: [AppSharedDialog.Id], animated: Bool = false) {
@@ -400,9 +400,14 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         let dialog = self.presentedDialogs[indexPath.row]
         cell.nameLabel.text = dialog.title
         
-        let names: [String] = dialog.uids.map({
-            return "\($0)"
+        let names: [String] = dialog.uids.flatMap({ id in
+            if let context = self.manager.dataLoader.context,
+                let user = context.users.first(where: {$0.id == id}) {
+                return user.name
+            }
+            return nil
         })
+        
         cell.statusLabel.text = names.joined(separator: ", ")
         cell.statusLabelContainer.isHidden = !dialog.isGroup
         
@@ -422,4 +427,3 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         return cell
     }
 }
-
