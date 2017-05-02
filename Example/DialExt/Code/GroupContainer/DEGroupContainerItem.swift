@@ -111,9 +111,9 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
     
     public var onDidChange: (() -> ())? = nil
     
-    init(url: URL,
-         workQueue: OperationQueue = DEGroupContainerFilePresenter.commonWorkOperationQueue,
-         callbackQueue: DispatchQueue? = DispatchQueue.main) {
+    public init(url: URL,
+                workQueue: OperationQueue = DEGroupContainerFilePresenter.commonWorkOperationQueue,
+                callbackQueue: DispatchQueue? = DispatchQueue.main) {
         self.url = url
         
         let queue = OperationQueue.init()
@@ -123,7 +123,7 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
         
         self.workQueue = queue
         self.callbackQueue = callbackQueue
-   
+        
         super.init()
         
         self.presenter = Presenter.init(url: self.url,
@@ -172,7 +172,7 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
             if !isSuccess && !isDataCreationFailure {
                 resultError = coordinatorError
             }
-
+            
             de_perform(code: {
                 if isSuccess {
                     onSuccess(data)
