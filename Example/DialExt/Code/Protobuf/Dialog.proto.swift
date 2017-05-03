@@ -32,6 +32,7 @@ final public class AppSharedDialog : GeneratedMessage {
         fieldCheck = fieldCheck && (lhs.uids == rhs.uids)
         fieldCheck = fieldCheck && (lhs.hasIsReadOnly == rhs.hasIsReadOnly) && (!lhs.hasIsReadOnly || lhs.isReadOnly == rhs.isReadOnly)
         fieldCheck = fieldCheck && (lhs.hasAccessHash == rhs.hasAccessHash) && (!lhs.hasAccessHash || lhs.accessHash == rhs.accessHash)
+        fieldCheck = fieldCheck && (lhs.hasPeerId == rhs.hasPeerId) && (!lhs.hasPeerId || lhs.peerId == rhs.peerId)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
@@ -52,6 +53,9 @@ final public class AppSharedDialog : GeneratedMessage {
 
     public fileprivate(set) var accessHash:Int64 = Int64(0)
     public fileprivate(set) var hasAccessHash:Bool = false
+
+    public fileprivate(set) var peerId:Int32 = Int32(0)
+    public fileprivate(set) var hasPeerId:Bool = false
 
     required public init() {
         super.init()
@@ -81,6 +85,9 @@ final public class AppSharedDialog : GeneratedMessage {
         }
         if hasAccessHash {
             try codedOutputStream.writeInt64(fieldNumber: 6, value:accessHash)
+        }
+        if hasPeerId {
+            try codedOutputStream.writeInt32(fieldNumber: 7, value:peerId)
         }
         try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
@@ -115,6 +122,9 @@ final public class AppSharedDialog : GeneratedMessage {
         }
         if hasAccessHash {
             serialize_size += accessHash.computeInt64Size(fieldNumber: 6)
+        }
+        if hasPeerId {
+            serialize_size += peerId.computeInt32Size(fieldNumber: 7)
         }
         serialize_size += unknownFields.serializedSize()
         memoizedSerializedSize = serialize_size
@@ -166,6 +176,9 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasAccessHash {
             jsonMap["accessHash"] = "\(accessHash)"
         }
+        if hasPeerId {
+            jsonMap["peerId"] = Int(peerId)
+        }
         return jsonMap
     }
     override class public func decode(jsonMap:Dictionary<String,Any>) throws -> AppSharedDialog {
@@ -196,6 +209,9 @@ final public class AppSharedDialog : GeneratedMessage {
         if hasAccessHash {
             output += "\(indent) accessHash: \(accessHash) \n"
         }
+        if hasPeerId {
+            output += "\(indent) peerId: \(peerId) \n"
+        }
         output += unknownFields.getDescription(indent: indent)
         return output
     }
@@ -219,6 +235,9 @@ final public class AppSharedDialog : GeneratedMessage {
             }
             if hasAccessHash {
                 hashCode = (hashCode &* 31) &+ accessHash.hashValue
+            }
+            if hasPeerId {
+                hashCode = (hashCode &* 31) &+ peerId.hashValue
             }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
@@ -388,6 +407,31 @@ final public class AppSharedDialog : GeneratedMessage {
             builderResult.accessHash = Int64(0)
             return self
         }
+        public var peerId:Int32 {
+            get {
+                return builderResult.peerId
+            }
+            set (value) {
+                builderResult.hasPeerId = true
+                builderResult.peerId = value
+            }
+        }
+        public var hasPeerId:Bool {
+            get {
+                return builderResult.hasPeerId
+            }
+        }
+        @discardableResult
+        public func setPeerId(_ value:Int32) -> AppSharedDialog.Builder {
+            self.peerId = value
+            return self
+        }
+        @discardableResult
+        public func clearPeerId() -> AppSharedDialog.Builder{
+            builderResult.hasPeerId = false
+            builderResult.peerId = Int32(0)
+            return self
+        }
         override public var internalGetResult:GeneratedMessage {
             get {
                 return builderResult
@@ -432,6 +476,9 @@ final public class AppSharedDialog : GeneratedMessage {
             if other.hasAccessHash {
                 accessHash = other.accessHash
             }
+            if other.hasPeerId {
+                peerId = other.peerId
+            }
             try merge(unknownField: other.unknownFields)
             return self
         }
@@ -472,6 +519,9 @@ final public class AppSharedDialog : GeneratedMessage {
                 case 48:
                     accessHash = try codedInputStream.readInt64()
 
+                case 56:
+                    peerId = try codedInputStream.readInt32()
+
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -507,6 +557,11 @@ final public class AppSharedDialog : GeneratedMessage {
                 resultDecodedBuilder.accessHash = Int64(jsonValueAccessHash)!
             } else if let jsonValueAccessHash = jsonMap["accessHash"] as? Int {
                 resultDecodedBuilder.accessHash = Int64(jsonValueAccessHash)
+            }
+            if let jsonValuePeerId = jsonMap["peerId"] as? Int {
+                resultDecodedBuilder.peerId = Int32(jsonValuePeerId)
+            } else if let jsonValuePeerId = jsonMap["peerId"] as? String {
+                resultDecodedBuilder.peerId = Int32(jsonValuePeerId)!
             }
             return resultDecodedBuilder
         }
@@ -1493,6 +1548,7 @@ extension AppSharedDialog: GeneratedMessageProtocol {
         case "uids": return self.uids
         case "isReadOnly": return self.isReadOnly
         case "accessHash": return self.accessHash
+        case "peerId": return self.peerId
         default: return nil
         }
     }
@@ -1507,6 +1563,7 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
             case "uids": return self.uids
             case "isReadOnly": return self.isReadOnly
             case "accessHash": return self.accessHash
+            case "peerId": return self.peerId
             default: return nil
             }
         }
@@ -1542,6 +1599,11 @@ extension AppSharedDialog.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.accessHash = newSubscriptValue
+            case "peerId":
+                guard let newSubscriptValue = newSubscriptValue as? Int32 else {
+                    return
+                }
+                self.peerId = newSubscriptValue
             default: return
             }
         }

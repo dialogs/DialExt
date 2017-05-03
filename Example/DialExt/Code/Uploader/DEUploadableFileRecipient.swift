@@ -12,7 +12,7 @@ public extension DEFileUploader {
     
     public struct Recipient {
         
-        public let id: Int64
+        public let id: Int32
         
         public var idString: String {
             return String(describing: self.id)
@@ -26,14 +26,14 @@ public extension DEFileUploader {
             return String(describing: self.accessHash)
         }
         
-        public init(id: Int64, peerType: PeerType, accessHash: Int64) {
+        public init(id: Int32, peerType: PeerType, accessHash: Int64) {
             self.id = id
             self.peerType = peerType
             self.accessHash = accessHash
         }
         
         public init(dialog: AppSharedDialog) {
-            self.init(id: dialog.id, peerType : dialog.isGroup ? .group : .private, accessHash: dialog.accessHash)
+            self.init(id: dialog.peerId, peerType : dialog.isGroup ? .group : .private, accessHash: dialog.accessHash)
         }
         
         public enum PeerType {
