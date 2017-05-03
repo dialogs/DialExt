@@ -6,9 +6,11 @@
   Copyright © 2017 CocoaPods. All rights reserved.
 */
 
-"AlertCancel" = "EEE Cancel";
+"AlertCancel" = "Отмена";
 
-"AlertUploadProgress" = "EEE Progress: ";
-"AlertUploadTitle" = "EEE Uploading";
-"AlertUploadPreparing" = "EEE Preparing...";
-"AlertUploadFinished" = "EEE Finished!";
+"AlertUploadProgress" = "Прогресс: ";
+"AlertUploadTitle" = "Загрузка";
+"AlertUploadPreparing" = "Подготовка...";
+"AlertUploadFinished" = "Завершено!";
+
+"NoDialogsFoundTitle" = "Диалогов не найдено";

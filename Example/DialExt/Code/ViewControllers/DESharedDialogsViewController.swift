@@ -59,6 +59,32 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
+    private enum Content: Equatable {
+        case idle
+        case dialogs
+        case noDialogs
+
+        private var typeId: Int {
+            switch self {
+            case .idle: return 0
+            case .dialogs: return 1
+            case .noDialogs: return 3
+            }
+        }
+        
+        public static func ==(lhs: Content, rhs: Content) -> Bool {
+            return lhs.typeId == rhs.typeId
+        }
+    }
+    
+    private var content: Content = .idle {
+        didSet {
+            if content != oldValue {
+                updateContentRepresentation(oldContent: oldValue)
+            }
+        }
+    }
+    
     public var onDidFinish:(()->())? = nil
     
     public var manager: DESharedDialogsManager!
@@ -70,6 +96,13 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     public var multipleSelectionAllowed: Bool = false
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
+    
+    private var providedContext: NSExtensionContext! {
+        guard let context = extensionContextProvider?.extensionContextForSharedDialogsViewController(self) else {
+            return nil
+        }
+        return context
+    }
     
     private var hasSelectedDialogs: Bool = false {
         didSet {
@@ -181,20 +214,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
         
         self.uploader.onDidFinish = { [unowned self] success, error in
-            if let alert = self.alert {
-                if success {
-                    alert.message = DELocalize(.alertUploadFinished)
-                }
-                else {
-                    let message = error?.localizedDescription ?? String(describing: error)
-                    alert.message = message
-                }
-                alert.actions.first?.isEnabled = false
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: { [unowned self] in
-                self.dismissAlert()
-            })
+            self.handleFilesUploadingFinished(success: success, error: error)
         }
     }
     
@@ -221,6 +241,16 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         self.alert?.dismiss(animated: true, completion: { [unowned self] in
             self.alert = nil
         })
+    }
+    
+    private func handleFilesUploadingFinished(success: Bool, error:Error? ) {
+        if success {
+            self.providedContext.completeRequest(returningItems: nil, completionHandler: nil)
+        }
+        else {
+            let contextError = error ?? NSError.init(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
+            self.providedContext.cancelRequest(withError: contextError)
+        }
     }
     
     private func uploadFiles() {
@@ -251,15 +281,62 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     private func handleDialogsState(_ state: DESharedDialogsDataLoader.DataState) {
         switch state {
         case let .failured(error):
-            fatalError("Totally failed: \(String(describing: error))")
-            
+            self.handleDialogLoadingFailure(error: error)
         case .loaded:
             self.dialogs = self.manager.dataLoader.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})
-            
+            if self.dialogs.count > 0 {
+                self.content = .dialogs
+            }
+            else {
+                self.content = .noDialogs
+            }
         default:
             break
         }
     }
+    
+    private func handleDialogLoadingFailure(error: Error?) {
+        guard let context = self.extensionContextProvider?.extensionContextForSharedDialogsViewController(self) else {
+            fatalError("No extension context providen")
+        }
+        
+        context.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
+    private func updateContentRepresentation(oldContent: Content) {
+        switch content {
+        case .dialogs:
+            dismissNoDialogsPlaceholderViewController()
+            
+        case .noDialogs:
+            presentNoDialogsPlaceholderViewController()
+            
+        default: break
+        }
+    }
+    
+    
+    private var noDialogsViewController: DEPlaceholderViewController? = nil
+    
+    private func presentNoDialogsPlaceholderViewController() {
+        let placeholderViewController = DEPlaceholderViewController.fromStoryboard()
+        let configurator = DEPlaceholderViewController.BasicConfigurator(preconfig: .noDialogs())
+        placeholderViewController.configure(configurator)
+        
+        self.addChildViewController(placeholderViewController)
+        self.view.addSubview(placeholderViewController.view)
+        NSLayoutConstraint.activate(NSLayoutConstraint.de_wrappingView(placeholderViewController.view))
+        placeholderViewController.didMove(toParentViewController: self)
+    }
+    
+    private func dismissNoDialogsPlaceholderViewController() {
+        if let viewController = noDialogsViewController {
+            viewController.willMove(toParentViewController: nil)
+            viewController.view.removeFromSuperview()
+            viewController.removeFromParentViewController()
+        }
+    }
+    
     
     private func updatePresentedDialogs() {
         if self.isSearching {

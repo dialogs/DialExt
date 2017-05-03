@@ -69,6 +69,10 @@
 		74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */; };
 		74846A431EA60D6800B80ED6 /* DESharedDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */; };
 		748B1B441E951A0D00BAB63D /* Dialog.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748B1B431E951A0D00BAB63D /* Dialog.proto.swift */; };
+		748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */; };
+		748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */; };
+		748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */; };
+		748BB7941EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
@@ -222,6 +226,10 @@
 		74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionReportHandler.swift; sourceTree = "<group>"; };
 		74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataConfig.swift; sourceTree = "<group>"; };
 		748B1B431E951A0D00BAB63D /* Dialog.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.proto.swift; sourceTree = "<group>"; };
+		748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DEPlaceholderViewController.storyboard; sourceTree = "<group>"; };
+		748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEPlaceholderViewController.swift; sourceTree = "<group>"; };
+		748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DialExt.swift"; sourceTree = "<group>"; };
+		748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+DialExt.swift"; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
@@ -386,6 +394,8 @@
 				74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */,
 				749660711EA775A5000A5D9A /* SwiftMisc.swift */,
 				744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */,
+				748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */,
+				748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -479,6 +489,7 @@
 				74065EEB1E8113A900C535B6 /* DEDialogCell.swift */,
 				74065EED1E8113A900C535B6 /* DESharedDialogsViewController.swift */,
 				74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */,
+				748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -489,6 +500,7 @@
 				74065F0D1E8115A700C535B6 /* DESharedDialogsViewController.storyboard */,
 				74065F0F1E8115A700C535B6 /* Images.xcassets */,
 				74326E121EAE42200016A1F1 /* Localizable.strings */,
+				748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -772,6 +784,7 @@
 				74065F121E8115A700C535B6 /* Images.xcassets in Resources */,
 				74326E101EAE42200016A1F1 /* Localizable.strings in Resources */,
 				742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */,
+				748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */,
 				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -936,9 +949,11 @@
 				74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */,
 				74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */,
 				74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */,
+				748BB7941EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift in Sources */,
 				74065EEE1E8113A900C535B6 /* DEKeychainDataProvider.swift in Sources */,
 				74065EF41E8113A900C535B6 /* DESimpleInterappMessenger.swift in Sources */,
 				74065EFA1E8113A900C535B6 /* DEKeychainQuery.swift in Sources */,
+				748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */,
 				74846A431EA60D6800B80ED6 /* DESharedDataConfig.swift in Sources */,
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
@@ -955,6 +970,7 @@
 				742DC8DA1EAA0C9C00ABDA55 /* DEExtensionItemUploader.swift in Sources */,
 				742CAB351E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift in Sources */,
 				74065EF01E8113A900C535B6 /* DispatchQueue+DialExt.swift in Sources */,
+				748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */,
 				74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */,
 				74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */,
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,

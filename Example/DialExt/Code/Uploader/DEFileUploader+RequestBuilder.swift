@@ -87,7 +87,7 @@ public extension DEFileUploader {
             
             for recipient in recipients {
                 appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
-                let peerDescription = recipient.mulitpartFormPeerDescription
+                appendBody(string: "Content-Type: text/plain; charset=UTF-8".appending(byNewLines: 1))
                 appendBody(contentDispositionSuffix: "name=\"peer\"".appending(byNewLines: 2))
                 appendBody(string: "\(recipient.mulitpartFormPeerDescription)".appending(byNewLines: 1))
             }

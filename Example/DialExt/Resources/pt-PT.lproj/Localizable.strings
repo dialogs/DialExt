@@ -12,3 +12,5 @@
 "AlertUploadTitle" = "Uploading";
 "AlertUploadPreparing" = "Preparing...";
 "AlertUploadFinished" = "Finished!";
+
+"NoDialogsFoundTitle" = "Nenhum diálogo encontrado";
