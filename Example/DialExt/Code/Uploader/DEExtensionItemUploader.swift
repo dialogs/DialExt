@@ -177,8 +177,11 @@ public class DEExtensionItemUploader {
         
         var nameIndex = 0
         let files: [DEFileUploader.File] = results.map { (item, data) in
-            let name = "File \(nameIndex)"
-            let mimetype = item.attachment.supposedFileExtension ?? ""
+            var name = "File \(nameIndex)"
+            if let fileExtension = item.fileExtension {
+                name.append(".\(fileExtension)")
+            }
+            let mimetype = item.attachment.supposedMimeType ?? "application/octet-stream"
             let file = DEFileUploader.File.init(name: name, data: data, mimetype: mimetype)
             
             nameIndex += 1
