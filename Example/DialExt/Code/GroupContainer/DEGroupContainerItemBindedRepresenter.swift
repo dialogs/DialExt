@@ -142,7 +142,7 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     }
     
     private func handleFirstLoadingFailure(error: Error?, isUpdate: Bool) {
-        print("Fail to sync representaiton: \(String(describing: error))")
+        print("Fail to sync representation: \(String(describing: error))")
         self.signalRepresentationUpdateFailed(error: error, isUpdate: isUpdate)
     }
     
