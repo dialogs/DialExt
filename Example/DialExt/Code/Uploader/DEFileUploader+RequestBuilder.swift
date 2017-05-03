@@ -40,8 +40,13 @@ public extension DEFileUploader {
             request.httpMethod = "POST"
             
             let recipients = [info.recipient]
-            let body = buildBody(recipients: recipients, boundary: boundary, file: info.file)
+            
+            let file = info.file
+            let body = buildBody(recipients: recipients, boundary: boundary, file: file)
             request.httpBody = body
+            
+            
+            request.addValue(String(describing: body.count), forHTTPHeaderField: "Content-Length")
             
             return request.copy() as! URLRequest
         }
@@ -52,12 +57,12 @@ public extension DEFileUploader {
         }
         
         private func buildBody(parameters: [String: String] = [:], recipients: [Recipient], boundary: Boundary, file: File) -> Data {
-            return buildBody(parameters: [:], recipients: recipients, data: file.data, mimeType: file.mimetype, filename: file.name)
+            return buildBody(parameters: [:], recipients: recipients, boundary: boundary, data: file.data, mimeType: file.mimetype, filename: file.name)
         }
         
         private func buildBody(parameters: [String: String],
                                recipients: [Recipient],
-                               boundary: Boundary = Boundary.init(),
+                               boundary: Boundary,
                                data: Data,
                                mimeType: String,
                                filename: String) -> Data {
@@ -80,7 +85,6 @@ public extension DEFileUploader {
                 appendBody(string: value.appending(byNewLines: 1))
             }
             
-            appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
             for recipient in recipients {
                 appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
                 let peerDescription = recipient.mulitpartFormPeerDescription
@@ -88,7 +92,6 @@ public extension DEFileUploader {
                 appendBody(string: "\(recipient.mulitpartFormPeerDescription)".appending(byNewLines: 1))
             }
             appendBody(string: boundary.prefixedString.appending(byNewLines: 1))
-            appendBody(string: "Content-Type: text/plain; charset=UTF-8".appending(byNewLines: 1))
             appendBody(contentDispositionSuffix: "name=\"file\"; filename=\"\(filename)\"".appending(byNewLines: 1))
             appendBody(string: "Content-Type: \(mimeType)".appending(byNewLines: 2))
             

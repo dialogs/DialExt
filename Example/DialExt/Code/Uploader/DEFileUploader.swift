@@ -239,7 +239,7 @@ final public class DEDebugFileUploader: DEFileUploaderable {
         
         let result = config.result
         let duration: TimeInterval = max(0.0, config.duration)
-            
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
             withOptionalExtendedLifetime(self, body: {
                 self?.handleTaskCompletion(uuid, result: result, completion: completion)
@@ -289,7 +289,7 @@ final public class DEDebugFileUploader: DEFileUploaderable {
                 self?.increaseProgress(by: progressFragment, uuid: uuid, nextCallInterval: nextCallInterval)
             }
         }
-
+        
     }
     
 }
