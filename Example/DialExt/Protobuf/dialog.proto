@@ -5,7 +5,7 @@ syntax = "proto3";
 // Minor version increases after changing in generated .swift file (if file has any changes). State version resets.
 // Major version changes for fully incompatibility
 //
-// [Version] = 1.0.1
+// [Version] = 1.0.2
 
 message AppSharedDialog {
    int64 id = 1;
@@ -14,6 +14,7 @@ message AppSharedDialog {
    repeated int32 uids = 4;
    bool isReadOnly = 5;
    int64 accessHash = 6;
+   int32 peerId = 7;
 }
 
 message AppSharedUser {
