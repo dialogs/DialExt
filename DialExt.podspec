@@ -24,7 +24,7 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://bitbucket.transmit.im/projects/DLG/repos/dialext'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Vladlex' => 'vladlexion@gmail.com' }
-  s.source           = { :git => 'https://bitbucket.transmit.im/scm/dlg/dialext.git' }
+  s.source           = { :git => 'ssh://git@bitbucket.transmit.im:7999/dlg/dialext.git' }
 
   s.ios.deployment_target = '9.0'
 
