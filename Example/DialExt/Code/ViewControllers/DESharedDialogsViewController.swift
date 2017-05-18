@@ -59,6 +59,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
+    internal var debug_stopsAtViewDidLoad: Bool = false
+    
     private enum Content: Equatable {
         case idle
         case dialogs
@@ -157,6 +159,10 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard !debug_stopsAtViewDidLoad else {
+            return
+        }
         
         guard config != nil else {
             fatalError("No shared data config set")

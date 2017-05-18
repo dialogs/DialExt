@@ -40,6 +40,8 @@
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		741AC8511ECE4F74008A0318 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
+		741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */; };
 		742CAB331E9B821200965906 /* DEProtobufItemDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742CAB321E9B821200965906 /* DEProtobufItemDataEncoder.swift */; };
 		742CAB351E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742CAB341E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift */; };
 		742DC8D71EAA045800ABDA55 /* NSExtensionItem+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742DC8D51EAA045800ABDA55 /* NSExtensionItem+DialExt.swift */; };
@@ -62,7 +64,6 @@
 		744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */; };
 		7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
-		748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748316681E72962500E4ADA8 /* DialExtTests.swift */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -190,6 +191,7 @@
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		74170F2B1E79805B00E88FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEDialogCellTests.swift; sourceTree = "<group>"; };
 		742CAB321E9B821200965906 /* DEProtobufItemDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEProtobufItemDataEncoder.swift; sourceTree = "<group>"; };
 		742CAB341E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEGroupContainerItemRepresenter+SharedDialogs.swift"; sourceTree = "<group>"; };
 		742DC8D51EAA045800ABDA55 /* NSExtensionItem+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSExtensionItem+DialExt.swift"; sourceTree = "<group>"; };
@@ -221,7 +223,6 @@
 		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
 		7483165C1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		748316611E72962500E4ADA8 /* DialExtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialExtTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		748316681E72962500E4ADA8 /* DialExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialExtTests.swift; sourceTree = "<group>"; };
 		7483166A1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionReportHandler.swift; sourceTree = "<group>"; };
 		74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataConfig.swift; sourceTree = "<group>"; };
@@ -266,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				741AC8511ECE4F74008A0318 /* DialExt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,9 +570,9 @@
 		748316671E72962500E4ADA8 /* DialExtTests */ = {
 			isa = PBXGroup;
 			children = (
-				748316681E72962500E4ADA8 /* DialExtTests.swift */,
 				7483166A1E72962500E4ADA8 /* Info.plist */,
 				749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */,
+				741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */,
 			);
 			path = DialExtTests;
 			sourceTree = "<group>";
@@ -826,7 +828,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		552E2CF22F0A57654139C5E4 /* [CP] Check Pods Manifest.lock */ = {
@@ -841,7 +843,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8BC8DD364E3CC3FBB5F27632 /* [CP] Copy Pods Resources */ = {
@@ -901,7 +903,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F9B41508C5CB68A9D02C37EE /* [CP] Copy Pods Resources */ = {
@@ -1011,7 +1013,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				748316691E72962500E4ADA8 /* DialExtTests.swift in Sources */,
+				741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */,
 				749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

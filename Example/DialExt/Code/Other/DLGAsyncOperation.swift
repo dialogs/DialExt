@@ -91,6 +91,7 @@ open class DLGAsyncOperation<ResultData>: Operation {
     
     // Private
     
+    // TODO: Make thread-safe
     private var state: DLGOperationState = .idle {
         willSet {
             if let oldStateWillChangeKey = state.operationKey {
