@@ -17,6 +17,11 @@ public protocol DESharedDialogsViewControllerPresenter {
     
 }
 
+
+public protocol DESharedDialogsViewControllerHidingResponsible {
+    func hideExtensionWithCompletionHandler(completion:(()->())?)
+}
+
 public protocol DESharedDialogsViewControllerExtensionContextProvider {
     func extensionContextForSharedDialogsViewController(_ viewController: DESharedDialogsViewController) -> NSExtensionContext?
 }
@@ -59,6 +64,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
     }
     
+    /// Variable available for testing. If *YES* then controller does nothing after loading the view.
     internal var debug_stopsAtViewDidLoad: Bool = false
     
     private enum Content: Equatable {
@@ -98,6 +104,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     public var multipleSelectionAllowed: Bool = false
     
     public var extensionContextProvider: DESharedDialogsViewControllerExtensionContextProvider? = nil
+    
+    public var hideResponsible: DESharedDialogsViewControllerHidingResponsible? = nil
     
     private var providedContext: NSExtensionContext! {
         guard let context = extensionContextProvider?.extensionContextForSharedDialogsViewController(self) else {
@@ -173,10 +181,9 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
         
         if self.uploader == nil {
-            let tokenProvider = DEFileUploadTokenInfoProvider.init(keychainGroupId: self.config.keychainGroup)
-            let fileUploader = DEFileUploader.init(tokenProvider: tokenProvider,
-                                                   endpoints: self.config.endpointUploadMethodURLs)
-            self.uploader = DEExtensionItemUploader.init(fileUploader: fileUploader)
+            let authProvider = DEUploadAuthProvider.init(keychainGroupId: self.config.keychainGroup)
+            let fileUploader = DEUploader.init(apiUrl: self.config.endpointUploadMethodURLs.first!)
+            self.uploader = DEExtensionItemUploader.init(fileUploader: fileUploader, authProvider: authProvider)
         }
         
         if self.avatarProvider == nil {
@@ -196,6 +203,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         searchController.searchResultsUpdater = self
         self.tableView.tableHeaderView = searchController.searchBar
         self.definesPresentationContext = true
+        self.searchController.dimsBackgroundDuringPresentation = false
         
         sendViewLineSeparatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
         
@@ -250,12 +258,23 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }
     
     private func handleFilesUploadingFinished(success: Bool, error:Error? ) {
-        if success {
-            self.providedContext.completeRequest(returningItems: nil, completionHandler: nil)
+        let finish: (() -> ()) = {
+            if success {
+                self.providedContext.completeRequest(returningItems: nil, completionHandler: nil)
+            }
+            else {
+                let contextError = error ?? NSError.init(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
+                self.providedContext.cancelRequest(withError: contextError)
+            }
+        }
+        if let hider = self.hideResponsible {
+            hider.hideExtensionWithCompletionHandler(completion: { 
+                finish()
+            })
+            
         }
         else {
-            let contextError = error ?? NSError.init(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-            self.providedContext.cancelRequest(withError: contextError)
+            finish()
         }
     }
     
@@ -274,7 +293,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true) {
-            let task = DEExtensionItemUploader.Task(items: items, dialogs: self.selectedDialogs)
+            let task = DEUploadTask(items: items, dialogs: self.selectedDialogs)
             self.uploader.upload(task: task)
         }
         self.alert = alert
@@ -501,8 +520,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         cell.avatarView.image = self.avatarProvider.provideImage(dialog: dialog, completion: { (image, placeholder) in
         })
         
-        let cellSide = min(cell.frame.size.width, cell.frame.size.height)
-        cell.avatarView.layer.cornerRadius = cellSide / 2.0
+        let avatarViewSide = min(cell.avatarView.frame.size.width, cell.avatarView.frame.size.height)
+        cell.avatarView.layer.cornerRadius = avatarViewSide / 2.0
         cell.avatarView.layer.masksToBounds = true
         
         cell.avatarView.image = self.loadImage(dialog: dialog)

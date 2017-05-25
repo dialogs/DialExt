@@ -28,7 +28,7 @@ public enum FakeError: Error {
         
         viewController.avatarProvider = DEDebugAvatarImageProvider.init()
         
-        let debugFileUploader = DEDebugFileUploader.init()
-        viewController.uploader = DEExtensionItemUploader.init(fileUploader: debugFileUploader)
+        // TODO: Provide debug uploade for testing UI responsiveness
+//        viewController.uploader = DEExtensionItemUploader.init(fileUploader: debugFileUploader)
     }
 }

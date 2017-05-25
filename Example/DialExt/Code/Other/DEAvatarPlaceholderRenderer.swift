@@ -11,7 +11,7 @@ import Foundation
 /// You can subclass this class and implement your own renderer with advanced features
 open class DEAvatarPlaceholderConfig {
     
-    public let context: Context
+    public var context: Context
     
     public var placeholder: String? = nil
     

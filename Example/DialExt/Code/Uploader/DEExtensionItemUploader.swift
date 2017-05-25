@@ -9,41 +9,59 @@
 import Foundation
 
 
-public enum DEExtensionItemUploaderError: Error {
-    case noItemsToLoad
-    case noItemsDataToLoad
+public protocol DEExtensionItemUploading: class {
+    
+    var isUploading: Bool { get }
+    
+    /// Value from 0.0 to 1.0, describing current task progress. 0.0 if no task in progress.
+    var progress: Float { get }
+
+    /// Callback for notifying about finishing current task.
+    var onDidFinish:((_ success: Bool, _ error: Error?) -> ())? { get set }
+    
+    /// Callback for notifying about finishing current task.
+    var onDidChangeProgress:((Float) -> ())? { get set }
+    
+    /// Starts uploading task. Returns *false* and does nothing if any task is already performing.
+    @discardableResult func upload(task: DEUploadTask) -> Bool
+    
+    
 }
+
+/**
+ * Describes task to do.
+ * Contains items passed from extension context and target dialogs (to send items to).
+ */
+public class DEUploadTask: Equatable {
+    
+    public private(set) var items: [NSExtensionItem]
+    
+    public private(set) var dialogs: [AppSharedDialog]
+    
+    private let uuid = UUID.init()
+    
+    public init(items: [NSExtensionItem], dialogs: [AppSharedDialog]) {
+        self.items = items
+        self.dialogs = dialogs
+    }
+    
+    public static func ==(lhs: DEUploadTask, rhs: DEUploadTask) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    
+}
+
 
 /**
  * Supposed to work on **main thread** only!
  * - warning: For now supports uploading only one file at a time.
  */
-public class DEExtensionItemUploader {
-    
-    // MARK: - Nested
-    
-    /**
-     * Describes task to do.
-     * Contains items passed from extension context and target dialogs (to send items to).
-     */
-    public class Task {
-        
-        public private(set) var items: [NSExtensionItem]
-        
-        public private(set) var dialogs: [AppSharedDialog]
-        
-        public init(items: [NSExtensionItem], dialogs: [AppSharedDialog]) {
-            self.items = items
-            self.dialogs = dialogs
-        }
-        
-    }
-    
+public class DEExtensionItemUploader: DEExtensionItemUploading {
     
     // MARK: - Vars
     
     /// Currently performing task. Nil there is no task performing right now.
-    public private(set) var currentTask: Task? {
+    public private(set) var currentTask: DEUploadTask? {
         didSet {
             resetProgress()
         }
@@ -66,184 +84,114 @@ public class DEExtensionItemUploader {
     // MARK: - Funcs
     
     /// Creates and returns new yploader instance.
-    public init(fileUploader: DEFileUploaderable) {
-        self.fileUploader = fileUploader
+    public init(fileUploader: DEUploaderable,
+                authProvider: DEUploadAuthProviding,
+                preparer: DEUploadShareExtensionItemPreparing = DEUploadShareExtensionItemPreparer.init()) {
+        self.uploader = fileUploader
+        self.preparer = preparer
+        self.authProvider = authProvider
     }
     
     /// Cancels current task. Callback will not be called. Do nothing if there is no current task.
     public func cancel() {
-        self.fileUploader.cancel()
+        self.uploader.cancel()
+        
         self.currentTask = nil
     }
     
-    /// Starts uploading task. Returns *false* if any task is already performing.
-    @discardableResult public func upload(task: Task) -> Bool {
+    /// Starts uploading task. Returns *false* and does nothing if any task is already performing.
+    @discardableResult public func upload(task: DEUploadTask) -> Bool {
         guard !self.isUploading else {
             return false
         }
         
         self.currentTask = task
-        
         self.processCurrentTask()
         
         return true
     }
     
-    public func isInProgressTask(_ task: Task) -> Bool {
-        return task === self.currentTask
-    }
-    
-    // MARK: - Private: Nested
-    
-    private class TaskItem: Hashable {
-        
-        let item: NSExtensionItem
-        
-        let attachment: NSItemProvider
-        
-        let fileExtension: String?
-        
-        public init(item: NSExtensionItem, attachment: NSItemProvider, fileExtension: String?) {
-            self.item = item
-            self.attachment = attachment
-            self.fileExtension = fileExtension
-        }
-        
-        public static func ==(lhs: TaskItem, rhs: TaskItem) -> Bool {
-            return lhs === rhs
-        }
-        
-        public var hashValue: Int {
-            return ObjectIdentifier.init(self).hashValue
-        }
-        
-    }
-    
     // MARK: - Private: Vars
     
-    private var fileUploader: DEFileUploaderable
+    /// Prepares items by converting from extensions to uploadable items
+    private let preparer: DEUploadShareExtensionItemPreparing
+    
+    /// Uploads items to server
+    private let uploader: DEUploaderable
+    
+    /// Provides data for signing url requests
+    private let authProvider: DEUploadAuthProviding
+    
     
     // MARK: - Private: Funcs
     
-    private func processCurrentTask() {
+    private func handleItemsPrepared(items: [DEUploadPreparedItem], task: DEUploadTask) {
+        guard isCurrentTask(task) else {
+            return
+        }
+        
         let task = self.currentTask!
+        let recipients = task.dialogs.map({ return DEUploadRecipient.init(dialog: $0) })
+        let auth = try! self.authProvider.provideAuth()
         
-        var taskItems: [TaskItem] = []
-        
-        let items = task.items
-        for item in items {
-            if let attachment = item.firstFoundDataRepresentableAttachment {
-                let fileExtension = attachment.supposedFileExtension
-                let taskItem = TaskItem.init(item: item, attachment: attachment, fileExtension: fileExtension)
-                taskItems.append(taskItem)
-            }
+        let preparedTask = DEUploadPreparedTask.init(recipients: recipients, items: items, auth: auth)
+        do {
+            try self.uploader.perform(task: preparedTask, progressCallback: { [weak self] progress in
+                self?.updateProgress(value: progress, task: task, notify: true)
+                }, completion: { [weak self] success, error in
+                    self?.finishTask(task: task, success: success, error: error)
+            })
         }
-        
-        guard taskItems.count > 0 else {
-            finishCurrentTask(success: false, error: DEExtensionItemUploaderError.noItemsToLoad)
-            return
+        catch {
+            handleFailure(error: error, task: task)
         }
-        
-        loadExtensionItemsData(task: task, items: taskItems)
+       
     }
     
-    private func finishTask(task: Task, success: Bool, error: Error?) {
-        guard self.isInProgressTask(task) else {
-            return
-        }
-        
-        finishCurrentTask(success: success, error: error)
-    }
     
-    private func finishCurrentTask(success: Bool, error: Error?) {
-        guard self.currentTask != nil else {
+    // MARK: - Task Control
+    
+    private func finishTask(task: DEUploadTask, success: Bool, error: Error?) {
+        guard self.isCurrentTask(task) else {
             return
         }
         
         self.currentTask = nil
-        
         onDidFinish?(success, error)
     }
     
-    private func uploadTaskItemResults(_ results: [TaskItem : Data], task: Task) {
-        guard isInProgressTask(task) else {
-            return
-        }
-        
-        guard results.count > 0 else {
-            self.finishCurrentTask(success: false, error: DEExtensionItemUploaderError.noItemsDataToLoad)
-            return
-        }
-        
-        var nameIndex = 0
-        let files: [DEFileUploader.File] = results.map { (item, data) in
-            var name = "File \(nameIndex)"
-            if let fileExtension = item.fileExtension {
-                name.append(".\(fileExtension)")
-            }
-            let mimetype = item.attachment.supposedMimeType ?? "application/octet-stream"
-            let file = DEFileUploader.File.init(name: name, data: data, mimetype: mimetype)
-            
-            nameIndex += 1
-            
-            return file
-        }
-        self.uploadFiles(files, task: task)
+    private func isCurrentTask(_ task: DEUploadTask?) -> Bool {
+        return self.currentTask == task && task != nil
     }
     
-    private func uploadFiles(_ files: [DEFileUploader.File], task: Task) {
-        guard isInProgressTask(task) else {
-            return
-        }
-        let file = files.first!
-        let dialog = task.dialogs.first!
-        let recipient = DEFileUploader.Recipient.init(dialog: dialog)
-        try! self.fileUploader.upload(file, recipient: recipient, progressCallback: { [weak self] (progress) in
-            withOptionalExtendedLifetime(self) {
-                self!.updateProgress(value: progress, task: task, notify: true)
-            }
-        }) { [weak self] success, error in
-            withOptionalExtendedLifetime(self) {
-                self!.finishTask(task: task, success: success, error: error)
-            }
-        }
+    private func handleFailure(error: Error?, task: DEUploadTask) {
+        self.finishTask(task: task, success: false, error: error)
     }
     
-    private func loadExtensionItemsData(task: Task, items: [TaskItem]) {
-        guard isInProgressTask(task) else {
-            return
-        }
+    private func processCurrentTask() {
+        let task = self.currentTask!
         
-        var results: [TaskItem : Data] = [:]
-        
-        let group = DispatchGroup.init()
-        
-        for item in items {
-            group.enter()
-            let loadStarted = item.attachment.loadAndRepresentData(options: nil, completionHandler: { (data, error) in
-                if let resultData = data {
-                    results[item] = resultData
-                }
-                group.leave()
-            })
-            guard loadStarted else {
-                fatalError("Item is not data representable!")
-            }
-        }
-        
-        group.notify(queue: .main) { [weak self] in
+        self.preparer.prepare(items: task.items) { [weak self] (preparedItems, error) in
             withOptionalExtendedLifetime(self, body: {
-                self!.uploadTaskItemResults(results, task: task)
+                if let items = preparedItems {
+                    self!.handleItemsPrepared(items: items, task: task)
+                }
+                else {
+                    self!.handleFailure(error: error, task: task)
+                }
             })
         }
     }
+    
+    
+    // MARK: - Progress
     
     private func resetProgress(notify: Bool = false) {
         self.updateProgress(value: 0.0, notify: notify)
     }
     
-    private func updateProgress(value: Float, task: Task? = nil, notify: Bool = true) {
-        guard task == nil || isInProgressTask(task!) else {
+    private func updateProgress(value: Float, task: DEUploadTask? = nil, notify: Bool = true) {
+        guard  isCurrentTask(task) else {
             return
         }
         
@@ -251,5 +199,62 @@ public class DEExtensionItemUploader {
         if notify, let progressCallback = self.onDidChangeProgress {
             progressCallback(value)
         }
+    }
+}
+
+
+/**
+ * Under development.
+ */
+public class DEDebueExtensionItemUploader: DEExtensionItemUploading {
+    
+    public struct TaskHandleConfig {
+        
+        var duration: TimeInterval = 3.0
+        var targerProgress: Float = 1.0
+        var progressUpdatesCallsCount = 10
+        var success: Bool = true
+        var error: Error? = nil
+        
+        public var progressStep: Float {
+            return targerProgress / Float(progressUpdatesCallsCount)
+        }
+        
+        public var progressCallRepeatInterval: TimeInterval {
+            return duration / Double(progressUpdatesCallsCount)
+        }
+        
+        public init() {
+            
+        }
+    }
+    
+    public var nextTaskHandleConfig = TaskHandleConfig.init()
+    
+    public init() {
+        
+    }
+    
+    /// Starts uploading task. Returns *false* and does nothing if any task is already performing.
+    @discardableResult
+    public func upload(task: DEUploadTask) -> Bool {
+        guard !self.isUploading else { return false }
+        
+        return true
+    }
+
+    /// Callback for notifying about finishing current task.
+    public var onDidChangeProgress: ((Float) -> ())?
+
+    /// Callback for notifying about finishing current task.
+    public var onDidFinish: ((Bool, Error?) -> ())?
+
+    /// Value from 0.0 to 1.0, describing current task progress. 0.0 if no task in progress.
+    public var progress: Float = 0.0
+
+    public private(set) var isUploading: Bool = false
+
+    private func peformTask(_ task: DEUploadTask) {
+        
     }
 }

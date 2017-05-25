@@ -13,7 +13,8 @@ public enum FakeError: Error {
 }
 
 open class DESharedDialogsPresentationViewController: UIViewController,
-DESharedDialogsViewControllerExtensionContextProvider {
+DESharedDialogsViewControllerExtensionContextProvider,
+DESharedDialogsViewControllerHidingResponsible {
     
     /// Override value in your subclass
     open var config: DESharedDataConfig! {
@@ -31,6 +32,7 @@ DESharedDialogsViewControllerExtensionContextProvider {
         
         let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard(config: self.config)
         dialogsController.extensionContextProvider = self
+        dialogsController.hideResponsible = self
         self.dialogsController = dialogsController
         
         configureDialogsViewController(dialogsController)
@@ -67,7 +69,7 @@ DESharedDialogsViewControllerExtensionContextProvider {
         self.dialogsControllerPresented = true
     }
     
-    private func hideExtensionWithCompletionHandler(completion:(()->())? = nil) {
+    public func hideExtensionWithCompletionHandler(completion:(()->())?) {
         UIView.animate(withDuration: 0.2, animations: {
             self.view.transform = CGAffineTransform.init(translationX: 0.0, y: UIScreen.main.bounds.size.height)
         }, completion: { [weak self] _ in

@@ -28,6 +28,7 @@ public extension DEAvatarPlaceholderRendererable {
                                                                        isCanceled: nil)
             let config = DEAvatarPlaceholderConfig(context: placeholderContext)
             config.placeholder = dialog.placeholderTitle
+            config.context.size = size
             
             self.render(config: config)
             
@@ -68,6 +69,8 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
         return cache
     }()
     
+    var avatarSize = CGSize.init(width: 40.0, height:40.0)
+    
     public private(set) var localLoader: DESharedAvatarLoader
     
     public private(set) var placeholderRenderer: DEAvatarPlaceholderRendererable? = nil
@@ -100,7 +103,7 @@ public class DEAvatarImageProvider: DEAvatarImageProvidable {
             return
         }
         
-        renderer.renderAsync(dialog: dialog) { (image) in
+        renderer.renderAsync(size: self.avatarSize, dialog: dialog) { (image) in
             self.handleImageLoaded(image, dialog: dialog, isPlaceholder: true, completion: completion)
         }
     }
