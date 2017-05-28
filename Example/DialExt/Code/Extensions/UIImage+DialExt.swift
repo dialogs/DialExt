@@ -24,7 +24,7 @@ public extension UIImage {
     }
     
     public var pixelsCount: Int {
-        return Int(self.pixelSize.perimeter)
+        return Int(self.pixelSize.square)
     }
     
     public func limited(byPixelsCount limit: Int) -> UIImage {
@@ -37,10 +37,22 @@ public extension UIImage {
         let image = self.resized(size: limitedSize, scale: 1.0)
         
         if image.pixelsCount > limit {
-            print("Fail to generate limited pixels image. ")
+            print("Fail to generate limited pixels image.")
         }
         
         return image
+    }
+    
+    public func limited(bySize limitSize: CGSize) -> UIImage {
+        let realSize = self.pixelSize
+        let factor = min(limitSize.width / realSize.width, limitSize.height / realSize.height)
+        if factor < 1.0 {
+            let targetSize = realSize.multiplied(by: factor)
+            return self.resized(size: targetSize, scale: 1.0)
+        }
+        else {
+            return self
+        }
     }
     
     public func resized(size: CGSize, scale: CGFloat = 0.0) -> UIImage {

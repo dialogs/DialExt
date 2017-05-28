@@ -21,10 +21,6 @@ public class DEUploadPreparedTask: Equatable {
         return nil
     }
     
-    var mediaFiles: [DEUploadPreparedItem.MediaFile] {
-        return self.items.flatMap({ $0.mediaFileRepresented })
-    }
-    
     public init(recipients: [DEUploadRecipient],
                 items: [DEUploadPreparedItem],
                 auth: DEUploadAuth,

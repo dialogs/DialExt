@@ -18,7 +18,9 @@ public enum FakeError: Error {
 @objc(ShareViewController) class ShareViewController: DESharedDialogsPresentationViewController {
     
     override var config: DESharedDataConfig! {
-        return DESharedDataConfig.init(keychainGroup: "", appGroup: "", uploadURLs: [])
+        return DESharedDataConfig.init(keychainGroup: "",
+                                       appGroup: "",
+                                       uploadURLs: [URL.init(string: "http://nowhere.no")!])
     }
     
     override func configureDialogsViewController(_ viewController: DESharedDialogsViewController) {

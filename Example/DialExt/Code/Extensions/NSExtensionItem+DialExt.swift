@@ -50,11 +50,15 @@ public extension NSExtensionItem {
     }
     
     public var videoAttachments: [NSItemProvider] {
-        return self.attachmentsWithTypeIdentifier(kUTTypeVideo as String)
+        return self.attachmentsWithTypeIdentifier(kUTTypeMovie as String)
     }
     
     public var imageAttachments: [NSItemProvider] {
         return self.attachmentsWithTypeIdentifier(kUTTypeImage as String)
+    }
+    
+    public var audioAttachments: [NSItemProvider] {
+        return self.attachmentsWithTypeIdentifier(kUTTypeAudio as String)
     }
     
 }

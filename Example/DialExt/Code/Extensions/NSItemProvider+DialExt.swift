@@ -38,6 +38,43 @@ public extension NSItemProvider {
         return nil
     }
     
+    public enum DataLoadingResult {
+        case success(url: URL, data: Data)
+        case failure(Error)
+    }
+    
+    @discardableResult public func loadData(options: [AnyHashable : Any]?,
+                                            completionHandler: @escaping ((DataLoadingResult) -> ())) -> Bool {
+        let typeId = kUTTypeData as String
+        guard self.hasItemConformingToTypeIdentifier(typeId) else {
+            return false
+        }
+        
+        self.loadItem(forTypeIdentifier: kUTTypeData as String, options: options) { (encodedValue, error) in
+            guard let value = encodedValue else {
+                completionHandler(.failure(error))
+                return
+            }
+            
+            guard let url = value as? URL else {
+                completionHandler(.failure(DEUploadError.unrecognizableExtensionItem))
+                return
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                do {
+                    let data = try Data.init(contentsOf: url)
+                    completionHandler(.success(url: url, data: data))
+                }
+                catch {
+                    completionHandler(.failure(error))
+                }
+            }
+        }
+        
+        return true
+    }
+    
     @discardableResult public func loadItemData(options: [AnyHashable : Any]?,
                                                 completionHandler: NSItemProvider.CompletionHandler?) -> Bool {
         let typeId = kUTTypeData as String

@@ -1,22 +1,22 @@
 import Foundation
+import MobileCoreServices
 
+/**
+ * Describes item providing full information for uploading
+ */
 public class DEUploadPreparedItem {
-    
+
+    /**
+     * Contains fully prepared content
+     */
     public let content: Content
     
-    public var mediaFileRepresented : MediaFile? {
-        
-        switch self.content {
-        case let .image(file): return file
-        case let .video(file): return file
-        case let .mediaFile(file): return file
-        case let .bytes(data): return MediaFile.init(data: data)
-            
-        default: return nil
-        }
+    public init(content: Content, preview: DEUploadImageRepresentation? = nil) {
+        self.content = content
+        self.preview = preview
     }
     
-    public var messageRepresentable: String? {
+    var messageRepresentable: String? {
         switch self.content {
         case let .url(url): return url.absoluteString
         case let .text(text): return text
@@ -24,80 +24,41 @@ public class DEUploadPreparedItem {
         }
     }
     
-    public init(content: Content) {
-        self.content = content
+    public var dataRepresentation: DEUploadDataRepresentation? {
+        switch self.content {
+        case let .image(image): return image.dataRepresentation
+        case let .video (video): return video.dataRepresentation
+        case let .audio(audio): return audio.dataRepresentation
+        case let .bytes(bytes): return bytes
+        default: return nil
+        }
     }
+    
+    var preview: DEUploadImageRepresentation?
     
     public enum Content {
         
-        case image(MediaFile)
+        case image(DEUploadImageRepresentation)
         
-        case video(MediaFile)
+        case video(DEUploadVideoRepresentation)
         
-        case mediaFile(MediaFile)
+        case audio(DEUploadAudioRepresentation)
+        
+        case bytes(DEUploadDataRepresentation)
         
         case url(URL)
         
         case text(String)
         
-        case bytes(Data)
-        
-    }
-    
-    public class MediaFile {
-        
-        public let file: HttpRequestFormDataRepresentation
-        
-        public let preview: HttpRequestFormDataRepresentation?
-        
-        public var allHttpRequestFormDataRepresentationItems: [HttpRequestFormDataRepresentation] {
-            var items: [HttpRequestFormDataRepresentation] = []
-            items.append(file)
-            if let preview = self.preview {
-                items.append(preview)
+        public func proposedFilename(idx: Int) -> String? {
+            switch self {
+            case let .image(rep): return rep.filename(base: "image_\(idx)")
+            case let .video(rep): return rep.filename(base: "video_\(idx)")
+            case let .audio(rep): return rep.filename(base: "audio_\(idx)")
+            case .bytes(_): return "file_\(idx)"
+            default: return nil
             }
-            return items
         }
-        
-        public var previewable: Bool {
-            return preview != nil
-        }
-        
-        public func update(byPreview: HttpRequestFormDataRepresentation?) -> MediaFile {
-            return MediaFile.init(file: self.file, preview: byPreview)
-        }
-        
-        public init(file: HttpRequestFormDataRepresentation, preview: HttpRequestFormDataRepresentation? = nil) {
-            self.file = file
-            self.preview = preview
-        }
-        
-        convenience public init(data: Data) {
-            self.init(file: HttpRequestFormDataRepresentation.init(data: data))
-        }
-        
-    }
-    
-    public class HttpRequestFormDataRepresentation {
-        
-        public let mimeType: String
-        
-        public var size: CGSize? = nil
-        
-        public let data: Data
-        
-        public let fileExtension: String?
-        
-        public init(mimeType: String, data: Data, fileExtension: String? = nil) {
-            self.mimeType = mimeType
-            self.data = data
-            self.fileExtension = fileExtension
-        }
-        
-        convenience public init(data: Data) {
-            self.init(mimeType: "application/octet-stream", data: data)
-        }
-        
     }
     
 }

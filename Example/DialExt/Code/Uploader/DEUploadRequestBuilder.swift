@@ -52,8 +52,8 @@ public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
         }
         
         // MARK: Fill Data-content
-        task.mediaFiles.enumerated().forEach { (idx, file) in
-            body.append(byFile: file, idx: idx, boundary: task.boundary)
+        task.items.enumerated().forEach { (idx, item) in
+            body.append(byItem: item, idx: idx, boundary: task.boundary)
         }
         
         // MARK: Fill Message
@@ -72,6 +72,30 @@ public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
     }
 }
 
+fileprivate extension DEHttpRequestBody.HeaderFieldAttribute {
+    
+    fileprivate static func dispositionName(_ name: String) -> DEHttpRequestBody.HeaderFieldAttribute {
+        return DEHttpRequestBody.HeaderFieldAttribute.init(key: "name", value: name)
+    }
+    
+    fileprivate static func dispositionFileName(_ filename: String) -> DEHttpRequestBody.HeaderFieldAttribute {
+        return DEHttpRequestBody.HeaderFieldAttribute.init(key: "filename", value: filename)
+    }
+    
+    fileprivate static func dispositionDuration(_ duration: Int) -> DEHttpRequestBody.HeaderFieldAttribute {
+        return DEHttpRequestBody.HeaderFieldAttribute.init(key: "duration", value: "\(duration)".wrappingByQuotes())
+    }
+    
+    fileprivate static func dispositionWidth(_ width: Int) -> DEHttpRequestBody.HeaderFieldAttribute {
+        return DEHttpRequestBody.HeaderFieldAttribute.init(key: "width", value: "\(width)".wrappingByQuotes())
+    }
+    
+    fileprivate static func dispositionHeight(_ height: Int) -> DEHttpRequestBody.HeaderFieldAttribute {
+        return DEHttpRequestBody.HeaderFieldAttribute.init(key: "height", value: "\(height)".wrappingByQuotes())
+    }
+    
+}
+
 
 fileprivate extension DEHttpRequestBody {
     
@@ -82,35 +106,97 @@ fileprivate extension DEHttpRequestBody {
         self.append(byString: byMessage)
     }
     
-    mutating fileprivate func append(byFile: DEUploadPreparedItem.MediaFile, idx: Int, boundary: String) {
+    mutating fileprivate func append(byDisposition disposition: HeaderFieldEntry,
+                                     contentType: HeaderFieldEntry,
+                                     data: Data,
+                                     boundary: String) {
         self.append(byBoundary: boundary)
+        self.append(by: disposition, String.httpRequestBodyLineBreak,
+                    contentType, String.httpRequestBodyLineBreak,
+                    String.httpRequestBodyLineBreak,
+                    data, String.httpRequestBodyLineBreak)
+    }
+    
+    mutating fileprivate func append(byItem item: DEUploadPreparedItem, idx: Int, boundary: String) {
         
         let name = "file_\(String(describing: idx))"
-        var fileName = "file_\(String(describing: idx))"
-        if let ext = byFile.file.fileExtension {
-            fileName.append(".\(ext)")
-        }
-        let fileRep = File.init(name: name,
-                                filename: fileName,
-                                mimeType: byFile.file.mimeType,
-                                data: byFile.file.data)
-        self.append(byItems: fileRep.bodyItems)
         
-        if let preview = byFile.preview {
-            self.append(byBoundary: boundary)
+        var disposition: HeaderFieldEntry! = nil
+        var contentType: HeaderFieldEntry! = nil
+        var data: Data! = nil
+        
+        switch item.content {
+        case let .audio(audio):
+            let fileName = item.content.proposedFilename(idx: idx)!
+            let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionDuration(audio.details.durationInSeconds)
+            ]
+            disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
+            contentType = HeaderFieldEntry.init(name: .contentType,
+                                                value: .init(audio.dataRepresentation.mimeType.wrappingByQuotes()))
+            data = audio.dataRepresentation.data
             
-            let size = preview.size!
-            let previewName = "\"preview_\(String(describing:idx))\""
-            let previewHeaderField = HeaderFieldEntry.init(name: .contentDisposition,
-                                                           value: .formData,
-                                                           attrs: ["name" : previewName,
-                                                                   "width" : String(describing:size.width),
-                                                                   "height" : String(describing: size.height)])
-            let previewContentTypeField = HeaderFieldEntry.init(name: .contentType, value: .init(preview.mimeType))
-            self.append(by: previewHeaderField, String.httpRequestBodyLineBreak,
-                        previewContentTypeField, String.httpRequestBodyLineBreak,
-                        String.httpRequestBodyLineBreak,
-                        preview.data)
+        case let .video(video):
+            let fileName = item.content.proposedFilename(idx: idx)!
+            let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionWidth(video.details.size.width),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionHeight(video.details.size.height),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionDuration(video.details.durationInSeconds)
+            ]
+            disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
+            contentType = HeaderFieldEntry.init(name: .contentType,
+                                                value: .init(video.dataRepresentation.mimeType.wrappingByQuotes()))
+            data = video.dataRepresentation.data
+            
+        case let .image(image):
+            let fileName = item.content.proposedFilename(idx: idx)!
+            let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionWidth(image.details.size.width),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionHeight(image.details.size.height),
+                ]
+            disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
+            contentType = HeaderFieldEntry.init(name: .contentType,
+                                                value: .init(image.dataRepresentation.mimeType.wrappingByQuotes()))
+            data = image.dataRepresentation.data
+            
+        case let .bytes(bytes):
+            let fileName = item.content.proposedFilename(idx: idx)!
+            let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes())
+            ]
+            disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
+            contentType = HeaderFieldEntry.init(name: .contentType,
+                                                value: .init(bytes.mimeType.wrappingByQuotes()))
+            data = bytes.data
+            
+        default: return
+        }
+        
+        self.append(byDisposition: disposition, contentType: contentType, data: data, boundary: boundary)
+        
+        if let preview = item.preview {
+            
+            let name = "preview_\(String(describing:idx))"
+            let fileName = preview.filename(base: name)
+            
+            let disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: [
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionWidth(preview.details.size.width),
+                DEHttpRequestBody.HeaderFieldAttribute.dispositionHeight(preview.details.size.height),
+                ])
+            let contentType = HeaderFieldEntry.init(name: .contentType,
+                                                    value: .init(preview.dataRepresentation.mimeType.wrappingByQuotes()))
+            let data = preview.dataRepresentation.data
+            
+            self.append(byDisposition: disposition, contentType: contentType, data: data, boundary: boundary)
         }
     }
     
@@ -119,7 +205,7 @@ fileprivate extension DEHttpRequestBody {
         
         self.append(byHeaderField: .createMultipartFormDispositionItem(named: "peer"))
         self.append(byHeaderField: .init(name: .contentType,
-                                         value: .init("text/plaing"),
+                                         value: .init("text/plain"),
                                          attrs: ["charset" : "UTF-8"]))
         self.append(byLineBreaks: 1)
         self.append(byString: recipient.mulitpartFormPeerDescription)

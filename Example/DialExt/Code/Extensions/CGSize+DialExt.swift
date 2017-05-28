@@ -50,6 +50,14 @@ public extension CGSize {
         return self.multiplied(by: limitMultiplier)
     }
     
+    /**
+     * Returns size proportionaly scaled by difference between original and limit sides.
+     * Returns unchanges size if it's under the limit.
+     */
+    public func limited(bySize: CGSize) -> CGSize {
+        fatalError()
+    }
+    
     // TODO: Implement limited(bySide limit: CGFloat, proportionally: Bool = false) -> CGSize
     
     public func rounded(rule: FloatingPointRoundingRule = .down) -> CGSize {
