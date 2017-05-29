@@ -101,8 +101,9 @@ fileprivate extension DEHttpRequestBody {
     
     mutating fileprivate func append(byMessage: String, boundary: String) {
         self.append(byBoundary: boundary)
-        self.append(byHeaderField: .createMultipartFormDispositionItem(named: "Notice"))
-        self.append(byHeaderField: .init(name: .contentType, value: .init("text.plain"), attrs: ["charset": "UTF-8"]))
+        self.append(byHeaderField: .createMultipartFormDispositionItem(named: "notice"))
+        self.append(byHeaderField: .init(name: .contentType, value: .init("text/plain"), attrs: ["charset": "UTF-8"]))
+        self.append(byLineBreaks: 1)
         self.append(byString: byMessage)
     }
     
@@ -135,7 +136,7 @@ fileprivate extension DEHttpRequestBody {
             ]
             disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
             contentType = HeaderFieldEntry.init(name: .contentType,
-                                                value: .init(audio.dataRepresentation.mimeType.wrappingByQuotes()))
+                                                value: .init(audio.dataRepresentation.mimeType))
             data = audio.dataRepresentation.data
             
         case let .video(video):
@@ -149,7 +150,7 @@ fileprivate extension DEHttpRequestBody {
             ]
             disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
             contentType = HeaderFieldEntry.init(name: .contentType,
-                                                value: .init(video.dataRepresentation.mimeType.wrappingByQuotes()))
+                                                value: .init(video.dataRepresentation.mimeType))
             data = video.dataRepresentation.data
             
         case let .image(image):
@@ -162,7 +163,7 @@ fileprivate extension DEHttpRequestBody {
                 ]
             disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
             contentType = HeaderFieldEntry.init(name: .contentType,
-                                                value: .init(image.dataRepresentation.mimeType.wrappingByQuotes()))
+                                                value: .init(image.dataRepresentation.mimeType))
             data = image.dataRepresentation.data
             
         case let .bytes(bytes):
@@ -173,7 +174,7 @@ fileprivate extension DEHttpRequestBody {
             ]
             disposition = HeaderFieldEntry.init(name: .contentDisposition, value: .formData, attributes: attributes)
             contentType = HeaderFieldEntry.init(name: .contentType,
-                                                value: .init(bytes.mimeType.wrappingByQuotes()))
+                                                value: .init(bytes.mimeType))
             data = bytes.data
             
         default: return
@@ -193,7 +194,7 @@ fileprivate extension DEHttpRequestBody {
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionHeight(preview.details.size.height),
                 ])
             let contentType = HeaderFieldEntry.init(name: .contentType,
-                                                    value: .init(preview.dataRepresentation.mimeType.wrappingByQuotes()))
+                                                    value: .init(preview.dataRepresentation.mimeType))
             let data = preview.dataRepresentation.data
             
             self.append(byDisposition: disposition, contentType: contentType, data: data, boundary: boundary)

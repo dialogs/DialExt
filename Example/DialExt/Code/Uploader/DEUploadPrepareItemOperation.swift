@@ -115,6 +115,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         loadPreview(onLoaded: { [weak self ] rep in
             withOptionalExtendedLifetime(self, body: {
                 self!.loadedPreview = rep
+                self!.doesPreviewLoadingFinished = true
             })
         })
         
@@ -161,7 +162,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     }
     
     private func finishIfMediaLoaded() {
-        guard let preview = self.loadedPreview,
+        guard self.doesPreviewLoadingFinished,
             let data = self.loadedData,
             let details = self.loadedDetails,
             !self.isCancelled else {
@@ -169,7 +170,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         let content: DEUploadPreparedItem.Content = self.buildConten(data: data, details: details)
-        let item = DEUploadPreparedItem.init(content: content, preview: preview)
+        let item = DEUploadPreparedItem.init(content: content, preview: self.loadedPreview)
         
         finish(result: DLGAsyncOperationResult.success(item))
     }
@@ -188,27 +189,35 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     }
     
     /// Callback performed on main thread
-    private func loadPreview(onLoaded: @escaping ((DEUploadImageRepresentation) -> ()) ) {
+    private func loadPreview(onLoaded: @escaping ((DEUploadImageRepresentation?) -> ()) ) {
         self.attachment.loadPreviewImage(options: nil, completionHandler: {[weak self] value, error in
             withOptionalExtendedLifetime(self, body: {
                 guard !self!.isCancelled else {
                     return
                 }
                 
-                let image: UIImage
+                var image: UIImage? = nil
                 
                 switch value {
                 case let valueImage as UIImage: image = valueImage
                 case let data as Data: image = UIImage.init(data: data)!
                 case let url as URL: image = UIImage.init(contentsOfFile: url.path)!
-                default: fatalError()
+                default: break
                 }
                 
-                let optimizedImage = image.limited(bySize: .init(width: 90.0, height: 90.0))
-                let previewRep = self!.buildPreviewRepresentation(original: optimizedImage)
-                DispatchQueue.main.async {
-                    onLoaded(previewRep)
+                if let previewImage = image {
+                    let optimizedImage = previewImage.limited(bySize: .init(width: 90.0, height: 90.0))
+                    let previewRep = self!.buildPreviewRepresentation(original: optimizedImage)
+                    DispatchQueue.main.async {
+                        onLoaded(previewRep)
+                    }
                 }
+                else {
+                    DispatchQueue.main.async {
+                        onLoaded(nil)
+                    }
+                }
+                
             })
         })
     }
@@ -246,22 +255,32 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     
     private func loadAudioDetails(url: URL, data: Data, onLoaded: @escaping ((DEUploadAudioDetails) -> ())) {
         DispatchQueue.global(qos: .background).async {
-            let asset = AVURLAsset.init(url: url)
-            let duration = Int(asset.duration.seconds)
+            var duration: Int = 0
+            do {
+                let player = try AVAudioPlayer.init(contentsOf: url)
+                let fetchedDuration = player.duration
+                duration = Int(fetchedDuration)
+            }
+            catch {
+                print("Fail to load sound for define duration: \(error)")
+            }
             let details = DEUploadAudioDetails.init(durationInSeconds: duration)
             DispatchQueue.main.async {
                 onLoaded(details)
             }
+            
         }
     }
-        
+    
     private var attachment: NSItemProvider!
     
     private var targetType: DetailedMediaFileType!
     
     private var loadedData: Data? = nil
     
-    private var loadedPreview: DEUploadImageRepresentation? = nil {
+    private var loadedPreview: DEUploadImageRepresentation?
+    
+    private var doesPreviewLoadingFinished: Bool = false {
         didSet {
             self.finishIfMediaLoaded()
         }
