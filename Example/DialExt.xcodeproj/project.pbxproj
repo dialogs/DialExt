@@ -109,6 +109,7 @@
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
+		74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */; };
 		74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
@@ -289,6 +290,7 @@
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
+		74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExt.swift"; sourceTree = "<group>"; };
 		74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAuthIdProvider.swift; sourceTree = "<group>"; };
 		9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
 		B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.debug.xcconfig"; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 		74065EC81E8113A900C535B6 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				74F7E0B91EEB05D000DE3891 /* Geometry */,
 				74401D141EA0FF7500200770 /* Uploader */,
 				74065EC91E8113A900C535B6 /* Extensions */,
 				74065ECD1E8113A900C535B6 /* GroupContainer */,
@@ -657,6 +660,14 @@
 				74A5DFB41ED6D01900CE254B /* DEHttpRequestBodyItem.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		74F7E0B91EEB05D000DE3891 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */,
+			);
+			path = Geometry;
 			sourceTree = "<group>";
 		};
 		9AD9753F518E79F85801B0FB /* Frameworks */ = {
@@ -1100,6 +1111,7 @@
 				74401D231EA1205700200770 /* URLComponents+DialExt.swift in Sources */,
 				7436D6231ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift in Sources */,
 				742DC8D71EAA045800ABDA55 /* NSExtensionItem+DialExt.swift in Sources */,
+				74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */,
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
