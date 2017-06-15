@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'DialExt' do
   pod 'ProtocolBuffers-Swift'
-  pod 'Sodium', :git => 'https://github.com/Vladlex/swift-sodium.git'
+  pod 'Sodium'
 end
 
 target 'DialExt_Example' do
