@@ -70,6 +70,9 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDelegate {
     private var currentTask: Task? = nil
     
     private lazy var session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
         return URLSession.init(configuration: .default, delegate: self, delegateQueue: .main)
     }()
     

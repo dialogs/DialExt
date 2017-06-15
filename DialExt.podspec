@@ -31,6 +31,7 @@ TODO: Add long description of the pod here.
   s.source_files = 'Example/DialExt/Code/**/*'
 
   s.dependency 'ProtocolBuffers-Swift'
+  s.dependency 'Sodium'
   
   s.resource_bundles = {
     'DialExt' => ['Example/DialExt/Resources/**/*']
