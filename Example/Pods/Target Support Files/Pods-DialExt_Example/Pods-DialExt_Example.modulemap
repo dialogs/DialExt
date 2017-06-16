@@ -1,6 +1,0 @@
-framework module Pods_DialExt_Example {
-  umbrella header "Pods-DialExt_Example-umbrella.h"
-
-  export *
-  module * { export * }
-}
