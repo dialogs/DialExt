@@ -16,16 +16,20 @@ public enum  DEKeychainQueryResult {
     case failure(status: OSStatus?)
     case success(values: [AnyObject]?)
     
-    public func doIfSuccess(_ block: ([AnyObject]?) -> ()) {
+    @discardableResult public func doIfSuccess(_ block: ([AnyObject]?) throws -> ()) rethrows -> Bool {
         if case let .success(values: values) = self {
-            block(values)
+            try block(values)
+            return true
         }
+        return false
     }
     
-    public func doIfFailed(_ block: ((OSStatus?) -> ())) {
+    @discardableResult public func doIfFailed(_ block: ((OSStatus?) throws -> ())) rethrows -> Bool {
         if case let .failure(status: status) = self {
-            block(status)
+            try block(status)
+            return true
         }
+        return false
     }
     
     /// Is query successfully performed.

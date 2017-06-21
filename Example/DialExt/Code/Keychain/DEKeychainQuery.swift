@@ -116,7 +116,7 @@ public struct DEKeychainQuery {
     /// Describes access to a value in keychain. You can treat it as a key for value in dictionary.
     public struct Access {
         
-        public let service: String
+        public let service: DEKeychainQuery.Service
         
         public let account: String
         
@@ -130,7 +130,7 @@ public struct DEKeychainQuery {
         public func dictionaryRepresentation() -> DEKeychainEntriesDictionary {
             var representation: DEKeychainEntriesDictionary = [:]
             representation[kSecClass as String] = kSecClassGenericPassword
-            representation[kSecAttrService as String] = service as AnyObject
+            representation[kSecAttrService as String] = service.rawValue as AnyObject
             representation[kSecAttrAccount as String] = account as AnyObject
             if let group = group {
                 representation[kSecAttrAccessGroup as String] = group as AnyObject
@@ -139,15 +139,58 @@ public struct DEKeychainQuery {
             return representation
         }
         
-        public init(service: String, account: String, group: String? = nil) {
+        public init(_ service: DEKeychainQuery.Service, account: String, group: String? = nil) {
             self.service = service
             self.account = account
             self.group = group
         }
     }
     
+    /**
+     Extend service by declaring you static constants
+     */
+    public struct Service: Hashable, RawRepresentable {
+        
+        public typealias RawValue = String
+        
+        public let rawValue: RawValue
+        
+        public init(rawValue: RawValue) {
+            self.rawValue = rawValue
+        }
+        
+        public init(_ rawValue: RawValue) {
+            self.init(rawValue: rawValue)
+        }
+        
+        public var hashValue: Int {
+            return self.rawValue.hashValue
+        }
+        
+        public static func ==(lhs: Service, rhs: Service) -> Bool {
+            return lhs.rawValue == rhs.rawValue
+        }
+    }
+    
     /// Operation desribes keychain query type and details
     public enum Operation {
+        
+        public enum Subtype: Int {
+            case add
+            case update
+            case read
+            case delete
+        }
+        
+        public var subtype: Subtype {
+            switch self {
+            case .add(value: _): return .add
+            case .delete: return .delete
+            case .read(config: _): return .read
+            case .update(value: _): return .update
+            }
+        }
+        
         public struct ReadConfig {
             public enum Limit {
                 case one

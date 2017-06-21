@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message Localizeable {
+    string loc_key = 1;
+    repeated string loc_args = 2;
+}
+
+message AlertingPush {
+    oneof alert_body {
+        Localizeable loc_alert_body = 1;
+        string simple_alert_body = 2;
+    }
+    oneof alert_title {
+        Localizeable loc_alert_title = 3;
+        string simple_alert_title = 4;
+    }
+    string sound = 5;
+    int32 badge = 6;
+}

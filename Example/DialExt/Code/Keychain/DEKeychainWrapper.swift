@@ -42,22 +42,6 @@ public class DEKeychainWrapper {
         self.account = account
         self.group = group
     }
-    
-    public func value(for key: String) -> DEKeychainQueryResult {
-        let access = DEKeychainQuery.Access(service: key, account: self.account, group: self.group)
-        let operation = DEKeychainQuery.Operation.read(config: nil)
-        let query = DEKeychainQuery(access: access, operation: operation)
-        
-        return dataProvider.perform(query: query)
-    }
-    
-    public func setValue(value: AnyObject, for key: String) -> DEKeychainQueryResult {
-        let access = DEKeychainQuery.Access(service: key, account: self.account, group: self.group)
-        let operation = DEKeychainQuery.Operation.update(value: value)
-        let query = DEKeychainQuery(access: access, operation: operation)
-        
-        return dataProvider.perform(query: query)
-    }
 }
 
 

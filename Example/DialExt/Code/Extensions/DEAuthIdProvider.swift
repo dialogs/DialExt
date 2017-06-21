@@ -79,25 +79,26 @@ public extension DEKeychainDataProvider {
     }
 }
 
+public extension DEKeychainQuery.Service {
+    public static let authIdService =  DEKeychainQuery.Service.init("auth_id")
+    
+    public static let signedIdAuthIdService = DEKeychainQuery.Service("signed_auth_id")
+}
 
 public extension DEKeychainQuery.Access {
-    
-    public static let defaultAuthIdService = "auth_id"
-    
-    public static let defaultSignedIdAuthIdService = "signed_auth_id"
     
     public static let defaultAuthIdAccount = "im.dlg.shared"
     
     public static func createAuthIdAccess(groupId: String) -> DEKeychainQuery.Access {
-        return DEKeychainQuery.Access(service: defaultAuthIdService,
-                                      account: defaultAuthIdAccount,
-                                      group: groupId)
+        return DEKeychainQuery.Access.init(.authIdService,
+                                           account: defaultAuthIdAccount,
+                                           group: groupId)
     }
     
     public static func createSignedAuthIdAccess(groupId: String) -> DEKeychainQuery.Access {
-        return DEKeychainQuery.Access(service: defaultSignedIdAuthIdService,
-                                      account: defaultAuthIdAccount,
-                                      group: groupId)
+        return DEKeychainQuery.Access.init(.signedIdAuthIdService,
+                                           account: defaultAuthIdAccount,
+                                           group: groupId)
     }
 
 }

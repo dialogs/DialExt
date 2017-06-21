@@ -12,6 +12,18 @@ public protocol DEKeychainQueryPerformerable {
     @discardableResult func perform(query: DEKeychainQuery) ->  DEKeychainQueryResult
 }
 
+public enum DEKeychainQueryError: Error {
+    /// Keychain failed, but there is no os status providen
+    case noOSStatus
+    
+    /// Trying to perform operation with wring query (like reading with writing operation)
+    case wrongQuery
+    
+    /// Query finished with success, but returns no results (incredibly rare case).
+    case noResults
+    
+}
+
 public extension DEKeychainQueryPerformerable {
     
     /// Returns 'success' even if deleting item does not exist (which is not keychain native behavior)
@@ -25,6 +37,38 @@ public extension DEKeychainQueryPerformerable {
             result = .success(values: nil)
         }
         return result
+    }
+    
+    @discardableResult func readData(query: DEKeychainQuery) throws -> Data {
+        guard query.operation.subtype == .read else {
+            throw DEKeychainQueryError.wrongQuery
+        }
+        let result = self.perform(query: query)
+        try result.doIfFailed { (status) in
+            guard let errorCode = status else {
+                throw DEKeychainQueryError.noOSStatus
+            }
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(errorCode), userInfo: nil)
+        }
+        
+        var data: Data! = nil
+        try result.doIfSuccess({ (results) in
+            guard let firstResult = results?.first as? NSData else {
+                throw DEKeychainQueryError.noResults
+            }
+            data = firstResult as Data
+        })
+        return data
+    }
+    
+    func addOrUpdateData(query: DEKeychainQuery) throws {
+        let result = self.performAddOrUpdate(query: query)
+        try result.doIfFailed({ (status) in
+            guard let errorCode = status else {
+                throw DEKeychainQueryError.noOSStatus
+            }
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(errorCode), userInfo: nil)
+        })
     }
     
     @discardableResult func performAddOrUpdate(query: DEKeychainQuery) ->  DEKeychainQueryResult {
