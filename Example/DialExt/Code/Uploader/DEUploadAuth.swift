@@ -8,7 +8,7 @@ public struct DEUploadAuth {
     let signedAuthId: Data
     
     public var httpQueryValue: String {
-        return "\(self.authId)|\(signedAuthId.hexString)"
+        return "\(self.authId)|\(signedAuthId.de_hexString)"
     }
     
     internal init(authId: DEAuthId, signedAuthId: Data) {

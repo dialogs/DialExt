@@ -98,6 +98,9 @@
 		7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */; };
 		7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */; };
 		7494B8E21EFA9D5D00830AAE /* AlertingPush.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E11EFA9D5D00830AAE /* AlertingPush.proto.swift */; };
+		7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */; };
+		7494B8E61EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */; };
+		7494B8EC1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
@@ -288,6 +291,9 @@
 		7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoNonce.swift; sourceTree = "<group>"; };
 		7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = alerting_push.proto; sourceTree = "<group>"; };
 		7494B8E11EFA9D5D00830AAE /* AlertingPush.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertingPush.proto.swift; sourceTree = "<group>"; };
+		7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecoder.swift; sourceTree = "<group>"; };
+		7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptorTests.swift; sourceTree = "<group>"; };
+		7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInt64BasedNonceTests.swift; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
@@ -654,6 +660,7 @@
 				7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */,
 				7447ED971EF92E58004C1F24 /* DECryptoKeyManager.swift */,
 				7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */,
+				7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */,
 				7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */,
 				7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */,
 			);
@@ -681,6 +688,8 @@
 				7447EDA61EF96B64004C1F24 /* DataDialExtTests.swift */,
 				741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */,
 				7413AA311ED3518500AD99EC /* CGSizeDialExtTests.swift */,
+				7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */,
+				7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */,
 			);
 			path = DialExtTests;
 			sourceTree = "<group>";
@@ -1079,6 +1088,7 @@
 			files = (
 				74A5DFB81ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldAttribute.swift in Sources */,
 				74313A621E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift in Sources */,
+				7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift in Sources */,
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
@@ -1176,6 +1186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7413AA321ED3518500AD99EC /* CGSizeDialExtTests.swift in Sources */,
+				7494B8E61EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift in Sources */,
+				7494B8EC1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift in Sources */,
 				7447EDA71EF96B64004C1F24 /* DataDialExtTests.swift in Sources */,
 				741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */,
 				749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */,
@@ -1413,6 +1425,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1445,6 +1458,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;

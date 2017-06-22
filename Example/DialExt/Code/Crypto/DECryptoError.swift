@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DECRyptoError: Error {
+public enum DECryptoError: Error {
     case failToInitializeSodium
     case failToGenerateRandomData
     case failToGenerateKeyPair

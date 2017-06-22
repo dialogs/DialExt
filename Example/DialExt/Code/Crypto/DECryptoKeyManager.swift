@@ -33,7 +33,7 @@ class DECryptoKeyManager {
         self.storage = storage
         self.groupId = groupId
         guard let sodium = Sodium() else {
-            throw DECRyptoError.failToInitializeSodium
+            throw DECryptoError.failToInitializeSodium
         }
         self.sodium = sodium
     }
@@ -41,10 +41,10 @@ class DECryptoKeyManager {
     public func generateKeyPair() throws -> DECryptoKeyPair {
         
         guard let randomData = sodium.randomBytes.buf(length: 32) else {
-            throw DECRyptoError.failToGenerateRandomData
+            throw DECryptoError.failToGenerateRandomData
         }
         guard let keyPair = sodium.keyExchange.keyPair(seed: randomData) else {
-            throw DECRyptoError.failToGenerateKeyPair
+            throw DECryptoError.failToGenerateKeyPair
         }
         return DECryptoKeyPair.init(keyPair)
     }
@@ -55,7 +55,7 @@ class DECryptoKeyManager {
                                                                      secretKey: clientKeyPair.secretKey,
                                                                      otherPublicKey: serverPublicKey,
                                                                      side: .client) else {
-                                                                        throw DECRyptoError.failToGenerateSharedSecret
+                                                                        throw DECryptoError.failToGenerateSharedSecret
         }
         try self.storage.setSharedSecretRx(sessionKeyPair.rx)
         try self.storage.setSharedSecretTx(sessionKeyPair.tx)

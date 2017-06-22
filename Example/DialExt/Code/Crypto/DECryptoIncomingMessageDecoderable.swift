@@ -16,7 +16,7 @@ public struct DecodedMessage {
 
 /// Responsible for decoding incoming messages. **Not thread-safe**
 public protocol DECryptoIncomingMessageDecoderable {
-    func decodeIncomingMessage(_ data: Data, nonce: DECryptoNonce) throws -> DecodedMessage
+    func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage
 }
 
 public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable {
@@ -25,22 +25,26 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     
     private let sodium: Sodium
     
+    private let decrypter: DECryptoIncomingDataDecrypting
+    
     public init(storage: DECryptoStorage) throws {
         guard let sodium = Sodium() else {
-            throw DECRyptoError.failToInitializeSodium
+            throw DECryptoError.failToInitializeSodium
         }
         self.sodium = sodium
         self.storage = storage
+        
+        self.decrypter = DECryptoIncomingDataDecryptor.init(sodium: self.sodium)
     }
     
-    public func decodeIncomingMessage(_ data: Data, nonce: DECryptoNonce) throws -> DecodedMessage {
-        let protoData = try self.decode(data, nonce: nonce)
+    public func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage {
+        let protoData = try self.decrypt(data, nonce: nonce)
         let push = try AlertingPush.parseFrom(data: protoData)
         return DecodedMessage(alertingPush: push)
     }
     
-    private func isValidNonce(_ nonce: DECryptoNonce) throws -> Bool {
-        var storedNonce = Int64.min
+    private func isValidNonce(_ nonce: DEInt64BasedNonce) throws -> Bool {
+        var storedNonce = DEInt64BasedNonce.init(value: 0)
         do {
             storedNonce = try self.storage.cryptoSeqNOnce()
         }
@@ -49,7 +53,7 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
                 throw error
             }
         }
-        return nonce > storedNonce
+        return nonce.value > storedNonce.value
     }
     
     private func isNoResultsKeychainError(_ error: Error) -> Bool {
@@ -59,31 +63,25 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
         return false
     }
     
-    private func decode(_ data: Data, nonce: DECryptoNonce, shouldStoreNewNonce: Bool = true) throws -> Data {
+    private func decrypt(_ data: Data, nonce: DEInt64BasedNonce, shouldStoreNewNonce: Bool = true) throws -> Data {
         let storedNonce = try self.storage.cryptoSeqNOnce()
         
-        guard nonce > storedNonce else {
-            print("Declared nonce \(nonce) is smaller or equal stored nonce \(storedNonce)")
-            throw DECRyptoError.wrongNonce
+        guard try self.isValidNonce(nonce) else {
+            print("Ignoring invalid nonce \(nonce). Stored: \(try! self.storage.cryptoSeqNOnce())")
+            throw DECryptoError.wrongNonce
         }
         
         let nonceData = Data.de_withValue(storedNonce) as SecretBox.Nonce
-        
         let readKey = try self.storage.sharedSecretRx() as SecretBox.Key
         
-        // Decode message data
-        guard let decodedData = self.sodium.secretBox.open(authenticatedCipherText: data,
-                                                           secretKey: readKey,
-                                                           nonce: nonceData) else {
-                                                            print("Fail to decode message (nonce is valid: \(nonce), stored: \(storedNonce))")
-                                                            throw DECRyptoError.failToDecodeMessage
-        }
+        // Decrypt message data
+        let decryptedData = try self.decrypter.decrypt(incomingData: data, rx: readKey, nonceData: nonceData)
         
         if shouldStoreNewNonce {
             try! self.storage.setCryptoSeqNOnce(nonce)
         }
         
-        return decodedData
+        return decryptedData
     }
     
 }

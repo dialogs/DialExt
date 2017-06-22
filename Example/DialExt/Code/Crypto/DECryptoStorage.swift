@@ -23,10 +23,10 @@ public protocol DECryptoStorage {
     func cryptoKeyPair() throws -> Box.KeyPair
     
     /// Sets nonce
-    func setCryptoSeqNOnce(_ nonce: DECryptoNonce) throws
+    func setCryptoSeqNOnce(_ nonce: DEInt64BasedNonce) throws
     
     /// Returns last set nonce
-    func cryptoSeqNOnce() throws -> DECryptoNonce
+    func cryptoSeqNOnce() throws -> DEInt64BasedNonce
     
     /// Sets shared secret rx part used for reading messages from server side
     func setSharedSecretRx(_ rx: Data) throws
@@ -81,13 +81,14 @@ extension DEGroupedKeychainDataProvider: DECryptoStorage {
                                                               data: keyPair.secretKey as NSData))
     }
     
-    public func cryptoSeqNOnce() throws -> DECryptoNonce {
+    public func cryptoSeqNOnce() throws -> DEInt64BasedNonce {
         let data = try self.readData(query: .readCryptoItemQuery(service: .nonce))
-        return data.de_toValue()
+        let nonce = DEInt64BasedNonce.init(data: data)
+        return nonce
     }
     
-    public func setCryptoSeqNOnce(_ nonce: DECryptoNonce) throws {
-        let data = Data.de_withValue(nonce)
+    public func setCryptoSeqNOnce(_ nonce: DEInt64BasedNonce) throws {
+        let data = nonce.nonce
         try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .nonce, data: data as NSData))
     }
     
