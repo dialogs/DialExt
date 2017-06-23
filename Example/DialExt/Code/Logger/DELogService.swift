@@ -10,36 +10,28 @@ import Foundation
 import os
 
 public protocol DELogService {
-    func log(_ message: String, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger)
+    func log(_ message: String,
+             subsystem: DELogger.Subsystem,
+             tag: String,
+             level: DELogger.Level,
+             info: DELogger.Info?,
+             logger: DELogger)
 }
 
 extension DELogService {
     func slog(_ message: StaticString, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
-        self.log(message.description, subsystem: subsystem, tag: tag, level: level, logger: logger)
-    }
-}
-
-
-extension DELogger: DELogService {
-    
-    // Supporting self as a service (for building service tree)
-    public func log(_ message: String, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
-        guard self != logger else {
-            fatalError("Trying to log from self to self!")
-        }
-        
-        self.log(message, subsystem: subsystem, tag: tag, level: level)
-    }
-    
-    public func slog(_ message: StaticString, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
-        let msg = message.description.wrapping(byPrefix: "<SENS!>", suffix: "")
-        self.log(msg, subsystem: subsystem, tag: tag, level: level, logger: logger)
+        self.log(message.description, subsystem: subsystem, tag: tag, level: level, info: nil, logger: logger)
     }
 }
 
 public class DEDebugConsoleLogService: DELogService {
     
-    public func log(_ message: String, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
+    public func log(_ message: String,
+                    subsystem: DELogger.Subsystem,
+                    tag: String,
+                    level: DELogger.Level,
+                    info: DELogger.Info?,
+                    logger: DELogger) {
         var result = "\(subsystem) [\(tag)]"
         if level != .default {
             result.append(" \(level)")
@@ -52,7 +44,12 @@ public class DEDebugConsoleLogService: DELogService {
 
 @available(iOS 10, *) public class DEiOSLogService: DELogService {
     
-    public func log(_ message: String, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
+    public func log(_ message: String,
+                    subsystem: DELogger.Subsystem,
+                    tag: String,
+                    level: DELogger.Level,
+                    info: DELogger.Info?,
+                    logger: DELogger) {
         // do nothing (OS does not support sensitive data logging)
     }
     

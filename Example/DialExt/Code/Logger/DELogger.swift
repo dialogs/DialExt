@@ -14,6 +14,7 @@ public func DELog(_ message: String,
                    subsystem: DELogger.Subsystem = .sdk,
                    tag: String = "",
                    level: DELogger.Level = .default,
+                   info: DELogger.Info? = nil,
                    logger: DELogger = DELogger.shared) {
     logger.log(message, subsystem: subsystem, tag: tag, level: level)
 }
@@ -27,7 +28,9 @@ public func DLGSLog(_ message: StaticString,
 }
 
 
-public class DELogger: NSObject {
+public final class DELogger: NSObject {
+    
+    public typealias Info = [AnyHashable : Any]
     
     public static let shared = DELogger.init()
     
@@ -63,8 +66,10 @@ public class DELogger: NSObject {
         super.init()
     }
     
-    public func log(_ message: String, subsystem: Subsystem = .sdk, tag: String, level: Level = .default) {
-        self.services.forEach({$0.log(message, subsystem: subsystem, tag: tag, level: level, logger: self)})
+    public func log(_ message: String, subsystem: Subsystem = .sdk, tag: String, level: Level = .default, info: Info? = nil) {
+        self.services.forEach({
+            $0.log(message, subsystem: subsystem, tag: tag, level: level, info: info, logger: self)
+        })
     }
     
     public func slog(_ message: StaticString, subsystem: Subsystem = .sdk, tag: String, level: Level = .default) {
