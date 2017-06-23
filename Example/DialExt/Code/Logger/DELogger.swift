@@ -11,15 +11,15 @@ import os
 
 
 public func DELog(_ message: String,
-                   subsystem: DELogger.Subsystem = .sdk,
-                   tag: String = "",
-                   level: DELogger.Level = .default,
-                   info: DELoggerInfo? = nil,
-                   logger: DELogger = DELogger.shared) {
+                  subsystem: DELogger.Subsystem = .sdk,
+                  tag: String = "",
+                  level: DELogger.Level = .default,
+                  info: DELoggerInfo? = nil,
+                  logger: DELogger = DELogger.shared) {
     logger.log(message, subsystem: subsystem, tag: tag, level: level)
 }
 
-public func DLGSLog(_ message: StaticString,
+public func DESLog(_ message: StaticString,
                    subsystem: DELogger.Subsystem = .sdk,
                    tag: String = "",
                    level: DELogger.Level = .default,
@@ -97,7 +97,7 @@ public final class DELogger: NSObject {
             }
         }
     }
-
+    
     
     
     public struct Subsystem: RawRepresentable {
