@@ -26,20 +26,52 @@ extension DELogService {
 
 public class DEDebugConsoleLogService: DELogService {
     
+    public enum OutputType {
+        case print
+        case nslog
+    }
+    
+    public let outputType: OutputType
+    
+    public init(outputType: OutputType = .nslog) {
+        self.outputType = outputType
+    }
+    
     public func log(_ message: String,
                     subsystem: DELogger.Subsystem,
                     tag: String,
                     level: DELogger.Level,
                     info: DELogger.Info?,
                     logger: DELogger) {
-        var result = "\(subsystem) [\(tag)]"
+        
+        var headers: [String] = [subsystem.rawValue]
         if level != .default {
-            result.append(" \(level)")
+            headers.append("[\(level.description)]")
         }
-        result.append(message)
-        print("[\(subsystem): \(tag) <\(level)>]: \(message)")
+        if !tag.isEmpty {
+            headers.append("(\(tag))")
+        }
+        let headersString = headers.joined(separator: " ").wrapping(byPrefix: "[", suffix: "]")
+
+        switch self.outputType {
+        case .print:
+            print("\(headersString): \(message)")
+
+        case .nslog:
+            NSLog("\(headersString): \(message)")
+        }
+        
+        if let info = info, let afterward = info[.afterward] as? String {
+            afterward.enumerateLines(invoking: { (line, _) in
+                switch self.outputType {
+                case .nslog:
+                    NSLog("\(line)")
+                case .print:
+                    print(line)
+                }
+            })
+        }
     }
-    
 }
 
 @available(iOS 10, *) public class DEiOSLogService: DELogService {

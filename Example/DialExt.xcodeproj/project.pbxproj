@@ -63,6 +63,7 @@
 		744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */; };
 		744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */; };
 		7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */; };
+		747721641EFD6171003B5EB0 /* DELoggerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747721631EFD6171003B5EB0 /* DELoggerInfo.swift */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
@@ -244,6 +245,7 @@
 		744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+DialExt.swift"; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
 		7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DESharedDialogsDataLoader+DataComposer.swift"; sourceTree = "<group>"; };
+		747721631EFD6171003B5EB0 /* DELoggerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DELoggerInfo.swift; sourceTree = "<group>"; };
 		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
 		7483165C1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -415,7 +417,6 @@
 			isa = PBXGroup;
 			children = (
 				74AC8FE81EFD46C60078C820 /* Logger */,
-				7447ED961EF92E13004C1F24 /* Crypto */,
 				74F7E0B91EEB05D000DE3891 /* Geometry */,
 				74401D141EA0FF7500200770 /* Uploader */,
 				74065EC91E8113A900C535B6 /* Extensions */,
@@ -672,6 +673,7 @@
 			isa = PBXGroup;
 			children = (
 				74AC8FEA1EFD46C60078C820 /* DELogger.swift */,
+				747721631EFD6171003B5EB0 /* DELoggerInfo.swift */,
 				74AC8FEB1EFD46C60078C820 /* DELogService.swift */,
 			);
 			path = Logger;
@@ -1075,6 +1077,7 @@
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
+				747721641EFD6171003B5EB0 /* DELoggerInfo.swift in Sources */,
 				74935E2B1ED9CA17005331A9 /* DEUploadPreparedItem.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
 				74065EF71E8113A900C535B6 /* KeyboardListener.swift in Sources */,
@@ -1098,7 +1101,6 @@
 				74A5DFB61ED6D01900CE254B /* DEHttpRequestBody.swift in Sources */,
 				7413AA2C1ED337FC00AD99EC /* UIImage+DialExt.swift in Sources */,
 				74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */,
-				7447ED981EF92E58004C1F24 /* DECryptoKeyManager.swift in Sources */,
 				74AC8FED1EFD46C60078C820 /* DELogger.swift in Sources */,
 				74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */,
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,
