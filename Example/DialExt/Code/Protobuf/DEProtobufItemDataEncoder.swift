@@ -8,15 +8,15 @@
 
 import Foundation
 
-import ProtocolBuffers
+import SwiftProtobuf
 
 
-public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: GeneratedMessageProtocol {
+public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: Message {
     override public func encode(representation: ProtoType) throws -> Data {
-        return try representation.data()
+        return try representation.serializedData()
     }
     
     override public func decode(data: Data) throws -> ProtoType {
-        return try ProtoType.parseFrom(data: data)
+        return try ProtoType.init(serializedData: data)
     }
 }

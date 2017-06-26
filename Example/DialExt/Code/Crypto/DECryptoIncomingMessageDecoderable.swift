@@ -39,7 +39,7 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     
     public func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage {
         let protoData = try self.decrypt(data, nonce: nonce)
-        let push = try AlertingPush.parseFrom(data: protoData)
+        let push = try AlertingPush.init(serializedData: protoData)
         return DecodedMessage(alertingPush: push)
     }
     

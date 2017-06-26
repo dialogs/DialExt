@@ -7,24 +7,14 @@
 //
 
 import Foundation
+import SwiftProtobuf
 
 public extension AppSharedDialogListContext {
     static public let empty: AppSharedDialogListContext = {
-        let contextBuilder = AppSharedDialogListContext.getBuilder()
-        contextBuilder.dialogs = []
-        contextBuilder.users = []
-        /*
-         let user: AppSharedUser = {
-         let builder = AppSharedUser.getBuilder()
-         builder.name = "Me"
-         builder.id = 123456
-         return try! builder.build()
-         }()
-         
-         contextBuilder.mainUser = user
-         */
-        let context = try! contextBuilder.build()
-        return context
+        return AppSharedDialogListContext.with({
+            $0.dialogs = []
+            $0.users = []
+        })
     }()
     
     static public let version: String = {
@@ -42,16 +32,8 @@ public extension AppSharedDialogListContext {
 
 public extension AppSharedDialogList {
     static public let empty: AppSharedDialogList = {
-        let builder = AppSharedDialogList.getBuilder()
-        builder.ids = []
-        return try! builder.build()
+        return AppSharedDialogList.with({
+            $0.ids = []
+        })
     }()
-}
-
-public extension AppSharedDialogListContext.Builder {
-    
-    public func setCurrentVersion() {
-        self.version = AppSharedDialogListContext.version
-    }
-    
 }

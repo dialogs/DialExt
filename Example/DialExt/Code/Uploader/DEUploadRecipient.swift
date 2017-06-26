@@ -23,7 +23,7 @@ public struct DEUploadRecipient: CustomStringConvertible {
     }
     
     public init(dialog: AppSharedDialog) {
-        self.init(id: dialog.peerId, peerType : dialog.isGroup ? .group : .private, accessHash: dialog.accessHash)
+        self.init(id: dialog.peerID, peerType : dialog.isGroup ? .group : .private, accessHash: dialog.accessHash)
     }
     
     public enum PeerType: CustomStringConvertible {

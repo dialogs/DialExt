@@ -75,7 +75,6 @@
 		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */; };
 		74846A431EA60D6800B80ED6 /* DESharedDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */; };
-		748B1B441E951A0D00BAB63D /* Dialog.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748B1B431E951A0D00BAB63D /* Dialog.proto.swift */; };
 		748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */; };
 		748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */; };
 		748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */; };
@@ -97,7 +96,6 @@
 		7494B8DC1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */; };
 		7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */; };
 		7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */; };
-		7494B8E21EFA9D5D00830AAE /* AlertingPush.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E11EFA9D5D00830AAE /* AlertingPush.proto.swift */; };
 		7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */; };
 		7494B8E61EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */; };
 		7494B8EC1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */; };
@@ -120,6 +118,8 @@
 		74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */; };
 		74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E51EA4E6A6006C243D /* String+DialExt.swift */; };
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
+		74F6BC2E1F017F18001B7584 /* alerting_push.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6BC2C1F017F18001B7584 /* alerting_push.pb.swift */; };
+		74F6BC2F1F017F18001B7584 /* dialog.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6BC2D1F017F18001B7584 /* dialog.pb.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
 		74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */; };
@@ -268,7 +268,6 @@
 		7483166A1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionReportHandler.swift; sourceTree = "<group>"; };
 		74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataConfig.swift; sourceTree = "<group>"; };
-		748B1B431E951A0D00BAB63D /* Dialog.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.proto.swift; sourceTree = "<group>"; };
 		748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DEPlaceholderViewController.storyboard; sourceTree = "<group>"; };
 		748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEPlaceholderViewController.swift; sourceTree = "<group>"; };
 		748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DialExt.swift"; sourceTree = "<group>"; };
@@ -290,7 +289,6 @@
 		7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingMessageDecoderable.swift; sourceTree = "<group>"; };
 		7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoNonce.swift; sourceTree = "<group>"; };
 		7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = alerting_push.proto; sourceTree = "<group>"; };
-		7494B8E11EFA9D5D00830AAE /* AlertingPush.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertingPush.proto.swift; sourceTree = "<group>"; };
 		7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecoder.swift; sourceTree = "<group>"; };
 		7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptorTests.swift; sourceTree = "<group>"; };
 		7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInt64BasedNonceTests.swift; sourceTree = "<group>"; };
@@ -314,6 +312,8 @@
 		74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLComponents+MultipartBody.swift"; sourceTree = "<group>"; };
 		74E231E51EA4E6A6006C243D /* String+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DialExt.swift"; sourceTree = "<group>"; };
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
+		74F6BC2C1F017F18001B7584 /* alerting_push.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = alerting_push.pb.swift; sourceTree = "<group>"; };
+		74F6BC2D1F017F18001B7584 /* dialog.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dialog.pb.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
 		74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExt.swift"; sourceTree = "<group>"; };
@@ -544,10 +544,10 @@
 		74065EE11E8113A900C535B6 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				7494B8E11EFA9D5D00830AAE /* AlertingPush.proto.swift */,
+				74F6BC2C1F017F18001B7584 /* alerting_push.pb.swift */,
+				74F6BC2D1F017F18001B7584 /* dialog.pb.swift */,
 				74065EE21E8113A900C535B6 /* AppSharedDialog+DialExt.swift */,
 				74065EE31E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift */,
-				748B1B431E951A0D00BAB63D /* Dialog.proto.swift */,
 				742CAB321E9B821200965906 /* DEProtobufItemDataEncoder.swift */,
 			);
 			path = Protobuf;
@@ -1119,10 +1119,8 @@
 				74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */,
 				74326E071EADFAB80016A1F1 /* LimitedValueType.swift in Sources */,
 				74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */,
-				7494B8E21EFA9D5D00830AAE /* AlertingPush.proto.swift in Sources */,
 				74A5DFBB1ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldValue.swift in Sources */,
 				749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */,
-				748B1B441E951A0D00BAB63D /* Dialog.proto.swift in Sources */,
 				7447EDA91EF97702004C1F24 /* DECryptoKeyPair.swift in Sources */,
 				7494B8DC1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift in Sources */,
 				74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */,
@@ -1138,6 +1136,7 @@
 				74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */,
 				7447ED981EF92E58004C1F24 /* DECryptoKeyManager.swift in Sources */,
 				74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */,
+				74F6BC2F1F017F18001B7584 /* dialog.pb.swift in Sources */,
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,
 				74935E261ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift in Sources */,
 				74BAF9451E952A8000ECB585 /* DESharedDialogsDataLoader.swift in Sources */,
@@ -1147,6 +1146,7 @@
 				74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */,
 				74065EF51E8113A900C535B6 /* KeyboardDetector.swift in Sources */,
 				7447EDAD1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift in Sources */,
+				74F6BC2E1F017F18001B7584 /* alerting_push.pb.swift in Sources */,
 				74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */,
 				74B284FE1EAF679C008354A1 /* Data+DialExt.swift in Sources */,
 				74065F001E8113A900C535B6 /* AppSharedDialog+DialExt.swift in Sources */,

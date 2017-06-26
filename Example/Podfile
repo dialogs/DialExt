@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'DialExt' do
-  pod 'ProtocolBuffers-Swift'
+  pod 'SwiftProtobuf', '~> 0.9.903'
   pod 'DLGSodium', :git => 'https://github.com/dialogs/swift-sodium.git'
 end
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-import ProtocolBuffers
+import SwiftProtobuf
 
 final public class DESharedDialogsDataLoader {
     
@@ -133,10 +133,6 @@ final public class DESharedDialogsDataLoader {
         }
         
         guard let reasonError = error else {
-            return true
-        }
-        
-        if error is ProtocolBuffersError {
             return true
         }
         
