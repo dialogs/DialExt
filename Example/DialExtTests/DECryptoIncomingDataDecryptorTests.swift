@@ -36,18 +36,21 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
         XCTAssertEqual(serverSharedSecret.tx, clientSharedSecret.rx)
         XCTAssertNotEqual(serverSharedSecret.rx, clientSharedSecret.rx)
         
-        let nonce = Int64(-2622849142741802).bigEndian
-        var nonceData = Data.de_withValue(nonce)
-        nonceData.appendByZeros(toLength: 24)
         
         let message = "Test message 1357444444Ghtgeagegklfkgpgn)"
         let encodedMessage: Data = sodium.secretBox.seal(message: message.data(using: .utf8)!, secretKey: serverSharedSecret.tx)!
         
-        guard let decodedMessage = sodium.secretBox.open(authenticatedCipherText: encodedMessage,
-                                                      secretKey: clientSharedSecret.rx,
-                                                      nonce: nonceData) else {
-            
+        guard let decodedMessageData = sodium.secretBox.open(nonceAndAuthenticatedCipherText: encodedMessage,
+                                                             secretKey: clientSharedSecret.rx) else {
+                                             XCTFail("Fail to decrypt message data")
+                                                                return
         }
+        guard let decodedMessage = String.init(data: decodedMessageData, encoding: .utf8) else {
+            XCTFail("Fail to decode message")
+            return
+        }
+        
+        XCTAssertEqual(message, decodedMessage)
     }
     
     func testServerPreparedData() {

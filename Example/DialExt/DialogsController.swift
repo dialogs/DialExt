@@ -22,17 +22,16 @@ extension DESharedDialogsViewController {
     @objc private func addDialogAction(sender: AnyObject) {
         
         if let context = self.manager.dataLoader.context {
-            let contextBuilder = try! context.toBuilder()
-            let dialogBuilder = AppSharedDialog.getBuilder()
-            dialogBuilder.title = UUID.init().uuidString
-            dialogBuilder.isGroup = false
-            dialogBuilder.uids = []
-            dialogBuilder.id = Int64(arc4random())
-            let dialog = try! dialogBuilder.build()
             
-            contextBuilder.dialogs.insert(dialog, at: 0)
+            let dialog = AppSharedDialog.with({
+                $0.title = UUID.init().uuidString
+                $0.isGroup = false
+                $0.uids = []
+                $0.id = Int64(arc4random())
+            })
             
-            let newContext = try! contextBuilder.build()
+            var newContext = context
+            newContext.dialogs.insert(dialog, at: 0)
             
             self.manager.dataLoader.contextQueuer.put(representation: newContext)
             self.resetDialogs(newContext.dialogs)
