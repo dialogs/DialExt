@@ -1,5 +1,5 @@
 //
-//  DECryptoIncomingDataDecoder.swift
+//  DECryptoIncomingDataDecryptor.swift
 //  DialExt
 //
 //  Created by Aleksei Gordeev on 21/06/2017.

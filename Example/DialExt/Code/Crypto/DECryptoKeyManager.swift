@@ -25,7 +25,7 @@ import DLGSodium
  *Device* recieves notification, redirect it to extension. →
  **Manager** goes to shared keychain and collects needed data. →
  **Manager** decrypts notification (may fail due bad nonce or some other reason) →
- *Extension* replace original notification data by decrypted message (optionally, load avatars and other stuff).
+ *Extension* replaces original notification data by decrypted message (optionally, load avatars and other stuff).
  */
 class DECryptoKeyManager {
     

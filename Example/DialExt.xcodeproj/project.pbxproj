@@ -96,7 +96,7 @@
 		7494B8DC1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */; };
 		7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */; };
 		7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */; };
-		7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */; };
+		7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */; };
 		7494B8E61EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */; };
 		7494B8EC1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
@@ -289,7 +289,7 @@
 		7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingMessageDecoderable.swift; sourceTree = "<group>"; };
 		7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoNonce.swift; sourceTree = "<group>"; };
 		7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = alerting_push.proto; sourceTree = "<group>"; };
-		7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecoder.swift; sourceTree = "<group>"; };
+		7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptor.swift; sourceTree = "<group>"; };
 		7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptorTests.swift; sourceTree = "<group>"; };
 		7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInt64BasedNonceTests.swift; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
@@ -660,7 +660,7 @@
 				7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */,
 				7447ED971EF92E58004C1F24 /* DECryptoKeyManager.swift */,
 				7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */,
-				7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift */,
+				7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */,
 				7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */,
 				7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */,
 			);
@@ -1088,7 +1088,7 @@
 			files = (
 				74A5DFB81ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldAttribute.swift in Sources */,
 				74313A621E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift in Sources */,
-				7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecoder.swift in Sources */,
+				7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift in Sources */,
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
