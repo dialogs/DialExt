@@ -144,10 +144,10 @@ internal extension DEKeychainQuery.Access {
         }
     }
     
-    private static let defaultAccount = "im.dlg.shared"
+    private static let cryptoServiceDefaultAccount = "im.dlg.shared"
     
     internal static func cryptoItem(service: CryptoService) -> DEKeychainQuery.Access {
-        return self.init(service.service, account: defaultAccount)
+        return self.init(service.service, account: cryptoServiceDefaultAccount)
     }
 }
 

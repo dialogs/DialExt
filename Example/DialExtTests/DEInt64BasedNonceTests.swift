@@ -14,7 +14,7 @@ class DEInt64BasedNonceTests: XCTestCase {
     public var nonceValue: Int64 = -2622849142741802
     
     func testNonceLittleEndianCreation() {
-        let nonce = DEInt64BasedNonce.init(value: self.nonceValue)
+        let nonce = DEInt64BasedNonce.init(self.nonceValue)
         XCTAssertEqual(nonce.value, self.nonceValue)
     }
     
@@ -25,8 +25,8 @@ class DEInt64BasedNonceTests: XCTestCase {
     }
     
     func testNonceEquataion() {
-        let nonce1 = DEInt64BasedNonce.init(value: self.nonceValue)
-        let nonce2 = DEInt64BasedNonce.init(value: self.nonceValue)
+        let nonce1 = DEInt64BasedNonce.init(self.nonceValue)
+        let nonce2 = DEInt64BasedNonce.init(self.nonceValue)
         let nonce3 = DEInt64BasedNonce.init(bigEndianValue: self.nonceValue.bigEndian)
         XCTAssertEqual(nonce1, nonce2)
         XCTAssertEqual(nonce2, nonce3)
@@ -34,9 +34,9 @@ class DEInt64BasedNonceTests: XCTestCase {
     }
     
     func testNonceComparison() {
-        let nonce1 = DEInt64BasedNonce.init(value: self.nonceValue)
+        let nonce1 = DEInt64BasedNonce.init(self.nonceValue)
         let nonce2 = DEInt64BasedNonce.init(bigEndianValue: (self.nonceValue + 1).bigEndian)
-        let nonce3 = DEInt64BasedNonce.init(value: self.nonceValue + 2)
+        let nonce3 = DEInt64BasedNonce.init(self.nonceValue + 2)
         let nonce4 = DEInt64BasedNonce.init(bigEndianValue: (self.nonceValue + 3).bigEndian)
         
         XCTAssertEqual(nonce1, nonce1)
@@ -61,7 +61,7 @@ class DEInt64BasedNonceTests: XCTestCase {
     }
     
     func testLittleEndianDataRepresentation() {
-        let nonce1 = DEInt64BasedNonce.init(value: self.nonceValue)
+        let nonce1 = DEInt64BasedNonce.init(self.nonceValue)
         let data = nonce1.nonce
         let decodedValue: Int64 = data.de_toValue()
         XCTAssertEqual(self.nonceValue, decodedValue)
@@ -80,7 +80,7 @@ class DEInt64BasedNonceTests: XCTestCase {
         let littleEndianNonceValue = self.nonceValue.littleEndian
         let bigEndianNonceValue = self.nonceValue.bigEndian
         
-        let nonce = DEInt64BasedNonce.init(value: nonceValue)
+        let nonce = DEInt64BasedNonce.init(nonceValue)
         let littleEndianBasedNonce = DEInt64BasedNonce.init(littleEndianValue: littleEndianNonceValue)
         let bigEndianBasedNonce = DEInt64BasedNonce.init(bigEndianValue: bigEndianNonceValue)
         
@@ -94,7 +94,7 @@ class DEInt64BasedNonceTests: XCTestCase {
         let littleEndianNonceValue = self.nonceValue.littleEndian
         let bigEndianNonceValue = self.nonceValue.bigEndian
         
-        let nonce = DEInt64BasedNonce.init(value: nonceValue)
+        let nonce = DEInt64BasedNonce.init(nonceValue)
         let littleEndianBasedNonce = DEInt64BasedNonce.init(littleEndianValue: littleEndianNonceValue)
         let bigEndianBasedNonce = DEInt64BasedNonce.init(bigEndianValue: bigEndianNonceValue)
         
@@ -108,7 +108,7 @@ class DEInt64BasedNonceTests: XCTestCase {
         let littleEndianNonceValue = self.nonceValue.littleEndian
         let bigEndianNonceValue = self.nonceValue.bigEndian
         
-        let nonce = DEInt64BasedNonce.init(value: nonceValue)
+        let nonce = DEInt64BasedNonce.init(nonceValue)
         let littleEndianBasedNonce = DEInt64BasedNonce.init(littleEndianValue: littleEndianNonceValue)
         let bigEndianBasedNonce = DEInt64BasedNonce.init(bigEndianValue: bigEndianNonceValue)
         

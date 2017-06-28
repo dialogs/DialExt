@@ -34,21 +34,21 @@ public struct DEInt64BasedNonce: Comparable {
         return data
     }
     
-    public init(value: Int64) {
+    public init(_ value: Int64) {
         self.value = value
     }
     
     public init(bigEndianValue: Int64) {
-        self.init(value: Int64.init(bigEndian: bigEndianValue))
+        self.init(Int64.init(bigEndian: bigEndianValue))
     }
     
     public init(littleEndianValue: Int64) {
-        self.init(value: Int64.init(littleEndian: littleEndianValue))
+        self.init(Int64.init(littleEndian: littleEndianValue))
     }
     
     public init(data: Data) {
         let value: Int64 = data.de_toValue()
-        self.init(value: value)
+        self.init(value)
     }
     
     public static func ==(lhs: DEInt64BasedNonce, rhs: DEInt64BasedNonce) -> Bool {

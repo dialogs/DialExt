@@ -44,7 +44,7 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     }
     
     private func isValidNonce(_ nonce: DEInt64BasedNonce) throws -> Bool {
-        var storedNonce = DEInt64BasedNonce.init(value: 0)
+        var storedNonce = DEInt64BasedNonce.init(0)
         do {
             storedNonce = try self.storage.cryptoSeqNOnce()
         }

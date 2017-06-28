@@ -39,6 +39,17 @@ public extension DEKeychainQueryPerformerable {
         return result
     }
     
+    func delete(query: DEKeychainQuery, safely: Bool = true) throws {
+        guard case .delete = query.operation else {
+            throw DEKeychainQueryError.wrongQuery
+        }
+        
+        let result = self.perform(query: query)
+        if case let .failure(status: status) = result, status != errSecItemNotFound {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(status ?? -1), userInfo: nil)
+        }
+    }
+    
     @discardableResult func readData(query: DEKeychainQuery) throws -> Data {
         guard query.operation.subtype == .read else {
             throw DEKeychainQueryError.wrongQuery
