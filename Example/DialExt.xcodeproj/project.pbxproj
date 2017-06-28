@@ -113,6 +113,9 @@
 		74BAF9451E952A8000ECB585 /* DESharedDialogsDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BAF9441E952A8000ECB585 /* DESharedDialogsDataLoader.swift */; };
 		74BAF9491E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BAF9481E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift */; };
 		74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C9A50D1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift */; };
+		74CD979C1F03F6A700BFF635 /* DELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CD97991F03F6A700BFF635 /* DELogger.swift */; };
+		74CD979D1F03F6A700BFF635 /* DELoggerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CD979A1F03F6A700BFF635 /* DELoggerInfo.swift */; };
+		74CD979E1F03F6A700BFF635 /* DELogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CD979B1F03F6A700BFF635 /* DELogService.swift */; };
 		74CF662D1F02650000E68BB5 /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
 		74D017D11F02B18F008C8536 /* AlertingPush+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D017CE1F02B18F008C8536 /* AlertingPush+DialExt.swift */; };
 		74D017D21F02B18F008C8536 /* DENotificationDecryptService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D017CF1F02B18F008C8536 /* DENotificationDecryptService.swift */; };
@@ -312,6 +315,9 @@
 		74BAF9441E952A8000ECB585 /* DESharedDialogsDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsDataLoader.swift; sourceTree = "<group>"; };
 		74BAF9481E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemRepresenter.swift; sourceTree = "<group>"; };
 		74C9A50D1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenterQueuer.swift; sourceTree = "<group>"; };
+		74CD97991F03F6A700BFF635 /* DELogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DELogger.swift; sourceTree = "<group>"; };
+		74CD979A1F03F6A700BFF635 /* DELoggerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DELoggerInfo.swift; sourceTree = "<group>"; };
+		74CD979B1F03F6A700BFF635 /* DELogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DELogService.swift; sourceTree = "<group>"; };
 		74D017CE1F02B18F008C8536 /* AlertingPush+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertingPush+DialExt.swift"; sourceTree = "<group>"; };
 		74D017CF1F02B18F008C8536 /* DENotificationDecryptService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DENotificationDecryptService.swift; sourceTree = "<group>"; };
 		74D017D01F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+CryptoMessage.swift"; sourceTree = "<group>"; };
@@ -454,6 +460,7 @@
 				74065ED31E8113A900C535B6 /* KeyboardManager */,
 				74065ED91E8113A900C535B6 /* Keychain */,
 				74326E091EAE12B90016A1F1 /* Localization */,
+				74CD97981F03F6A700BFF635 /* Logger */,
 				74A5DFAC1ED6D01900CE254B /* Network */,
 				74065EDD1E8113A900C535B6 /* Other */,
 				74065EE11E8113A900C535B6 /* Protobuf */,
@@ -716,6 +723,16 @@
 				74A5DFB41ED6D01900CE254B /* DEHttpRequestBodyItem.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		74CD97981F03F6A700BFF635 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				74CD97991F03F6A700BFF635 /* DELogger.swift */,
+				74CD979A1F03F6A700BFF635 /* DELoggerInfo.swift */,
+				74CD979B1F03F6A700BFF635 /* DELogService.swift */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 		74D017CD1F02B103008C8536 /* CryptoPush */ = {
@@ -1135,6 +1152,7 @@
 				74D017D31F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift in Sources */,
 				74065EF71E8113A900C535B6 /* KeyboardListener.swift in Sources */,
 				74935E251ED9CA17005331A9 /* DEUploadDataRepresentation.swift in Sources */,
+				74CD979C1F03F6A700BFF635 /* DELogger.swift in Sources */,
 				744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */,
 				74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
@@ -1151,6 +1169,7 @@
 				742CAB351E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift in Sources */,
 				74065EF01E8113A900C535B6 /* DispatchQueue+DialExt.swift in Sources */,
 				74935E2D1ED9CA17005331A9 /* DEUploadRecipient.swift in Sources */,
+				74CD979D1F03F6A700BFF635 /* DELoggerInfo.swift in Sources */,
 				7447ED9E1EF930C7004C1F24 /* DECryptoStorage.swift in Sources */,
 				748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */,
 				74D017D21F02B18F008C8536 /* DENotificationDecryptService.swift in Sources */,
@@ -1167,6 +1186,7 @@
 				74935E291ED9CA17005331A9 /* DEUploadError.swift in Sources */,
 				74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */,
 				7402B5011ECF22670042627D /* SharingURL.swift in Sources */,
+				74CD979E1F03F6A700BFF635 /* DELogService.swift in Sources */,
 				74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */,
 				74065EF51E8113A900C535B6 /* KeyboardDetector.swift in Sources */,
 				7447EDAD1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift in Sources */,
