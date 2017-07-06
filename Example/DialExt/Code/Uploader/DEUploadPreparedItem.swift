@@ -55,7 +55,7 @@ public class DEUploadPreparedItem {
             case let .image(rep): return rep.filename(base: "image_\(idx)")
             case let .video(rep): return rep.filename(base: "video_\(idx)")
             case let .audio(rep): return rep.filename(base: "audio_\(idx)")
-            case .bytes(_): return "file_\(idx)"
+            case let .bytes(rep): return rep.filename(base: "file_\(idx)")
             default: return nil
             }
         }

@@ -100,7 +100,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     
     private func handleFileDataLoaded(url: URL, data: Data) {
         guard self.targetType != .file else {
-            let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data)))
+            let mostSpecificUti = self.attachment.registeredTypeIdentifiers.first as! String
+            let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)))
             self.finish(result: DLGAsyncOperationResult.success(item))
             return
         }
@@ -143,7 +144,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
     }
     
-    private func buildConten(data: Data, details: LoadedDetails) -> DEUploadPreparedItem.Content {
+    private func buildContent(data: Data, details: LoadedDetails) -> DEUploadPreparedItem.Content {
         let fileRep = DEUploadDataRepresentation.init(data: self.loadedData!,
                                                       mimeType: self.attachment.supposedMimeType!,
                                                       fileExtension: self.attachment.supposedFileExtension!)
@@ -169,7 +170,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
                 return
         }
         
-        let content: DEUploadPreparedItem.Content = self.buildConten(data: data, details: details)
+        let content: DEUploadPreparedItem.Content = self.buildContent(data: data, details: details)
         let item = DEUploadPreparedItem.init(content: content, preview: self.loadedPreview)
         
         finish(result: DLGAsyncOperationResult.success(item))

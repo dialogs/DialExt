@@ -40,6 +40,14 @@ public class DEUploadDataRepresentation {
         self.data = data
     }
     
+    public func filename(base: String) -> String {
+        var filename = base
+        if !fileExtension.isEmpty {
+            filename = filename.appending(".").appending(fileExtension)
+        }
+        return filename
+    }
+    
     convenience public init(data: Data, uti: String) {
         let mimeType = UTTypeCopyPreferredTagWithClass(uti as CFString, kUTTagClassMIMEType)!.takeRetainedValue()
         var fileExtension: String = ""
