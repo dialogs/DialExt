@@ -26,15 +26,39 @@ public extension NSExtensionItem {
         return nil
     }
     
+    /**
+     Does not include remote urls.
+     For remote urls check *remoteUrlAttachments* and load it (the result will probably be an URL instance).
+     */
     public var sharingUrl: SharingURL? {
         if let attributedText = self.attributedContentText,
             let url = URL.init(string: attributedText.string)  {
             return SharingURL.init(url: url, attributedString: attributedText)
         }
+        
         return nil
     }
     
-    public func attachmentsWithTypeIdentifier(_ id: String) -> [NSItemProvider] {
+    public func attachmentsPassingTest(test: (NSItemProvider) throws -> Bool) rethrows -> [NSItemProvider] {
+        guard let attachments = self.attachments, !attachments.isEmpty else {
+            return []
+        }
+        return try attachments.flatMap({
+            guard let item = $0 as? NSItemProvider else {
+                return nil
+            }
+            return try test(item) ? item : nil
+        })
+    }
+    
+    public var remoteUrlAttachments: [NSItemProvider] {
+        return self.attachmentsPassingTest(test: {
+            return !$0.hasItemConformingToTypeIdentifier(kUTTypeFileURL as String) &&
+                $0.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
+        })
+    }
+    
+    public func attachmentsConformingToTypeIdentifier(_ id: String) -> [NSItemProvider] {
         guard let attachments = self.attachments else {
             return []
         }
@@ -50,15 +74,15 @@ public extension NSExtensionItem {
     }
     
     public var videoAttachments: [NSItemProvider] {
-        return self.attachmentsWithTypeIdentifier(kUTTypeMovie as String)
+        return self.attachmentsConformingToTypeIdentifier(kUTTypeMovie as String)
     }
     
     public var imageAttachments: [NSItemProvider] {
-        return self.attachmentsWithTypeIdentifier(kUTTypeImage as String)
+        return self.attachmentsConformingToTypeIdentifier(kUTTypeImage as String)
     }
     
     public var audioAttachments: [NSItemProvider] {
-        return self.attachmentsWithTypeIdentifier(kUTTypeAudio as String)
+        return self.attachmentsConformingToTypeIdentifier(kUTTypeAudio as String)
     }
     
 }

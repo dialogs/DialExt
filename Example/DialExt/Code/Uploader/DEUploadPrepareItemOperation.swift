@@ -41,7 +41,12 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         
         if let sharingUrl = item.sharingUrl {
             let preparedItem = DEUploadPreparedItem.init(content: .url(sharingUrl.url))
-            finish(result: DLGAsyncOperationResult.success(preparedItem))
+            finish(item: preparedItem)
+            return
+        }
+        
+        if let remoteUrlAttachment = item.remoteUrlAttachments.first {
+            loadRemoteUrl(attachment: remoteUrlAttachment)
             return
         }
         
@@ -64,7 +69,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         if mediaAttachment == nil {
-            mediaAttachment = item.attachmentsWithTypeIdentifier(kUTTypeContent as String).first
+            mediaAttachment = item.attachmentsConformingToTypeIdentifier(kUTTypeContent as String).first
             mediaType = .file
         }
         
@@ -98,11 +103,54 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
     }
     
+    private func loadRemoteUrl(attachment: NSItemProvider) {
+        attachment.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil) { (item, error) in
+            
+            guard !self.isCancelled else {
+                return
+            }
+            
+            if let item = item {
+                func finish(url: URL) {
+                    self.finish(item: .init(content: .url(url)))
+                }
+                
+                func finish(string: String) {
+                    if let url = URL.init(string: string) {
+                        finish(url: url)
+                    }
+                    else {
+                        self.finish(item: .init(content: .text(string)))
+                    }
+                }
+                
+                func finish(data: Data) {
+                    if let string = String(data: data, encoding: .utf8) {
+                        finish(string: string)
+                    }
+                    self.finishWithFailure(error: DEUploadError.unexpectedUrlContent)
+                }
+                
+                
+                switch item {
+                case let url as URL: finish(url: url)
+                case let link as String: finish(string: link)
+                case let data as Data: finish(data: data)
+                default: self.finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
+                }
+            }
+            else {
+                self.finishWithFailure(error: error)
+            }
+            
+        }
+    }
+    
     private func handleFileDataLoaded(url: URL, data: Data) {
         guard self.targetType != .file else {
             let mostSpecificUti = self.attachment.registeredTypeIdentifiers.first as! String
             let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)))
-            self.finish(result: DLGAsyncOperationResult.success(item))
+            self.finish(item: item)
             return
         }
         
@@ -162,6 +210,10 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         return content
     }
     
+    private func finish(item: DEUploadPreparedItem) {
+        self.finish(result: DLGAsyncOperationResult.success(item))
+    }
+    
     private func finishIfMediaLoaded() {
         guard self.doesPreviewLoadingFinished,
             let data = self.loadedData,
@@ -173,7 +225,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         let content: DEUploadPreparedItem.Content = self.buildContent(data: data, details: details)
         let item = DEUploadPreparedItem.init(content: content, preview: self.loadedPreview)
         
-        finish(result: DLGAsyncOperationResult.success(item))
+        finish(item: item)
     }
     
     private func loadVideoDetails(url: URL, data: Data, onLoaded:@escaping ((DEUploadVideoDetails) -> ())) {

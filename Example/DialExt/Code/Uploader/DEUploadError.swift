@@ -17,6 +17,9 @@ public enum DEUploadError: Error {
     /// Uploading now (for single-item workers only)
     case busy
     
+    /// Unexpected sharing url (system provides neither url, neither string, neither utf-8 encoded string).
+    case unexpectedUrlContent
+    
     case unrecognizableExtensionItem
     
     public var localizedDescription: String {
@@ -26,6 +29,7 @@ public enum DEUploadError: Error {
         case .invalidAuthInfo: return "Invalid authorization info"
         case .busy: return "Already uploading now"
         case .unrecognizableExtensionItem: return "Could not recognize sharing item"
+        case .unexpectedUrlContent: return "Unexpected url content"
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription
         }
