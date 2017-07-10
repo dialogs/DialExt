@@ -148,8 +148,11 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     
     private func handleFileDataLoaded(url: URL, data: Data) {
         guard self.targetType != .file else {
+            let name = url.lastPathComponent.isEmpty ? nil : url.lastPathComponent
+            
             let mostSpecificUti = self.attachment.registeredTypeIdentifiers.first as! String
-            let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)))
+            let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)),
+                                                 originalName: name)
             self.finish(item: item)
             return
         }
@@ -160,6 +163,10 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     private func loadMedia(url: URL, data: Data) {
         
         self.loadedData = data
+        
+        if !url.lastPathComponent.isEmpty {
+            self.proposedFilename = url.lastPathComponent
+        }
         
         loadPreview(onLoaded: { [weak self ] rep in
             withOptionalExtendedLifetime(self, body: {
@@ -223,7 +230,9 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         let content: DEUploadPreparedItem.Content = self.buildContent(data: data, details: details)
-        let item = DEUploadPreparedItem.init(content: content, preview: self.loadedPreview)
+        let item = DEUploadPreparedItem.init(content: content,
+                                             preview: self.loadedPreview,
+                                             originalName: self.proposedFilename)
         
         finish(item: item)
     }
@@ -344,6 +353,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             self.finishIfMediaLoaded()
         }
     }
+    
+    private var proposedFilename: String? = nil
     
     private enum LoadedDetails {
         case image(DEUploadImageDetails)
