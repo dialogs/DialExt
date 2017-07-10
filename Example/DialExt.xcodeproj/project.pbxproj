@@ -26,7 +26,6 @@
 		74065EF91E8113A900C535B6 /* UIViewAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065ED81E8113A900C535B6 /* UIViewAnimationOptions.swift */; };
 		74065EFA1E8113A900C535B6 /* DEKeychainQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */; };
 		74065EFB1E8113A900C535B6 /* DEKeychainResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */; };
-		74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */; };
 		74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDE1E8113A900C535B6 /* DEAvatarImageProvider.swift */; };
 		74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDF1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift */; };
 		74065EFF1E8113A900C535B6 /* FrameworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE01E8113A900C535B6 /* FrameworkProvider.swift */; };
@@ -89,6 +88,9 @@
 		74935E2E1ED9CA17005331A9 /* DEUploadRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E201ED9CA17005331A9 /* DEUploadRequestBuilder.swift */; };
 		74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E211ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift */; };
 		74935E301ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */; };
+		749542311F13B324008F8BA5 /* DESharingApiUrlProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */; };
+		749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */; };
+		749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
@@ -202,7 +204,6 @@
 		74065ED81E8113A900C535B6 /* UIViewAnimationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewAnimationOptions.swift; sourceTree = "<group>"; };
 		74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainQuery.swift; sourceTree = "<group>"; };
 		74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainResult.swift; sourceTree = "<group>"; };
-		74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainWrapper.swift; sourceTree = "<group>"; };
 		74065EDE1E8113A900C535B6 /* DEAvatarImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarImageProvider.swift; sourceTree = "<group>"; };
 		74065EDF1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarPlaceholderRenderer.swift; sourceTree = "<group>"; };
 		74065EE01E8113A900C535B6 /* FrameworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkProvider.swift; sourceTree = "<group>"; };
@@ -272,6 +273,9 @@
 		74935E201ED9CA17005331A9 /* DEUploadRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadRequestBuilder.swift; sourceTree = "<group>"; };
 		74935E211ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadShareExtensionItemPreparing.swift; sourceTree = "<group>"; };
 		74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadTokenInfoProvider.swift; sourceTree = "<group>"; };
+		749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingApiUrlProvider.swift; sourceTree = "<group>"; };
+		749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupedKeychainDataProvider.swift; sourceTree = "<group>"; };
+		749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEKeychainQuery+Shared.swift"; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
@@ -499,8 +503,9 @@
 			isa = PBXGroup;
 			children = (
 				74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */,
+				749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */,
 				74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */,
-				74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */,
+				749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */,
 			);
 			path = Keychain;
 			sourceTree = "<group>";
@@ -626,6 +631,7 @@
 				7436D6221ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift */,
 				7436D6241EDA078200808E41 /* DEUploadPrepareItemListOperation.swift */,
 				74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */,
+				749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */,
 			);
 			path = Uploader;
 			sourceTree = "<group>";
@@ -1060,7 +1066,6 @@
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
-				74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */,
 				74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */,
 				74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */,
 				748BB7941EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift in Sources */,
@@ -1106,6 +1111,7 @@
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,
 				74935E261ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift in Sources */,
 				74BAF9451E952A8000ECB585 /* DESharedDialogsDataLoader.swift in Sources */,
+				749542311F13B324008F8BA5 /* DESharingApiUrlProvider.swift in Sources */,
 				74935E291ED9CA17005331A9 /* DEUploadError.swift in Sources */,
 				74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */,
 				7402B5011ECF22670042627D /* SharingURL.swift in Sources */,
@@ -1132,6 +1138,7 @@
 				7436D6231ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift in Sources */,
 				742DC8D71EAA045800ABDA55 /* NSExtensionItem+DialExt.swift in Sources */,
 				74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */,
+				749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */,
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
@@ -1141,6 +1148,7 @@
 				74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */,
 				74065EF31E8113A900C535B6 /* DEInterappMessenger.swift in Sources */,
 				74065EF61E8113A900C535B6 /* KeyboardEvent.swift in Sources */,
+				749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

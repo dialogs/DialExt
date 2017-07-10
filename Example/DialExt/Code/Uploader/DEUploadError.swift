@@ -22,6 +22,12 @@ public enum DEUploadError: Error {
     
     case unrecognizableExtensionItem
     
+    case noServerApiURL
+    
+    case invalidServerApiURL
+    
+    case noContactsShared
+    
     public var localizedDescription: String {
         switch self {
         case .tooManyItems: return "Items limit exceeded"
@@ -30,6 +36,9 @@ public enum DEUploadError: Error {
         case .busy: return "Already uploading now"
         case .unrecognizableExtensionItem: return "Could not recognize sharing item"
         case .unexpectedUrlContent: return "Unexpected url content"
+        case .noServerApiURL: return "Could not define server API URL"
+        case .invalidServerApiURL: return "Server API URL is invalid"
+        case .noContactsShared: return "Contacts are unavailable"
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription
         }

@@ -181,7 +181,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
         
         if self.uploader == nil {
-            let authProvider = DEUploadAuthProvider.init(keychainGroupId: self.config.keychainGroup)
+            let keychain = DEKeychainDataProvider.init()
+            let authProvider = keychain.shared(groupName: self.config.keychainGroup)
             let fileUploader = DEUploader.init(apiUrl: self.config.endpointUploadMethodURLs.first!)
             self.uploader = DEExtensionItemUploader.init(fileUploader: fileUploader, authProvider: authProvider)
         }
