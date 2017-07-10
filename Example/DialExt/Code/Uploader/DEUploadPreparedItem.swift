@@ -37,6 +37,16 @@ public class DEUploadPreparedItem {
         }
     }
     
+    public func proposeName(baseBuilder:(()->(String))) -> String {
+        if let name = self.originalName {
+            return name
+        }
+        
+        let name = baseBuilder()
+        let filename = self.content.proposedFilename(base: baseBuilder())
+        return filename ?? name
+    }
+    
     var preview: DEUploadImageRepresentation?
     
     public enum Content {
