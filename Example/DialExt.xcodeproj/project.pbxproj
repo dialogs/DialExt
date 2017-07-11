@@ -88,7 +88,6 @@
 		74935E2E1ED9CA17005331A9 /* DEUploadRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E201ED9CA17005331A9 /* DEUploadRequestBuilder.swift */; };
 		74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E211ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift */; };
 		74935E301ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */; };
-		749542311F13B324008F8BA5 /* DESharingApiUrlProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */; };
 		749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */; };
 		749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
@@ -112,6 +111,7 @@
 		74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */; };
 		74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E51EA4E6A6006C243D /* String+DialExt.swift */; };
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
+		74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
 		74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */; };
@@ -273,7 +273,6 @@
 		74935E201ED9CA17005331A9 /* DEUploadRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadRequestBuilder.swift; sourceTree = "<group>"; };
 		74935E211ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadShareExtensionItemPreparing.swift; sourceTree = "<group>"; };
 		74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadTokenInfoProvider.swift; sourceTree = "<group>"; };
-		749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingApiUrlProvider.swift; sourceTree = "<group>"; };
 		749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupedKeychainDataProvider.swift; sourceTree = "<group>"; };
 		749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEKeychainQuery+Shared.swift"; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
@@ -298,6 +297,7 @@
 		74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLComponents+MultipartBody.swift"; sourceTree = "<group>"; };
 		74E231E51EA4E6A6006C243D /* String+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DialExt.swift"; sourceTree = "<group>"; };
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
+		74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingConfigProvider.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
 		74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExt.swift"; sourceTree = "<group>"; };
@@ -616,6 +616,7 @@
 			isa = PBXGroup;
 			children = (
 				74935E151ED9CA17005331A9 /* DEExtensionItemUploader.swift */,
+				74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */,
 				74935E161ED9CA17005331A9 /* DEUploadAuth.swift */,
 				74935E171ED9CA17005331A9 /* DEUploadDataRepresentation.swift */,
 				74935E181ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift */,
@@ -631,7 +632,6 @@
 				7436D6221ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift */,
 				7436D6241EDA078200808E41 /* DEUploadPrepareItemListOperation.swift */,
 				74935E221ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift */,
-				749542301F13B324008F8BA5 /* DESharingApiUrlProvider.swift */,
 			);
 			path = Uploader;
 			sourceTree = "<group>";
@@ -1083,6 +1083,7 @@
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
 				747721641EFD6171003B5EB0 /* DELoggerInfo.swift in Sources */,
+				74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */,
 				74935E2B1ED9CA17005331A9 /* DEUploadPreparedItem.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
 				74065EF71E8113A900C535B6 /* KeyboardListener.swift in Sources */,
@@ -1111,7 +1112,6 @@
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,
 				74935E261ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift in Sources */,
 				74BAF9451E952A8000ECB585 /* DESharedDialogsDataLoader.swift in Sources */,
-				749542311F13B324008F8BA5 /* DESharingApiUrlProvider.swift in Sources */,
 				74935E291ED9CA17005331A9 /* DEUploadError.swift in Sources */,
 				74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */,
 				7402B5011ECF22670042627D /* SharingURL.swift in Sources */,
