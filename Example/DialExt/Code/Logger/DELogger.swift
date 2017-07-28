@@ -10,21 +10,33 @@ import Foundation
 import os
 
 
+public struct LogPosition {
+    let file: StaticString
+    let function: StaticString
+    let line: UInt
+}
+
 public func DELog(_ message: String,
                   subsystem: DELogger.Subsystem = .sdk,
                   tag: String = "",
                   level: DELogger.Level = .default,
                   info: DELoggerInfo? = nil,
-                  logger: DELogger = DELogger.shared) {
-    logger.log(message, subsystem: subsystem, tag: tag, level: level)
+                  logger: DELogger = DELogger.shared,
+                  file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    var info: DELoggerInfo = info ?? DELoggerInfo()
+    info[.position] = LogPosition(file: file, function: function, line: line)
+    logger.log(message, subsystem: subsystem, tag: tag, level: level, info: info)
 }
 
 public func DESLog(_ message: StaticString,
                    subsystem: DELogger.Subsystem = .sdk,
                    tag: String = "",
                    level: DELogger.Level = .default,
-                   logger: DELogger = DELogger.shared) {
-    logger.slog(message, subsystem: subsystem, tag: tag, level: level)
+                   logger: DELogger = DELogger.shared,
+                   file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    var info = DELoggerInfo()
+    info[.position] = LogPosition(file: file, function: function, line: line)
+    logger.slog(message, subsystem: subsystem, tag: tag, level: level, info: info)
 }
 
 public final class DELogger: NSObject {
@@ -69,7 +81,7 @@ public final class DELogger: NSObject {
         })
     }
     
-    public func slog(_ message: StaticString, subsystem: Subsystem = .sdk, tag: String, level: Level = .default) {
+    public func slog(_ message: StaticString, subsystem: Subsystem = .sdk, tag: String, level: Level = .default, info: Info? = nil) {
         self.services.forEach({$0.slog(message, subsystem: subsystem, tag: tag, level: level, logger: self)})
     }
     

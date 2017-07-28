@@ -86,7 +86,11 @@ public class DEDebugConsoleLogService: DELogService {
     }
     
     /// Override for put in console
-    public func slog(_ message: StaticString, subsystem: DELogger.Subsystem, tag: String, level: DELogger.Level, logger: DELogger) {
+    public func slog(_ message: StaticString,
+                     subsystem: DELogger.Subsystem,
+                     tag: String,
+                     level: DELogger.Level,
+                     logger: DELogger) {
         let type = level.osLogType
         let log = OSLog.init(subsystem: subsystem.rawValue, category: tag)
         guard log.isEnabled(type: type) else {

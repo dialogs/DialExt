@@ -36,6 +36,9 @@ public struct DELoggerInfoKey: RawRepresentable, Hashable {
     public static let error = DELoggerInfoKey.init("im.dlg.logger.key.error")
     
     public static let afterward = DELoggerInfoKey.init("im.dlg.logger.key.afterward")
+    
+    /// Contains LogPosition instance
+    public static let position = DELoggerInfoKey.init("im.dlg.logger.key.position")
 }
 
 
