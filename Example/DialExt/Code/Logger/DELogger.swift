@@ -10,10 +10,10 @@ import Foundation
 import os
 
 
-public struct LogPosition {
-    let file: StaticString
-    let function: StaticString
-    let line: UInt
+public struct DELogPosition {
+    public let file: StaticString
+    public let function: StaticString
+    public let line: UInt
 }
 
 public func DELog(_ message: String,
@@ -24,7 +24,7 @@ public func DELog(_ message: String,
                   logger: DELogger = DELogger.shared,
                   file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
     var info: DELoggerInfo = info ?? DELoggerInfo()
-    info[.position] = LogPosition(file: file, function: function, line: line)
+    info[.position] = DELogPosition(file: file, function: function, line: line)
     logger.log(message, subsystem: subsystem, tag: tag, level: level, info: info)
 }
 
@@ -35,7 +35,7 @@ public func DESLog(_ message: StaticString,
                    logger: DELogger = DELogger.shared,
                    file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
     var info = DELoggerInfo()
-    info[.position] = LogPosition(file: file, function: function, line: line)
+    info[.position] = DELogPosition(file: file, function: function, line: line)
     logger.slog(message, subsystem: subsystem, tag: tag, level: level, info: info)
 }
 
