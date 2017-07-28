@@ -259,23 +259,28 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     }
     
     private func handleFilesUploadingFinished(success: Bool, error:Error? ) {
-        let finish: (() -> ()) = {
-            if success {
-                self.providedContext.completeRequest(returningItems: nil, completionHandler: nil)
+        if !success {
+            if let alert = self.alert, self.presentedViewController == alert {
+                alert.dismiss(animated: false, completion: { [unowned self] in
+                    let message: String = error?.localizedDescription ?? DEUploadError.unknownError.localizedDescription
+                    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                })
             }
-            else {
-                let contextError = error ?? NSError.init(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
-                self.providedContext.cancelRequest(withError: contextError)
-            }
-        }
-        if let hider = self.hideResponsible {
-            hider.hideExtensionWithCompletionHandler(completion: { 
-                finish()
-            })
-            
         }
         else {
-            finish()
+            let finish: (() -> ()) = {
+                self.providedContext.completeRequest(returningItems: nil, completionHandler: nil)
+            }
+            if let hider = self.hideResponsible {
+                hider.hideExtensionWithCompletionHandler(completion: {
+                    finish()
+                })
+            }
+            else {
+                finish()
+            }
         }
     }
     

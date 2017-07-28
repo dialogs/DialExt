@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DEUploadError: Error {
+public enum DEUploadError: LocalizedError {
     
     /// Trying to upload too many items
     case tooManyItems
@@ -28,6 +28,8 @@ public enum DEUploadError: Error {
     
     case noContactsShared
     
+    case unknownError
+    
     public var localizedDescription: String {
         switch self {
         case .tooManyItems: return "Items limit exceeded"
@@ -39,6 +41,7 @@ public enum DEUploadError: Error {
         case .noServerApiURL: return "Could not define server API URL"
         case .invalidServerApiURL: return "Server API URL is invalid"
         case .noContactsShared: return "Contacts are unavailable"
+        case .unknownError: return "Unknown error"
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription
         }
