@@ -7,11 +7,10 @@
 //
 
 import Foundation
+import ProtocolBuffers
 
-import SwiftProtobuf
 
-
-public class DEProtobufContainerItemRepresenter<Proto: Message>: DEGroupContainerItemRepresenter<Proto> {
+public class DEProtobufContainerItemRepresenter<Proto: GeneratedMessage>: DEGroupContainerItemRepresenter<Proto> {
     
     public class func createDefaultEncoder() -> DEGroupContainerItemDataEncoder<Proto> {
         return DEProtobufItemDataEncoder<Proto>.init()
@@ -23,7 +22,7 @@ public class DEProtobufContainerItemRepresenter<Proto: Message>: DEGroupContaine
     
 }
 
-public class DEProtobufContainterItemBindedRepresenter<Proto: Message>: DEGroupContainerItemBindedRepresenter<Proto> {
+public class DEProtobufContainterItemBindedRepresenter<Proto: GeneratedMessage>: DEGroupContainerItemBindedRepresenter<Proto> {
     
     init(item: DEGroupContainerItem) {
         let representer = DEProtobufContainerItemRepresenter<Proto>.init(item: item)

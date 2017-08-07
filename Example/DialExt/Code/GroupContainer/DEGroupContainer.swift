@@ -62,7 +62,7 @@ public class DEDebugContainer: DEGroupContainerable {
     private let context: AppSharedDialogListContext
     
     private var list: AppSharedDialogList {
-        return AppSharedDialogList.with { (list) in
+        return AppSharedDialogList.create { (list) in
             list.ids = self.context.users.map({ Int64($0.id)})
         }
     }
@@ -70,14 +70,14 @@ public class DEDebugContainer: DEGroupContainerable {
     public init() {
         
         let user: AppSharedUser = {
-            return AppSharedUser.with({
+            return AppSharedUser.create({
                 $0.id = 123456
                 $0.name = "Debug User"
             })
         }()
         
         let privateDialog: AppSharedDialog = {
-            return AppSharedDialog.with({
+            return AppSharedDialog.create({
                 $0.id = 1234567890
                 $0.isGroup = false
                 $0.title = "Debug Private Dialog"
@@ -88,7 +88,7 @@ public class DEDebugContainer: DEGroupContainerable {
         }()
         
         let groupDialog: AppSharedDialog = {
-            return AppSharedDialog.with({
+            return AppSharedDialog.create({
                 $0.id = 1234567891
                 $0.isGroup = false
                 $0.title = "Debug Group Diaog"
@@ -99,7 +99,7 @@ public class DEDebugContainer: DEGroupContainerable {
         }()
         
         let context: AppSharedDialogListContext = {
-            return AppSharedDialogListContext.with({
+            return AppSharedDialogListContext.create({
                 $0.dialogs = [privateDialog, groupDialog]
                 $0.users = [user]
                 $0.version = "1.0.0"
@@ -112,9 +112,9 @@ public class DEDebugContainer: DEGroupContainerable {
     public func item(forFileNamed name: String, callbackQueue: DispatchQueue) -> DEGroupContainerItem {
         switch name {
         case "dialogs":
-            return DEDebugContainerItem.init(data: try! self.context.serializedData())
+            return DEDebugContainerItem.init(data: try! self.context.toJSON())
         case "dialog_list":
-            return DEDebugContainerItem.init(data: try! self.list.serializedData())
+            return DEDebugContainerItem.init(data: try! self.list.toJSON())
         default:
             return DEDebugContainerItem.init(data: Data.init())
         }

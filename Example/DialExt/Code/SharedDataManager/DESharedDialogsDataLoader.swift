@@ -8,7 +8,7 @@
 
 import UIKit
 
-import SwiftProtobuf
+import ProtocolBuffers
 
 final public class DESharedDialogsDataLoader {
     

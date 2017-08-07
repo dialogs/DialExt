@@ -19,22 +19,22 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public struct Localizeable: SwiftProtobuf.Message {
-  public static let protoMessageName: String = "Localizeable"
+struct Localizeable: SwiftProtobuf.Message {
+  static let protoMessageName: String = "Localizeable"
 
-  public var locKey: String = String()
+  var locKey: String = String()
 
-  public var locArgs: [String] = []
+  var locArgs: [String] = []
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public init() {}
+  init() {}
 
   /// Used by the decoding initializers in the SwiftProtobuf library, not generally
   /// used directly. `init(serializedData:)`, `init(jsonUTF8Data:)`, and other decoding
   /// initializers are defined in the SwiftProtobuf library. See the Message and
   /// Message+*Additions` files.
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.locKey)
@@ -48,7 +48,7 @@ public struct Localizeable: SwiftProtobuf.Message {
   /// used directly. `Message.serializedData()`, `Message.jsonUTF8Data()`, and
   /// other serializer methods are defined in the SwiftProtobuf library. See the
   /// `Message` and `Message+*Additions` files.
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.locKey.isEmpty {
       try visitor.visitSingularStringField(value: self.locKey, fieldNumber: 1)
     }
@@ -59,15 +59,15 @@ public struct Localizeable: SwiftProtobuf.Message {
   }
 }
 
-public struct AlertingPush: SwiftProtobuf.Message {
-  public static let protoMessageName: String = "AlertingPush"
+struct AlertingPush: SwiftProtobuf.Message {
+  static let protoMessageName: String = "AlertingPush"
 
-  public var alertBody: OneOf_AlertBody? {
+  var alertBody: OneOf_AlertBody? {
     get {return _storage._alertBody}
     set {_uniqueStorage()._alertBody = newValue}
   }
 
-  public var locAlertBody: Localizeable {
+  var locAlertBody: Localizeable {
     get {
       if case .locAlertBody(let v)? = _storage._alertBody {return v}
       return Localizeable()
@@ -75,7 +75,7 @@ public struct AlertingPush: SwiftProtobuf.Message {
     set {_uniqueStorage()._alertBody = .locAlertBody(newValue)}
   }
 
-  public var simpleAlertBody: String {
+  var simpleAlertBody: String {
     get {
       if case .simpleAlertBody(let v)? = _storage._alertBody {return v}
       return String()
@@ -83,12 +83,12 @@ public struct AlertingPush: SwiftProtobuf.Message {
     set {_uniqueStorage()._alertBody = .simpleAlertBody(newValue)}
   }
 
-  public var alertTitle: OneOf_AlertTitle? {
+  var alertTitle: OneOf_AlertTitle? {
     get {return _storage._alertTitle}
     set {_uniqueStorage()._alertTitle = newValue}
   }
 
-  public var locAlertTitle: Localizeable {
+  var locAlertTitle: Localizeable {
     get {
       if case .locAlertTitle(let v)? = _storage._alertTitle {return v}
       return Localizeable()
@@ -96,7 +96,7 @@ public struct AlertingPush: SwiftProtobuf.Message {
     set {_uniqueStorage()._alertTitle = .locAlertTitle(newValue)}
   }
 
-  public var simpleAlertTitle: String {
+  var simpleAlertTitle: String {
     get {
       if case .simpleAlertTitle(let v)? = _storage._alertTitle {return v}
       return String()
@@ -104,23 +104,23 @@ public struct AlertingPush: SwiftProtobuf.Message {
     set {_uniqueStorage()._alertTitle = .simpleAlertTitle(newValue)}
   }
 
-  public var sound: String {
+  var sound: String {
     get {return _storage._sound}
     set {_uniqueStorage()._sound = newValue}
   }
 
-  public var badge: Int32 {
+  var badge: Int32 {
     get {return _storage._badge}
     set {_uniqueStorage()._badge = newValue}
   }
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OneOf_AlertBody: Equatable {
+  enum OneOf_AlertBody: Equatable {
     case locAlertBody(Localizeable)
     case simpleAlertBody(String)
 
-    public static func ==(lhs: AlertingPush.OneOf_AlertBody, rhs: AlertingPush.OneOf_AlertBody) -> Bool {
+    static func ==(lhs: AlertingPush.OneOf_AlertBody, rhs: AlertingPush.OneOf_AlertBody) -> Bool {
       switch (lhs, rhs) {
       case (.locAlertBody(let l), .locAlertBody(let r)): return l == r
       case (.simpleAlertBody(let l), .simpleAlertBody(let r)): return l == r
@@ -129,11 +129,11 @@ public struct AlertingPush: SwiftProtobuf.Message {
     }
   }
 
-  public enum OneOf_AlertTitle: Equatable {
+  enum OneOf_AlertTitle: Equatable {
     case locAlertTitle(Localizeable)
     case simpleAlertTitle(String)
 
-    public static func ==(lhs: AlertingPush.OneOf_AlertTitle, rhs: AlertingPush.OneOf_AlertTitle) -> Bool {
+    static func ==(lhs: AlertingPush.OneOf_AlertTitle, rhs: AlertingPush.OneOf_AlertTitle) -> Bool {
       switch (lhs, rhs) {
       case (.locAlertTitle(let l), .locAlertTitle(let r)): return l == r
       case (.simpleAlertTitle(let l), .simpleAlertTitle(let r)): return l == r
@@ -142,13 +142,13 @@ public struct AlertingPush: SwiftProtobuf.Message {
     }
   }
 
-  public init() {}
+  init() {}
 
   /// Used by the decoding initializers in the SwiftProtobuf library, not generally
   /// used directly. `init(serializedData:)`, `init(jsonUTF8Data:)`, and other decoding
   /// initializers are defined in the SwiftProtobuf library. See the Message and
   /// Message+*Additions` files.
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -191,7 +191,7 @@ public struct AlertingPush: SwiftProtobuf.Message {
   /// used directly. `Message.serializedData()`, `Message.jsonUTF8Data()`, and
   /// other serializer methods are defined in the SwiftProtobuf library. See the
   /// `Message` and `Message+*Additions` files.
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       switch _storage._alertBody {
       case .locAlertBody(let v)?:
@@ -223,12 +223,12 @@ public struct AlertingPush: SwiftProtobuf.Message {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension Localizeable: SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "loc_key"),
     2: .standard(proto: "loc_args"),
   ]
 
-  public func _protobuf_generated_isEqualTo(other: Localizeable) -> Bool {
+  func _protobuf_generated_isEqualTo(other: Localizeable) -> Bool {
     if self.locKey != other.locKey {return false}
     if self.locArgs != other.locArgs {return false}
     if unknownFields != other.unknownFields {return false}
@@ -237,7 +237,7 @@ extension Localizeable: SwiftProtobuf._MessageImplementationBase, SwiftProtobuf.
 }
 
 extension AlertingPush: SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "loc_alert_body"),
     2: .standard(proto: "simple_alert_body"),
     3: .standard(proto: "loc_alert_title"),
@@ -271,7 +271,7 @@ extension AlertingPush: SwiftProtobuf._MessageImplementationBase, SwiftProtobuf.
     return _storage
   }
 
-  public func _protobuf_generated_isEqualTo(other: AlertingPush) -> Bool {
+  func _protobuf_generated_isEqualTo(other: AlertingPush) -> Bool {
     if _storage !== other._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((_storage, other._storage)) { (_storage, other_storage) in
         if _storage._alertBody != other_storage._alertBody {return false}

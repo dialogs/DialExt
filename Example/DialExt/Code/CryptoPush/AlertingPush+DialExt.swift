@@ -12,31 +12,36 @@ import UserNotifications
 extension AlertingPush {
     
     func supposeTitle() throws -> String {
-        guard let title = self.alertTitle else {
+        switch self.getOneOfAlertTitle() {
+        case let .LocAlertTitle(localizable):
+            return try localizable.buildLocalizedString()
+            
+        case let .SimpleAlertTitle(text):
+            return text
+            
+        case .OneOfAlertTitleNotSet:
             throw DEEncryptedPushNotificationError.noAlertDataTitle
-        }
-        
-        switch title {
-        case let .locAlertTitle(localizable): return try localizable.buildLocalizedString()
-        case let .simpleAlertTitle(text): return text
         }
     }
     
     
     func supposeBody() throws -> String {
-        guard let body = self.alertBody else {
+        switch self.getOneOfAlertBody() {
+        case let .LocAlertBody(localizable): return try localizable.buildLocalizedString()
+            
+        case let .SimpleAlertBody(text): return text
+            
+        case .OneOfAlertBodyNotSet:
             throw DEEncryptedPushNotificationError.noAlertDataBody
-        }
-        
-        switch body {
-        case let .locAlertBody(localizable): return try localizable.buildLocalizedString()
-        case let .simpleAlertBody(text): return text
         }
     }
     
     @available(iOSApplicationExtension 10.0, *) func supposeSound() -> UNNotificationSound {
-        let soundName = self.sound
+        if let soundName = self.sound {
         return soundName.isEmpty ? UNNotificationSound.default() : UNNotificationSound.init(named: soundName)
+        } else {
+            return UNNotificationSound.default() 
+        }
     }
     
 }
