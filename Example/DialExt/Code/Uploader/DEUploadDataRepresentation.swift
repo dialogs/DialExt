@@ -49,7 +49,8 @@ public class DEUploadDataRepresentation {
     }
     
     convenience public init(data: Data, uti: String) {
-        let mimeType = UTTypeCopyPreferredTagWithClass(uti as CFString, kUTTagClassMIMEType)!.takeRetainedValue()
+        let utiBasedType = UTTypeCopyPreferredTagWithClass(uti as CFString, kUTTagClassMIMEType)?.takeRetainedValue()
+        let mimeType = utiBasedType ?? "application/octet-stream" as CFString
         var fileExtension: String = ""
         if let proposedExtension = UTTypeCopyPreferredTagWithClass(uti as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() {
             fileExtension = proposedExtension as String

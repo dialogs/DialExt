@@ -150,7 +150,10 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         guard self.targetType != .file else {
             let name = url.lastPathComponent.isEmpty ? nil : url.lastPathComponent
             
-            let mostSpecificUti = self.attachment.registeredTypeIdentifiers.first as! String
+            let mimeTypeRepresentableType = self.attachment.mimeRepresentableTypeIdentifiers.first
+            
+            /// Ho to define most specific UTI? Like when pdf-file has "public.file-url" and "comp.adobe.pdf" UTIs?
+            let mostSpecificUti =  mimeTypeRepresentableType ?? self.attachment.registeredTypeIdentifiers.first as! String
             let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)),
                                                  originalName: name)
             self.finish(item: item)
