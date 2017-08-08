@@ -16,6 +16,12 @@ public protocol DEUploadAuthProviding {
     
 }
 
+public protocol DEWriteableUploadAuthProviding: DEUploadAuthProviding {
+    
+    func writeAuth(_ auth: DEUploadAuth) throws
+    
+}
+
 extension DEUploadAuthProviding {
     
     func checkIfAuthProviden() -> Bool {
@@ -28,28 +34,4 @@ extension DEUploadAuthProviding {
         }
         return DEUploadAuth.init(authId: id, signedAuthId: signedId)
     }
-}
-
-/**
- * Provides auth id and signed auth id for subscriptnig upload requests.
- * Thread-safe.
- */
-class DEUploadAuthProvider: DEUploadAuthProviding {
-    
-    let keychain = DEKeychainDataProvider.init()
-    
-    let groupId: String
-    
-    public init(keychainGroupId: String) {
-        self.groupId = keychainGroupId
-    }
-    
-    func provideAuthId() throws -> DEAuthId {
-        return try keychain.authId(groupId: self.groupId)
-    }
-    
-    func provideSignedAuthId() throws -> Data {
-        return try keychain.signedAuthId(groupId: self.groupId)
-    }
-    
 }

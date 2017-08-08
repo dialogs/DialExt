@@ -9,8 +9,8 @@
 import Foundation
 
 /**
-    This instance using for binding with keychain and replace queries group ids 
-        (so you create an instance once and perform queries without passing group id).
+ This instance using for binding with keychain and replace queries group ids
+ (so you create an instance once and perform queries without passing group id).
  */
 public class DEGroupedKeychainDataProvider: DEKeychainQueryPerformerable {
     

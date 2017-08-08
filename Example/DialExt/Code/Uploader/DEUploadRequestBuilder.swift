@@ -99,6 +99,12 @@ fileprivate extension DEHttpRequestBody.HeaderFieldAttribute {
 
 fileprivate extension DEHttpRequestBody {
     
+    private static let fileDateFormatter: DateFormatter = {
+        let formatter = DateFormatter.init()
+        
+        return formatter
+    }()
+    
     mutating fileprivate func append(byMessage: String, boundary: String) {
         self.append(byBoundary: boundary)
         self.append(byHeaderField: .createMultipartFormDispositionItem(named: "notice"))
@@ -126,9 +132,15 @@ fileprivate extension DEHttpRequestBody {
         var contentType: HeaderFieldEntry! = nil
         var data: Data! = nil
         
+        
+        let fileName = item.proposeName(baseBuilder: {
+            let date = DEHttpRequestBody.fileDateFormatter.string(from: Date())
+            let filenameBase = "\(idx)_\(arc4random())_\(date)"
+            return filenameBase
+        })
+        
         switch item.content {
         case let .audio(audio):
-            let fileName = item.content.proposedFilename(idx: idx)!
             let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
@@ -140,7 +152,6 @@ fileprivate extension DEHttpRequestBody {
             data = audio.dataRepresentation.data
             
         case let .video(video):
-            let fileName = item.content.proposedFilename(idx: idx)!
             let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
@@ -154,7 +165,6 @@ fileprivate extension DEHttpRequestBody {
             data = video.dataRepresentation.data
             
         case let .image(image):
-            let fileName = item.content.proposedFilename(idx: idx)!
             let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes()),
@@ -167,7 +177,6 @@ fileprivate extension DEHttpRequestBody {
             data = image.dataRepresentation.data
             
         case let .bytes(bytes):
-            let fileName = item.content.proposedFilename(idx: idx)!
             let attributes: [DEHttpRequestBody.HeaderFieldAttribute] = [
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionName(name.wrappingByQuotes()),
                 DEHttpRequestBody.HeaderFieldAttribute.dispositionFileName(fileName.wrappingByQuotes())

@@ -26,7 +26,6 @@
 		74065EF91E8113A900C535B6 /* UIViewAnimationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065ED81E8113A900C535B6 /* UIViewAnimationOptions.swift */; };
 		74065EFA1E8113A900C535B6 /* DEKeychainQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */; };
 		74065EFB1E8113A900C535B6 /* DEKeychainResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */; };
-		74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */; };
 		74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDE1E8113A900C535B6 /* DEAvatarImageProvider.swift */; };
 		74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EDF1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift */; };
 		74065EFF1E8113A900C535B6 /* FrameworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74065EE01E8113A900C535B6 /* FrameworkProvider.swift */; };
@@ -66,7 +65,6 @@
 		7447ED9E1EF930C7004C1F24 /* DECryptoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */; };
 		7447EDA71EF96B64004C1F24 /* DataDialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDA61EF96B64004C1F24 /* DataDialExtTests.swift */; };
 		7447EDA91EF97702004C1F24 /* DECryptoKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */; };
-		7447EDAD1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDAC1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift */; };
 		7447EDAF1EF99896004C1F24 /* DECryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDAE1EF99896004C1F24 /* DECryptoError.swift */; };
 		744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */; };
 		744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */; };
@@ -101,6 +99,8 @@
 		7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */; };
 		7494B8E61EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */; };
 		7494B8EC1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */; };
+		749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */; };
+		749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
 		74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAD1ED6D01900CE254B /* DEHttpError.swift */; };
@@ -127,6 +127,7 @@
 		74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */; };
 		74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E51EA4E6A6006C243D /* String+DialExt.swift */; };
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
+		74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
 		74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */; };
@@ -219,7 +220,6 @@
 		74065ED81E8113A900C535B6 /* UIViewAnimationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewAnimationOptions.swift; sourceTree = "<group>"; };
 		74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainQuery.swift; sourceTree = "<group>"; };
 		74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainResult.swift; sourceTree = "<group>"; };
-		74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEKeychainWrapper.swift; sourceTree = "<group>"; };
 		74065EDE1E8113A900C535B6 /* DEAvatarImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarImageProvider.swift; sourceTree = "<group>"; };
 		74065EDF1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEAvatarPlaceholderRenderer.swift; sourceTree = "<group>"; };
 		74065EE01E8113A900C535B6 /* FrameworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkProvider.swift; sourceTree = "<group>"; };
@@ -264,7 +264,6 @@
 		7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoStorage.swift; sourceTree = "<group>"; };
 		7447EDA61EF96B64004C1F24 /* DataDialExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDialExtTests.swift; sourceTree = "<group>"; };
 		7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoKeyPair.swift; sourceTree = "<group>"; };
-		7447EDAC1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupedKeychainDataProvider.swift; sourceTree = "<group>"; };
 		7447EDAE1EF99896004C1F24 /* DECryptoError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoError.swift; sourceTree = "<group>"; };
 		744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+DialExt.swift"; sourceTree = "<group>"; };
 		744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+DialExt.swift"; sourceTree = "<group>"; };
@@ -301,6 +300,8 @@
 		7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptor.swift; sourceTree = "<group>"; };
 		7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoIncomingDataDecryptorTests.swift; sourceTree = "<group>"; };
 		7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEInt64BasedNonceTests.swift; sourceTree = "<group>"; };
+		749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupedKeychainDataProvider.swift; sourceTree = "<group>"; };
+		749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEKeychainQuery+Shared.swift"; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
@@ -328,6 +329,7 @@
 		74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLComponents+MultipartBody.swift"; sourceTree = "<group>"; };
 		74E231E51EA4E6A6006C243D /* String+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DialExt.swift"; sourceTree = "<group>"; };
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
+		74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingConfigProvider.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
 		74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExt.swift"; sourceTree = "<group>"; };
@@ -475,7 +477,6 @@
 			children = (
 				74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */,
 				74065ECA1E8113A900C535B6 /* DEKeychainDataProvider.swift */,
-				7447EDAC1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift */,
 				744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */,
 				74065ECB1E8113A900C535B6 /* Dictionary+DialExt.swift */,
 				74065ECC1E8113A900C535B6 /* DispatchQueue+DialExt.swift */,
@@ -536,8 +537,9 @@
 			isa = PBXGroup;
 			children = (
 				74065EDA1E8113A900C535B6 /* DEKeychainQuery.swift */,
+				749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */,
 				74065EDB1E8113A900C535B6 /* DEKeychainResult.swift */,
-				74065EDC1E8113A900C535B6 /* DEKeychainWrapper.swift */,
+				749542321F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift */,
 			);
 			path = Keychain;
 			sourceTree = "<group>";
@@ -650,6 +652,7 @@
 			isa = PBXGroup;
 			children = (
 				74935E151ED9CA17005331A9 /* DEExtensionItemUploader.swift */,
+				74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */,
 				74935E161ED9CA17005331A9 /* DEUploadAuth.swift */,
 				74935E171ED9CA17005331A9 /* DEUploadDataRepresentation.swift */,
 				74935E181ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift */,
@@ -1130,7 +1133,6 @@
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
-				74065EFC1E8113A900C535B6 /* DEKeychainWrapper.swift in Sources */,
 				74208EAB1F38C5710077EE85 /* Dialog.proto.swift in Sources */,
 				74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */,
 				74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */,
@@ -1148,6 +1150,7 @@
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
+				74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */,
 				74935E2B1ED9CA17005331A9 /* DEUploadPreparedItem.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
 				74D017D31F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift in Sources */,
@@ -1190,7 +1193,6 @@
 				74CD979E1F03F6A700BFF635 /* DELogService.swift in Sources */,
 				74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */,
 				74065EF51E8113A900C535B6 /* KeyboardDetector.swift in Sources */,
-				7447EDAD1EF9950B004C1F24 /* DEGroupedKeychainDataProvider.swift in Sources */,
 				74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */,
 				74B284FE1EAF679C008354A1 /* Data+DialExt.swift in Sources */,
 				74065F001E8113A900C535B6 /* AppSharedDialog+DialExt.swift in Sources */,
@@ -1212,6 +1214,7 @@
 				7436D6231ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift in Sources */,
 				742DC8D71EAA045800ABDA55 /* NSExtensionItem+DialExt.swift in Sources */,
 				74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */,
+				749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */,
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
@@ -1222,6 +1225,7 @@
 				74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */,
 				74065EF31E8113A900C535B6 /* DEInterappMessenger.swift in Sources */,
 				74065EF61E8113A900C535B6 /* KeyboardEvent.swift in Sources */,
+				749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

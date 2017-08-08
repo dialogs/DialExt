@@ -121,6 +121,10 @@ public extension DEKeychainQueryPerformerable {
         
         return result
     }
+    
+    public func shared(groupName: String) -> DEGroupedKeychainDataProvider {
+        return DEGroupedKeychainDataProvider.init(groupId: groupName, keychainProvider: self)
+    }
 }
 
 public class DEKeychainDataProvider: DEKeychainQueryPerformerable {

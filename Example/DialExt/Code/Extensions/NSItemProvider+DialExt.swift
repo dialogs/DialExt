@@ -20,6 +20,20 @@ public extension NSItemProvider {
         return self.hasItemConformingToTypeIdentifier(kUTTypeData as String)
     }
     
+    public var mimeRepresentableTypeIdentifiers: [String] {
+        let filtered: [String] = self.registeredTypeIdentifiers.flatMap({
+            guard let stringUti = $0 as? String else {
+                return nil
+            }
+            guard let mimeType = UTTypeCopyPreferredTagWithClass(stringUti as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
+                return nil
+            }
+            
+            return mimeType as String
+        })
+        return filtered
+    }
+    
     public var supposedMimeType: String? {
         for case let uti as CFString in self.registeredTypeIdentifiers {
             if let foundExtensionUnmanaged = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType) {

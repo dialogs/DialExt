@@ -11,7 +11,7 @@ public struct DEUploadAuth {
         return "\(self.authId)|\(signedAuthId.de_hexString)"
     }
     
-    internal init(authId: DEAuthId, signedAuthId: Data) {
+    public init(authId: DEAuthId, signedAuthId: Data) {
         self.authId = authId
         self.signedAuthId = signedAuthId
     }

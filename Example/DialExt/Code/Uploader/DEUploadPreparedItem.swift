@@ -11,9 +11,12 @@ public class DEUploadPreparedItem {
      */
     public let content: Content
     
-    public init(content: Content, preview: DEUploadImageRepresentation? = nil) {
+    public let originalName: String?
+    
+    public init(content: Content, preview: DEUploadImageRepresentation? = nil, originalName: String? = nil) {
         self.content = content
         self.preview = preview
+        self.originalName = originalName
     }
     
     var messageRepresentable: String? {
@@ -34,6 +37,16 @@ public class DEUploadPreparedItem {
         }
     }
     
+    public func proposeName(baseBuilder:(()->(String))) -> String {
+        if let name = self.originalName {
+            return name
+        }
+        
+        let name = baseBuilder()
+        let filename = self.content.proposedFilename(base: baseBuilder())
+        return filename ?? name
+    }
+    
     var preview: DEUploadImageRepresentation?
     
     public enum Content {
@@ -49,13 +62,13 @@ public class DEUploadPreparedItem {
         case url(URL)
         
         case text(String)
-        
-        public func proposedFilename(idx: Int) -> String? {
+                
+        public func proposedFilename(base: String) -> String? {
             switch self {
-            case let .image(rep): return rep.filename(base: "image_\(idx)")
-            case let .video(rep): return rep.filename(base: "video_\(idx)")
-            case let .audio(rep): return rep.filename(base: "audio_\(idx)")
-            case .bytes(_): return "file_\(idx)"
+            case let .image(rep): return rep.filename(base: base)
+            case let .video(rep): return rep.filename(base: base)
+            case let .audio(rep): return rep.filename(base: base)
+            case let .bytes(rep): return rep.filename(base: base)
             default: return nil
             }
         }

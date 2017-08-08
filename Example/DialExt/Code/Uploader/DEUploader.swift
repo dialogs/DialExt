@@ -16,7 +16,7 @@ public protocol DEUploaderable {
 }
 
 
-public final class DEUploader: NSObject, DEUploaderable, URLSessionDelegate {
+public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate {
     
     public var isUploading: Bool {
         return self.currentTask != nil
@@ -85,14 +85,52 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDelegate {
     // MARK: - URLSessionDataDelegate
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-        if let task = self.currentTask {
-            task.updateProgress()
+        if let currentTask = self.currentTask {
+            currentTask.updateProgress()
         }
     }
     
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if let currentTask = self.currentTask {
+            
+            self.currentTask = nil
+            
+            let fail = { (error: Error?) in
+                let resultError = error ?? DEUploadError.unknownError
+                currentTask.completion(false, error)
+            }
+            
+            guard error == nil else {
+                fail(error)
+                return
+            }
+            
+            guard let data = currentTask.data, let response = task.response as? HTTPURLResponse else {
+                // error
+                fail(nil)
+                return
+            }
+            
+            guard response.statusCode == 200 else {
+                DESLog("Sharing upload failed", level: .error)
+                let message = String.init(data: data, encoding: .utf8) ?? ""
+                DELog("Sharing upload failed, status code: \(response.statusCode), message: \(message)")
+                fail(NSError.httpError(statusCode: response.statusCode, data: data))
+                return
+            }
+            
+            DESLog("Sharing upload finished with success")
+            currentTask.completion(true, nil)
+        }
+    }
+    
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        self.currentTask?.data = data
+    }
+ 
     /*
      public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-     
+ 
      guard let sender = challenge.sender else {
      fatalError()
      }

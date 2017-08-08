@@ -28,109 +28,29 @@ extension DEAuthId {
     }
 }
 
-public extension DEKeychainDataProvider {
+extension DEGroupedKeychainDataProvider: DEWriteableUploadAuthProviding {
     
-    func setAuthId(_ id: DEAuthId, groupId: String) throws {
-        let query = DEKeychainQuery.authIdWriteQuery(id: id, groupId: groupId)
-        let result = self.performAddOrUpdate(query: query)
-        
-        if case let DEKeychainQueryResult.failure(status: status) = result {
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        }
+    public func provideAuthId() throws -> DEAuthId {
+        let data = try self.readData(query: .readShared(.authIdService))
+        let id = DEAuthId.authIdFromData(data)
+        return id
     }
     
-    func authId(groupId: String) throws -> DEAuthId {
-        let query = DEKeychainQuery.authIdReadQuery(groupId: groupId)
-        let result = self.perform(query: query)
-        switch result {
-        case let .failure(status: status):
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        case let .success(values: values):
-            let data = values!.first! as! Data
-            let id = DEAuthId.authIdFromData(data)
-            return id
-        }
+    public func provideSignedAuthId() throws -> Data {
+        let data = try self.readData(query: .readShared(.signedIdAuthIdService))
+        return data
     }
     
-    func setSignedAuthId(_ data: Data, groupId: String) throws {
-        let query = DEKeychainQuery.signedAuthIdWriteQuery(data: data as NSData, groupId: groupId)
-        let result = self.performAddOrUpdate(query: query)
+    public func writeAuth(_ auth: DEUploadAuth) throws {
+        let idData = auth.authId.authIdToData() as NSData
+        try self.addOrUpdateData(query: .writeShared(.authIdService, data: idData))
         
-        if case let DEKeychainQueryResult.failure(status: status) = result {
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        }
-    }
-    
-    func signedAuthId(groupId: String) throws -> Data {
-        let query = DEKeychainQuery.signedAuthIdReadQuery(groupId: groupId)
-        let result = self.perform(query: query)
-        
-        switch result {
-        case let .failure(status: status):
-            let code = Int(status!)
-            throw NSError(domain: NSOSStatusErrorDomain, code: code, userInfo: nil)
-        case let .success(values: values):
-            let data = values!.first! as! Data
-            return data
-        }
+        let signedData = auth.signedAuthId as NSData
+        try self.addOrUpdateData(query: .writeShared(.signedIdAuthIdService, data: signedData))
     }
 }
 
 public extension DEKeychainQuery.Service {
     public static let authIdService =  DEKeychainQuery.Service.init("auth_id")
-    
     public static let signedIdAuthIdService = DEKeychainQuery.Service("signed_auth_id")
-}
-
-public extension DEKeychainQuery.Access {
-    
-    public static let defaultAuthIdAccount = "im.dlg.shared"
-    
-    public static func createAuthIdAccess(groupId: String) -> DEKeychainQuery.Access {
-        return DEKeychainQuery.Access.init(.authIdService,
-                                           account: defaultAuthIdAccount,
-                                           group: groupId)
-    }
-    
-    public static func createSignedAuthIdAccess(groupId: String) -> DEKeychainQuery.Access {
-        return DEKeychainQuery.Access.init(.signedIdAuthIdService,
-                                           account: defaultAuthIdAccount,
-                                           group: groupId)
-    }
-
-}
-
-
-public extension DEKeychainQuery {
-    
-    public static func signedAuthIdReadQuery(groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createSignedAuthIdAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.read(config: nil)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func signedAuthIdWriteQuery(data: NSData, groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createSignedAuthIdAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.add(value: data)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func authIdReadQuery(groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createAuthIdAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.read(config: nil)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func authIdWriteQuery(data: NSData, groupId: String) -> DEKeychainQuery {
-        let access = DEKeychainQuery.Access.createAuthIdAccess(groupId: groupId)
-        let operation = DEKeychainQuery.Operation.add(value: data)
-        return self.init(access: access, operation: operation)
-    }
-    
-    public static func authIdWriteQuery(id: DEAuthId, groupId: String) -> DEKeychainQuery {
-        return authIdWriteQuery(data: id.authIdToData(), groupId: groupId)
-    }
 }

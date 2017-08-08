@@ -149,8 +149,17 @@ extension CGRect {
     
 }
 
-extension UIEdgeInsets {
-    init(horizontal: CGFloat, vertical: CGFloat) {
+public extension UIEdgeInsets {
+    
+    public init(horizontal: CGFloat, vertical: CGFloat) {
         self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
+    }
+    
+    public var horizontalSum: CGFloat {
+        return self.left + self.right
+    }
+    
+    public var verticalSum: CGFloat {
+        return self.top + self.bottom
     }
 }

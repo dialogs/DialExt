@@ -115,7 +115,7 @@ public struct DEKeychainQuery {
     
     /// Describes access to a value in keychain. You can treat it as a key for value in dictionary.
     public struct Access {
-        
+
         public let service: DEKeychainQuery.Service
         
         public let account: String
@@ -144,6 +144,8 @@ public struct DEKeychainQuery {
             self.account = account
             self.group = group
         }
+        
+        
     }
     
     /**
@@ -273,5 +275,4 @@ public struct DEKeychainQuery {
         
         return representation
     }
-    
 }
