@@ -11,10 +11,6 @@ import Foundation
 import ProtocolBuffers
 
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: GeneratedMessageProtocol {
     override public func encode(representation: ProtoType) throws -> Data {
         return try representation.data()
