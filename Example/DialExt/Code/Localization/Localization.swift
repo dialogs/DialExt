@@ -89,6 +89,8 @@ public struct DELocalizable : RawRepresentable, Equatable, Hashable, Comparable 
     
     public static let alertUploadFinished = DELocalizable("AlertUploadFinished")
     
+    public static let sendSharedFile = DELocalizable("SendSharedItems")
+    
 }
 
 
