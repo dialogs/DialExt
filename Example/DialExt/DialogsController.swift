@@ -23,15 +23,17 @@ extension DESharedDialogsViewController {
         
         if let context = self.manager.dataLoader.context {
             
-            let dialog = AppSharedDialog.with({
+            let dialog = AppSharedDialog.create({
                 $0.title = UUID.init().uuidString
                 $0.isGroup = false
                 $0.uids = []
                 $0.id = Int64(arc4random())
             })
             
-            var newContext = context
-            newContext.dialogs.insert(dialog, at: 0)
+            let newContextBuilder = context.getBuilder()
+            newContextBuilder.dialogs.insert(dialog, at: 0)
+            
+            let newContext = try! newContextBuilder.build()
             
             self.manager.dataLoader.contextQueuer.put(representation: newContext)
             self.resetDialogs(newContext.dialogs)

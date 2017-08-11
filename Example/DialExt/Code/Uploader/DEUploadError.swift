@@ -30,7 +30,7 @@ public enum DEUploadError: LocalizedError {
     
     case unknownError
     
-    public var localizedDescription: String {
+    public var errorDescription: String? {
         switch self {
         case .tooManyItems: return "Items limit exceeded"
         case .noItemsToUpload: return "No items to upload"

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 public extension Data {
     
     private static let deHexStringRegex = try! NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
@@ -40,6 +41,11 @@ public extension Data {
         return self.withUnsafeBytes { (ptr: UnsafePointer<Value>) -> Value in
             return ptr.pointee
         }
+    }
+    
+    var crc32: UInt32 {
+        let crc = CRC32.init(data: self)
+        return crc.crc
     }
     
 }

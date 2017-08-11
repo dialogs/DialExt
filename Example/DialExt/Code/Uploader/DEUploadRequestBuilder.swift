@@ -189,6 +189,7 @@ fileprivate extension DEHttpRequestBody {
         default: return
         }
         
+        DELog("Going to share file \(data.crc32)")
         self.append(byDisposition: disposition, contentType: contentType, data: data, boundary: boundary)
         
         if let preview = item.preview {

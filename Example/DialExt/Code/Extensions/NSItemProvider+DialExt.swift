@@ -25,11 +25,11 @@ public extension NSItemProvider {
             guard let stringUti = $0 as? String else {
                 return nil
             }
-            guard let mimeType = UTTypeCopyPreferredTagWithClass(stringUti as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
+            guard let _ = UTTypeCopyPreferredTagWithClass(stringUti as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
                 return nil
             }
             
-            return mimeType as String
+            return stringUti
         })
         return filtered
     }

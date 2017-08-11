@@ -156,6 +156,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     @IBOutlet public private(set) var tableView: UITableView!
     
     @IBOutlet public private(set) var sendView: UIView!
+    @IBOutlet public private(set) var sendButton: UIButton!
     
     @IBOutlet public private(set) var recipientsLabel: UILabel!
     
@@ -198,6 +199,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
                 self!.handleDialogsState(state)
             }
         }
+        
+        self.sendButton.setTitle(DELocalize(.sendSharedFile), for: .normal)
         
         self.manager.dataLoader.start()
         
@@ -328,6 +331,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
     
     private func handleDialogLoadingFailure(error: Error?) {
         guard let context = self.extensionContextProvider?.extensionContextForSharedDialogsViewController(self) else {
+            DESLog("No extension context providen")
             fatalError("No extension context providen")
         }
         
