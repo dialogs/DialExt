@@ -27,7 +27,7 @@ import DLGSodium
  **Manager** decrypts notification (may fail due bad nonce or some other reason) →
  *Extension* replaces original notification data by decrypted message (optionally, load avatars and other stuff).
  */
-class DECryptoKeyManager {
+public class DECryptoKeyManager {
     
     public init(storage: DECryptoStorage, groupId: String) throws {
         self.storage = storage
