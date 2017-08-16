@@ -29,19 +29,19 @@ class DataDialExtTests: XCTestCase {
             XCTAssertEqual(int, decodedInt)
         }
     }
-    
-    func testIntToDataHex() {
-        let nonce: Int64 = Int64(-2622849142741802).bigEndian
-        var data = Data.de_withValue(nonce)
-        data.appendByZeros(toLength: 24)
-        XCTAssertEqual(data.de_hexString, "fff6ae88588c24d600000000000000000000000000000000")
-    }
-    
-    func testDataHexToInt() {
-        let string = "fff6ae88588c24d600000000000000000000000000000000"
-        let data = string.de_encoding(.bytesHexLiteral)!
-        let nonce: Int64 = data.de_toValue()
-        XCTAssertEqual(nonce, Int64(-2622849142741802).bigEndian)
-    }
+//    
+//    func testIntToDataHex() {
+//        let nonce: Int64 = Int64(-2622849142741802).bigEndian
+//        var data = Data.de_withValue(nonce)
+//        data.appendByZeros(toLength: 24)
+//        XCTAssertEqual(data.de_hexString, "fff6ae88588c24d600000000000000000000000000000000")
+//    }
+//    
+//    func testDataHexToInt() {
+//        let string = "fff6ae88588c24d600000000000000000000000000000000"
+//        let data = string.de_encoding(.hex)!
+//        let nonce: Int64 = data.de_toValue()
+//        XCTAssertEqual(nonce, Int64(-2622849142741802).bigEndian)
+//    }
     
 }

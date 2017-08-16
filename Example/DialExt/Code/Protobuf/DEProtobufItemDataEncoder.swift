@@ -12,12 +12,12 @@ import ProtocolBuffers
 
 
 
-public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: GeneratedMessage {
+public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: GeneratedMessageProtocol {
     override public func encode(representation: ProtoType) throws -> Data {
-        return try representation.toJSON()
+        return try representation.data()
     }
     
     override public func decode(data: Data) throws -> ProtoType {
-        return try ProtoType.fromJSON(data: data)
+        return try ProtoType.parseFrom(data: data)
     }
 }

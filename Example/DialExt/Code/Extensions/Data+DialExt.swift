@@ -18,7 +18,7 @@ public extension Data {
     }
     
     public static func de_withHexString(_ string: String) -> Data? {
-        return string.de_encoding(.bytesHexLiteral)
+        return string.de_encoding(.hex)
     }
     
     mutating func appendByZeros(toLength length: Int) {

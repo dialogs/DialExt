@@ -24,11 +24,11 @@ public extension String {
 
     /// Expanded encoding
     ///
-    /// - bytesHexLiteral: Hex string of bytes
+    /// - hex: Hex string of bytes
     /// - base64: Base64 string
     public enum ExpandedEncoding {
         /// Hex string of bytes
-        case bytesHexLiteral
+        case hex
         /// Base64 string
         case base64
     }
@@ -39,7 +39,7 @@ public extension String {
     /// - Returns: data
     public func de_encoding(_ encoding: ExpandedEncoding) -> Data? {
         switch encoding {
-        case .bytesHexLiteral:
+        case .hex:
             guard self.characters.count % 2 == 0 else { return nil }
             var data = Data(capacity: self.characters.count/2)
             var byteLiteral = ""

@@ -29,13 +29,30 @@ import DLGSodium
  */
 public class DECryptoKeyManager {
     
-    public init(storage: DECryptoStorage, groupId: String) throws {
+    public init(storage: DECryptoStorage) throws {
         self.storage = storage
-        self.groupId = groupId
         guard let sodium = Sodium() else {
             throw DECryptoError.failToInitializeSodium
         }
         self.sodium = sodium
+    }
+    
+    public func hasStoredCryptoInfo() -> Bool {
+        let pair = try? self.storage.cryptoKeyPair() != nil
+        return pair != nil
+    }
+    
+    public func currentKeyPair() throws -> Box.KeyPair {
+        return try self.storage.cryptoKeyPair()
+    }
+    
+    public func clear() {
+        try? self.storage.resetCryptoStorage()
+    }
+    
+    private func setupKeyPair() throws {
+        let pair = try self.generateKeyPair()
+        try self.storage.setCryptoKeyPair(pair.boxKeyPair)
     }
     
     public func generateKeyPair() throws -> DECryptoKeyPair {
@@ -66,8 +83,6 @@ public class DECryptoKeyManager {
     private let storage: DECryptoStorage
     
     private let sodium: Sodium
-    
-    private let groupId: String
 }
 
 
