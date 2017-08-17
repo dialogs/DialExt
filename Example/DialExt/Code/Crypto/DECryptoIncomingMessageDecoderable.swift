@@ -13,47 +13,35 @@ public struct DecodedMessage {
     var alertingPush: AlertingPush
 }
 
-
 /// Responsible for decoding incoming messages. **Not thread-safe**
 public protocol DECryptoIncomingMessageDecoderable {
     func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage
 }
 
 public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable {
-    
+
     private let storage: DECryptoStorage
-    
-    private let sodium: Sodium
     
     private let decrypter: DECryptoIncomingDataDecrypting
     
-    public init(storage: DECryptoStorage) throws {
-        guard let sodium = Sodium() else {
-            throw DECryptoError.failToInitializeSodium
-        }
-        self.sodium = sodium
+    public init(storage: DECryptoStorage,
+                decryptor: DECryptoIncomingDataDecrypting = DECryptoIncomingDataDecryptor.init()) throws {
         self.storage = storage
-        
-        self.decrypter = DECryptoIncomingDataDecryptor.init(sodium: self.sodium)
+        self.decrypter = decryptor
     }
     
     public func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage {
         let protoData = try self.decrypt(data, nonce: nonce)
-        let push = try AlertingPush.parseFrom(data: data)
+        let push = try AlertingPush.parseFrom(data: protoData)
         return DecodedMessage(alertingPush: push)
     }
     
     private func isValidNonce(_ nonce: DEInt64BasedNonce) throws -> Bool {
-        var storedNonce = DEInt64BasedNonce.init(0)
-        do {
-            storedNonce = try self.storage.cryptoSeqNOnce()
+        var lastNonce = DEInt64BasedNonce.init(Int64.min)
+        if let storedNonce = try? self.storage.cryptoMessgingNonce() {
+            lastNonce = storedNonce
         }
-        catch {
-            if !self.isNoResultsKeychainError(error) {
-                throw error
-            }
-        }
-        return nonce.value > storedNonce.value
+        return nonce.value > lastNonce.value
     }
     
     private func isNoResultsKeychainError(_ error: Error) -> Bool {
@@ -64,24 +52,24 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     }
     
     private func decrypt(_ data: Data, nonce: DEInt64BasedNonce, shouldStoreNewNonce: Bool = true) throws -> Data {
-        let storedNonce = try self.storage.cryptoSeqNOnce()
-        
         guard try self.isValidNonce(nonce) else {
-            print("Ignoring invalid nonce \(nonce). Stored: \(try! self.storage.cryptoSeqNOnce())")
             throw DECryptoError.wrongNonce
         }
         
-        let nonceData = Data.de_withValue(storedNonce) as SecretBox.Nonce
-        let readKey = try self.storage.sharedSecretRx() as SecretBox.Key
-        
-        // Decrypt message data
-        let decryptedData = try self.decrypter.decrypt(incomingData: data, rx: readKey, nonceData: nonceData)
+        let secret = try self.storage.cryptoSharedSecret()
+        let decodedMessage = try self.decrypter.decrypt(incomingData: data,
+                                                              rx: secret.rx,
+                                                              nonceData: nonce.bigEndianData)
         
         if shouldStoreNewNonce {
-            try! self.storage.setCryptoSeqNOnce(nonce)
+            do {
+                try self.storage.setCryptoMessagingNonce(nonce)
+            }
+            catch {
+                throw DECryptoError.failToStoreNewNonce
+            }
         }
         
-        return decryptedData
+        return decodedMessage
     }
-    
 }

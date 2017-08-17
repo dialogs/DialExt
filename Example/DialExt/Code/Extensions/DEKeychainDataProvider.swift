@@ -50,6 +50,11 @@ public extension DEKeychainQueryPerformerable {
         }
     }
     
+    @discardableResult func readData(access: DEKeychainQuery.Access,
+                                     config: DEKeychainQuery.Operation.ReadConfig? = nil ) throws -> Data {
+        return try self.readData(query: .init(access: access, operation: .read(config: config)))
+    }
+    
     @discardableResult func readData(query: DEKeychainQuery) throws -> Data {
         guard query.operation.subtype == .read else {
             throw DEKeychainQueryError.wrongQuery
@@ -80,6 +85,10 @@ public extension DEKeychainQueryPerformerable {
             }
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(errorCode), userInfo: nil)
         })
+    }
+    
+    func addOrUpdateData(access: DEKeychainQuery.Access, data: Data) throws {
+        try self.addOrUpdateData(query: .init(access: access, operation: .add(value: data as NSData)))
     }
     
     @discardableResult func performAddOrUpdate(query: DEKeychainQuery) ->  DEKeychainQueryResult {

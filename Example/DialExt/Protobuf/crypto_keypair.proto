@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message KeyPair {
+   bytes secretKey = 1;
+   bytes publicKey = 2;
+}

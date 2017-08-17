@@ -14,8 +14,10 @@ public enum DECryptoError: Error {
     case failToGenerateRandomData
     case failToGenerateKeyPair
     case failToGenerateSharedSecret
+    case noNonceStored
     case wrongNonce
     case failToDecodeMessage
+    case failToStoreNewNonce
 }
 
 public enum DEEncryptedPushNotificationError: Error {
@@ -30,7 +32,7 @@ public enum DEEncryptedPushNotificationError: Error {
 }
 
 
-public struct DEDetailedError: Error {
+public struct DEDetailedError: LocalizedError {
     
     public let baseError: Error
     
@@ -56,6 +58,14 @@ public struct DEDetailedError: Error {
     }
     
     public var localizedDescription: String {
+        return self.baseError.localizedDescription
+    }
+    
+    public var errorDescription: String? {
+        if let localizedError = self.baseError as? LocalizedError {
+            return localizedError.errorDescription
+        }
+        
         return self.baseError.localizedDescription
     }
     

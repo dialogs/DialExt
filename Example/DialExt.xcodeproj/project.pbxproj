@@ -61,7 +61,7 @@
 		7436D6231ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436D6221ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift */; };
 		7436D6251EDA078200808E41 /* DEUploadPrepareItemListOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436D6241EDA078200808E41 /* DEUploadPrepareItemListOperation.swift */; };
 		74401D231EA1205700200770 /* URLComponents+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74401D221EA1205700200770 /* URLComponents+DialExt.swift */; };
-		7447ED981EF92E58004C1F24 /* DECryptoKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447ED971EF92E58004C1F24 /* DECryptoKeyManager.swift */; };
+		744420781F45979B0008B880 /* DECryptoSharedSecretProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744420771F45979B0008B880 /* DECryptoSharedSecretProvider.swift */; };
 		7447ED9E1EF930C7004C1F24 /* DECryptoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */; };
 		7447EDA71EF96B64004C1F24 /* DataDialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDA61EF96B64004C1F24 /* DataDialExtTests.swift */; };
 		7447EDA91EF97702004C1F24 /* DECryptoKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */; };
@@ -103,6 +103,13 @@
 		749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */; };
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
+		749C10C31F445EAA009F7064 /* shared_secret.proto in Resources */ = {isa = PBXBuildFile; fileRef = 749C10C21F445EAA009F7064 /* shared_secret.proto */; };
+		749C10C81F448424009F7064 /* SharedSecret.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C10C71F448424009F7064 /* SharedSecret.proto.swift */; };
+		749C10CA1F44935F009F7064 /* DECryptoKeyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C10C91F44935F009F7064 /* DECryptoKeyStorage.swift */; };
+		749C10CC1F44956A009F7064 /* crypto_keypair.proto in Resources */ = {isa = PBXBuildFile; fileRef = 749C10CB1F44956A009F7064 /* crypto_keypair.proto */; };
+		749C10D21F44964D009F7064 /* CryptoKeypair.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C10D11F44964D009F7064 /* CryptoKeypair.proto.swift */; };
+		749C10D41F44A7A8009F7064 /* DECryptoKeyPairGeneratable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C10D31F44A7A8009F7064 /* DECryptoKeyPairGeneratable.swift */; };
+		749C10D61F44A942009F7064 /* DECryptoManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749C10D51F44A942009F7064 /* DECryptoManagable.swift */; };
 		74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAD1ED6D01900CE254B /* DEHttpError.swift */; };
 		74A5DFB61ED6D01900CE254B /* DEHttpRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAE1ED6D01900CE254B /* DEHttpRequestBody.swift */; };
 		74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAF1ED6D01900CE254B /* DEHttpRequestBodyFile.swift */; };
@@ -261,7 +268,7 @@
 		7436D6221ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadPrepareItemOperation.swift; sourceTree = "<group>"; };
 		7436D6241EDA078200808E41 /* DEUploadPrepareItemListOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadPrepareItemListOperation.swift; sourceTree = "<group>"; };
 		74401D221EA1205700200770 /* URLComponents+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLComponents+DialExt.swift"; sourceTree = "<group>"; };
-		7447ED971EF92E58004C1F24 /* DECryptoKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoKeyManager.swift; sourceTree = "<group>"; };
+		744420771F45979B0008B880 /* DECryptoSharedSecretProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoSharedSecretProvider.swift; sourceTree = "<group>"; };
 		7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoStorage.swift; sourceTree = "<group>"; };
 		7447EDA61EF96B64004C1F24 /* DataDialExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDialExtTests.swift; sourceTree = "<group>"; };
 		7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoKeyPair.swift; sourceTree = "<group>"; };
@@ -305,6 +312,13 @@
 		749542341F13B859008F8BA5 /* DEKeychainQuery+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEKeychainQuery+Shared.swift"; sourceTree = "<group>"; };
 		749660711EA775A5000A5D9A /* SwiftMisc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMisc.swift; sourceTree = "<group>"; };
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
+		749C10C21F445EAA009F7064 /* shared_secret.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared_secret.proto; sourceTree = "<group>"; };
+		749C10C71F448424009F7064 /* SharedSecret.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSecret.proto.swift; sourceTree = "<group>"; };
+		749C10C91F44935F009F7064 /* DECryptoKeyStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoKeyStorage.swift; sourceTree = "<group>"; };
+		749C10CB1F44956A009F7064 /* crypto_keypair.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = crypto_keypair.proto; sourceTree = "<group>"; };
+		749C10D11F44964D009F7064 /* CryptoKeypair.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoKeypair.proto.swift; sourceTree = "<group>"; };
+		749C10D31F44A7A8009F7064 /* DECryptoKeyPairGeneratable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoKeyPairGeneratable.swift; sourceTree = "<group>"; };
+		749C10D51F44A942009F7064 /* DECryptoManagable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DECryptoManagable.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		74A2A8561E79911E00E3D04D /* DialogsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsController.swift; sourceTree = "<group>"; };
 		74A5DFAD1ED6D01900CE254B /* DEHttpError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEHttpError.swift; sourceTree = "<group>"; };
@@ -565,6 +579,8 @@
 		74065EE11E8113A900C535B6 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				749C10D11F44964D009F7064 /* CryptoKeypair.proto.swift */,
+				749C10C71F448424009F7064 /* SharedSecret.proto.swift */,
 				74208EA81F38C5710077EE85 /* AlertingPush.proto.swift */,
 				74208EA91F38C5710077EE85 /* Dialog.proto.swift */,
 				74065EE21E8113A900C535B6 /* AppSharedDialog+DialExt.swift */,
@@ -629,6 +645,8 @@
 		742FCF681E8266B2003D1FBC /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				749C10CB1F44956A009F7064 /* crypto_keypair.proto */,
+				749C10C21F445EAA009F7064 /* shared_secret.proto */,
 				742FCF691E8266C9003D1FBC /* dialog.proto */,
 				7494B8DF1EFA9A9B00830AAE /* alerting_push.proto */,
 			);
@@ -680,11 +698,14 @@
 			children = (
 				7447EDAE1EF99896004C1F24 /* DECryptoError.swift */,
 				7494B8DD1EFA89D200830AAE /* DECryptoNonce.swift */,
-				7447ED971EF92E58004C1F24 /* DECryptoKeyManager.swift */,
 				7494B8DB1EFA86AA00830AAE /* DECryptoIncomingMessageDecoderable.swift */,
 				7494B8E31EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift */,
 				7447ED9D1EF930C7004C1F24 /* DECryptoStorage.swift */,
+				749C10C91F44935F009F7064 /* DECryptoKeyStorage.swift */,
+				749C10D31F44A7A8009F7064 /* DECryptoKeyPairGeneratable.swift */,
 				7447EDA81EF97702004C1F24 /* DECryptoKeyPair.swift */,
+				749C10D51F44A942009F7064 /* DECryptoManagable.swift */,
+				744420771F45979B0008B880 /* DECryptoSharedSecretProvider.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -967,7 +988,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				74065F121E8115A700C535B6 /* Images.xcassets in Resources */,
+				749C10C31F445EAA009F7064 /* shared_secret.proto in Resources */,
 				74326E101EAE42200016A1F1 /* Localizable.strings in Resources */,
+				749C10CC1F44956A009F7064 /* crypto_keypair.proto in Resources */,
 				742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */,
 				748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */,
 				7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */,
@@ -1133,10 +1156,12 @@
 				74D017D11F02B18F008C8536 /* AlertingPush+DialExt.swift in Sources */,
 				74313A621E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift in Sources */,
 				7494B8E41EFAA7F200830AAE /* DECryptoIncomingDataDecryptor.swift in Sources */,
+				749C10D41F44A7A8009F7064 /* DECryptoKeyPairGeneratable.swift in Sources */,
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
 				74D729A51F3C6F7800F123E7 /* CRC32.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
+				749C10CA1F44935F009F7064 /* DECryptoKeyStorage.swift in Sources */,
 				74208EAB1F38C5710077EE85 /* Dialog.proto.swift in Sources */,
 				74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */,
 				74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */,
@@ -1151,6 +1176,7 @@
 				748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */,
 				74935E301ED9CA17005331A9 /* DEUploadTokenInfoProvider.swift in Sources */,
 				74846A431EA60D6800B80ED6 /* DESharedDataConfig.swift in Sources */,
+				749C10C81F448424009F7064 /* SharedSecret.proto.swift in Sources */,
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
@@ -1185,7 +1211,6 @@
 				74A5DFB61ED6D01900CE254B /* DEHttpRequestBody.swift in Sources */,
 				7413AA2C1ED337FC00AD99EC /* UIImage+DialExt.swift in Sources */,
 				74065F041E8113A900C535B6 /* DESharedAvatarLoader.swift in Sources */,
-				7447ED981EF92E58004C1F24 /* DECryptoKeyManager.swift in Sources */,
 				74065F091E8113A900C535B6 /* DESharedDialogsViewController.swift in Sources */,
 				74065EF11E8113A900C535B6 /* DEGroupContainer.swift in Sources */,
 				74D017D51F02B33B008C8536 /* DECryptoPushErrorStorage.swift in Sources */,
@@ -1203,6 +1228,7 @@
 				7413AA2E1ED3409000AD99EC /* CGSize+DialExt.swift in Sources */,
 				74065EFB1E8113A900C535B6 /* DEKeychainResult.swift in Sources */,
 				74065EF81E8113A900C535B6 /* UIView+KeyboardAnimation.swift in Sources */,
+				749C10D21F44964D009F7064 /* CryptoKeypair.proto.swift in Sources */,
 				74935E231ED9CA17005331A9 /* DEExtensionItemUploader.swift in Sources */,
 				74326E0B1EAE12CF0016A1F1 /* Localization.swift in Sources */,
 				74065EEF1E8113A900C535B6 /* Dictionary+DialExt.swift in Sources */,
@@ -1225,7 +1251,9 @@
 				7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */,
 				74BAF9491E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift in Sources */,
 				74313A5F1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift in Sources */,
+				749C10D61F44A942009F7064 /* DECryptoManagable.swift in Sources */,
 				742CAB331E9B821200965906 /* DEProtobufItemDataEncoder.swift in Sources */,
+				744420781F45979B0008B880 /* DECryptoSharedSecretProvider.swift in Sources */,
 				74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */,
 				74065EF31E8113A900C535B6 /* DEInterappMessenger.swift in Sources */,
 				74065EF61E8113A900C535B6 /* KeyboardEvent.swift in Sources */,

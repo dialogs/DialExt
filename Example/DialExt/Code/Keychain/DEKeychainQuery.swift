@@ -145,7 +145,6 @@ public struct DEKeychainQuery {
             self.group = group
         }
         
-        
     }
     
     /**
@@ -226,7 +225,7 @@ public struct DEKeychainQuery {
         /// Adds data to keychain. Fails if entry already exists.
         case add(value: AnyObject)
         
-        /// Updates data in keychain. Failes if entry does not exist.
+        /// Updates data in keychain. Fails if entry does not exist.
         case update(value: AnyObject)
         
         /// Reads entry from keychain and returns data. Fails if entry does not exist.

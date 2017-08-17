@@ -9,30 +9,37 @@
 import Foundation
 import DLGSodium
 
+
 public struct DECryptoKeyPair {
     
     public let publicKey: Data
     
     internal let secretKey: Data
     
-    public var boxKeyPair: Box.KeyPair {
-        return Box.KeyPair.init(publicKey: self.publicKey, secretKey: self.secretKey)
-    }
-    
-    public var keyExchangeBox: KeyExchange.KeyPair {
-        return KeyExchange.KeyPair.init(publicKey: self.publicKey, secretKey: self.secretKey)
-    }
-    
     public init(publicKey: Data, secretKey: Data) {
         self.publicKey = publicKey
         self.secretKey = secretKey
     }
     
-    internal init(_ box: Box.KeyPair) {
-        self.init(publicKey: box.publicKey, secretKey: box.secretKey)
+    // Sodium KeyExhange compatibility
+    
+    internal init(keyExchangeKeyPair: KeyExchange.KeyPair) {
+        self.publicKey = keyExchangeKeyPair.publicKey
+        self.secretKey = keyExchangeKeyPair.secretKey
     }
     
-    internal init(_ box: KeyExchange.KeyPair) {
-        self.init(publicKey: box.publicKey, secretKey: box.secretKey)
+    // KeyPair compatibility
+    
+    internal var keyPair: KeyPair {
+        let builder = KeyPair.getBuilder()
+        builder.publicKey = self.publicKey
+        builder.secretKey = self.secretKey
+        return try! builder.build()
     }
+    
+    internal init (keyPair: KeyPair) {
+        self.publicKey = keyPair.publicKey
+        self.secretKey = keyPair.secretKey
+    }
+    
 }

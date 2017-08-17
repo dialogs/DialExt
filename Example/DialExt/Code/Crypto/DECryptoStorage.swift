@@ -14,90 +14,59 @@ import DLGSodium
  
  It's intented that implementer is **thread-safe**.
  */
-public protocol DECryptoStorage {
+public protocol DECryptoStorageReadable {
     
-    /// Set keys pair
-    func setCryptoKeyPair(_ keyPair: Box.KeyPair) throws
+    func cryptoSharedSecret() throws -> SharedSecret
     
-    /// Returns last set keys pair
-    func cryptoKeyPair() throws -> Box.KeyPair
+    func cryptoMessgingNonce() throws -> DEInt64BasedNonce
+}
+
+
+public protocol DECryptoStorageWriteable {
     
-    /// Sets nonce
-    func setCryptoSeqNOnce(_ nonce: DEInt64BasedNonce) throws
+    /// Sets new messaging data
+    func setCryptoSharedSecret(_ messaing: SharedSecret) throws
     
-    /// Returns last set nonce
-    func cryptoSeqNOnce() throws -> DEInt64BasedNonce
-    
-    /// Sets shared secret rx part used for reading messages from server side
-    func setSharedSecretRx(_ rx: Data) throws
-    
-    /// Returns shared secret rx part used for reading messages from server side
-    func sharedSecretRx() throws -> Data
-    
-    /// Sets shared secret tx part used for encrypting outgoing messages
-    func setSharedSecretTx(_ tx: Data) throws
-    
-    /// Returns shared secret tx part used for encrypting outgoing messages
-    func sharedSecretTx() throws -> Data
+    func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws
     
     /// Clears all data
     func resetCryptoStorage() throws
 }
 
+public typealias DECryptoStorage = DECryptoStorageReadable & DECryptoStorageWriteable
 
-extension DEGroupedKeychainDataProvider: DECryptoStorage {
+
+extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStorageReadable {
     
-    public func sharedSecretTx() throws -> Data {
-        return try self.readData(query: .readCryptoItemQuery(service: .sharedSecretTx))
+    public func setCryptoSharedSecret(_ secret: SharedSecret) throws {
+        let data = secret.data() as NSData
+        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecret, data: data))
     }
     
-    public func setSharedSecretTx(_ tx: Data) throws {
-        let data = tx as NSData
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecretTx, data: data))
+    public func cryptoSharedSecret() throws -> SharedSecret {
+        let data = try self.readData(query: .readCryptoItemQuery(service: .sharedSecret))
+        let secret = try SharedSecret.parseFrom(data: data)
+        return secret
     }
     
-    
-    public func sharedSecretRx() throws -> Data {
-        return try self.readData(query: .readCryptoItemQuery(service: .sharedSecretRx))
+    public func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws {
+        let data = nonce.nonce as NSData
+        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .messagingNonce, data: data))
     }
     
-    public func setSharedSecretRx(_ rx: Data) throws {
-        let data = rx as NSData
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecretRx, data: data))
-    }
-    
-    
-    public func cryptoKeyPair() throws -> Box.KeyPair {
-        let publicKey = try self.readData(query: .readCryptoItemQuery(service: .publicKey))
-        let secretKey = try self.readData(query: .readCryptoItemQuery(service: .secretKey))
-        return Box.KeyPair.init(publicKey: publicKey, secretKey: secretKey)
-    }
-    
-    
-    public func setCryptoKeyPair(_ keyPair: Box.KeyPair) throws {
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .publicKey,
-                                                              data: keyPair.publicKey as NSData))
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .secretKey,
-                                                              data: keyPair.secretKey as NSData))
-    }
-    
-    public func cryptoSeqNOnce() throws -> DEInt64BasedNonce {
-        let data = try self.readData(query: .readCryptoItemQuery(service: .nonce))
+    public func cryptoMessgingNonce() throws -> DEInt64BasedNonce {
+        let data = try self.readData(query: .readCryptoItemQuery(service: .messagingNonce))
         let nonce = DEInt64BasedNonce.init(data: data)
         return nonce
     }
     
-    public func setCryptoSeqNOnce(_ nonce: DEInt64BasedNonce) throws {
-        let data = nonce.nonce
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .nonce, data: data as NSData))
-    }
-    
     public func resetCryptoStorage() throws {
         let itemsToDelete: [DEKeychainQuery.Access.CryptoService] = [
-            .nonce,.publicKey, .secretKey, .sharedSecretRx, .sharedSecretTx
+            DEKeychainQuery.Access.CryptoService.sharedSecret,
+            DEKeychainQuery.Access.CryptoService.messagingNonce
         ]
         itemsToDelete.forEach { (service) in
-            self.performSafeDeletion(query: .deleteCryptoItemQuery(service: .nonce))
+            self.performSafeDeletion(query: .deleteCryptoItemQuery(service: service))
         }
     }
     
@@ -114,12 +83,8 @@ public extension DEKeychainDataProvider {
 
 internal extension DEKeychainQuery.Service {
     
-    internal static let cryptoPublicKey = DEKeychainQuery.Service.init("im.dlg.crypto.keypair.public")
-    internal static let cryptoSecretKey = DEKeychainQuery.Service.init("im.dlg.crypto.keypair.private")
-    internal static let cryptoSharedSecretTx = DEKeychainQuery.Service.init("im.dlg.crypto.shared.tx")
-    internal static let cryptoSharedSecretRx = DEKeychainQuery.Service.init("im.dlg.crypto.shared.rx")
-    internal static let cryptoNonce = DEKeychainQuery.Service.init("im.dlg.crypto.nonce")
-    
+    internal static let cryptoMessagingKey = DEKeychainQuery.Service.init("im.dlg.crypto.messaging")
+    internal static let cryptoSharedSecret = DEKeychainQuery.Service.init("im.dlg.crypto.shared_secret")
     
 }
 
@@ -127,19 +92,15 @@ internal extension DEKeychainQuery.Service {
 internal extension DEKeychainQuery.Access {
     
     internal enum CryptoService {
-        case publicKey
-        case secretKey
-        case sharedSecretTx
-        case sharedSecretRx
-        case nonce
+        
+        case messagingNonce
+        
+        case sharedSecret
         
         var service: DEKeychainQuery.Service {
             switch self {
-            case .publicKey: return .cryptoPublicKey
-            case .secretKey: return .cryptoSecretKey
-            case .sharedSecretTx: return .cryptoSharedSecretTx
-            case .sharedSecretRx: return .cryptoSharedSecretRx
-            case .nonce: return .cryptoNonce
+            case .messagingNonce: return .cryptoMessagingKey
+            case .sharedSecret: return .cryptoSharedSecret
             }
         }
     }
