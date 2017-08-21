@@ -53,12 +53,18 @@ public extension NSItemProvider {
     }
     
     public enum DataLoadingResult {
-        case success(url: URL, data: Data)
+        case success(ItemType)
         case failure(Error)
     }
     
+    public enum ItemType {
+        case urlData(url: URL, data: Data)
+        case image(UIImage)
+    }
+    
     @discardableResult public func loadData(options: [AnyHashable : Any]?,
-                                            completionHandler: @escaping ((DataLoadingResult) -> ())) -> Bool {
+                                            onSuccess: @escaping ((ItemType) -> ()),
+                                            onFailure: @escaping ((Error) -> ())) -> Bool {
         let typeId = kUTTypeData as String
         guard self.hasItemConformingToTypeIdentifier(typeId) else {
             return false
@@ -66,23 +72,27 @@ public extension NSItemProvider {
         
         self.loadItem(forTypeIdentifier: kUTTypeData as String, options: options) { (encodedValue, error) in
             guard let value = encodedValue else {
-                completionHandler(.failure(error))
+                onFailure(error)
                 return
             }
             
-            guard let url = value as? URL else {
-                completionHandler(.failure(DEUploadError.unrecognizableExtensionItem))
-                return
-            }
-            
-            DispatchQueue.global(qos: .background).async {
-                do {
-                    let data = try Data.init(contentsOf: url)
-                    completionHandler(.success(url: url, data: data))
+            switch value {
+                
+            case let image as UIImage:
+                onSuccess(.image(image))
+                
+            case let url as URL:
+                DispatchQueue.global(qos: .background).async {
+                    do {
+                        let data = try Data.init(contentsOf: url)
+                        onSuccess(.urlData(url: url, data: data))
+                    }
+                    catch {
+                        onFailure(error)
+                    }
                 }
-                catch {
-                    completionHandler(.failure(error))
-                }
+                
+            default: onFailure(DEUploadError.unrecognizableExtensionItem)
             }
         }
         

@@ -28,6 +28,8 @@ public enum DEUploadError: LocalizedError {
     
     case noContactsShared
     
+    case unencodablImage
+    
     case unknownError
     
     public var errorDescription: String? {
@@ -42,6 +44,7 @@ public enum DEUploadError: LocalizedError {
         case .invalidServerApiURL: return "Server API URL is invalid"
         case .noContactsShared: return "Contacts are unavailable"
         case .unknownError: return "Unknown error"
+        case .unencodablImage: return "Fail to encode image (neither png, nor jpg)"
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription
         }

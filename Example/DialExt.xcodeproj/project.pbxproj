@@ -93,6 +93,7 @@
 		749660721EA775A5000A5D9A /* SwiftMisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660711EA775A5000A5D9A /* SwiftMisc.swift */; };
 		749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */; };
 		74A2A8581E7991C600E3D04D /* DialogsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A2A8561E79911E00E3D04D /* DialogsController.swift */; };
+		74A4C9F61F4B08D700717F0E /* DEUti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A4C9F51F4B08D700717F0E /* DEUti.swift */; };
 		74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAD1ED6D01900CE254B /* DEHttpError.swift */; };
 		74A5DFB61ED6D01900CE254B /* DEHttpRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAE1ED6D01900CE254B /* DEHttpRequestBody.swift */; };
 		74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5DFAF1ED6D01900CE254B /* DEHttpRequestBodyFile.swift */; };
@@ -280,6 +281,7 @@
 		749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMiscTests.swift; sourceTree = "<group>"; };
 		74A2A8541E79862C00E3D04D /* Share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Share.entitlements; sourceTree = "<group>"; };
 		74A2A8561E79911E00E3D04D /* DialogsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsController.swift; sourceTree = "<group>"; };
+		74A4C9F51F4B08D700717F0E /* DEUti.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUti.swift; sourceTree = "<group>"; };
 		74A5DFAD1ED6D01900CE254B /* DEHttpError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEHttpError.swift; sourceTree = "<group>"; };
 		74A5DFAE1ED6D01900CE254B /* DEHttpRequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEHttpRequestBody.swift; sourceTree = "<group>"; };
 		74A5DFAF1ED6D01900CE254B /* DEHttpRequestBodyFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEHttpRequestBodyFile.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				74326E061EADFAB80016A1F1 /* LimitedValueType.swift */,
 				74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */,
 				74D729A41F3C6F7800F123E7 /* CRC32.swift */,
+				74A4C9F51F4B08D700717F0E /* DEUti.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -1093,6 +1096,7 @@
 				74065EF71E8113A900C535B6 /* KeyboardListener.swift in Sources */,
 				74935E251ED9CA17005331A9 /* DEUploadDataRepresentation.swift in Sources */,
 				744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */,
+				74A4C9F61F4B08D700717F0E /* DEUti.swift in Sources */,
 				74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
 				74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */,

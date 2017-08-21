@@ -39,15 +39,27 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         
         let item = self.extensionItem
         
-        if let sharingUrl = item.sharingUrl {
-            let preparedItem = DEUploadPreparedItem.init(content: .url(sharingUrl.url))
-            finish(item: preparedItem)
+        guard let identifiedItem = self.identifyItem(item) else {
+            finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
             return
         }
         
+        self.prepareItem(identifiedItem: identifiedItem)
+    }
+    
+    private enum IdentificationResult {
+        case urlToShareInfo(SharingURL)
+        case remoteUrl(NSItemProvider)
+        case attachment(item: NSItemProvider, type: DetailedMediaFileType)
+    }
+    
+    private func identifyItem(_ item: NSExtensionItem) -> IdentificationResult? {
+        if let sharingUrl = item.sharingUrl {
+            return IdentificationResult.urlToShareInfo(sharingUrl)
+        }
+        
         if let remoteUrlAttachment = item.remoteUrlAttachments.first {
-            loadRemoteUrl(attachment: remoteUrlAttachment)
-            return
+            return IdentificationResult.remoteUrl(remoteUrlAttachment)
         }
         
         var mediaAttachment: NSItemProvider? = nil
@@ -74,33 +86,95 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         if let attachment = mediaAttachment, let type = mediaType {
-            self.attachment = attachment
-            self.targetType = type
-            self.loadFileData()
-        }
-        else {
-            finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
+            return IdentificationResult.attachment(item: attachment, type: type)
         }
         
+        return nil
     }
     
-    private func loadFileData() {
-        self.attachment.loadData(options: nil) { [weak self] (result) in
-            withOptionalExtendedLifetime(self, body: {
-                guard !self!.isCancelled else {
-                    return
-                }
-                
-                switch result {
-                case let .failure(error):
-                    self!.finishWithFailure(error: error)
-                    break
-                case let .success(url: url, data: data):
-                    self!.handleFileDataLoaded(url: url, data: data)
-                    break
-                }
-            })
+    private func prepareItem(identifiedItem: IdentificationResult) {
+        switch identifiedItem {
+        case .urlToShareInfo(let urlInfo):
+            self.finish(item: .init(content: .url(urlInfo.url)))
+            
+        case .remoteUrl(let urlExtensionItem):
+            self.loadRemoteUrl(attachment: urlExtensionItem)
+            
+        case .attachment(item: let attachment, type: let type):
+            self.loadData(attachment: attachment, type: type)
         }
+    }
+    
+    private func loadData(attachment: NSItemProvider, type: DetailedMediaFileType) {
+        guard !self.isCancelled else {
+            return
+        }
+        
+        attachment.loadData(options: nil, onSuccess: { [weak self] itemData in
+            switch itemData {
+            case .image(let image):
+                self?.prepareItem(image: image)
+            case .urlData(url: let url, data: let data):
+                self?.handleFileDataLoaded(url: url, data: data)
+            }
+        }, onFailure: { [weak self] error in
+            self?.finishWithFailure(error: error)
+        })
+    }
+    
+    private func prepareItem(image: UIImage) {
+        guard let encodedImage = self.encodeImage(image) else {
+            self.finishWithFailure(error: DEUploadError.fileLengthExceedsMaximum)
+            return
+        }
+        
+        let dataRep = DEUploadDataRepresentation.init(data: encodedImage.data,
+                                                      uti: encodedImage.format.uti.rawValue)
+        let details = self.getImageDetails(image)
+        let uploadReap = DEUploadImageRepresentation.init(dataRepresentation: dataRep, details: details)
+        
+        let preview = self.buildPreviewRepresentation(original: image)
+        
+        // Guaranteed, otherwise encoding failed
+        let fileExtension = encodedImage.format.uti.fileExtension!
+        let name = self.generateName().appending(".").appending(fileExtension)
+        
+        let item = DEUploadPreparedItem.init(content: .image(uploadReap), preview: preview, originalName: name)
+        self.finish(item: item)
+    }
+    
+    private func generateName(prefix: String = "") -> String {
+        let formatter = DateFormatter.init()
+        formatter.dateFormat = prefix.appending("YYYY-MM-dd-HH-mm")
+        return formatter.string(from: Date())
+    }
+    
+    private struct EncodedImage {
+        var data: Data
+        var format: Format
+        
+        enum Format {
+            case png
+            case jpeg
+            
+            var uti: DEUti {
+                switch self {
+                case .png: return .png
+                case .jpeg: return .jpeg
+                }
+            }
+            
+        }
+    }
+    
+    private func encodeImage(_ image: UIImage) -> EncodedImage? {
+        if let data = UIImagePNGRepresentation(image) {
+            return .init(data: data, format: .png)
+        }
+        if let data = UIImageJPEGRepresentation(image, 1.0) {
+            return .init(data: data, format: .jpeg)
+        }
+        return nil
     }
     
     private func loadRemoteUrl(attachment: NSItemProvider) {
@@ -316,6 +390,12 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
                 onLoaded(details)
             }
         }
+    }
+    
+    private func getImageDetails(_ image: UIImage) -> DEUploadImageDetails {
+        let size = DEUploadIntegerSize.init(size: image.pixelSize)
+        let details = DEUploadImageDetails.init(size: size)
+        return details
     }
     
     private func loadAudioDetails(url: URL, data: Data, onLoaded: @escaping ((DEUploadAudioDetails) -> ())) {
