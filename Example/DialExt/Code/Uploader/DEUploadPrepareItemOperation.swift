@@ -137,7 +137,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         
         // Guaranteed, otherwise encoding failed
         let fileExtension = encodedImage.format.uti.fileExtension!
-        let name = self.generateName().appending(".").appending(fileExtension)
+        let name = self.generateName(prefix:"image_").appending(".").appending(fileExtension)
         
         let item = DEUploadPreparedItem.init(content: .image(uploadReap), preview: preview, originalName: name)
         self.finish(item: item)
@@ -145,8 +145,9 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     
     private func generateName(prefix: String = "") -> String {
         let formatter = DateFormatter.init()
-        formatter.dateFormat = prefix.appending("YYYY-MM-dd-HH-mm")
-        return formatter.string(from: Date())
+        formatter.dateFormat = "YYYY-MM-dd-HH-mm"
+        let base = formatter.string(from: Date())
+        return prefix.appending(base)
     }
     
     private struct EncodedImage {
