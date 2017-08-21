@@ -16,7 +16,7 @@ import DLGSodium
  */
 public protocol DECryptoStorageReadable {
     
-    func cryptoSharedSecret() throws -> SharedSecret
+    func cryptoSharedSecret() throws -> DESharedSecret
     
     func cryptoMessgingNonce() throws -> DEInt64BasedNonce
 }
@@ -25,7 +25,7 @@ public protocol DECryptoStorageReadable {
 public protocol DECryptoStorageWriteable {
     
     /// Sets new messaging data
-    func setCryptoSharedSecret(_ messaing: SharedSecret) throws
+    func setCryptoSharedSecret(_ messaing: DESharedSecret) throws
     
     func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws
     
@@ -38,14 +38,15 @@ public typealias DECryptoStorage = DECryptoStorageReadable & DECryptoStorageWrit
 
 extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStorageReadable {
     
-    public func setCryptoSharedSecret(_ secret: SharedSecret) throws {
-        let data = secret.data() as NSData
-        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecret, data: data))
+    public func setCryptoSharedSecret(_ secret: DESharedSecret) throws {
+        let data = secret.protobufSharedSecret.data()
+        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecret, data: data as NSData))
     }
     
-    public func cryptoSharedSecret() throws -> SharedSecret {
+    public func cryptoSharedSecret() throws -> DESharedSecret {
         let data = try self.readData(query: .readCryptoItemQuery(service: .sharedSecret))
-        let secret = try SharedSecret.parseFrom(data: data)
+        let protoSecret = try SharedSecret.parseFrom(data: data)
+        let secret = DESharedSecret.init(protobufSharedSecret: protoSecret)
         return secret
     }
     

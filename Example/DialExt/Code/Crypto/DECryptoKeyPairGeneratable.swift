@@ -10,7 +10,10 @@ import Foundation
 import DLGSodium
 
 public protocol DECryptoKeyPairGeneratable {
+    
     func generateKeyPair() throws -> DECryptoKeyPair
+    
+    func generateSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret
 }
 
 public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
@@ -24,5 +27,16 @@ public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
             throw DECryptoError.failToGenerateKeyPair
         }
         return DECryptoKeyPair.init(keyExchangeKeyPair: keyPair)
+    }
+    
+    public func generateSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
+        let sodium = Sodium.init()!
+        guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey,
+                                                             secretKey: keyPair.secretKey,
+                                                             otherPublicKey: publicKey,
+                                                             side: .client) else {
+                                                                throw DECryptoError.failToGenerateSharedSecret
+        }
+        return DESharedSecret.init(rx: sharedSecret.rx, tx: sharedSecret.tx)
     }
 }
