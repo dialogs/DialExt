@@ -43,7 +43,7 @@ public struct DESharedSecret {
 
 public protocol DECryptoManagable {
     
-    func ensureKeyPair(resetCurrent: Bool) throws -> DECryptoKeyPair
+    func ensureKeyPair(resetCurrent: Bool) throws -> (pair: DECryptoKeyPair, isNewOne: Bool)
     
     func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret
     
@@ -72,16 +72,19 @@ public class DECryptoManager: DECryptoManagable {
         self.keyGenerator = generator
     }
     
-    public func ensureKeyPair(resetCurrent: Bool) throws -> DECryptoKeyPair {
+    
+    public func ensureKeyPair(resetCurrent: Bool) throws -> (pair: DECryptoKeyPair, isNewOne: Bool) {
         if resetCurrent {
-            return try self.setupNewKeyPair()
+            let keyPair = try self.setupNewKeyPair()
+            return (keyPair, true)
         }
         else {
             if let keyPair = try self.keyStorage.keyPair() {
-                return keyPair
+                return (keyPair, false)
             }
             else {
-                return try self.setupNewKeyPair()
+                let keyPair = try self.setupNewKeyPair()
+                return (keyPair, true)
             }
         }
     }
