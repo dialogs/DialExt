@@ -22,12 +22,12 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
 
     private let storage: DECryptoStorage
     
-    private let decrypter: DECryptoIncomingDataDecrypting
+    private let decryptor: DECryptoIncomingDataDecrypting
     
     public init(storage: DECryptoStorage,
                 decryptor: DECryptoIncomingDataDecrypting = DECryptoIncomingDataDecryptor.init()) throws {
         self.storage = storage
-        self.decrypter = decryptor
+        self.decryptor = decryptor
     }
     
     public func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage {
@@ -38,7 +38,7 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     
     private func isValidNonce(_ nonce: DEInt64BasedNonce) throws -> Bool {
         var lastNonce = DEInt64BasedNonce.init(Int64.min)
-        if let storedNonce = try? self.storage.cryptoMessgingNonce() {
+        if let storedNonce = try self.storage.cryptoMessgingNonce() {
             lastNonce = storedNonce
         }
         return nonce.value > lastNonce.value
@@ -56,8 +56,10 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
             throw DECryptoError.wrongNonce
         }
         
-        let secret = try self.storage.cryptoSharedSecret()
-        let decodedMessage = try self.decrypter.decrypt(incomingData: data,
+        guard let secret = try self.storage.cryptoSharedSecret() else {
+            throw DECryptoError.noSharedSecretStored
+        }
+        let decodedMessage = try self.decryptor.decrypt(incomingData: data,
                                                               rx: secret.rx,
                                                               nonceData: nonce.bigEndianData)
         

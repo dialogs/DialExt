@@ -16,11 +16,15 @@ public enum DEKeychainQueryError: Error {
     /// Keychain failed, but there is no os status providen
     case noOSStatus
     
-    /// Trying to perform operation with wring query (like reading with writing operation)
+    /// Trying to perform operation with wrong query (like reading with writing operation)
     case wrongQuery
     
-    /// Query finished with success, but returns no results (incredibly rare case).
+    /// Query finished with success, but returns no results.
     case noResults
+    
+    var isNoResultsError: Bool {
+        return self == DEKeychainQueryError.noResults
+    }
     
 }
 
@@ -60,6 +64,9 @@ public extension DEKeychainQueryPerformerable {
             throw DEKeychainQueryError.wrongQuery
         }
         let result = self.perform(query: query)
+        if result.isItemNotFound {
+            throw DEKeychainQueryError.noResults
+        }
         try result.doIfFailed { (status) in
             guard let errorCode = status else {
                 throw DEKeychainQueryError.noOSStatus
@@ -75,6 +82,24 @@ public extension DEKeychainQueryPerformerable {
             data = firstResult as Data
         })
         return data
+    }
+    
+    @discardableResult func readNullableData(access: DEKeychainQuery.Access,
+                                             config: DEKeychainQuery.Operation.ReadConfig? = nil ) throws -> Data? {
+        return try self.readNullableData(query: .init(access: access, operation: .read(config: config)))
+    }
+    
+    @discardableResult func readNullableData(query: DEKeychainQuery) throws -> Data? {
+        do {
+            let data = try self.readData(query: query)
+            return data
+        }
+        catch {
+            if let keychainError = error as? DEKeychainQueryError, keychainError.isNoResultsError {
+                return nil
+            }
+            throw error
+        }
     }
     
     func addOrUpdateData(query: DEKeychainQuery) throws {

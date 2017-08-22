@@ -18,6 +18,7 @@ public enum DECryptoError: Error {
     case wrongNonce
     case failToDecodeMessage
     case failToStoreNewNonce
+    case noSharedSecretStored
 }
 
 public enum DEEncryptedPushNotificationError: Error {

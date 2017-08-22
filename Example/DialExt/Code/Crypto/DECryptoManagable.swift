@@ -40,13 +40,14 @@ public struct DESharedSecret {
     }
 }
 
-protocol DECryptoManagable {
+
+public protocol DECryptoManagable {
     
     func ensureKeyPair(resetCurrent: Bool) throws -> DECryptoKeyPair
     
     func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret
     
-    func getSharedSecret() throws -> DESharedSecret
+    func getSharedSecret() throws -> DESharedSecret?
     
     func clearStorage() throws
     
@@ -54,7 +55,7 @@ protocol DECryptoManagable {
 
 public class DECryptoManager: DECryptoManagable {
     
-    func clearStorage() throws {
+    public func clearStorage() throws {
         try self.keyStorage.deleteKeyPair()
         try self.storage.resetCryptoStorage()
     }
@@ -71,7 +72,7 @@ public class DECryptoManager: DECryptoManagable {
         self.keyGenerator = generator
     }
     
-    func ensureKeyPair(resetCurrent: Bool) throws -> DECryptoKeyPair {
+    public func ensureKeyPair(resetCurrent: Bool) throws -> DECryptoKeyPair {
         if resetCurrent {
             return try self.setupNewKeyPair()
         }
@@ -85,11 +86,11 @@ public class DECryptoManager: DECryptoManagable {
         }
     }
     
-    func getSharedSecret() throws -> DESharedSecret {
+    public func getSharedSecret() throws -> DESharedSecret? {
         return try self.storage.cryptoSharedSecret()
     }
     
-    func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
+    public func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
         let sharedSecret = try self.keyGenerator.generateSharedSecret(keyPair: keyPair, publicKey: publicKey)
         try self.storage.setCryptoSharedSecret(sharedSecret)
         return sharedSecret

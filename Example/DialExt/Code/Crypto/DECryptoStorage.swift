@@ -16,9 +16,9 @@ import DLGSodium
  */
 public protocol DECryptoStorageReadable {
     
-    func cryptoSharedSecret() throws -> DESharedSecret
+    func cryptoSharedSecret() throws -> DESharedSecret?
     
-    func cryptoMessgingNonce() throws -> DEInt64BasedNonce
+    func cryptoMessgingNonce() throws -> DEInt64BasedNonce?
 }
 
 
@@ -43,8 +43,18 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
         try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .sharedSecret, data: data as NSData))
     }
     
-    public func cryptoSharedSecret() throws -> DESharedSecret {
-        let data = try self.readData(query: .readCryptoItemQuery(service: .sharedSecret))
+    public func cryptoSharedSecret() throws -> DESharedSecret? {
+        
+        let data: Data
+        do {
+            if let storedData = try self.readNullableData(query: .readCryptoItemQuery(service: .sharedSecret)) {
+                data = storedData
+            }
+            else {
+                return nil
+            }
+        }
+        
         let protoSecret = try SharedSecret.parseFrom(data: data)
         let secret = DESharedSecret.init(protobufSharedSecret: protoSecret)
         return secret
@@ -55,8 +65,11 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
         try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .messagingNonce, data: data))
     }
     
-    public func cryptoMessgingNonce() throws -> DEInt64BasedNonce {
-        let data = try self.readData(query: .readCryptoItemQuery(service: .messagingNonce))
+    public func cryptoMessgingNonce() throws -> DEInt64BasedNonce? {
+        let storedData = try self.readNullableData(query: .readCryptoItemQuery(service: .messagingNonce))
+        guard let data = storedData else {
+            return nil
+        }
         let nonce = DEInt64BasedNonce.init(data: data)
         return nonce
     }
