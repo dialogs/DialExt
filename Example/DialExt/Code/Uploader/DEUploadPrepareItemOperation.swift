@@ -50,6 +50,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     private enum IdentificationResult {
         case urlToShareInfo(SharingURL)
         case remoteUrl(NSItemProvider)
+        case plainText(NSItemProvider)
+        case itemAttributedText(NSAttributedString)
         case attachment(item: NSItemProvider, type: DetailedMediaFileType)
     }
     
@@ -60,6 +62,14 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         
         if let remoteUrlAttachment = item.remoteUrlAttachments.first {
             return IdentificationResult.remoteUrl(remoteUrlAttachment)
+        }
+        
+        if let attachment = item.attachments?.first as? NSItemProvider,
+            attachment.hasItemConformingToTypeIdentifier(DEUti.plainText.rawValue) {
+            if let text = item.attributedContentText {
+                return IdentificationResult.itemAttributedText(text)
+            }
+            return IdentificationResult.plainText(attachment)
         }
         
         var mediaAttachment: NSItemProvider? = nil
@@ -102,6 +112,12 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             
         case .attachment(item: let attachment, type: let type):
             self.loadData(attachment: attachment, type: type)
+            
+        case .plainText(let item):
+            self.loadText(attachment: item)
+            
+        case .itemAttributedText(let attributedString):
+            self.finish(item: DEUploadPreparedItem.init(content: .text(attributedString.string)))
         }
     }
     
@@ -120,6 +136,22 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }, onFailure: { [weak self] error in
             self?.finishWithFailure(error: error)
         })
+    }
+    
+    private func loadText(attachment: NSItemProvider) {
+        guard !self.isCancelled else {
+            return
+        }
+        
+        attachment.loadItem(forTypeIdentifier: DEUti.plainText.rawValue, options: nil) { (text, error) in
+            if let text = text as? String {
+                self.finish(item: DEUploadPreparedItem.init(content: .text(text)))
+            }
+            else {
+                let targetError = error ?? DEUploadError.unrecognizableExtensionItem
+                self.finishWithFailure(error: targetError)
+            }
+        }
     }
     
     private func prepareItem(image: UIImage) {
