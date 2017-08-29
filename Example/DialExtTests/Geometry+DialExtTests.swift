@@ -12,13 +12,14 @@ import XCTest
 
 class Geometry_DialExtTests: XCTestCase {
     
-    struct RectAdjustingTask {
-        let original: CGRect
-        let insets: UIEdgeInsets
-        let expected: CGRect
-    }
-    
     func testRectAdjustingByInsets() {
+        
+        struct RectAdjustingTask {
+            let original: CGRect
+            let insets: UIEdgeInsets
+            let expected: CGRect
+        }
+        
         let tasks: [RectAdjustingTask] = [
             
             RectAdjustingTask.init(original: .init(x: -1.0, y: -1.0, width: 101.0, height: 101.0),
@@ -40,6 +41,60 @@ class Geometry_DialExtTests: XCTestCase {
         
     }
     
+    func testEdgeInsetsInit() {
+        
+        struct EdgeInsetsInitTask {
+            let original: UIEdgeInsets
+            let expected: UIEdgeInsets
+        }
+        
+        let tasks: [EdgeInsetsInitTask] = [
+            EdgeInsetsInitTask.init(original: .init(horizontal: 10.0, vertical: 10.0),
+                                    expected: .init(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)),
+            
+            EdgeInsetsInitTask.init(original: .init(horizontal: 5.0, vertical: 8.0),
+                                    expected: .init(top: 8.0, left: 5.0, bottom: 8.0, right: 5.0)),
+            
+            EdgeInsetsInitTask.init(original: .init(horizontal: -100.0, vertical: -83.0),
+                                    expected: .init(top: -83.0, left: -100.0, bottom: -83.0, right: -100.0))
+        ]
+        
+        for task in tasks {
+            XCTAssertEqual(task.original, task.expected)
+        }
+    }
+
     
+    func testEdgeInsetsSideSum() {
+        
+        struct EdgeInsetsSideSumTask {
+            let original: UIEdgeInsets
+            let expectedVerSum: CGFloat
+            let expectedHorSum: CGFloat
+        }
+        
+        let tasks: [EdgeInsetsSideSumTask] = [
+            EdgeInsetsSideSumTask.init(original: .zero,
+                                       expectedVerSum: 0.0,
+                                       expectedHorSum: 0.0),
+            
+            EdgeInsetsSideSumTask.init(original: .init(top: 0.0, left: 2.0, bottom: 0.0, right: 2.0),
+                                       expectedVerSum: 0.0, expectedHorSum: 4.0),
+            
+            EdgeInsetsSideSumTask.init(original: .init(top: 4.0, left: 0.0, bottom: 9.0, right: 0.0),
+                                       expectedVerSum: 13.0, expectedHorSum: 0.0),
+            
+            EdgeInsetsSideSumTask.init(original: .init(top: 111.3, left: 35.0, bottom: 112.0, right: 54.4),
+                                       expectedVerSum: 223.3, expectedHorSum: 89.4),
+            
+            EdgeInsetsSideSumTask.init(original: .init(top: -100.0, left: -50.0, bottom: -4.0, right: -23.0),
+                                       expectedVerSum: -104.0, expectedHorSum: -73.0)
+        ]
+        
+        for task in tasks {
+            XCTAssertEqual(task.original.horizontalSum, task.expectedHorSum)
+            XCTAssertEqual(task.original.verticalSum, task.expectedVerSum)
+        }
+    }
     
 }

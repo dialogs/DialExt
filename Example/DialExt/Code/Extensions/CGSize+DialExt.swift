@@ -18,16 +18,15 @@ public extension CGSize {
         self.init(width: side, height: side)
     }
     
-    
     public var square: CGFloat {
         return self.width * self.height
     }
     
     public var perimeter: CGFloat {
-        return self.width + self.height
+        return (self.width + self.height) * 2
     }
     
-    /// Proportional relationship between image's width and height.
+    /// Proportional relationship between width and height.
     public var ratio: CGFloat {
         return self.width / self.height
     }
@@ -48,14 +47,6 @@ public extension CGSize {
         
         let limitMultiplier: CGFloat = (limit / self.square).squareRoot()
         return self.multiplied(by: limitMultiplier)
-    }
-    
-    /**
-     * Returns size proportionaly scaled by difference between original and limit sides.
-     * Returns unchanges size if it's under the limit.
-     */
-    public func limited(bySize: CGSize) -> CGSize {
-        fatalError()
     }
     
     // TODO: Implement limited(bySide limit: CGFloat, proportionally: Bool = false) -> CGSize
