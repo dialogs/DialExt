@@ -43,14 +43,28 @@ public struct DESharedSecret {
 
 public protocol DECryptoManagable {
     
-    func ensureKeyPair(resetCurrent: Bool) throws -> (pair: DECryptoKeyPair, isNewOne: Bool)
+    @discardableResult func ensureKeyPair(resetCurrent: Bool) throws -> (pair: DECryptoKeyPair, isNewOne: Bool)
     
-    func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret
+    @discardableResult func resetSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret
     
     func getSharedSecret() throws -> DESharedSecret?
     
     func clearStorage() throws
     
+}
+
+public extension DECryptoManagable {
+    
+    func hasSharedSecret() -> Bool {
+        do {
+            let secret = try self.getSharedSecret()
+            return secret != nil
+        }
+        catch {
+            DESErrorLog("Fail to fetch shared secret")
+            return false
+        }
+    }
 }
 
 public class DECryptoManager: DECryptoManagable {

@@ -10,7 +10,7 @@ import Foundation
 import DLGSodium
 
 public struct DecodedMessage {
-    var alertingPush: AlertingPush
+    public var alertingPush: AlertingPush
 }
 
 /// Responsible for decoding incoming messages. **Not thread-safe**

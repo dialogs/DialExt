@@ -9,9 +9,9 @@
 import Foundation
 import UserNotifications
 
-extension AlertingPush {
+public extension AlertingPush {
     
-    func supposeTitle() throws -> String {
+    public func supposeTitle() throws -> String {
         switch self.getOneOfAlertTitle() {
         case let .LocAlertTitle(localizable):
             return try localizable.buildLocalizedString()
@@ -25,7 +25,7 @@ extension AlertingPush {
     }
     
     
-    func supposeBody() throws -> String {
+    public func supposeBody() throws -> String {
         switch self.getOneOfAlertBody() {
         case let .LocAlertBody(localizable): return try localizable.buildLocalizedString()
             
@@ -36,7 +36,7 @@ extension AlertingPush {
         }
     }
     
-    @available(iOSApplicationExtension 10.0, *) func supposeSound() -> UNNotificationSound {
+    @available(iOSApplicationExtension 10.0, *) public func supposeSound() -> UNNotificationSound {
         if let soundName = self.sound {
         return soundName.isEmpty ? UNNotificationSound.default() : UNNotificationSound.init(named: soundName)
         } else {
