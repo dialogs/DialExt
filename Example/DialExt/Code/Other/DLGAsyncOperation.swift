@@ -30,7 +30,10 @@ public enum DLGOperationState {
 }
 
 /**
- * A basic abstract async operation for subclassing
+ A basic abstract async operation for subclassing
+ 
+ onDidFinish() called *before* finishing operation.
+ Be careful, the completion block may be called on other thread than onDidFinish().
  */
 open class DLGAsyncOperation<ResultData>: Operation {
     
@@ -84,7 +87,9 @@ open class DLGAsyncOperation<ResultData>: Operation {
     
     // Subclassing: Override
     
-    // Override this method instead of 'start' or 'main'
+    /**
+     Override this method instead of 'start' or 'main'.
+     */
     open func onDidStart() {
         
     }
