@@ -113,6 +113,7 @@
 		74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */; };
 		74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E51EA4E6A6006C243D /* String+DialExt.swift */; };
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
+		74E71EB61F558B8300BE4619 /* Geometry+DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */; };
 		74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
@@ -301,6 +302,7 @@
 		74E231E31EA4DC33006C243D /* URLComponents+MultipartBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLComponents+MultipartBody.swift"; sourceTree = "<group>"; };
 		74E231E51EA4E6A6006C243D /* String+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DialExt.swift"; sourceTree = "<group>"; };
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
+		74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExtTests.swift"; sourceTree = "<group>"; };
 		74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingConfigProvider.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 				7413AA331ED36D4500AD99EC /* Resources */,
 				7483166A1E72962500E4ADA8 /* Info.plist */,
 				749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */,
+				74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */,
 				741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */,
 				7413AA311ED3518500AD99EC /* CGSizeDialExtTests.swift */,
 			);
@@ -1167,6 +1170,7 @@
 				7413AA321ED3518500AD99EC /* CGSizeDialExtTests.swift in Sources */,
 				741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */,
 				749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */,
+				74E71EB61F558B8300BE4619 /* Geometry+DialExtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
