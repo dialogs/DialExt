@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum DECryptoError: Error {
+public enum DECryptoError: LocalizedError {
     case failToInitializeSodium
     case failToGenerateRandomData
     case failToGenerateKeyPair
@@ -20,6 +20,21 @@ public enum DECryptoError: Error {
     case failToStoreNewNonce
     case noSharedSecretStored
     case noKeychainGroupProvided
+    
+    public var localizedDescription: String {
+        switch self {
+        case .failToInitializeSodium: return "Sodium failed"
+        case .failToGenerateRandomData: return "Fail to generate random data"
+        case .failToGenerateKeyPair: return "Fail to generate key pair"
+        case .failToGenerateSharedSecret: return "Fail to generate Shared Secret"
+        case .noNonceStored: return "No stored nonce found"
+        case .wrongNonce: return "Nonce is wrong"
+        case .failToDecodeMessage: return "Message decoding failed"
+        case .failToStoreNewNonce: return "Could not store new nonce"
+        case .noSharedSecretStored: return "No shared secret found"
+        case .noKeychainGroupProvided: return "No keychain group providen by service subclass"
+        }
+    }
 }
 
 public enum DEEncryptedPushNotificationError: Error {
