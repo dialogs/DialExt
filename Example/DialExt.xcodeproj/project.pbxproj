@@ -75,6 +75,7 @@
 		7483166F1E72962500E4ADA8 /* DialExt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */; };
 		74846A431EA60D6800B80ED6 /* DESharedDataConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */; };
+		748919481F57FFD4006A8D75 /* CryptoNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748919471F57FFD4006A8D75 /* CryptoNotificationService.swift */; };
 		748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */; };
 		748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */; };
 		748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */; };
@@ -284,6 +285,7 @@
 		7483166A1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74846A3E1EA6039400B80ED6 /* ActionReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionReportHandler.swift; sourceTree = "<group>"; };
 		74846A421EA60D6800B80ED6 /* DESharedDataConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDataConfig.swift; sourceTree = "<group>"; };
+		748919471F57FFD4006A8D75 /* CryptoNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoNotificationService.swift; sourceTree = "<group>"; };
 		748BB78D1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DEPlaceholderViewController.storyboard; sourceTree = "<group>"; };
 		748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEPlaceholderViewController.swift; sourceTree = "<group>"; };
 		748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DialExt.swift"; sourceTree = "<group>"; };
@@ -769,6 +771,7 @@
 				74D017CF1F02B18F008C8536 /* DENotificationDecryptService.swift */,
 				74D017D01F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift */,
 				74D017D41F02B33B008C8536 /* DECryptoPushErrorStorage.swift */,
+				748919471F57FFD4006A8D75 /* CryptoNotificationService.swift */,
 			);
 			path = CryptoPush;
 			sourceTree = "<group>";
@@ -1167,6 +1170,7 @@
 				74313A661E9E60A5002AAF55 /* DLGAsyncOperation.swift in Sources */,
 				748BB7941EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift in Sources */,
 				74A5DFBC1ED6D01900CE254B /* DEHttpRequestBodyItem.swift in Sources */,
+				748919481F57FFD4006A8D75 /* CryptoNotificationService.swift in Sources */,
 				74935E2C1ED9CA17005331A9 /* DEUploadPreparedTask.swift in Sources */,
 				74935E2A1ED9CA17005331A9 /* DEUploadIntegerSize.swift in Sources */,
 				74065EEE1E8113A900C535B6 /* DEKeychainDataProvider.swift in Sources */,

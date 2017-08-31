@@ -97,7 +97,7 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
             
             let fail = { (error: Error?) in
                 let resultError = error ?? DEUploadError.unknownError
-                currentTask.completion(false, error)
+                currentTask.completion(false, resultError)
             }
             
             guard error == nil else {

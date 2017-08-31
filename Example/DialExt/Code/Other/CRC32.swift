@@ -173,7 +173,7 @@ final public class CRC32: Hashable {
         initialized = true
     }
     
-    func run(data data: Data) {
+    func run(data: Data) {
         crc = crc32(crc, data: data)
         initialized = true
     }
