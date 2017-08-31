@@ -11,6 +11,7 @@ import Foundation
 import ProtocolBuffers
 
 
+
 public class DEProtobufItemDataEncoder<ProtoType>: DEGroupContainerItemDataEncoder<ProtoType> where ProtoType: GeneratedMessageProtocol {
     override public func encode(representation: ProtoType) throws -> Data {
         return try representation.data()

@@ -10,21 +10,10 @@ import Foundation
 
 public extension AppSharedDialogListContext {
     static public let empty: AppSharedDialogListContext = {
-        let contextBuilder = AppSharedDialogListContext.getBuilder()
-        contextBuilder.dialogs = []
-        contextBuilder.users = []
-        /*
-         let user: AppSharedUser = {
-         let builder = AppSharedUser.getBuilder()
-         builder.name = "Me"
-         builder.id = 123456
-         return try! builder.build()
-         }()
-         
-         contextBuilder.mainUser = user
-         */
-        let context = try! contextBuilder.build()
-        return context
+        return AppSharedDialogListContext.create({
+            $0.dialogs = []
+            $0.users = []
+        })
     }()
     
     static public let version: String = {
@@ -38,20 +27,25 @@ public extension AppSharedDialogListContext {
         let version = versionLineComponents.last!
         return version
     }()
+    
+    static public func create(_ block: (AppSharedDialogListContext.Builder) -> ()) -> AppSharedDialogListContext {
+        let builder = AppSharedDialogListContext.Builder.init()
+        block(builder)
+        return try! builder.build()
+    }
 }
 
 public extension AppSharedDialogList {
-    static public let empty: AppSharedDialogList = {
-        let builder = AppSharedDialogList.getBuilder()
-        builder.ids = []
-        return try! builder.build()
-    }()
-}
-
-public extension AppSharedDialogListContext.Builder {
     
-    public func setCurrentVersion() {
-        self.version = AppSharedDialogListContext.version
+    static public func create(_ block: (AppSharedDialogList.Builder) -> ()) -> AppSharedDialogList {
+        let builder = AppSharedDialogList.Builder.init()
+        block(builder)
+        return try! builder.build()
     }
     
+    static public let empty: AppSharedDialogList = {
+        return AppSharedDialogList.create({
+            $0.ids = []
+        })
+    }()
 }

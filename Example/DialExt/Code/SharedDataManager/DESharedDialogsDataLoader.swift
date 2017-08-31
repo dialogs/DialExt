@@ -136,10 +136,6 @@ final public class DESharedDialogsDataLoader {
             return true
         }
         
-        if error is ProtocolBuffersError {
-            return true
-        }
-        
         let cocoaError = reasonError as NSError
         if cocoaError.domain == NSCocoaErrorDomain &&
             (cocoaError.code == NSFileNoSuchFileError || cocoaError.code == NSFileReadNoSuchFileError) {

@@ -9,15 +9,30 @@
 import Foundation
 
 
+public extension AppSharedUser {
+    public static func create(_ block: (AppSharedUser.Builder) -> ()) -> AppSharedUser {
+        let builder = AppSharedUser.Builder.init()
+        block(builder)
+        return try! builder.build()
+    }
+}
+
+
 public extension AppSharedDialog {
+    
+    public static func create(_ block: (AppSharedDialog.Builder) -> ()) -> AppSharedDialog {
+        let builder = AppSharedDialog.Builder.init()
+        block(builder)
+        return try! builder.build()
+    }
     
     public typealias Id = Int64
     
-    public class func avatarSharedItemName(for dialog: AppSharedDialog) -> String {
+    public static func avatarSharedItemName(for dialog: AppSharedDialog) -> String {
         return self.avatarSharedItemName(for: dialog.id, isGroup: dialog.isGroup)
     }
     
-    public class func avatarSharedItemName(for dialogId: Id, isGroup: Bool) -> String {
+    public static func avatarSharedItemName(for dialogId: Id, isGroup: Bool) -> String {
         let prefix = isGroup ? "g" : "u"
         let name = "\(prefix)\(dialogId)"
         return name

@@ -28,6 +28,21 @@ public func DELog(_ message: String,
     logger.log(message, subsystem: subsystem, tag: tag, level: level, info: info)
 }
 
+public func DESErrorLog(_ message: StaticString, isFatal: Bool = false,
+                        subsystem: DELogger.Subsystem = .sdk,
+                        tag: String = "",
+                        info: DELoggerInfo? = nil,
+                        logger: DELogger = DELogger.shared,
+                        file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DESLog(message,
+           tag: tag,
+           level: isFatal ? DELogger.Level.fault : DELogger.Level.error,
+           logger: logger,
+           file: file,
+           function: function,
+           line: line)
+}
+
 public func DEErrorLog(_ message: String,
                        isFatal: Bool = false,
                        subsystem: DELogger.Subsystem = .sdk,

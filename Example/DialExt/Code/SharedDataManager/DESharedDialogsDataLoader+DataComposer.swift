@@ -57,9 +57,11 @@ internal extension DESharedDialogsDataLoader {
                 return originalContext.dialogs.first(where: { $0.id == dialogId})
             }
             
-            let updatableContext = originalContext.getBuilder()
-            updatableContext.dialogs = filteredSortedDialogs
-            return try! updatableContext.build()
+            let context = AppSharedDialogListContext.create({
+                $0.dialogs = filteredSortedDialogs
+            })
+            
+            return context
         }
     }
 }

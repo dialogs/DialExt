@@ -62,48 +62,48 @@ public class DEDebugContainer: DEGroupContainerable {
     private let context: AppSharedDialogListContext
     
     private var list: AppSharedDialogList {
-        let builder = AppSharedDialogList.getBuilder()
-        builder.ids = self.context.users.map({ Int64($0.id)})
-        return try! builder.build()
+        return AppSharedDialogList.create { (list) in
+            list.ids = self.context.users.map({ Int64($0.id)})
+        }
     }
     
     public init() {
         
         let user: AppSharedUser = {
-            let builder = AppSharedUser.getBuilder()
-            builder.id = 123456
-            builder.name = "Debug User"
-            return try! builder.build()
+            return AppSharedUser.create({
+                $0.id = 123456
+                $0.name = "Debug User"
+            })
         }()
         
         let privateDialog: AppSharedDialog = {
-            let builder = AppSharedDialog.getBuilder()
-            builder.id = 1234567890
-            builder.isGroup = false
-            builder.title = "Debug Private Dialog"
-            builder.uids = [user.id]
-            builder.isReadOnly = false
-            builder.accessHash = 909080807070
-            return try! builder.build()
+            return AppSharedDialog.create({
+                $0.id = 1234567890
+                $0.isGroup = false
+                $0.title = "Debug Private Dialog"
+                $0.uids = [user.id]
+                $0.isReadOnly = false
+                $0.accessHash = 909080807070
+            })
         }()
         
         let groupDialog: AppSharedDialog = {
-            let builder = AppSharedDialog.getBuilder()
-            builder.id = 1234567891
-            builder.isGroup = false
-            builder.title = "Debug Group Diaog"
-            builder.uids = [user.id]
-            builder.isReadOnly = false
-            builder.accessHash = 10102020303
-            return try! builder.build()
+            return AppSharedDialog.create({
+                $0.id = 1234567891
+                $0.isGroup = false
+                $0.title = "Debug Group Diaog"
+                $0.uids = [user.id]
+                $0.isReadOnly = false
+                $0.accessHash = 10102020303
+            })
         }()
         
         let context: AppSharedDialogListContext = {
-            let builder = AppSharedDialogListContext.getBuilder()
-            builder.dialogs = [privateDialog, groupDialog]
-            builder.users = [user]
-            builder.version = "1.0.0"
-            return try! builder.build()
+            return AppSharedDialogListContext.create({
+                $0.dialogs = [privateDialog, groupDialog]
+                $0.users = [user]
+                $0.version = "1.0.0"
+            })
         }()
         
         self.context = context
@@ -112,9 +112,9 @@ public class DEDebugContainer: DEGroupContainerable {
     public func item(forFileNamed name: String, callbackQueue: DispatchQueue) -> DEGroupContainerItem {
         switch name {
         case "dialogs":
-            return DEDebugContainerItem.init(data: self.context.data())
+            return DEDebugContainerItem.init(data: try! self.context.toJSON())
         case "dialog_list":
-            return DEDebugContainerItem.init(data: self.list.data())
+            return DEDebugContainerItem.init(data: try! self.list.toJSON())
         default:
             return DEDebugContainerItem.init(data: Data.init())
         }

@@ -16,11 +16,15 @@ public enum DEKeychainQueryError: Error {
     /// Keychain failed, but there is no os status providen
     case noOSStatus
     
-    /// Trying to perform operation with wring query (like reading with writing operation)
+    /// Trying to perform operation with wrong query (like reading with writing operation)
     case wrongQuery
     
-    /// Query finished with success, but returns no results (incredibly rare case).
+    /// Query finished with success, but returns no results.
     case noResults
+    
+    var isNoResultsError: Bool {
+        return self == DEKeychainQueryError.noResults
+    }
     
 }
 
@@ -39,11 +43,30 @@ public extension DEKeychainQueryPerformerable {
         return result
     }
     
+    func delete(query: DEKeychainQuery, safely: Bool = true) throws {
+        guard case .delete = query.operation else {
+            throw DEKeychainQueryError.wrongQuery
+        }
+        
+        let result = self.perform(query: query)
+        if case let .failure(status: status) = result, status != errSecItemNotFound {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(status ?? -1), userInfo: nil)
+        }
+    }
+    
+    @discardableResult func readData(access: DEKeychainQuery.Access,
+                                     config: DEKeychainQuery.Operation.ReadConfig? = nil ) throws -> Data {
+        return try self.readData(query: .init(access: access, operation: .read(config: config)))
+    }
+    
     @discardableResult func readData(query: DEKeychainQuery) throws -> Data {
         guard query.operation.subtype == .read else {
             throw DEKeychainQueryError.wrongQuery
         }
         let result = self.perform(query: query)
+        if result.isItemNotFound {
+            throw DEKeychainQueryError.noResults
+        }
         try result.doIfFailed { (status) in
             guard let errorCode = status else {
                 throw DEKeychainQueryError.noOSStatus
@@ -61,6 +84,24 @@ public extension DEKeychainQueryPerformerable {
         return data
     }
     
+    @discardableResult func readNullableData(access: DEKeychainQuery.Access,
+                                             config: DEKeychainQuery.Operation.ReadConfig? = nil ) throws -> Data? {
+        return try self.readNullableData(query: .init(access: access, operation: .read(config: config)))
+    }
+    
+    @discardableResult func readNullableData(query: DEKeychainQuery) throws -> Data? {
+        do {
+            let data = try self.readData(query: query)
+            return data
+        }
+        catch {
+            if let keychainError = error as? DEKeychainQueryError, keychainError.isNoResultsError {
+                return nil
+            }
+            throw error
+        }
+    }
+    
     func addOrUpdateData(query: DEKeychainQuery) throws {
         let result = self.performAddOrUpdate(query: query)
         try result.doIfFailed({ (status) in
@@ -69,6 +110,10 @@ public extension DEKeychainQueryPerformerable {
             }
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(errorCode), userInfo: nil)
         })
+    }
+    
+    func addOrUpdateData(access: DEKeychainQuery.Access, data: Data) throws {
+        try self.addOrUpdateData(query: .init(access: access, operation: .add(value: data as NSData)))
     }
     
     @discardableResult func performAddOrUpdate(query: DEKeychainQuery) ->  DEKeychainQueryResult {
