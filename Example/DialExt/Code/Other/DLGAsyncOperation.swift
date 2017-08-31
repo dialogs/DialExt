@@ -21,6 +21,10 @@ public enum DLGOperationState {
     case finished
     
     var operationKey: String? {
+        
+        // Do not use #keyPath here, because swift 3.1 has bug with operation's keyPaths.
+        // https://github.com/postmates/PMKVObserver/issues/15
+        
         switch self {
         case .executing: return "isExecuting"
         case .finished: return "isFinished"
