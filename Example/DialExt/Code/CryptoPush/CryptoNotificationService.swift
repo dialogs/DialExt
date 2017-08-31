@@ -14,10 +14,10 @@ import UserNotifications
  To make it work – override keychain group. Nothing else needed.
  */
 @available(iOSApplicationExtension 10.0, *)
-public class CryptoNotificationService: UNNotificationServiceExtension {
+open class CryptoNotificationService: UNNotificationServiceExtension {
     
     /// Override keychain group to make crypto notifications work.
-    open var keychainGroup: String! = nil
+    open private(set) var keychainGroup: String! = nil
     
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
@@ -34,7 +34,7 @@ public class CryptoNotificationService: UNNotificationServiceExtension {
         return decoder
     }
     
-    override public func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+    override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
         DESLog("Notification service received a message")
         
@@ -98,7 +98,7 @@ public class CryptoNotificationService: UNNotificationServiceExtension {
         contentHandler(self.bestAttemptContent!)
     }
     
-    override public func serviceExtensionTimeWillExpire() {
+    override open func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
         if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
