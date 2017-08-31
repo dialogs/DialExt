@@ -22,8 +22,8 @@ public enum DLGOperationState {
     
     var operationKey: String? {
         switch self {
-        case .executing: return #keyPath(Operation.isExecuting)
-        case .finished: return #keyPath(Operation.isFinished)
+        case .executing: return "isExecuting"
+        case .finished: return "isFinished"
         default: return nil
         }
     }
