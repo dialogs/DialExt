@@ -33,9 +33,15 @@ public struct DEKeychainQuery {
     
     /// Describes entry synchronization and access details
     public enum Synchronizable {
-        case any                        ///< Used for searching (including searching for deleting).
-        case yes(SynchronizableType)    ///< Value shared between user devices.
-        case no(ThisDeviceOnlyType)     ///< Value is unique for device.
+        
+        /// Used for searching (including searching for deleting).
+        case any
+        
+        /// Value shared between user devices.
+        case yes(SynchronizableType)
+        
+        /// Value is unique for device.
+        case no(ThisDeviceOnlyType)
         
         public enum SynchronizableType {
             case whenUnlocked

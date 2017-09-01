@@ -120,8 +120,9 @@ public extension DEKeychainQueryPerformerable {
         let updateQuery: DEKeychainQuery?
         switch query.operation {
         case let .add(value: addingValue):
-            let operation = DEKeychainQuery.Operation.update(value: addingValue)
-            updateQuery = DEKeychainQuery.init(access: query.access, operation: operation)
+            var modifableQuery = query
+            modifableQuery.operation = .update(value: addingValue)
+            updateQuery = modifableQuery
         case .update:
             updateQuery = query
         default:
