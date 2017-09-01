@@ -111,9 +111,22 @@ public struct DEKeychainQuery {
         }
         
         internal func dictionaryRepresentation() -> DEKeychainEntriesDictionary {
-            var representation = [kSecAttrSynchronizable as String : keychainSynchronizableValue()]
-            if let accessibleValue = keychainAccessibleValue() {
-                representation[kSecAttrAccessible as String] = accessibleValue
+            
+            /*
+             If kSecAttrAccessible is not ends with "thisDeviceOnly" and kSecAttrSynchronizable is presented – acessible ignored.
+             So to pass kSecAttrAccessible for this device only – we should avoid of settings kSecAttrSynchronizable value.
+             https://developer.apple.com/documentation/security/ksecattraccessible
+             */
+            
+            var representation: DEKeychainEntriesDictionary = [:]
+            switch self {
+            case .yes(let syncType):
+                representation[kSecAttrSynchronizable as String] = keychainSynchronizableValue()
+                representation[kSecAttrAccessible as String] = syncType.keychainValue() as AnyObject
+            case .any:
+                return [:]
+            case .no(let syncType):
+                representation[kSecAttrAccessible as String] = syncType.keychainValue() as AnyObject
             }
             return representation
         }
