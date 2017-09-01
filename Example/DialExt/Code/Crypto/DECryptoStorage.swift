@@ -133,7 +133,9 @@ internal extension DEKeychainQuery {
     }
     
     internal static func writeCryptoItemQuery(service: DEKeychainQuery.Access.CryptoService, data: NSData) -> DEKeychainQuery {
-        return self.init(access: .cryptoItem(service: service), operation: .add(value: data))
+        let query = self.init(access: .cryptoItem(service: service), operation: .add(value: data))
+        query.synchronizable = Synchronizable.no(.always)
+        return query
     }
     
     internal static func deleteCryptoItemQuery(service: DEKeychainQuery.Access.CryptoService) -> DEKeychainQuery {
