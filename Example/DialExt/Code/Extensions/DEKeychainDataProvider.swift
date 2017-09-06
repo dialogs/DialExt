@@ -116,6 +116,68 @@ public extension DEKeychainQueryPerformerable {
         try self.addOrUpdateData(query: .init(access: access, operation: .add(value: data as NSData)))
     }
     
+    func rewrite(deletionQuery: DEKeychainQuery? = nil, addQuery: DEKeychainQuery) throws {
+        let result = self.performRewrite(deletionQuery: deletionQuery, addQuery: addQuery)
+        try result.doIfFailed({ (status) in
+            guard let errorCode = status else {
+                throw DEKeychainQueryError.noOSStatus
+            }
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(errorCode), userInfo: nil)
+        })
+    }
+    
+    /**
+     Remove item if any and then write it with new value.
+     Use this method if you want to change item accessibility, because it could not be changed using 'update'
+ */
+    @discardableResult func performRewrite(deletionQuery: DEKeychainQuery? = nil,
+                                           addQuery: DEKeychainQuery) -> DEKeychainQueryResult {
+        
+        let nonNilDeletionQuery: DEKeychainQuery
+        if let query = deletionQuery {
+            nonNilDeletionQuery = query
+        }
+        else {
+            var castedQuery =  addQuery
+            castedQuery.operation = .delete
+            castedQuery.synchronizable = nil
+            nonNilDeletionQuery = castedQuery
+        }
+        
+        let deletionResult = self.performSafeDeletion(query: nonNilDeletionQuery)
+        if !deletionResult.isSuccess {
+            return deletionResult
+        }
+        
+        return self.perform(query: addQuery)
+    }
+    
+    @discardableResult func performAddOrUpdate(addQuery: DEKeychainQuery, updateQuery: DEKeychainQuery?) -> DEKeychainQueryResult {
+        
+        guard addQuery.operation.subtype == .add else {
+            assertionFailure("Unexpected query operation: \(addQuery.operation)")
+            return DEKeychainQueryResult.failure(status: errSecBadReq)
+        }
+        
+        let addingResult = self.perform(query: addQuery)
+        guard addingResult.isItemDuplicate else {
+            // This can be a failure or a success result.
+            return addingResult
+        }
+        
+        let nonNilUpdateQuery: DEKeychainQuery
+        if let query = updateQuery {
+            nonNilUpdateQuery = query
+        }
+        else {
+            var query = addQuery
+            query.synchronizable = nil
+            nonNilUpdateQuery = query
+        }
+        
+        return perform(query: nonNilUpdateQuery)
+    }
+    
     @discardableResult func performAddOrUpdate(query: DEKeychainQuery) ->  DEKeychainQueryResult {
         let updateQuery: DEKeychainQuery?
         switch query.operation {

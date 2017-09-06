@@ -79,8 +79,14 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
             DEKeychainQuery.Access.CryptoService.sharedSecret,
             DEKeychainQuery.Access.CryptoService.messagingNonce
         ]
+        
         itemsToDelete.forEach { (service) in
-            self.performSafeDeletion(query: .deleteCryptoItemQuery(service: service))
+            do {
+                try self.delete(query: DEKeychainQuery.deleteCryptoItemQuery(service: service))
+            }
+            catch {
+                DESLog("Fail to delete crypto item", tag: "CRYPTO")
+            }
         }
     }
     

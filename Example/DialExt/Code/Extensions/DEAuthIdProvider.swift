@@ -43,10 +43,10 @@ extension DEGroupedKeychainDataProvider: DEWriteableUploadAuthProviding {
     
     public func writeAuth(_ auth: DEUploadAuth) throws {
         let idData = auth.authId.authIdToData() as NSData
-        try self.addOrUpdateData(query: .writeShared(.authIdService, data: idData))
+        try self.rewrite(addQuery: .writeShared(.authIdService, data: idData))
         
         let signedData = auth.signedAuthId as NSData
-        try self.addOrUpdateData(query: .writeShared(.signedIdAuthIdService, data: signedData))
+        try self.rewrite(addQuery: .writeShared(.signedIdAuthIdService, data: signedData))
     }
 }
 

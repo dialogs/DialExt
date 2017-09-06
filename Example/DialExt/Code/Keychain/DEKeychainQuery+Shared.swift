@@ -25,7 +25,9 @@ public extension DEKeychainQuery {
     }
     
     public static func writeShared(_ service: DEKeychainQuery.Service, data: NSData) -> DEKeychainQuery {
-        return self.init(access: .shared(service), operation: .add(value: data))
+        var query = self.init(access: .shared(service), operation: .add(value: data))
+        query.synchronizable = DEKeychainQuery.Synchronizable.no(.afterFirstUnlock)
+        return query
     }
     
     public static func deleteShared(_ service: DEKeychainQuery.Service) -> DEKeychainQuery {

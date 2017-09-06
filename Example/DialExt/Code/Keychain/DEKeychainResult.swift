@@ -48,6 +48,13 @@ public enum  DEKeychainQueryResult {
         return status! == errSecItemNotFound
     }
     
+    public var isItemDuplicate: Bool {
+        guard case let .failure(status: status) = self, status != nil else {
+            return false
+        }
+        return status! == errSecDuplicateItem
+    }
+    
     /// Is query failed with an error which possibly means you didn't specified Access Group in entitlements.plist
     public var isNoAccessError: Bool {
         guard case let .failure(status: status) = self, status != nil else {
