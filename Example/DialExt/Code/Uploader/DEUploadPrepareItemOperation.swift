@@ -129,12 +129,12 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         attachment.loadData(options: nil, onSuccess: { [weak self] itemData in
             switch itemData {
             case .image(let image):
-                self?.prepareItem(image: image)
+                self?.prepareItem(image: image, attachment: attachment, type: type)
             case .urlData(url: let url, data: let data):
-                self?.handleFileDataLoaded(url: url, data: data)
+                self?.handleFileDataLoaded(url: url, data: data, attachment: attachment, type: type)
             }
-        }, onFailure: { [weak self] error in
-            self?.finishWithFailure(error: error)
+            }, onFailure: { [weak self] error in
+                self?.finishWithFailure(error: error)
         })
     }
     
@@ -143,18 +143,42 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             return
         }
         
-        attachment.loadItem(forTypeIdentifier: DEUti.plainText.rawValue, options: nil) { (text, error) in
-            if let text = text as? String {
-                self.finish(item: DEUploadPreparedItem.init(content: .text(text)))
+        attachment.loadItem(forTypeIdentifier: DEUti.plainText.rawValue, options: nil) { (itemContent, error) in
+            guard let content = itemContent else {
+                self.finishWithFailure(error: error)
+                return
             }
-            else {
-                let targetError = error ?? DEUploadError.unrecognizableExtensionItem
-                self.finishWithFailure(error: targetError)
+            
+            switch content {
+            case let text as String:
+                self.finish(item: DEUploadPreparedItem.init(content: .text(text)))
+                
+            case let url as URL:
+                var name: String? = nil
+                if !url.lastPathComponent.isEmpty {
+                    name = url.lastPathComponent
+                }
+                
+                let data: Data
+                do {
+                    data = try Data.init(contentsOf: url)
+                }
+                catch {
+                    self.finishWithFailure(error: error)
+                    return
+                }
+                
+                let rep = DEUploadDataRepresentation.init(data: data, uti: DEUti.plainText.rawValue)
+                self.finish(item: DEUploadPreparedItem.init(content: .bytes(rep), preview: nil, originalName: name))
+                
+            default:
+                DELog("Unexpected item: \(String(describing: content))")
+                self.finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
             }
         }
     }
     
-    private func prepareItem(image: UIImage) {
+    private func prepareItem(image: UIImage, attachment: NSItemProvider, type: DetailedMediaFileType) {
         guard let encodedImage = self.encodeImage(image) else {
             self.finishWithFailure(error: DEUploadError.fileLengthExceedsMaximum)
             return
@@ -253,70 +277,104 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
     }
     
-    private func handleFileDataLoaded(url: URL, data: Data) {
-        guard self.targetType != .file else {
+    private func handleFileDataLoaded(url: URL, data: Data, attachment: NSItemProvider, type: DetailedMediaFileType) {
+        guard type != .file else {
             let name = url.lastPathComponent.isEmpty ? nil : url.lastPathComponent
             
-            let mimeTypeRepresentableType = self.attachment.mimeRepresentableTypeIdentifiers.first
+            let mimeTypeRepresentableType = attachment.mimeRepresentableTypeIdentifiers.first
             
             /// Ho to define most specific UTI? Like when pdf-file has "public.file-url" and "comp.adobe.pdf" UTIs?
-            let mostSpecificUti =  mimeTypeRepresentableType ?? self.attachment.registeredTypeIdentifiers.first as! String
+            let mostSpecificUti =  mimeTypeRepresentableType ?? attachment.registeredTypeIdentifiers.first as! String
             let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)),
                                                  originalName: name)
             self.finish(item: item)
             return
         }
         
-        loadMedia(url: url, data: data)
+        loadMedia(url: url, data: data, attachment: attachment, type: type) { [weak self] media in
+            withExtendedLifetime(self, {
+                self?.finish(attachment: attachment, data: data, media: media)
+            })
+        }
     }
     
-    private func loadMedia(url: URL, data: Data) {
+    fileprivate struct LoadedMedia {
+        let name: String?
+        let details: LoadedDetails
+        let preview: DEUploadImageRepresentation
+    }
+    
+    private func loadMedia(url: URL,
+                           data: Data,
+                           attachment: NSItemProvider,
+                           type: DetailedMediaFileType,
+                           completionBlock: @escaping (LoadedMedia) -> () ) {
         
-        self.loadedData = data
-        
+        var proposedName: String? = nil
         if !url.lastPathComponent.isEmpty {
-            self.proposedFilename = url.lastPathComponent
+            proposedName = url.lastPathComponent
         }
         
-        loadPreview(onLoaded: { [weak self ] rep in
+        var loadedDetails: LoadedDetails? = nil
+        var loadedPreview: DEUploadImageRepresentation? = nil
+        
+        let group = DispatchGroup.init()
+        
+        group.enter()
+        loadPreview(attachment: attachment, onLoaded: { [weak self] rep in
             withOptionalExtendedLifetime(self, body: {
-                self!.loadedPreview = rep
-                self!.doesPreviewLoadingFinished = true
+                loadedPreview = rep
+                group.leave()
             })
         })
         
-        switch self.targetType! {
+        switch type {
         case .image:
+            group.enter()
             self.loadImageDetails(url: url, data: data, onLoaded: { [weak self] details in
                 withOptionalExtendedLifetime(self, body: {
-                    self!.loadedDetails = .image(details)
+                    loadedDetails = LoadedDetails.image(details)
+                    group.leave()
                 })
             })
         case .video:
+            group.enter()
             self.loadVideoDetails(url: url, data: data, onLoaded: { [weak self] (details) in
                 withOptionalExtendedLifetime(self, body: {
-                    self!.loadedDetails = .video(details)
+                    loadedDetails = LoadedDetails.video(details)
+                    group.leave()
                 })
             })
         case .audio:
+            group.enter()
             self.loadAudioDetails(url: url, data: data, onLoaded: { [weak self] (details) in
                 withOptionalExtendedLifetime(self, body: {
-                    self!.loadedDetails = .audio(details)
+                    loadedDetails = LoadedDetails.audio(details)
+                    group.leave()
                 })
             })
         default:
             fatalError()
         }
+        
+        group.notify(queue: .global(qos: .background), execute: {
+            guard let details = loadedDetails, let preview = loadedPreview else {
+                let failedItem = loadedDetails == nil ? "details" : "preview"
+                fatalError("group finished, but \(failedItem) is nil")
+            }
+            let media = LoadedMedia.init(name: proposedName, details: details, preview: preview)
+            completionBlock(media)
+        })
     }
     
-    private func buildContent(data: Data, details: LoadedDetails) -> DEUploadPreparedItem.Content {
-        let fileRep = DEUploadDataRepresentation.init(data: self.loadedData!,
-                                                      mimeType: self.attachment.supposedMimeType!,
-                                                      fileExtension: self.attachment.supposedFileExtension!)
+    private func buildContent(attachment: NSItemProvider, data: Data, details: LoadedDetails) -> DEUploadPreparedItem.Content {
+        let fileRep = DEUploadDataRepresentation.init(data: data,
+                                                      mimeType: attachment.supposedMimeType!,
+                                                      fileExtension: attachment.supposedFileExtension!)
         
         
         let content: DEUploadPreparedItem.Content
-        switch self.loadedDetails! {
+        switch details {
         case let .audio(details):
             content = .audio(DEUploadAudioRepresentation.init(dataRepresentation: fileRep, details: details))
         case let .video(details):
@@ -331,20 +389,21 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         self.finish(result: DLGAsyncOperationResult.success(item))
     }
     
-    private func finishIfMediaLoaded() {
-        guard self.doesPreviewLoadingFinished,
-            let data = self.loadedData,
-            let details = self.loadedDetails,
-            !self.isCancelled else {
-                return
+    private func finish(attachment: NSItemProvider, data: Data, media: LoadedMedia) {
+        self.finish(attachment: attachment,
+                    name: media.name,
+                    preview: media.preview,
+                    data: data,
+                    details: media.details)
+    }
+    
+    private func finish(attachment: NSItemProvider, name: String?, preview: DEUploadImageRepresentation, data: Data, details: LoadedDetails) {
+        guard !self.isCancelled else {
+            return
         }
-        
-        let content: DEUploadPreparedItem.Content = self.buildContent(data: data, details: details)
-        let item = DEUploadPreparedItem.init(content: content,
-                                             preview: self.loadedPreview,
-                                             originalName: self.proposedFilename)
-        
-        finish(item: item)
+        let content = self.buildContent(attachment: attachment, data: data, details: details)
+        let item = DEUploadPreparedItem.init(content: content, preview: preview, originalName: name)
+        self.finish(item: item)
     }
     
     private func loadVideoDetails(url: URL, data: Data, onLoaded:@escaping ((DEUploadVideoDetails) -> ())) {
@@ -361,8 +420,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     }
     
     /// Callback performed on main thread
-    private func loadPreview(onLoaded: @escaping ((DEUploadImageRepresentation?) -> ()) ) {
-        self.attachment.loadPreviewImage(options: nil, completionHandler: {[weak self] value, error in
+    private func loadPreview(attachment: NSItemProvider, onLoaded: @escaping ((DEUploadImageRepresentation?) -> ()) ) {
+        attachment.loadPreviewImage(options: nil, completionHandler: {[weak self] value, error in
             withOptionalExtendedLifetime(self, body: {
                 guard !self!.isCancelled else {
                     return
@@ -449,28 +508,6 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             
         }
     }
-    
-    private var attachment: NSItemProvider!
-    
-    private var targetType: DetailedMediaFileType!
-    
-    private var loadedData: Data? = nil
-    
-    private var loadedPreview: DEUploadImageRepresentation?
-    
-    private var doesPreviewLoadingFinished: Bool = false {
-        didSet {
-            self.finishIfMediaLoaded()
-        }
-    }
-    
-    private var loadedDetails: LoadedDetails? = nil {
-        didSet {
-            self.finishIfMediaLoaded()
-        }
-    }
-    
-    private var proposedFilename: String? = nil
     
     private enum LoadedDetails {
         case image(DEUploadImageDetails)
