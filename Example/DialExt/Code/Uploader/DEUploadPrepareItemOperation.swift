@@ -298,7 +298,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
     }
     
-    fileprivate struct LoadedMedia {
+    private struct LoadedMedia {
         let name: String?
         let details: LoadedDetails
         let preview: DEUploadImageRepresentation
