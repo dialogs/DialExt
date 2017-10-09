@@ -18,7 +18,7 @@ public class DECryptoIncomingDataDecryptor: DECryptoIncomingDataDecrypting {
     
     private let sodium: Sodium
     
-    public init(sodium: Sodium = Sodium()!) {
+    public init(sodium: Sodium = Sodium()) {
         self.sodium = sodium
     }
     

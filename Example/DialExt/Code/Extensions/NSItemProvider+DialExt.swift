@@ -22,14 +22,11 @@ public extension NSItemProvider {
     
     public var mimeRepresentableTypeIdentifiers: [String] {
         let filtered: [String] = self.registeredTypeIdentifiers.flatMap({
-            guard let stringUti = $0 as? String else {
-                return nil
-            }
-            guard let _ = UTTypeCopyPreferredTagWithClass(stringUti as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
+            guard let _ = UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
                 return nil
             }
             
-            return stringUti
+            return $0
         })
         return filtered
     }

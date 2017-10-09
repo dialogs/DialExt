@@ -12,7 +12,7 @@ public extension NSError {
     
     public static let DEHttpErrorDomain = "im.dlg.error.domain.http"
     
-    public class func httpError(statusCode: Int, userInfo: [AnyHashable : Any]? = nil) -> NSError {
+    public class func httpError(statusCode: Int, userInfo: [String : Any]? = nil) -> NSError {
         return self.init(domain: DEHttpErrorDomain, code: statusCode, userInfo: userInfo)
     }
     

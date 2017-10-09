@@ -19,7 +19,7 @@ public protocol DECryptoKeyPairGeneratable {
 public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
     
     public func generateKeyPair() throws -> DECryptoKeyPair {
-        let sodium = Sodium.init()!
+        let sodium = Sodium.init()
         guard let randomData = sodium.randomBytes.buf(length: 32) else {
             throw DECryptoError.failToGenerateRandomData
         }
@@ -30,13 +30,17 @@ public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
     }
     
     public func generateSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
-        let sodium = Sodium.init()!
+        let sodium = Sodium.init()
         guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey,
                                                              secretKey: keyPair.secretKey,
                                                              otherPublicKey: publicKey,
-                                                             side: .client) else {
+                                                             side: .CLIENT) else {
                                                                 throw DECryptoError.failToGenerateSharedSecret
         }
         return DESharedSecret.init(rx: sharedSecret.rx, tx: sharedSecret.tx)
+    }
+    
+    public init() {
+        
     }
 }

@@ -284,7 +284,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             let mimeTypeRepresentableType = attachment.mimeRepresentableTypeIdentifiers.first
             
             /// Ho to define most specific UTI? Like when pdf-file has "public.file-url" and "comp.adobe.pdf" UTIs?
-            let mostSpecificUti =  mimeTypeRepresentableType ?? attachment.registeredTypeIdentifiers.first as! String
+            let mostSpecificUti =  mimeTypeRepresentableType ?? attachment.registeredTypeIdentifiers.first!
             let item = DEUploadPreparedItem.init(content: .bytes(.init(data: data, uti: mostSpecificUti)),
                                                  originalName: name)
             self.finish(item: item)
@@ -410,7 +410,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         DispatchQueue.global(qos: .background).async {
             let asset = AVURLAsset.init(url: url)
             let duration = Int(asset.duration.seconds)
-            let size = asset.tracks(withMediaType: AVMediaTypeVideo).first!.naturalSize
+            let size = asset.tracks(withMediaType: AVMediaType.video).first!.naturalSize
             let integerSize = DEUploadIntegerSize.init(size: size)
             let details = DEUploadVideoDetails.init(size: integerSize, durationInSeconds: duration)
             DispatchQueue.main.async {

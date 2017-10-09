@@ -42,17 +42,21 @@ public class DEAvatarPlaceholderRenderer: DEAvatarPlaceholderRendererable {
         renderTitle(config: config)
     }
     
-    public func placeholderAttributesForConfig(_ config: DEAvatarPlaceholderConfig) -> [String : Any] {
+    public init() {
+        //do nothing
+    }
+    
+    public func placeholderAttributesForConfig(_ config: DEAvatarPlaceholderConfig) -> [NSAttributedStringKey : Any] {
         let font = UIFont.systemFont(ofSize: config.context.size.width / 2.0)
         
         let style : NSMutableParagraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         style.alignment = NSTextAlignment.center
         style.lineBreakMode = NSLineBreakMode.byWordWrapping
         
-        let attributes: [String : Any] = [
-            NSParagraphStyleAttributeName: style,
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: UIColor.black
+        let attributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.paragraphStyle: style,
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.foregroundColor: UIColor.black
         ]
         
         return attributes
@@ -86,7 +90,7 @@ public class DEAvatarPlaceholderRenderer: DEAvatarPlaceholderRendererable {
             let attributes = self.placeholderAttributesForConfig(config)
             var rect = CGRect(origin: .zero, size: config.context.size)
             
-            let font = attributes[NSFontAttributeName]! as! UIFont
+            let font = attributes[NSAttributedStringKey.font]! as! UIFont
             let expectedHeight = font.lineHeight
             rect.origin.y = round(rect.midY - (expectedHeight / 2.0) )
             title.draw(in: rect, withAttributes: attributes)

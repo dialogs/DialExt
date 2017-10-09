@@ -69,7 +69,7 @@ public class DEUploadPrepareItemListOperation: DLGAsyncOperation<[DEUploadPrepar
         case let .success(item):
             self.results.append((item!, idx))
             if resultsCollected {
-                let sortedResults = self.results.sorted(by: { $0.0.idx > $0.1.idx})
+                let sortedResults = self.results.sorted(by: { $0.idx > $1.idx})
                 let items = sortedResults.map{ $0.prepared }
                 self.finish(result: DLGAsyncOperationResult.success(items))
             }

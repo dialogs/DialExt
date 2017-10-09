@@ -75,7 +75,7 @@ extension DEKeychainDataProvider: DECryptoKeyStorage {
     }
     
     private func generateKeyPair() throws -> DECryptoKeyPair {
-        let sodium = Sodium()!
+        let sodium = Sodium()
         guard let randomData = sodium.randomBytes.buf(length: 32) else {
             throw DECryptoError.failToGenerateRandomData
         }

@@ -1,7 +1,8 @@
 use_frameworks!
+platform :ios, '10.0'
 
 target 'DialExt' do
-  pod 'ProtocolBuffers-Swift', '3.0.22'
+  pod 'ProtocolBuffers-Swift', '3.0.24'
   pod 'DLGSodium', :git => 'https://github.com/dialogs/swift-sodium.git'
 end
 
