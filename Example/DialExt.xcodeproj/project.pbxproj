@@ -79,6 +79,7 @@
 		748BB7901EBA1AA9005CF8BD /* DEPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */; };
 		748BB7921EBA1B2A005CF8BD /* UIButton+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */; };
 		748BB7941EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */; };
+		748BC5281F9B6FF6002CFB8E /* CGRect+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748BC5271F9B6FF6002CFB8E /* CGRect+DialExt.swift */; };
 		74935E231ED9CA17005331A9 /* DEExtensionItemUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E151ED9CA17005331A9 /* DEExtensionItemUploader.swift */; };
 		74935E241ED9CA17005331A9 /* DEUploadAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E161ED9CA17005331A9 /* DEUploadAuth.swift */; };
 		74935E251ED9CA17005331A9 /* DEUploadDataRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74935E171ED9CA17005331A9 /* DEUploadDataRepresentation.swift */; };
@@ -289,6 +290,7 @@
 		748BB78F1EBA1AA9005CF8BD /* DEPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEPlaceholderViewController.swift; sourceTree = "<group>"; };
 		748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+DialExt.swift"; sourceTree = "<group>"; };
 		748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+DialExt.swift"; sourceTree = "<group>"; };
+		748BC5271F9B6FF6002CFB8E /* CGRect+DialExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+DialExt.swift"; sourceTree = "<group>"; };
 		74935E151ED9CA17005331A9 /* DEExtensionItemUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEExtensionItemUploader.swift; sourceTree = "<group>"; };
 		74935E161ED9CA17005331A9 /* DEUploadAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadAuth.swift; sourceTree = "<group>"; };
 		74935E171ED9CA17005331A9 /* DEUploadDataRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEUploadDataRepresentation.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */,
 				7413AA2B1ED337FC00AD99EC /* UIImage+DialExt.swift */,
 				7413AA2D1ED3409000AD99EC /* CGSize+DialExt.swift */,
+				748BC5271F9B6FF6002CFB8E /* CGRect+DialExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1240,6 +1243,7 @@
 				74D017D51F02B33B008C8536 /* DECryptoPushErrorStorage.swift in Sources */,
 				74935E261ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift in Sources */,
 				74BAF9451E952A8000ECB585 /* DESharedDialogsDataLoader.swift in Sources */,
+				748BC5281F9B6FF6002CFB8E /* CGRect+DialExt.swift in Sources */,
 				74935E291ED9CA17005331A9 /* DEUploadError.swift in Sources */,
 				74065F071E8113A900C535B6 /* DEDialogCell.swift in Sources */,
 				7402B5011ECF22670042627D /* SharingURL.swift in Sources */,
