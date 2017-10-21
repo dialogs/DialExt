@@ -162,4 +162,8 @@ public extension UIEdgeInsets {
     public var verticalSum: CGFloat {
         return self.top + self.bottom
     }
+    
+    public var startPoint: CGPoint {
+        return CGPoint(x: self.left, y: self.top)
+    }
 }

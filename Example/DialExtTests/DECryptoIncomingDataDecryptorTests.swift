@@ -15,7 +15,7 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
     let decryptor: DECryptoIncomingDataDecryptor = DECryptoIncomingDataDecryptor.init()
     
     func testSelfEncryptedMessage() {
-        let sodium = Sodium.init()!
+        let sodium = Sodium.init()
         
         let serverKeys = sodium.keyExchange.keyPair(seed: sodium.randomBytes.buf(length: 32)!)!
         let clientKeys = sodium.keyExchange.keyPair(seed: sodium.randomBytes.buf(length: 32)!)!
@@ -25,12 +25,12 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
         let serverSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: serverKeys.publicKey,
                                                                    secretKey: serverKeys.secretKey,
                                                                    otherPublicKey: clientKeys.publicKey,
-                                                                   side: .server)!
+                                                                   side: .SERVER)!
         
         let clientSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: clientKeys.publicKey,
                                                                    secretKey: clientKeys.secretKey,
                                                                    otherPublicKey: serverKeys.publicKey,
-                                                                   side: .client)!
+                                                                   side: .CLIENT)!
         
         XCTAssertEqual(serverSharedSecret.rx, clientSharedSecret.tx)
         XCTAssertEqual(serverSharedSecret.tx, clientSharedSecret.rx)
@@ -54,19 +54,19 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
     }
     
     func testClientAndServerSharedSecretKey() {
-        let sodium = Sodium()!
+        let sodium = Sodium()
         let clientKeys = sodium.keyExchange.keyPair(seed: sodium.randomBytes.buf(length: 32)!)!
         let serverKeys = sodium.keyExchange.keyPair(seed: sodium.randomBytes.buf(length: 32)!)!
         
         let clientSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: clientKeys.publicKey,
                                                                    secretKey: clientKeys.secretKey,
                                                                    otherPublicKey: serverKeys.publicKey,
-                                                                   side: .client)!
+                                                                   side: .CLIENT)!
         
         let serverSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: serverKeys.publicKey,
                                                                    secretKey: serverKeys.secretKey,
                                                                    otherPublicKey: clientKeys.publicKey,
-                                                                   side: .server)!
+                                                                   side: .SERVER)!
         
         XCTAssertEqual(clientSharedSecret.rx, serverSharedSecret.tx)
         XCTAssertEqual(clientSharedSecret.tx, serverSharedSecret.rx)
@@ -95,7 +95,7 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
     }
     
     func testSharedSecretGeneration() {
-        let sodium = Sodium.init()!
+        let sodium = Sodium.init()
         
         let clientPublic = "dc2efbd4fcdc2c4f8e8ae87ae4806d1f96b1d27e10cf1f44b2d8992c65cac41b".de_encoding(.hex)!
         let clientSecret = "4051cf96730d0ac21be63698b032bcb1e7ab5c7ea520dea4a72865d451ba1d52".de_encoding(.hex)!
@@ -108,12 +108,12 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
         let clientSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: clientKeys.publicKey,
                                                                    secretKey: clientKeys.secretKey,
                                                                    otherPublicKey: serverKeys.publicKey,
-                                                                   side: .client)!
+                                                                   side: .CLIENT)!
         
         let serverSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: serverKeys.publicKey,
                                                                    secretKey: serverKeys.secretKey,
                                                                    otherPublicKey: clientKeys.publicKey,
-                                                                   side: .server)!
+                                                                   side: .SERVER)!
         
         XCTAssertEqual(clientSharedSecret.rx,
                        "79b5fe6746853894f60d76e40487072c2af8ef01c1b34d606e804b5d3dab1de9".de_encoding(.hex))
@@ -130,11 +130,11 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
     func testServerPreparedMessageDecoding() {
         let encodedMessage = "d2043c71565871034d618b878cd7927761600b5854d38f4b86c168b4fca34dc30ae31c2e751d9b04139b0bf225db16b9570d1d4ad2f22ad6acebfddef5".de_encoding(.hex)!
         let nonce = DEInt64BasedNonce.init(-2792862357897823)
-        guard let decodedMessage = Sodium()!.secretBox.open(authenticatedCipherText: encodedMessage,
-                                                            secretKey: Session.defaultClient.sharedSecret.rx,
-                                                            nonce: nonce.bigEndianData) else {
-                                                                XCTFail("Fail to decrypt message")
-                                                                return
+        guard let decodedMessage = Sodium().secretBox.open(authenticatedCipherText: encodedMessage,
+                                                           secretKey: Session.defaultClient.sharedSecret.rx,
+                                                           nonce: nonce.bigEndianData) else {
+                                                            XCTFail("Fail to decrypt message")
+                                                            return
         }
         
         let expectedMessage = "121d426c616b6520536e796465725f313630353734323536343a2054455354220c746573742067726f75702031".de_encoding(.hex)!
@@ -155,15 +155,15 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
         static let defaultClient: Session = {
             let clientKeys = KeyExchange.KeyPair.testClientKeyPair
             let serverPublic = KeyExchange.KeyPair.testServerKeyPair.publicKey
-            let secret = clientKeys.sharedSecret(otherPublicKey: serverPublic, side: .client)
-            return Session.init(side: .client, keyPair: clientKeys, sharedSecret: secret)
+            let secret = clientKeys.sharedSecret(otherPublicKey: serverPublic, side: .CLIENT)
+            return Session.init(side: .CLIENT, keyPair: clientKeys, sharedSecret: secret)
         }()
         
         static let defaultServer: Session = {
             let serverKeys = KeyExchange.KeyPair.testServerKeyPair
             let clientKey = KeyExchange.KeyPair.testClientKeyPair.publicKey
-            let secret = serverKeys.sharedSecret(otherPublicKey: clientKey, side: .server)
-            return Session.init(side: .server, keyPair: serverKeys, sharedSecret: secret)
+            let secret = serverKeys.sharedSecret(otherPublicKey: clientKey, side: .SERVER)
+            return Session.init(side: .SERVER, keyPair: serverKeys, sharedSecret: secret)
         }()
         
         var side: KeyExchange.Side
@@ -201,7 +201,7 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
             })
         }
         
-        let sodium = Sodium.init()!
+        let sodium = Sodium.init()
         
         let clientKeys = sodium.keyExchange.keyPair(seed: sodium.randomBytes.buf(length: 32)!)!
         
@@ -217,13 +217,13 @@ class DECryptoIncomingDataDecryptorTests: XCTestCase {
         let clientSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: clientPublicKey,
                                                                    secretKey: clientSecretKey,
                                                                    otherPublicKey: serverPublicKey,
-                                                                   side: .client)!
+                                                                   side: .CLIENT)!
         
         let fakeClientPublicKey = "dc2efbd4fcdc2c4f8e8ae87ae4806d1f96b1d27e10cf1f44b2d8992c65cac41b".de_encoding(.hex)!
         let serverSharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: serverPublicKey,
                                                                    secretKey: serverSecretKey,
                                                                    otherPublicKey: fakeClientPublicKey,
-                                                                   side: .server)!
+                                                                   side: .SERVER)!
         
         let expectedRx = "c0e4e5005d9f959f54563d8a9e3e3a06ea53b25c912fe4fc165a3e8771a8f2e6".de_encoding(.hex)!
         //        XCTAssertEqual(clientSharedSecret.rx,
@@ -254,8 +254,8 @@ extension KeyExchange.KeyPair {
         "a7a91bbe84f15da821a5421d2a96c93c575138dee2bbaca11a818e5aeed72a49".de_encoding(.hex)!)
     
     public func sharedSecret(otherPublicKey: Data, side: KeyExchange.Side) -> KeyExchange.SessionKeyPair {
-        return Sodium()!.keyExchange.sessionKeyPair(publicKey: self.publicKey,
-                                                    secretKey: self.secretKey,
-                                                    otherPublicKey: otherPublicKey, side: side)!
+        return Sodium().keyExchange.sessionKeyPair(publicKey: self.publicKey,
+                                                   secretKey: self.secretKey,
+                                                   otherPublicKey: otherPublicKey, side: side)!
     }
 }
