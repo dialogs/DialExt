@@ -32,6 +32,7 @@ public extension CGRect {
                                boxWidth: CGFloat,
                                extendsBoxWidthToContainer: Bool = false,
                                alignment: ContentAlignment = .left,
+                               shouldIntegral: Bool = true,
                                calculator: ((CGFloat)->(CGSize))) -> (box: CGRect, item: CGRect) {
         let availableWidth = boxWidth - insets.horizontalSum
         let itemSize = calculator(availableWidth)
@@ -54,9 +55,14 @@ public extension CGRect {
         }
         
         let itemOrigin = CGPoint(x: boxX + insets.left, y: itemY)
-        let itemRect = CGRect(origin: itemOrigin, size: itemSize)
+        var itemRect = CGRect(origin: itemOrigin, size: itemSize)
         
-        let boxRect = CGRect(origin: CGPoint(x: boxX, y: 0.0), size: boxSize)
+        var boxRect = CGRect(origin: CGPoint(x: boxX, y: 0.0), size: boxSize)
+        if shouldIntegral {
+            itemRect = itemRect.integral
+            boxRect = boxRect.integral
+        }
+        
         return (boxRect, itemRect)
     }
     
