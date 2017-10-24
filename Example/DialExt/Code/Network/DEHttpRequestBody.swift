@@ -10,9 +10,9 @@ import Foundation
 
 public struct DEHttpRequestBody: CustomStringConvertible {
     
-    var items: [DEHttpRequestBodyItemRepresentable] = []
+    public var items: [DEHttpRequestBodyItemRepresentable] = []
     
-    var data: Data {
+    public var data: Data {
         var data = Data.init()
         items.forEach({ data.append($0.httpRequestBodyData) })
         return data
@@ -29,7 +29,7 @@ public struct DEHttpRequestBody: CustomStringConvertible {
     
 }
 
-extension DEHttpRequestBody {
+public extension DEHttpRequestBody {
     
     mutating public func append(byLineBreaks: Int) {
         guard byLineBreaks > 0 else {
