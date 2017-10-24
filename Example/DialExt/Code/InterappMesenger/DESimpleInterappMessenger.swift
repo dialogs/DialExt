@@ -22,8 +22,8 @@ extension DEInterappMessenger {
 
 public class DESimpleMessageEncoder: DEInterappMessageEncoder<DESimpleInterappMessengerMessage> {
     
-    public init() {
-        // do nothing
+    public override init() {
+        super.init()
     }
     
     override func encode(message: DESimpleInterappMessengerMessage) throws -> Data {

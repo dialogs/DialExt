@@ -15,6 +15,10 @@ import Foundation
  */
 public class DEInterappMessageEncoder<DEInterappMessage> {
     
+    public init() {
+        // do nothing
+    }
+    
     func encode(message: DEInterappMessage) throws -> Data {
         fatalError()
     }
