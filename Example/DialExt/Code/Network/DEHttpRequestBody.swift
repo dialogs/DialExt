@@ -12,6 +12,10 @@ public struct DEHttpRequestBody: CustomStringConvertible {
     
     public var items: [DEHttpRequestBodyItemRepresentable] = []
     
+    public init() {
+        // do nothing
+    }
+    
     public var data: Data {
         var data = Data.init()
         items.forEach({ data.append($0.httpRequestBodyData) })
