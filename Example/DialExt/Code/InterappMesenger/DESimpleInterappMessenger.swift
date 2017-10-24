@@ -22,6 +22,10 @@ extension DEInterappMessenger {
 
 public class DESimpleMessageEncoder: DEInterappMessageEncoder<DESimpleInterappMessengerMessage> {
     
+    public init() {
+        // do nothing
+    }
+    
     override func encode(message: DESimpleInterappMessengerMessage) throws -> Data {
         return try PropertyListSerialization.data(fromPropertyList: message, format: .binary, options: 0)
     }
