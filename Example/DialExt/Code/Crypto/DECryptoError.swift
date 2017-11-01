@@ -21,6 +21,10 @@ public enum DECryptoError: LocalizedError {
     case noSharedSecretStored
     case noKeychainGroupProvided
     
+    public var errorDescription: String? {
+        return localizedDescription
+    }
+    
     public var localizedDescription: String {
         switch self {
         case .failToInitializeSodium: return "Sodium failed"

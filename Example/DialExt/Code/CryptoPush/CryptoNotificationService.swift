@@ -21,8 +21,11 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     
     open var debugModeTextReplacementEnabled: Bool = false
     
-    var contentHandler: ((UNNotificationContent) -> Void)!
-    var bestAttemptContent: UNMutableNotificationContent!
+    open var insertSecureSymbolIntoTitle: Bool = true
+    
+    open var contentHandler: ((UNNotificationContent) -> Void)!
+    
+    open var bestAttemptContent: UNMutableNotificationContent!
     
     private func createDecoder() throws -> DECryptoIncomingMessageDecoderable {
         
@@ -36,17 +39,11 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
         return decoder
     }
     
-    override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        
-        DESLog("Notification service received a message")
-        
-        self.contentHandler = contentHandler
-        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
-        let finishAsIs = {
-            contentHandler(self.bestAttemptContent)
-        }
-        
+    /**
+     Decrypts notification and put it to 'bestAttemptContent' var.
+     If 'debugModeTextReplacementEnabled' is on – put explanation text into 'bestAttemptContent' if an error occured.
+     */
+    open func decryptNotification(request: UNNotificationRequest) throws {
         let setBodyIfInDebugMode: (String) -> () = { body in
             if self.debugModeTextReplacementEnabled {
                 self.bestAttemptContent.body = body
@@ -63,7 +60,8 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             
             setBodyIfInDebugMode("Fail to init decoder: \(error.localizedDescription)")
             
-            finishAsIs()
+            throw error
+            
             return
         }
         
@@ -77,7 +75,7 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             DESErrorLog("No [needed data] or encrypted data in notification")
             DEErrorLog("\(error), \(error.localizedDescription)")
             setBodyIfInDebugMode(error.localizedDescription)
-            finishAsIs()
+            throw error
             return
         }
         
@@ -91,19 +89,24 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             DESErrorLog("Fail to decode message")
             DEErrorLog("Fail to decode message: \(error.localizedDescription)")
             setBodyIfInDebugMode(String(describing: error))
-            finishAsIs()
+            throw error
             return
         }
         
         let push = message.alertingPush
         
+     let secureSymbol = "🔏 "
+        
         do {
-            let title = try push.supposeTitle()
+            var title = try push.supposeTitle()
+            if self.insertSecureSymbolIntoTitle {
+                title = secureSymbol.appending(title)
+            }
             self.bestAttemptContent.title = title
         }
         catch {
             DESErrorLog("No title in push")
-            self.bestAttemptContent.title = ""
+            self.bestAttemptContent.title = secureSymbol
         }
         
         do {
@@ -116,6 +119,14 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
         }
         
         DESLog("Notification Service succesfully modified the message")
+    }
+    
+    override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        
+        self.contentHandler = contentHandler
+        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        
+        try? self.decryptNotification(request: request)
         
         contentHandler(self.bestAttemptContent)
     }
@@ -130,7 +141,7 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     
 }
 
-public enum DENotificationCryproContentError: LocalizedError {
+public enum DENotificationCryptoContentError: LocalizedError {
     
     case noUserInfo
     
@@ -141,6 +152,10 @@ public enum DENotificationCryproContentError: LocalizedError {
     case noNonce
     case nonceInvalidFormat
     case nonceInvalidFormatEncoding
+    
+    public var errorDescription: String? {
+        return self.localizedDescription
+    }
     
     public var localizedDescription: String {
         
@@ -172,17 +187,17 @@ extension UNNotificationContent {
     
     func encodedData() throws -> Data {
         guard let userInfo = self.encodingInfo else {
-            throw DENotificationCryproContentError.noUserInfo
+            throw DENotificationCryptoContentError.noUserInfo
         }
         guard let dataValue = userInfo["encrypted_data"] else {
-            throw DENotificationCryproContentError.noEncryptedData
+            throw DENotificationCryptoContentError.noEncryptedData
         }
         guard let base64String = dataValue as? String else {
-            throw DENotificationCryproContentError.dataInvalidFormat
+            throw DENotificationCryptoContentError.dataInvalidFormat
         }
         
         guard let data = Data.init(base64Encoded: base64String) else {
-            throw DENotificationCryproContentError.dataInvalidFormatEncoding
+            throw DENotificationCryptoContentError.dataInvalidFormatEncoding
         }
         
         return data
@@ -190,16 +205,16 @@ extension UNNotificationContent {
     
     func nonce() throws -> Int64 {
         guard let userInfo = self.encodingInfo else {
-            throw DENotificationCryproContentError.noUserInfo
+            throw DENotificationCryptoContentError.noUserInfo
         }
         guard let nonceAnyValue = userInfo["nonce"] else {
-            throw DENotificationCryproContentError.noNonce
+            throw DENotificationCryptoContentError.noNonce
         }
         guard let nonceString = nonceAnyValue as? String else {
-            throw DENotificationCryproContentError.nonceInvalidFormat
+            throw DENotificationCryptoContentError.nonceInvalidFormat
         }
         guard let nonceLong = Int64.init(nonceString) else {
-            throw DENotificationCryproContentError.nonceInvalidFormatEncoding
+            throw DENotificationCryptoContentError.nonceInvalidFormatEncoding
         }
         return nonceLong
     }
