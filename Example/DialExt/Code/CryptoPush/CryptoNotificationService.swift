@@ -175,9 +175,9 @@ public enum DENotificationCryptoContentError: LocalizedError {
 }
 
 @available(iOSApplicationExtension 10.0, *)
-extension UNNotificationContent {
+public extension UNNotificationContent {
     
-    var encodingInfo: [String : AnyObject]? {
+    public var encodingInfo: [String : AnyObject]? {
         guard let info = self.userInfo["user_info"] as? [String : AnyObject] else {
             DESErrorLog("No user info in notification")
             return nil
@@ -185,7 +185,7 @@ extension UNNotificationContent {
         return info
     }
     
-    func encodedData() throws -> Data {
+    public func encodedData() throws -> Data {
         guard let userInfo = self.encodingInfo else {
             throw DENotificationCryptoContentError.noUserInfo
         }
@@ -203,7 +203,7 @@ extension UNNotificationContent {
         return data
     }
     
-    func nonce() throws -> Int64 {
+    public func nonceString() throws -> String {
         guard let userInfo = self.encodingInfo else {
             throw DENotificationCryptoContentError.noUserInfo
         }
@@ -213,6 +213,11 @@ extension UNNotificationContent {
         guard let nonceString = nonceAnyValue as? String else {
             throw DENotificationCryptoContentError.nonceInvalidFormat
         }
+        return nonceString
+    }
+    
+    public func nonce() throws -> Int64 {
+        let nonceString = try self.nonceString()
         guard let nonceLong = Int64.init(nonceString) else {
             throw DENotificationCryptoContentError.nonceInvalidFormatEncoding
         }
