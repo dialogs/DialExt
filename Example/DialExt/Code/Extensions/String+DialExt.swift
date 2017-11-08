@@ -21,6 +21,22 @@ public extension String {
         return string
     }
     
+    public func attributed(with attributes: [String : Any]?) -> NSAttributedString {
+        if let attributes = attributes {
+            var newAttributes: [NSAttributedStringKey : Any] = [:]
+            for entry in attributes {
+                newAttributes[NSAttributedStringKey.init(entry.key)] =  entry.value
+            }
+            return NSAttributedString.init(string: self, attributes: newAttributes)
+        }
+        return NSAttributedString.init(string: self, attributes: nil)
+    }
+    
+    #if swift(>=4.0)
+    public func attributed(_ attributes: [NSAttributedStringKey : Any]?) -> NSAttributedString {
+        return NSAttributedString.init(string: self, attributes: attributes)
+    }
+    #endif
 
     /// Expanded encoding
     ///
