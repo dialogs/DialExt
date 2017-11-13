@@ -26,7 +26,7 @@ TODO: Add long description of the pod here.
   s.author           = { 'Vladlex' => 'vladlexion@gmail.com' }
   s.source           = { :git => 'ssh://git@bitbucket.transmit.im:7999/dlg/dialext.git' }
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'Example/DialExt/Code/**/*'
 
