@@ -58,7 +58,7 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             }
             
             let nonce = try? request.content.nonceString()
-            let report = FailReport.init(error: error, nonce: nonce)
+            let report = CryptoFailReport.init(error: error, nonce: nonce)
             if self.insertFailReportToRequestUserInfo {
                 self.bestAttemptContent.setCryptoFailReport(report)
             }
@@ -71,7 +71,7 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     /**
      Override this function if you want to keep original decription, but to send/keep information about fail.
      */
-    open func onDidFail(report: FailReport) {
+    open func onDidFail(report: CryptoFailReport) {
         
     }
     
@@ -202,7 +202,7 @@ public enum DENotificationCryptoContentError: LocalizedError {
     }
 }
 
-@available(iOSApplicationExtension 10.0, *)
+@available(iOS 10.0, *)
 public extension UNNotificationContent {
     
     public var encodingInfo: [String : AnyObject]? {
@@ -260,15 +260,16 @@ public extension UNNotificationContent {
         guard let info = fromUserInfo else {
             return nil
         }
-        return info[CryptoNotificationService.FailReport.userInfoKey] as? String
+        return info[CryptoFailReport.userInfoKey] as? String
     }
     
 }
 
+@available(iOS 10.0, *)
 public extension UNMutableNotificationContent {
     
-    func setCryptoFailReport(_ report: CryptoNotificationService.FailReport) {
-        self.userInfo[CryptoNotificationService.FailReport.userInfoKey] = report.description
+    func setCryptoFailReport(_ report: CryptoFailReport) {
+        self.userInfo[CryptoFailReport.userInfoKey] = report.description
     }
     
 }
