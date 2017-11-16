@@ -253,7 +253,14 @@ public extension UNNotificationContent {
     }
     
     public var failReportDescription: String? {
-        return self.userInfo[CryptoNotificationService.FailReport.userInfoKey] as? String
+        return UNNotificationContent.failReportDescription(fromUserInfo: self.userInfo)
+    }
+    
+    public static func failReportDescription(fromUserInfo: [AnyHashable : Any]?) -> String? {
+        guard let info = fromUserInfo else {
+            return nil
+        }
+        return info[CryptoNotificationService.FailReport.userInfoKey] as? String
     }
     
 }
