@@ -182,7 +182,7 @@ public extension UIButton {
         }
         else {
             // https://stackoverflow.com/questions/18946490/how-to-stop-unwanted-uibutton-animation-on-title-change
-            var wereAnimationsEnabled = UIView.areAnimationsEnabled
+            let wereAnimationsEnabled = UIView.areAnimationsEnabled
             UIView.setAnimationsEnabled(false)
             textChange()
             self.layoutIfNeeded()

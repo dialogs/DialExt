@@ -23,6 +23,10 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     
     open var insertSecureSymbolIntoTitle: Bool = true
     
+    open var insertSpecialSecureSymbolToDecryptFailedTitle: Bool = true
+    
+    open var insertFailReportToRequestUserInfo: Bool = true
+    
     open var contentHandler: ((UNNotificationContent) -> Void)!
     
     open var bestAttemptContent: UNMutableNotificationContent!
@@ -44,6 +48,44 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
      If 'debugModeTextReplacementEnabled' is on – put explanation text into 'bestAttemptContent' if an error occured.
      */
     open func decryptNotification(request: UNNotificationRequest) throws {
+        do {
+            try defaultWayDecrypt(request: request)
+        }
+        catch {
+            if self.insertSpecialSecureSymbolToDecryptFailedTitle {
+                var title = self.bestAttemptContent.title
+                title.wrap(byPrefix: "🔒 ", suffix: "")
+            }
+            
+            let nonce = try? request.content.nonceString()
+            let report = FailReport.init(error: error, nonce: nonce)
+            if self.insertFailReportToRequestUserInfo {
+                self.bestAttemptContent.setCryptoFailReport(report)
+            }
+            
+            self.onDidFail(report: report)
+            throw error
+        }
+    }
+    
+    /**
+     Override this function if you want to keep original decription, but to send/keep information about fail.
+     */
+    open func onDidFail(report: FailReport) {
+        
+    }
+    
+    override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        
+        self.contentHandler = contentHandler
+        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        
+        try? self.decryptNotification(request: request)
+        
+        contentHandler(self.bestAttemptContent)
+    }
+    
+    private func defaultWayDecrypt(request: UNNotificationRequest) throws {
         let setBodyIfInDebugMode: (String) -> () = { body in
             if self.debugModeTextReplacementEnabled {
                 self.bestAttemptContent.body = body
@@ -61,8 +103,6 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             setBodyIfInDebugMode("Fail to init decoder: \(error.localizedDescription)")
             
             throw error
-            
-            return
         }
         
         let remoteNonce: Int64
@@ -76,7 +116,6 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             DEErrorLog("\(error), \(error.localizedDescription)")
             setBodyIfInDebugMode(error.localizedDescription)
             throw error
-            return
         }
         
         let remoteNonceObject = DEInt64BasedNonce.init(remoteNonce)
@@ -90,12 +129,11 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
             DEErrorLog("Fail to decode message: \(error.localizedDescription)")
             setBodyIfInDebugMode(String(describing: error))
             throw error
-            return
         }
         
         let push = message.alertingPush
         
-     let secureSymbol = "🔏 "
+        let secureSymbol = "🔏 "
         
         do {
             var title = try push.supposeTitle()
@@ -119,16 +157,6 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
         }
         
         DESLog("Notification Service succesfully modified the message")
-    }
-    
-    override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        
-        self.contentHandler = contentHandler
-        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
-        try? self.decryptNotification(request: request)
-        
-        contentHandler(self.bestAttemptContent)
     }
     
     override open func serviceExtensionTimeWillExpire() {
@@ -165,7 +193,7 @@ public enum DENotificationCryptoContentError: LocalizedError {
         case .noEncryptedData: return "User info's content does not have encypted data"
         case .dataInvalidFormat: return "Encoded data has unexpected format"
         case .dataInvalidFormatEncoding: return "Encoded data has unexpected format encoding"
-        
+            
         case .noNonce: return "User info's content does not have needed data"
         case .nonceInvalidFormat: return "Needed data has unexpected format"
         case .nonceInvalidFormatEncoding: return "Needed data has unexpected format encoding"
@@ -222,6 +250,18 @@ public extension UNNotificationContent {
             throw DENotificationCryptoContentError.nonceInvalidFormatEncoding
         }
         return nonceLong
+    }
+    
+    public var failReportDescription: String? {
+        return self.userInfo[CryptoNotificationService.FailReport.userInfoKey] as? String
+    }
+    
+}
+
+public extension UNMutableNotificationContent {
+    
+    func setCryptoFailReport(_ report: CryptoNotificationService.FailReport) {
+        self.userInfo[CryptoNotificationService.FailReport.userInfoKey] = report.description
     }
     
 }
