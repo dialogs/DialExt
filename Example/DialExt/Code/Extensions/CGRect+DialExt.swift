@@ -28,12 +28,14 @@ public extension CGRect {
         case right
     }
     
+    public typealias SizeForWidthCalculator = ((CGFloat) -> (CGSize))
+    
     public static func rectsOf(itemWithInsets insets: UIEdgeInsets,
                                boxWidth: CGFloat,
                                extendsBoxWidthToContainer: Bool = false,
                                alignment: ContentAlignment = .left,
                                shouldIntegral: Bool = true,
-                               calculator: ((CGFloat)->(CGSize))) -> (box: CGRect, item: CGRect) {
+                               calculator: SizeForWidthCalculator) -> (box: CGRect, item: CGRect) {
         let availableWidth = boxWidth - insets.horizontalSum
         let itemSize = calculator(availableWidth)
         
@@ -68,3 +70,10 @@ public extension CGRect {
     
 }
 
+public extension UIView {
+    public var sizeForWidthCalculator: CGRect.SizeForWidthCalculator {
+        return {
+            return self.sizeThatFits(CGSize.init(width: $0, height: 0.0))
+        }
+    }
+}
