@@ -19,6 +19,48 @@ public struct AlertingPushRoot {
     }
 }
 
+
+
+//Enum type declaration start 
+
+public enum PeerType:Int32, GeneratedEnum {
+    case private = 0
+    case group = 1
+    case sip = 2
+    public func toString() -> String {
+        switch self {
+        case .private: return "Private"
+        case .group: return "Group"
+        case .sip: return "SIP"
+        }
+    }
+    public static func fromString(_ str:String) throws -> PeerType {
+        switch str {
+        case "Private":    return .private
+        case "Group":    return .group
+        case "SIP":    return .sip
+        default: throw ProtocolBuffersError.invalidProtocolBuffer("Conversion failed.")
+        }
+    }
+    public var debugDescription:String { return getDescription() }
+    public var description:String { return getDescription() }
+    private func getDescription() -> String { 
+        switch self {
+        case .private: return ".private"
+        case .group: return ".group"
+        case .sip: return ".sip"
+        }
+    }
+    public var hashValue:Int {
+        return self.rawValue.hashValue
+    }
+    public static func ==(lhs:PeerType, rhs:PeerType) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
+//Enum type declaration end 
+
 final public class Localizeable : GeneratedMessage {
     public typealias BuilderType = Localizeable.Builder
 
@@ -289,6 +331,334 @@ final public class Localizeable : GeneratedMessage {
               throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try Localizeable.Builder.decodeToBuilder(jsonMap:jsDataCast)
+        }
+    }
+
+}
+
+final public class Peer : GeneratedMessage {
+    public typealias BuilderType = Peer.Builder
+
+    public static func == (lhs: Peer, rhs: Peer) -> Bool {
+        if lhs === rhs {
+            return true
+        }
+        var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+        fieldCheck = fieldCheck && (lhs.hasType == rhs.hasType) && (!lhs.hasType || lhs.type == rhs.type)
+        fieldCheck = fieldCheck && (lhs.hasId == rhs.hasId) && (!lhs.hasId || lhs.id == rhs.id)
+        fieldCheck = fieldCheck && (lhs.hasStrId == rhs.hasStrId) && (!lhs.hasStrId || lhs.strId == rhs.strId)
+        fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+        return fieldCheck
+    }
+
+    public fileprivate(set) var type:PeerType = PeerType.private
+    public fileprivate(set) var hasType:Bool = false
+    public fileprivate(set) var id:Int32! = nil
+    public fileprivate(set) var hasId:Bool = false
+
+    public fileprivate(set) var strId:String! = nil
+    public fileprivate(set) var hasStrId:Bool = false
+
+    required public init() {
+        super.init()
+    }
+    override public func isInitialized() -> Bool {
+        return true
+    }
+    override public func writeTo(codedOutputStream: CodedOutputStream) throws {
+        if hasType {
+            try codedOutputStream.writeEnum(fieldNumber: 1, value:type.rawValue)
+        }
+        if hasId {
+            try codedOutputStream.writeInt32(fieldNumber: 2, value:id)
+        }
+        if hasStrId {
+            try codedOutputStream.writeString(fieldNumber: 3, value:strId)
+        }
+        try unknownFields.writeTo(codedOutputStream: codedOutputStream)
+    }
+    override public func serializedSize() -> Int32 {
+        var serialize_size:Int32 = memoizedSerializedSize
+        if serialize_size != -1 {
+         return serialize_size
+        }
+
+        serialize_size = 0
+        if (hasType) {
+            serialize_size += type.rawValue.computeEnumSize(fieldNumber: 1)
+        }
+        if hasId {
+            serialize_size += id.computeInt32Size(fieldNumber: 2)
+        }
+        if hasStrId {
+            serialize_size += strId.computeStringSize(fieldNumber: 3)
+        }
+        serialize_size += unknownFields.serializedSize()
+        memoizedSerializedSize = serialize_size
+        return serialize_size
+    }
+    public class func getBuilder() -> Peer.Builder {
+        return Peer.classBuilder() as! Peer.Builder
+    }
+    public func getBuilder() -> Peer.Builder {
+        return classBuilder() as! Peer.Builder
+    }
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return Peer.Builder()
+    }
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return Peer.Builder()
+    }
+    public func toBuilder() throws -> Peer.Builder {
+        return try Peer.builderWithPrototype(prototype:self)
+    }
+    public class func builderWithPrototype(prototype:Peer) throws -> Peer.Builder {
+        return try Peer.Builder().mergeFrom(other:prototype)
+    }
+    override public func encode() throws -> Dictionary<String,Any> {
+        guard isInitialized() else {
+            throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
+        }
+
+        var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
+        if hasType {
+            jsonMap["type"] = type.toString()
+        }
+        if hasId {
+            jsonMap["id"] = Int(id)
+        }
+        if hasStrId {
+            jsonMap["strId"] = strId
+        }
+        return jsonMap
+    }
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> Peer {
+        return try Peer.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    }
+    override class public func fromJSON(data:Data) throws -> Peer {
+        return try Peer.Builder.fromJSONToBuilder(data:data).build()
+    }
+    override public func getDescription(indent:String) throws -> String {
+        var output = ""
+        if (hasType) {
+            output += "\(indent) type: \(type.description)\n"
+        }
+        if hasId {
+            output += "\(indent) id: \(id) \n"
+        }
+        if hasStrId {
+            output += "\(indent) strId: \(strId) \n"
+        }
+        output += unknownFields.getDescription(indent: indent)
+        return output
+    }
+    override public var hashValue:Int {
+        get {
+            var hashCode:Int = 7
+            if hasType {
+                 hashCode = (hashCode &* 31) &+ type.hashValue
+            }
+            if hasId {
+                hashCode = (hashCode &* 31) &+ id.hashValue
+            }
+            if hasStrId {
+                hashCode = (hashCode &* 31) &+ strId.hashValue
+            }
+            hashCode = (hashCode &* 31) &+  unknownFields.hashValue
+            return hashCode
+        }
+    }
+
+
+    //Meta information declaration start
+
+    override public class func className() -> String {
+        return "Peer"
+    }
+    override public func className() -> String {
+        return "Peer"
+    }
+    //Meta information declaration end
+
+    final public class Builder : GeneratedMessageBuilder {
+        fileprivate var builderResult:Peer = Peer()
+        public func getMessage() -> Peer {
+            return builderResult
+        }
+
+        required override public init () {
+            super.init()
+        }
+            public var type:PeerType {
+                get {
+                    return builderResult.type
+                }
+                set (value) {
+                    builderResult.hasType = true
+                    builderResult.type = value
+                }
+            }
+            public var hasType:Bool{
+                get {
+                    return builderResult.hasType
+                }
+            }
+        @discardableResult
+            public func setType(_ value:PeerType) -> Peer.Builder {
+              self.type = value
+              return self
+            }
+        @discardableResult
+            public func clearType() -> Peer.Builder {
+               builderResult.hasType = false
+               builderResult.type = .private
+               return self
+            }
+        public var id:Int32 {
+            get {
+                return builderResult.id
+            }
+            set (value) {
+                builderResult.hasId = true
+                builderResult.id = value
+            }
+        }
+        public var hasId:Bool {
+            get {
+                return builderResult.hasId
+            }
+        }
+        @discardableResult
+        public func setId(_ value:Int32) -> Peer.Builder {
+            self.id = value
+            return self
+        }
+        @discardableResult
+        public func clearId() -> Peer.Builder{
+            builderResult.hasId = false
+            builderResult.id = nil
+            return self
+        }
+        public var strId:String {
+            get {
+                return builderResult.strId
+            }
+            set (value) {
+                builderResult.hasStrId = true
+                builderResult.strId = value
+            }
+        }
+        public var hasStrId:Bool {
+            get {
+                return builderResult.hasStrId
+            }
+        }
+        @discardableResult
+        public func setStrId(_ value:String) -> Peer.Builder {
+            self.strId = value
+            return self
+        }
+        @discardableResult
+        public func clearStrId() -> Peer.Builder{
+            builderResult.hasStrId = false
+            builderResult.strId = nil
+            return self
+        }
+        override public var internalGetResult:GeneratedMessage {
+            get {
+                return builderResult
+            }
+        }
+        @discardableResult
+        override public func clear() -> Peer.Builder {
+            builderResult = Peer()
+            return self
+        }
+        override public func clone() throws -> Peer.Builder {
+            return try Peer.builderWithPrototype(prototype:builderResult)
+        }
+        override public func build() throws -> Peer {
+            try checkInitialized()
+            return buildPartial()
+        }
+        public func buildPartial() -> Peer {
+            let returnMe:Peer = builderResult
+            return returnMe
+        }
+        @discardableResult
+        public func mergeFrom(other:Peer) throws -> Peer.Builder {
+            if other == Peer() {
+                return self
+            }
+            if other.hasType {
+                type = other.type
+            }
+            if other.hasId {
+                id = other.id
+            }
+            if other.hasStrId {
+                strId = other.strId
+            }
+            try merge(unknownField: other.unknownFields)
+            return self
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> Peer.Builder {
+            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Peer.Builder {
+            let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
+            while (true) {
+                let protobufTag = try codedInputStream.readTag()
+                switch protobufTag {
+                case 0: 
+                    self.unknownFields = try unknownFieldsBuilder.build()
+                    return self
+
+                case 8:
+                    let valueInttype = try codedInputStream.readEnum()
+                    if let enumstype = PeerType(rawValue:valueInttype){
+                        type = enumstype
+                    } else {
+                        try unknownFieldsBuilder.mergeVarintField(fieldNumber: 1, value:Int64(valueInttype))
+                    }
+
+                case 16:
+                    id = try codedInputStream.readInt32()
+
+                case 26:
+                    strId = try codedInputStream.readString()
+
+                default:
+                    if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
+                        unknownFields = try unknownFieldsBuilder.build()
+                        return self
+                    }
+                }
+            }
+        }
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> Peer.Builder {
+            let resultDecodedBuilder = Peer.Builder()
+            if let jsonValueType = jsonMap["type"] as? String {
+                resultDecodedBuilder.type = try PeerType.fromString(jsonValueType)
+            }
+            if let jsonValueId = jsonMap["id"] as? Int {
+                resultDecodedBuilder.id = Int32(jsonValueId)
+            } else if let jsonValueId = jsonMap["id"] as? String {
+                resultDecodedBuilder.id = Int32(jsonValueId)!
+            }
+            if let jsonValueStrId = jsonMap["strId"] as? String {
+                resultDecodedBuilder.strId = jsonValueStrId
+            }
+            return resultDecodedBuilder
+        }
+        override class public func fromJSONToBuilder(data:Data) throws -> Peer.Builder {
+            let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
+            guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
+              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+            }
+            return try Peer.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
 
@@ -1058,6 +1428,77 @@ extension Localizeable.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.locArgs = newSubscriptValue
+            default: return
+            }
+        }
+    }
+}
+extension Peer: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Peer> {
+        var mergedArray = Array<Peer>()
+        while let value = try parseDelimitedFrom(inputStream: inputStream) {
+          mergedArray.append(value)
+        }
+        return mergedArray
+    }
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> Peer? {
+        return try Peer.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    }
+    public class func parseFrom(data: Data) throws -> Peer {
+        return try Peer.Builder().mergeFrom(data: data, extensionRegistry:AlertingPushRoot.default.extensionRegistry).build()
+    }
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> Peer {
+        return try Peer.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(inputStream: InputStream) throws -> Peer {
+        return try Peer.Builder().mergeFrom(inputStream: inputStream).build()
+    }
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> Peer {
+        return try Peer.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> Peer {
+        return try Peer.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> Peer {
+        return try Peer.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public subscript(key: String) -> Any? {
+        switch key {
+        case "type": return self.type
+        case "id": return self.id
+        case "strId": return self.strId
+        default: return nil
+        }
+    }
+}
+extension Peer.Builder: GeneratedMessageBuilderProtocol {
+    public typealias GeneratedMessageType = Peer
+    public subscript(key: String) -> Any? {
+        get { 
+            switch key {
+            case "type": return self.type
+            case "id": return self.id
+            case "strId": return self.strId
+            default: return nil
+            }
+        }
+        set (newSubscriptValue) { 
+            switch key {
+            case "type":
+                guard let newSubscriptValue = newSubscriptValue as? PeerType else {
+                    return
+                }
+                self.type = newSubscriptValue
+            case "id":
+                guard let newSubscriptValue = newSubscriptValue as? Int32 else {
+                    return
+                }
+                self.id = newSubscriptValue
+            case "strId":
+                guard let newSubscriptValue = newSubscriptValue as? String else {
+                    return
+                }
+                self.strId = newSubscriptValue
             default: return
             }
         }
