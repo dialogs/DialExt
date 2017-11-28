@@ -28,4 +28,5 @@ message AlertingPush {
     }
     string sound = 5;
     int32 badge = 6;
+    Peer peer = 7;
 }

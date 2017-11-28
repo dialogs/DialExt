@@ -133,6 +133,13 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
         
         let push = message.alertingPush
         
+        if let peer = push.peer {
+            self.bestAttemptContent.setPeer(peer)
+        }
+        else {
+            DESLog("Notification does not contain peer")
+        }
+        
         let secureSymbol = "🔏 "
         
         do {
@@ -266,10 +273,33 @@ public extension UNNotificationContent {
 }
 
 @available(iOS 10.0, *)
+public extension UNNotificationContent {
+    public static let peerUserInfoKey = "im.dlg.peer"
+
+}
+
+@available(iOS 10.0, *)
 public extension UNMutableNotificationContent {
     
     func setCryptoFailReport(_ report: CryptoFailReport) {
         self.userInfo[CryptoFailReport.userInfoKey] = report.description
     }
     
+    func setPeer(_ peer: Peer) {
+        self.userInfo[UNNotificationContent.peerUserInfoKey] = peer.data()
+    }
+    
+}
+
+public extension Peer {
+    public static func createWithUserInfo(_ userInfo: [AnyHashable : Any]?) -> Peer? {
+        guard let info = userInfo else {
+            return nil
+        }
+        guard let peerData = info[CryptoFailReport.userInfoKey] as? Data else {
+            return nil
+        }
+        
+        return try? Peer.parseFrom(data: peerData)
+    }
 }

@@ -10,7 +10,7 @@ import ProtocolBuffers
 public struct AlertingPushRoot {
     public static let `default` = AlertingPushRoot()
     public var extensionRegistry:ExtensionRegistry
-
+    
     init() {
         extensionRegistry = ExtensionRegistry()
         registerAllExtensions(registry: extensionRegistry)
@@ -21,7 +21,7 @@ public struct AlertingPushRoot {
 
 
 
-//Enum type declaration start 
+//Enum type declaration start
 
 public enum PeerType:Int32, GeneratedEnum {
     case `private` = 0
@@ -44,7 +44,7 @@ public enum PeerType:Int32, GeneratedEnum {
     }
     public var debugDescription:String { return getDescription() }
     public var description:String { return getDescription() }
-    private func getDescription() -> String { 
+    private func getDescription() -> String {
         switch self {
         case .private: return ".private"
         case .group: return ".group"
@@ -59,11 +59,11 @@ public enum PeerType:Int32, GeneratedEnum {
     }
 }
 
-//Enum type declaration end 
+//Enum type declaration end
 
 final public class Localizeable : GeneratedMessage {
     public typealias BuilderType = Localizeable.Builder
-
+    
     public static func == (lhs: Localizeable, rhs: Localizeable) -> Bool {
         if lhs === rhs {
             return true
@@ -74,10 +74,10 @@ final public class Localizeable : GeneratedMessage {
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
-
+    
     public fileprivate(set) var locKey:String! = nil
     public fileprivate(set) var hasLocKey:Bool = false
-
+    
     public fileprivate(set) var locArgs:Array<String> = Array<String>()
     required public init() {
         super.init()
@@ -99,9 +99,9 @@ final public class Localizeable : GeneratedMessage {
     override public func serializedSize() -> Int32 {
         var serialize_size:Int32 = memoizedSerializedSize
         if serialize_size != -1 {
-         return serialize_size
+            return serialize_size
         }
-
+        
         serialize_size = 0
         if hasLocKey {
             serialize_size += locKey.computeStringSize(fieldNumber: 1)
@@ -138,7 +138,7 @@ final public class Localizeable : GeneratedMessage {
         guard isInitialized() else {
             throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
         }
-
+        
         var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
         if hasLocKey {
             jsonMap["locKey"] = locKey
@@ -184,10 +184,10 @@ final public class Localizeable : GeneratedMessage {
             return hashCode
         }
     }
-
-
+    
+    
     //Meta information declaration start
-
+    
     override public class func className() -> String {
         return "Localizeable"
     }
@@ -195,13 +195,13 @@ final public class Localizeable : GeneratedMessage {
         return "Localizeable"
     }
     //Meta information declaration end
-
+    
     final public class Builder : GeneratedMessageBuilder {
         fileprivate var builderResult:Localizeable = Localizeable()
         public func getMessage() -> Localizeable {
             return builderResult
         }
-
+        
         required override public init () {
             super.init()
         }
@@ -293,16 +293,16 @@ final public class Localizeable : GeneratedMessage {
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
                 switch protobufTag {
-                case 0: 
+                case 0:
                     self.unknownFields = try unknownFieldsBuilder.build()
                     return self
-
+                    
                 case 10:
                     locKey = try codedInputStream.readString()
-
+                    
                 case 18:
                     locArgs += [try codedInputStream.readString()]
-
+                    
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -328,17 +328,17 @@ final public class Localizeable : GeneratedMessage {
         override class public func fromJSONToBuilder(data:Data) throws -> Localizeable.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
-              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+                throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try Localizeable.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
-
+    
 }
 
 final public class Peer : GeneratedMessage {
     public typealias BuilderType = Peer.Builder
-
+    
     public static func == (lhs: Peer, rhs: Peer) -> Bool {
         if lhs === rhs {
             return true
@@ -350,15 +350,15 @@ final public class Peer : GeneratedMessage {
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
-
+    
     public fileprivate(set) var type:PeerType = PeerType.private
     public fileprivate(set) var hasType:Bool = false
     public fileprivate(set) var id:Int32! = nil
     public fileprivate(set) var hasId:Bool = false
-
+    
     public fileprivate(set) var strId:String! = nil
     public fileprivate(set) var hasStrId:Bool = false
-
+    
     required public init() {
         super.init()
     }
@@ -380,9 +380,9 @@ final public class Peer : GeneratedMessage {
     override public func serializedSize() -> Int32 {
         var serialize_size:Int32 = memoizedSerializedSize
         if serialize_size != -1 {
-         return serialize_size
+            return serialize_size
         }
-
+        
         serialize_size = 0
         if (hasType) {
             serialize_size += type.rawValue.computeEnumSize(fieldNumber: 1)
@@ -419,7 +419,7 @@ final public class Peer : GeneratedMessage {
         guard isInitialized() else {
             throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
         }
-
+        
         var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
         if hasType {
             jsonMap["type"] = type.toString()
@@ -456,7 +456,7 @@ final public class Peer : GeneratedMessage {
         get {
             var hashCode:Int = 7
             if hasType {
-                 hashCode = (hashCode &* 31) &+ type.hashValue
+                hashCode = (hashCode &* 31) &+ type.hashValue
             }
             if hasId {
                 hashCode = (hashCode &* 31) &+ id.hashValue
@@ -468,10 +468,10 @@ final public class Peer : GeneratedMessage {
             return hashCode
         }
     }
-
-
+    
+    
     //Meta information declaration start
-
+    
     override public class func className() -> String {
         return "Peer"
     }
@@ -479,41 +479,41 @@ final public class Peer : GeneratedMessage {
         return "Peer"
     }
     //Meta information declaration end
-
+    
     final public class Builder : GeneratedMessageBuilder {
         fileprivate var builderResult:Peer = Peer()
         public func getMessage() -> Peer {
             return builderResult
         }
-
+        
         required override public init () {
             super.init()
         }
-            public var type:PeerType {
-                get {
-                    return builderResult.type
-                }
-                set (value) {
-                    builderResult.hasType = true
-                    builderResult.type = value
-                }
+        public var type:PeerType {
+            get {
+                return builderResult.type
             }
-            public var hasType:Bool{
-                get {
-                    return builderResult.hasType
-                }
+            set (value) {
+                builderResult.hasType = true
+                builderResult.type = value
             }
+        }
+        public var hasType:Bool{
+            get {
+                return builderResult.hasType
+            }
+        }
         @discardableResult
-            public func setType(_ value:PeerType) -> Peer.Builder {
-              self.type = value
-              return self
-            }
+        public func setType(_ value:PeerType) -> Peer.Builder {
+            self.type = value
+            return self
+        }
         @discardableResult
-            public func clearType() -> Peer.Builder {
-               builderResult.hasType = false
-               builderResult.type = .private
-               return self
-            }
+        public func clearType() -> Peer.Builder {
+            builderResult.hasType = false
+            builderResult.type = .private
+            return self
+        }
         public var id:Int32 {
             get {
                 return builderResult.id
@@ -612,10 +612,10 @@ final public class Peer : GeneratedMessage {
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
                 switch protobufTag {
-                case 0: 
+                case 0:
                     self.unknownFields = try unknownFieldsBuilder.build()
                     return self
-
+                    
                 case 8:
                     let valueInttype = try codedInputStream.readEnum()
                     if let enumstype = PeerType(rawValue:valueInttype){
@@ -623,13 +623,13 @@ final public class Peer : GeneratedMessage {
                     } else {
                         try unknownFieldsBuilder.mergeVarintField(fieldNumber: 1, value:Int64(valueInttype))
                     }
-
+                    
                 case 16:
                     id = try codedInputStream.readInt32()
-
+                    
                 case 26:
                     strId = try codedInputStream.readString()
-
+                    
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -656,17 +656,17 @@ final public class Peer : GeneratedMessage {
         override class public func fromJSONToBuilder(data:Data) throws -> Peer.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
-              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+                throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try Peer.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
-
+    
 }
 
 final public class AlertingPush : GeneratedMessage {
     public typealias BuilderType = AlertingPush.Builder
-
+    
     public static func == (lhs: AlertingPush, rhs: AlertingPush) -> Bool {
         if lhs === rhs {
             return true
@@ -678,17 +678,18 @@ final public class AlertingPush : GeneratedMessage {
         fieldCheck = fieldCheck && (lhs.hasSimpleAlertTitle == rhs.hasSimpleAlertTitle) && (!lhs.hasSimpleAlertTitle || lhs.simpleAlertTitle == rhs.simpleAlertTitle)
         fieldCheck = fieldCheck && (lhs.hasSound == rhs.hasSound) && (!lhs.hasSound || lhs.sound == rhs.sound)
         fieldCheck = fieldCheck && (lhs.hasBadge == rhs.hasBadge) && (!lhs.hasBadge || lhs.badge == rhs.badge)
+        fieldCheck = fieldCheck && (lhs.hasPeer == rhs.hasPeer) && (!lhs.hasPeer || lhs.peer == rhs.peer)
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
-
-
-
+    
+    
+    
     //OneOf declaration start
-
+    
     public enum AlertBody {
         case OneOfAlertBodyNotSet
-
+        
         public func checkOneOfIsSet() -> Bool {
             switch self {
             case .OneOfAlertBodyNotSet: return false
@@ -696,16 +697,16 @@ final public class AlertingPush : GeneratedMessage {
             }
         }
         case LocAlertBody(Localizeable)
-
+        
         public static func getLocAlertBody(_ value:AlertBody) -> Localizeable? {
             switch value {
             case .LocAlertBody(let enumValue):
                 return enumValue
-                default: return nil
+            default: return nil
             }
         }
         case SimpleAlertBody(String)
-
+        
         public static func getSimpleAlertBody(_ value:AlertBody) -> String? {
             switch value {
             case .SimpleAlertBody(let enumValue): return enumValue
@@ -714,19 +715,19 @@ final public class AlertingPush : GeneratedMessage {
         }
     }
     //OneOf declaration end
-
+    
     fileprivate var storageAlertBody:AlertingPush.AlertBody =  AlertingPush.AlertBody.OneOfAlertBodyNotSet
     public func getOneOfAlertBody() ->  AlertingPush.AlertBody {
         let copyObjectAlertBody = storageAlertBody
         return copyObjectAlertBody
     }
-
-
+    
+    
     //OneOf declaration start
-
+    
     public enum AlertTitle {
         case OneOfAlertTitleNotSet
-
+        
         public func checkOneOfIsSet() -> Bool {
             switch self {
             case .OneOfAlertTitleNotSet: return false
@@ -734,16 +735,16 @@ final public class AlertingPush : GeneratedMessage {
             }
         }
         case LocAlertTitle(Localizeable)
-
+        
         public static func getLocAlertTitle(_ value:AlertTitle) -> Localizeable? {
             switch value {
             case .LocAlertTitle(let enumValue):
                 return enumValue
-                default: return nil
+            default: return nil
             }
         }
         case SimpleAlertTitle(String)
-
+        
         public static func getSimpleAlertTitle(_ value:AlertTitle) -> String? {
             switch value {
             case .SimpleAlertTitle(let enumValue): return enumValue
@@ -752,7 +753,7 @@ final public class AlertingPush : GeneratedMessage {
         }
     }
     //OneOf declaration end
-
+    
     fileprivate var storageAlertTitle:AlertingPush.AlertTitle =  AlertingPush.AlertTitle.OneOfAlertTitleNotSet
     public func getOneOfAlertTitle() ->  AlertingPush.AlertTitle {
         let copyObjectAlertTitle = storageAlertTitle
@@ -832,10 +833,12 @@ final public class AlertingPush : GeneratedMessage {
     }
     public fileprivate(set) var sound:String! = nil
     public fileprivate(set) var hasSound:Bool = false
-
+    
     public fileprivate(set) var badge:Int32! = nil
     public fileprivate(set) var hasBadge:Bool = false
-
+    
+    public fileprivate(set) var peer:Peer!
+    public fileprivate(set) var hasPeer:Bool = false
     required public init() {
         super.init()
     }
@@ -861,14 +864,17 @@ final public class AlertingPush : GeneratedMessage {
         if hasBadge {
             try codedOutputStream.writeInt32(fieldNumber: 6, value:badge)
         }
+        if hasPeer {
+            try codedOutputStream.writeMessage(fieldNumber: 7, value:peer)
+        }
         try unknownFields.writeTo(codedOutputStream: codedOutputStream)
     }
     override public func serializedSize() -> Int32 {
         var serialize_size:Int32 = memoizedSerializedSize
         if serialize_size != -1 {
-         return serialize_size
+            return serialize_size
         }
-
+        
         serialize_size = 0
         if hasLocAlertBody {
             if let varSizelocAlertBody = locAlertBody?.computeMessageSize(fieldNumber: 1) {
@@ -891,6 +897,11 @@ final public class AlertingPush : GeneratedMessage {
         }
         if hasBadge {
             serialize_size += badge.computeInt32Size(fieldNumber: 6)
+        }
+        if hasPeer {
+            if let varSizepeer = peer?.computeMessageSize(fieldNumber: 7) {
+                serialize_size += varSizepeer
+            }
         }
         serialize_size += unknownFields.serializedSize()
         memoizedSerializedSize = serialize_size
@@ -918,7 +929,7 @@ final public class AlertingPush : GeneratedMessage {
         guard isInitialized() else {
             throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
         }
-
+        
         var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
         if hasLocAlertBody {
             jsonMap["locAlertBody"] = try locAlertBody.encode()
@@ -937,6 +948,9 @@ final public class AlertingPush : GeneratedMessage {
         }
         if hasBadge {
             jsonMap["badge"] = Int(badge)
+        }
+        if hasPeer {
+            jsonMap["peer"] = try peer.encode()
         }
         return jsonMap
     }
@@ -974,6 +988,13 @@ final public class AlertingPush : GeneratedMessage {
         if hasBadge {
             output += "\(indent) badge: \(badge) \n"
         }
+        if hasPeer {
+            output += "\(indent) peer {\n"
+            if let outDescPeer = peer {
+                output += try outDescPeer.getDescription(indent: "\(indent)  ")
+            }
+            output += "\(indent) }\n"
+        }
         output += unknownFields.getDescription(indent: indent)
         return output
     }
@@ -1002,14 +1023,19 @@ final public class AlertingPush : GeneratedMessage {
             if hasBadge {
                 hashCode = (hashCode &* 31) &+ badge.hashValue
             }
+            if hasPeer {
+                if let hashValuepeer = peer?.hashValue {
+                    hashCode = (hashCode &* 31) &+ hashValuepeer
+                }
+            }
             hashCode = (hashCode &* 31) &+  unknownFields.hashValue
             return hashCode
         }
     }
-
-
+    
+    
     //Meta information declaration start
-
+    
     override public class func className() -> String {
         return "AlertingPush"
     }
@@ -1017,13 +1043,13 @@ final public class AlertingPush : GeneratedMessage {
         return "AlertingPush"
     }
     //Meta information declaration end
-
+    
     final public class Builder : GeneratedMessageBuilder {
         fileprivate var builderResult:AlertingPush = AlertingPush()
         public func getMessage() -> AlertingPush {
             return builderResult
         }
-
+        
         required override public init () {
             super.init()
         }
@@ -1235,6 +1261,60 @@ final public class AlertingPush : GeneratedMessage {
             builderResult.badge = nil
             return self
         }
+        public var peer:Peer! {
+            get {
+                if peerBuilder_ != nil {
+                    builderResult.peer = peerBuilder_.getMessage()
+                }
+                return builderResult.peer
+            }
+            set (value) {
+                builderResult.hasPeer = true
+                builderResult.peer = value
+            }
+        }
+        public var hasPeer:Bool {
+            get {
+                return builderResult.hasPeer
+            }
+        }
+        fileprivate var peerBuilder_:Peer.Builder! {
+            didSet {
+                builderResult.hasPeer = true
+            }
+        }
+        public func getPeerBuilder() -> Peer.Builder {
+            if peerBuilder_ == nil {
+                peerBuilder_ = Peer.Builder()
+                builderResult.peer = peerBuilder_.getMessage()
+                if peer != nil {
+                    try! peerBuilder_.mergeFrom(other: peer)
+                }
+            }
+            return peerBuilder_
+        }
+        @discardableResult
+        public func setPeer(_ value:Peer!) -> AlertingPush.Builder {
+            self.peer = value
+            return self
+        }
+        @discardableResult
+        public func mergePeer(value:Peer) throws -> AlertingPush.Builder {
+            if builderResult.hasPeer {
+                builderResult.peer = try Peer.builderWithPrototype(prototype:builderResult.peer).mergeFrom(other: value).buildPartial()
+            } else {
+                builderResult.peer = value
+            }
+            builderResult.hasPeer = true
+            return self
+        }
+        @discardableResult
+        public func clearPeer() -> AlertingPush.Builder {
+            peerBuilder_ = nil
+            builderResult.hasPeer = false
+            builderResult.peer = nil
+            return self
+        }
         override public var internalGetResult:GeneratedMessage {
             get {
                 return builderResult
@@ -1279,6 +1359,9 @@ final public class AlertingPush : GeneratedMessage {
             if other.hasBadge {
                 badge = other.badge
             }
+            if (other.hasPeer) {
+                try mergePeer(value: other.peer)
+            }
             try merge(unknownField: other.unknownFields)
             return self
         }
@@ -1292,10 +1375,10 @@ final public class AlertingPush : GeneratedMessage {
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
                 switch protobufTag {
-                case 0: 
+                case 0:
                     self.unknownFields = try unknownFieldsBuilder.build()
                     return self
-
+                    
                 case 10:
                     let subBuilder:Localizeable.Builder = Localizeable.Builder()
                     if hasLocAlertBody {
@@ -1303,10 +1386,10 @@ final public class AlertingPush : GeneratedMessage {
                     }
                     try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
                     locAlertBody = subBuilder.buildPartial()
-
+                    
                 case 18:
                     simpleAlertBody = try codedInputStream.readString()
-
+                    
                 case 26:
                     let subBuilder:Localizeable.Builder = Localizeable.Builder()
                     if hasLocAlertTitle {
@@ -1314,16 +1397,24 @@ final public class AlertingPush : GeneratedMessage {
                     }
                     try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
                     locAlertTitle = subBuilder.buildPartial()
-
+                    
                 case 34:
                     simpleAlertTitle = try codedInputStream.readString()
-
+                    
                 case 42:
                     sound = try codedInputStream.readString()
-
+                    
                 case 48:
                     badge = try codedInputStream.readInt32()
-
+                    
+                case 58:
+                    let subBuilder:Peer.Builder = Peer.Builder()
+                    if hasPeer {
+                        try subBuilder.mergeFrom(other: peer)
+                    }
+                    try codedInputStream.readMessage(builder: subBuilder, extensionRegistry:extensionRegistry)
+                    peer = subBuilder.buildPartial()
+                    
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -1336,14 +1427,14 @@ final public class AlertingPush : GeneratedMessage {
             let resultDecodedBuilder = AlertingPush.Builder()
             if let jsonValueLocAlertBody = jsonMap["locAlertBody"] as? Dictionary<String,Any> {
                 resultDecodedBuilder.locAlertBody = try Localizeable.Builder.decodeToBuilder(jsonMap:jsonValueLocAlertBody).build()
-
+                
             }
             if let jsonValueSimpleAlertBody = jsonMap["simpleAlertBody"] as? String {
                 resultDecodedBuilder.simpleAlertBody = jsonValueSimpleAlertBody
             }
             if let jsonValueLocAlertTitle = jsonMap["locAlertTitle"] as? Dictionary<String,Any> {
                 resultDecodedBuilder.locAlertTitle = try Localizeable.Builder.decodeToBuilder(jsonMap:jsonValueLocAlertTitle).build()
-
+                
             }
             if let jsonValueSimpleAlertTitle = jsonMap["simpleAlertTitle"] as? String {
                 resultDecodedBuilder.simpleAlertTitle = jsonValueSimpleAlertTitle
@@ -1356,24 +1447,28 @@ final public class AlertingPush : GeneratedMessage {
             } else if let jsonValueBadge = jsonMap["badge"] as? String {
                 resultDecodedBuilder.badge = Int32(jsonValueBadge)!
             }
+            if let jsonValuePeer = jsonMap["peer"] as? Dictionary<String,Any> {
+                resultDecodedBuilder.peer = try Peer.Builder.decodeToBuilder(jsonMap:jsonValuePeer).build()
+                
+            }
             return resultDecodedBuilder
         }
         override class public func fromJSONToBuilder(data:Data) throws -> AlertingPush.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
-              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+                throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try AlertingPush.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
-
+    
 }
 
 extension Localizeable: GeneratedMessageProtocol {
     public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Localizeable> {
         var mergedArray = Array<Localizeable>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
-          mergedArray.append(value)
+            mergedArray.append(value)
         }
         return mergedArray
     }
@@ -1409,14 +1504,14 @@ extension Localizeable: GeneratedMessageProtocol {
 extension Localizeable.Builder: GeneratedMessageBuilderProtocol {
     public typealias GeneratedMessageType = Localizeable
     public subscript(key: String) -> Any? {
-        get { 
+        get {
             switch key {
             case "locKey": return self.locKey
             case "locArgs": return self.locArgs
             default: return nil
             }
         }
-        set (newSubscriptValue) { 
+        set (newSubscriptValue) {
             switch key {
             case "locKey":
                 guard let newSubscriptValue = newSubscriptValue as? String else {
@@ -1437,7 +1532,7 @@ extension Peer: GeneratedMessageProtocol {
     public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<Peer> {
         var mergedArray = Array<Peer>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
-          mergedArray.append(value)
+            mergedArray.append(value)
         }
         return mergedArray
     }
@@ -1474,7 +1569,7 @@ extension Peer: GeneratedMessageProtocol {
 extension Peer.Builder: GeneratedMessageBuilderProtocol {
     public typealias GeneratedMessageType = Peer
     public subscript(key: String) -> Any? {
-        get { 
+        get {
             switch key {
             case "type": return self.type
             case "id": return self.id
@@ -1482,7 +1577,7 @@ extension Peer.Builder: GeneratedMessageBuilderProtocol {
             default: return nil
             }
         }
-        set (newSubscriptValue) { 
+        set (newSubscriptValue) {
             switch key {
             case "type":
                 guard let newSubscriptValue = newSubscriptValue as? PeerType else {
@@ -1508,7 +1603,7 @@ extension AlertingPush: GeneratedMessageProtocol {
     public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<AlertingPush> {
         var mergedArray = Array<AlertingPush>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
-          mergedArray.append(value)
+            mergedArray.append(value)
         }
         return mergedArray
     }
@@ -1541,6 +1636,7 @@ extension AlertingPush: GeneratedMessageProtocol {
         case "simpleAlertTitle": return self.simpleAlertTitle
         case "sound": return self.sound
         case "badge": return self.badge
+        case "peer": return self.peer
         default: return nil
         }
     }
@@ -1548,7 +1644,7 @@ extension AlertingPush: GeneratedMessageProtocol {
 extension AlertingPush.Builder: GeneratedMessageBuilderProtocol {
     public typealias GeneratedMessageType = AlertingPush
     public subscript(key: String) -> Any? {
-        get { 
+        get {
             switch key {
             case "locAlertBody": return self.locAlertBody
             case "simpleAlertBody": return self.simpleAlertBody
@@ -1556,10 +1652,11 @@ extension AlertingPush.Builder: GeneratedMessageBuilderProtocol {
             case "simpleAlertTitle": return self.simpleAlertTitle
             case "sound": return self.sound
             case "badge": return self.badge
+            case "peer": return self.peer
             default: return nil
             }
         }
-        set (newSubscriptValue) { 
+        set (newSubscriptValue) {
             switch key {
             case "locAlertBody":
                 guard let newSubscriptValue = newSubscriptValue as? Localizeable else {
@@ -1591,6 +1688,11 @@ extension AlertingPush.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.badge = newSubscriptValue
+            case "peer":
+                guard let newSubscriptValue = newSubscriptValue as? Peer else {
+                    return
+                }
+                self.peer = newSubscriptValue
             default: return
             }
         }
