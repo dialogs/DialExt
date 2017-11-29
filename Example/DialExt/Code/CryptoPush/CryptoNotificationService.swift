@@ -296,7 +296,7 @@ public extension Peer {
         guard let info = userInfo else {
             return nil
         }
-        guard let peerData = info[CryptoFailReport.userInfoKey] as? Data else {
+        guard let peerData = info[UNNotificationContent.peerUserInfoKey] as? Data else {
             return nil
         }
         
