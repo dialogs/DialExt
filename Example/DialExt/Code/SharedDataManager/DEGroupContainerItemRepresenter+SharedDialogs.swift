@@ -22,7 +22,7 @@ public class DEProtobufContainerItemRepresenter<Proto: GeneratedMessageProtocol>
     
 }
 
-public class DEProtobufContainterItemBindedRepresenter<Proto: GeneratedMessageProtocol>: DEGroupContainerItemBindedRepresenter<Proto> {
+public class DEProtobufContainerItemBindedRepresenter<Proto: GeneratedMessageProtocol>: DEGroupContainerItemBindedRepresenter<Proto> {
     
     init(item: DEGroupContainerItem) {
         let representer = DEProtobufContainerItemRepresenter<Proto>.init(item: item)
@@ -30,6 +30,6 @@ public class DEProtobufContainterItemBindedRepresenter<Proto: GeneratedMessagePr
     }
 }
 
-public typealias AppSharedDialogListBindedRepresenter = DEProtobufContainterItemBindedRepresenter<AppSharedDialogList>
+public typealias AppSharedDialogListBindedRepresenter = DEProtobufContainerItemBindedRepresenter<AppSharedDialogList>
 
-public typealias AppSharedDialogListContextBindedRepresenter = DEProtobufContainterItemBindedRepresenter<AppSharedDialogListContext>
+public typealias AppSharedDialogListContextBindedRepresenter = DEProtobufContainerItemBindedRepresenter<AppSharedDialogListContext>

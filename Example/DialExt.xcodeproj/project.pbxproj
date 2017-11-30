@@ -70,6 +70,9 @@
 		744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */; };
 		744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */; };
 		7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */; };
+		7469FBA11FD07B4200730787 /* Config.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA01FD07B4200730787 /* Config.proto.swift */; };
+		7469FBA41FD07C7300730787 /* ConfigSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */; };
+		7469FBA61FD07EB900730787 /* messenger_config.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7469FBA51FD07EB900730787 /* messenger_config.proto */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		7483166B1E72962500E4ADA8 /* DialExt.h in Headers */ = {isa = PBXBuildFile; fileRef = 7483165B1E72962500E4ADA8 /* DialExt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7483166E1E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
@@ -284,6 +287,9 @@
 		744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+DialExt.swift"; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
 		7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DESharedDialogsDataLoader+DataComposer.swift"; sourceTree = "<group>"; };
+		7469FBA01FD07B4200730787 /* Config.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.proto.swift; sourceTree = "<group>"; };
+		7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSynchronizer.swift; sourceTree = "<group>"; };
+		7469FBA51FD07EB900730787 /* messenger_config.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = messenger_config.proto; sourceTree = "<group>"; };
 		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7483165B1E72962500E4ADA8 /* DialExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DialExt.h; sourceTree = "<group>"; };
 		7483165C1E72962500E4ADA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -480,6 +486,7 @@
 		74065EC81E8113A900C535B6 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				7469FBA21FD07BDE00730787 /* ConfigSynchronizer */,
 				74D017CD1F02B103008C8536 /* CryptoPush */,
 				7447ED961EF92E13004C1F24 /* Crypto */,
 				74F7E0B91EEB05D000DE3891 /* Geometry */,
@@ -595,6 +602,7 @@
 		74065EE11E8113A900C535B6 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				7469FBA01FD07B4200730787 /* Config.proto.swift */,
 				749C10D11F44964D009F7064 /* CryptoKeypair.proto.swift */,
 				749C10C71F448424009F7064 /* SharedSecret.proto.swift */,
 				74208EA81F38C5710077EE85 /* AlertingPush.proto.swift */,
@@ -661,6 +669,7 @@
 		742FCF681E8266B2003D1FBC /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				7469FBA51FD07EB900730787 /* messenger_config.proto */,
 				749C10CB1F44956A009F7064 /* crypto_keypair.proto */,
 				749C10C21F445EAA009F7064 /* shared_secret.proto */,
 				742FCF691E8266C9003D1FBC /* dialog.proto */,
@@ -723,6 +732,14 @@
 				749C10D51F44A942009F7064 /* DECryptoManagable.swift */,
 			);
 			path = Crypto;
+			sourceTree = "<group>";
+		};
+		7469FBA21FD07BDE00730787 /* ConfigSynchronizer */ = {
+			isa = PBXGroup;
+			children = (
+				7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */,
+			);
+			path = ConfigSynchronizer;
 			sourceTree = "<group>";
 		};
 		7483165A1E72962500E4ADA8 /* DialExt */ = {
@@ -1013,6 +1030,7 @@
 				742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */,
 				748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */,
 				7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */,
+				7469FBA61FD07EB900730787 /* messenger_config.proto in Resources */,
 				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1232,6 +1250,7 @@
 				74A4C9F61F4B08D700717F0E /* DEUti.swift in Sources */,
 				74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
+				7469FBA11FD07B4200730787 /* Config.proto.swift in Sources */,
 				74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */,
 				74326E071EADFAB80016A1F1 /* LimitedValueType.swift in Sources */,
 				74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */,
@@ -1244,6 +1263,7 @@
 				74A5DFBA1ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldName.swift in Sources */,
 				742CAB351E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift in Sources */,
 				74065EF01E8113A900C535B6 /* DispatchQueue+DialExt.swift in Sources */,
+				7469FBA41FD07C7300730787 /* ConfigSynchronizer.swift in Sources */,
 				74935E2D1ED9CA17005331A9 /* DEUploadRecipient.swift in Sources */,
 				74CD979D1F03F6A700BFF635 /* DELoggerInfo.swift in Sources */,
 				74208EAA1F38C5710077EE85 /* AlertingPush.proto.swift in Sources */,
