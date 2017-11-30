@@ -24,7 +24,7 @@ public class DEProtobufContainerItemRepresenter<Proto: GeneratedMessageProtocol>
 
 public class DEProtobufContainerItemBindedRepresenter<Proto: GeneratedMessageProtocol>: DEGroupContainerItemBindedRepresenter<Proto> {
     
-    init(item: DEGroupContainerItem) {
+    public init(item: DEGroupContainerItem) {
         let representer = DEProtobufContainerItemRepresenter<Proto>.init(item: item)
         super.init(unbindableRepresenter: representer, storePolicy: .onSuccessOnly)
     }
