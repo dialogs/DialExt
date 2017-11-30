@@ -8,4 +8,17 @@
 
 import Foundation
 
-public typealias ConfigSynchronizer = DEProtobufContainerItemBindedRepresenter<MessengerConfig>
+public class ConfigSynchronizer {
+    
+    public static let defaultFileName = "im.dlg.messenger.config"
+    
+    public typealias Representer = DEProtobufContainerItemBindedRepresenter<MessengerConfig>
+    
+    public let representer: Representer
+    
+    public init(groupId: String, fileName: String = ConfigSynchronizer.defaultFileName) {
+        let item = DEGroupContainer.init(groupId: groupId).item(forFileNamed: fileName)
+        self.representer = Representer.init(item: item)
+    }
+    
+}
