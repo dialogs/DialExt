@@ -144,7 +144,6 @@
 		74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231E51EA4E6A6006C243D /* String+DialExt.swift */; };
 		74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */; };
 		74E71EB61F558B8300BE4619 /* Geometry+DialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */; };
-		74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */; };
 		74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */; };
 		74F7D2001E9D1E0F00D6E9D0 /* PThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */; };
 		74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */; };
@@ -363,7 +362,6 @@
 		74E231E51EA4E6A6006C243D /* String+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DialExt.swift"; sourceTree = "<group>"; };
 		74E231FE1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharedDialogsPresentationViewController.swift; sourceTree = "<group>"; };
 		74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExtTests.swift"; sourceTree = "<group>"; };
-		74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESharingConfigProvider.swift; sourceTree = "<group>"; };
 		74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemBindedRepresenter.swift; sourceTree = "<group>"; };
 		74F7D1FF1E9D1E0F00D6E9D0 /* PThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PThreadMutex.swift; sourceTree = "<group>"; };
 		74F7E0BA1EEB05D000DE3891 /* Geometry+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geometry+DialExt.swift"; sourceTree = "<group>"; };
@@ -698,7 +696,6 @@
 			isa = PBXGroup;
 			children = (
 				74935E151ED9CA17005331A9 /* DEExtensionItemUploader.swift */,
-				74EA75751F14E8E800D53EB9 /* DESharingConfigProvider.swift */,
 				74935E161ED9CA17005331A9 /* DEUploadAuth.swift */,
 				74935E171ED9CA17005331A9 /* DEUploadDataRepresentation.swift */,
 				74935E181ED9CA17005331A9 /* DEUploadDetailedDataRepresentation.swift */,
@@ -1238,7 +1235,6 @@
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
-				74EA75761F14E8E800D53EB9 /* DESharingConfigProvider.swift in Sources */,
 				74935E2B1ED9CA17005331A9 /* DEUploadPreparedItem.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
 				74D017D31F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift in Sources */,
