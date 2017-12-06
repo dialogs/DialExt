@@ -37,7 +37,11 @@ internal class ThreadSafeRepresentationState<Representation> {
     
     private var _backupRepresentation: Representation? = nil
     
-    private let mutex = PThreadMutex.init()
+    private let mutex: PThreadMutex
+    
+    public init(mutex: PThreadMutex = PThreadMutex.init()) {
+        self.mutex = mutex
+    }
     
     func perform(_ block:(()->())) {
         mutex.sync(execute:{

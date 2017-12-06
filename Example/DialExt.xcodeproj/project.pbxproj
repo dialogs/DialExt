@@ -43,6 +43,7 @@
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74178AA61FD8224D0086A4A2 /* ThreadSafeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74178AA51FD8224D0086A4A2 /* ThreadSafeBox.swift */; };
 		741AC8511ECE4F74008A0318 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
 		741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */; };
 		74208EAA1F38C5710077EE85 /* AlertingPush.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74208EA81F38C5710077EE85 /* AlertingPush.proto.swift */; };
@@ -254,6 +255,7 @@
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		74170F2B1E79805B00E88FA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74178AA51FD8224D0086A4A2 /* ThreadSafeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeBox.swift; sourceTree = "<group>"; };
 		741AC8521ECE5012008A0318 /* DEDialogCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEDialogCellTests.swift; sourceTree = "<group>"; };
 		74208EA81F38C5710077EE85 /* AlertingPush.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertingPush.proto.swift; sourceTree = "<group>"; };
 		74208EA91F38C5710077EE85 /* Dialog.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.proto.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				74313A611E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift */,
 				74C9A50D1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift */,
 				74313A5E1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift */,
+				74178AA51FD8224D0086A4A2 /* ThreadSafeBox.swift */,
 			);
 			path = GroupContainer;
 			sourceTree = "<group>";
@@ -1235,6 +1238,7 @@
 				74C9A50E1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift in Sources */,
 				74A5DFB71ED6D01900CE254B /* DEHttpRequestBodyFile.swift in Sources */,
 				74935E271ED9CA17005331A9 /* DEUploader.swift in Sources */,
+				74178AA61FD8224D0086A4A2 /* ThreadSafeBox.swift in Sources */,
 				74935E2B1ED9CA17005331A9 /* DEUploadPreparedItem.swift in Sources */,
 				74E231FF1EA51B17006C243D /* DESharedDialogsPresentationViewController.swift in Sources */,
 				74D017D31F02B18F008C8536 /* UNNotificationContent+CryptoMessage.swift in Sources */,

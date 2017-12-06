@@ -261,6 +261,47 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         })
     }
     
+    private var configSynchroznier: ConfigSynchronizer! = nil
+    private func loadEndpointAddress(success: @escaping ((URL)->()), failure: ((Error)->())? = nil) {
+        
+        var finished = false
+        
+        func fail(_ error: Error) {
+            guard !finished else {
+                return
+            }
+            finished = true
+            failure?(error)
+        }
+        
+        func finish(_ url: URL) {
+            guard !finished else {
+                return
+            }
+            finished = true
+            success(url)
+        }
+        
+        self.configSynchroznier = ConfigSynchronizer.init(groupId: self.config.appGroup)
+        self.configSynchroznier.representer.onDidChangeRepresentation = { [weak self] config, _ in
+            guard let endpointLink = config.sharingEndpoint else {
+                fail(DEUploadError.noServerApiURL)
+                return
+            }
+            guard let url = URL.init(string: endpointLink) else {
+                fail(DEUploadError.invalidServerApiURL)
+                return
+            }
+            finish(url)
+        }
+        self.configSynchroznier.representer.onFailToSyncRepresentation = { error in
+            var targetError: Error = error ?? DEUploadError.unknownError
+            fail(targetError)
+        }
+        self.configSynchroznier.representer.targetQueue = .main
+        self.configSynchroznier.representer.bind()
+    }
+    
     private func handleFilesUploadingFinished(success: Bool, error:Error? ) {
         if !success {
             if let alert = self.alert, self.presentedViewController == alert {
