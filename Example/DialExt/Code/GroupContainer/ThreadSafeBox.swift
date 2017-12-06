@@ -36,6 +36,13 @@ public class ThreadSafeBox<V> {
         self.unsafeValue = value
     }
     
+    public func safe(_ block: ((V?)->())) {
+        mutex.sync(execute: {
+            let value = self.unsafeValue
+            block(value)
+        })
+    }
+    
     private func perform(_ block:(()->())) {
         mutex.sync(execute:{
             block()
