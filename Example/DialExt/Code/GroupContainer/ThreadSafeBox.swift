@@ -31,7 +31,7 @@ public class ThreadSafeBox<V> {
     
     private var unsafeValue: V? = nil
     
-    public init(mutex : PThreadMutex, value: V?) {
+    public init(mutex : PThreadMutex, value: V? = nil) {
         self.mutex = mutex
         self.unsafeValue = value
     }
