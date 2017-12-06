@@ -31,8 +31,9 @@ public class ThreadSafeBox<V> {
     
     private var unsafeValue: V? = nil
     
-    public init(mutex : PThreadMutex) {
+    public init(mutex : PThreadMutex, value: V?) {
         self.mutex = mutex
+        self.unsafeValue = value
     }
     
     private func perform(_ block:(()->())) {
