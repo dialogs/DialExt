@@ -283,7 +283,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         }
         
         self.configSynchroznier = ConfigSynchronizer.init(groupId: self.config.appGroup)
-        self.configSynchroznier.representer.onDidChangeRepresentation = { [weak self] config, _ in
+        self.configSynchroznier.representer.onDidChangeRepresentation = { config, _ in
             guard let endpointLink = config.sharingEndpoint else {
                 fail(DEUploadError.noServerApiURL)
                 return
@@ -295,7 +295,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             finish(url)
         }
         self.configSynchroznier.representer.onFailToSyncRepresentation = { error in
-            var targetError: Error = error ?? DEUploadError.unknownError
+            let targetError: Error = error ?? DEUploadError.unknownError
             fail(targetError)
         }
         self.configSynchroznier.representer.targetQueue = .main
