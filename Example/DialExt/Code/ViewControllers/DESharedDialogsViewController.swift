@@ -153,6 +153,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         return !text.isEmpty
     }
     
+    private var endpointUrl: URL! = nil
+    
     @IBOutlet public private(set) var tableView: UITableView!
     
     @IBOutlet public private(set) var sendView: UIView!
@@ -219,9 +221,23 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         
         NotificationCenter.default.addObserver(forName: Notification.Name.KeyboardListenerDidDetectEvent,
                                                object: KeyboardListener.shared,
-                                               queue: nil) { [unowned self] (notification) in
+                                               queue: nil) { [weak self] (notification) in
                                                 let event = notification.userInfo![KeyboardListener.eventUserInfoKey] as! KeyboardEvent
-                                                self.view.animateKeyboardEvent(event, bottomConstraint: self.contentBottomConstraint)
+                                                if let controller = self {
+                                                controller.view.animateKeyboardEvent(event, bottomConstraint: (controller.contentBottomConstraint))
+                                                    
+                                                }
+        }
+        
+        self.view.isUserInteractionEnabled = false
+        
+        self.loadEndpointAddress(success: { [weak self]  (url) in
+            self?.endpointUrl = url
+            self?.view.isUserInteractionEnabled = true
+        }) { [weak self] (error) in
+            self?.view.isUserInteractionEnabled = true
+            DEErrorLog("Error loading endpoint url. \(error)")
+            self?.setEndpointUrlFromConfig()
         }
         
         self.uploader.onDidChangeProgress = { [unowned self] progress in
@@ -234,6 +250,14 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         self.uploader.onDidFinish = { [unowned self] success, error in
             self.handleFilesUploadingFinished(success: success, error: error)
         }
+    }
+    
+    private func setEndpointUrlFromConfig() {
+        guard let endpoint = self.config.endpointUploadMethodURLs.first else {
+            DESErrorLog("No endpoint in config!")
+            return
+        }
+        self.endpointUrl = endpoint
     }
     
     public func resetDialogs(_ dialogs: [AppSharedDialog]) {
