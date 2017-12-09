@@ -16,10 +16,13 @@ public enum DECryptoError: LocalizedError {
     case failToGenerateSharedSecret
     case noNonceStored
     case wrongNonce
+    case nonceAlreadyUsedBefore
+    case failToProcessNonceList
     case failToDecodeMessage
     case failToStoreNewNonce
     case noSharedSecretStored
     case noKeychainGroupProvided
+    case nonceListLimitTooSmall
     
     public var errorDescription: String? {
         return localizedDescription
@@ -33,10 +36,13 @@ public enum DECryptoError: LocalizedError {
         case .failToGenerateSharedSecret: return "Fail to generate Shared Secret"
         case .noNonceStored: return "No stored nonce found"
         case .wrongNonce: return "Nonce is wrong"
+        case .nonceAlreadyUsedBefore: return "Nonce in list of already user nonces"
+        case .failToProcessNonceList: return "Problems with nonce list processing"
         case .failToDecodeMessage: return "Message decoding failed"
         case .failToStoreNewNonce: return "Could not store new nonce"
         case .noSharedSecretStored: return "No shared secret found"
         case .noKeychainGroupProvided: return "No keychain group providen by service subclass"
+        case .nonceListLimitTooSmall: return "Nonce list limit too small, should be at least '1'"
         }
     }
 }

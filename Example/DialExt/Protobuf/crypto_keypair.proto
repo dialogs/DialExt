@@ -4,3 +4,7 @@ message KeyPair {
    bytes secretKey = 1;
    bytes publicKey = 2;
 }
+
+message NonceList {
+    repeated bytes nonces = 1;
+}

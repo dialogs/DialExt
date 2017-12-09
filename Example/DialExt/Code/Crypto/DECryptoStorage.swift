@@ -19,18 +19,67 @@ public protocol DECryptoStorageReadable {
     func cryptoSharedSecret() throws -> DESharedSecret?
     
     func cryptoMessgingNonce() throws -> DEInt64BasedNonce?
+    
+    func cryptoNonceList() throws -> [DEInt64BasedNonce]?
 }
 
 
-public protocol DECryptoStorageWriteable {
+public protocol DECryptoStorageWriteable: DECryptoStorageReadable {
     
     /// Sets new messaging data
     func setCryptoSharedSecret(_ messaing: DESharedSecret) throws
     
     func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws
     
+    func removeCryptoMessagingNonce() throws
+    
+    func setCryptoNonceList(_ list: [DEInt64BasedNonce]) throws
+    
     /// Clears all data
     func resetCryptoStorage() throws
+}
+
+public extension DECryptoStorageWriteable {
+    
+    /**
+  Inserts nonce into a nonce list. Removes last nonce if needed.
+     Limit is 50.
+ */
+    func pushNonceToList(_ nonce: DEInt64BasedNonce) throws {
+        try self.pushNonceToList(nonce, limit: 50)
+    }
+    
+    /**
+     Inserts nonce into a nonce list. Removes last nonce from list if needed.
+     Limit should be postive (> 0). Recommended is 50 (you can use 'pushNonceToList' instead).
+     */
+    func pushNonceToList(_ nonce: DEInt64BasedNonce, limit: Int) throws {
+        let storedNonces = try self.cryptoNonceList()
+        
+        let list: [DEInt64BasedNonce]
+        if var nonces = storedNonces {
+            nonces.insert(nonce, at: 0)
+            nonces = Array(nonces.prefix(limit))
+            list = nonces
+        }
+        else {
+            list = [nonce]
+        }
+        try self.setCryptoNonceList(list)
+    }
+    
+    func migrateMessagingNonceToList() throws -> DEInt64BasedNonce? {
+        
+        guard let nonce = try self.cryptoMessgingNonce() else {
+            return nil
+        }
+        
+        try self.pushNonceToList(nonce)
+        
+        return nonce
+        
+    }
+    
 }
 
 public typealias DECryptoStorage = DECryptoStorageReadable & DECryptoStorageWriteable
@@ -65,6 +114,10 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
         try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .messagingNonce, data: data))
     }
     
+    public func removeCryptoMessagingNonce() throws {
+        try self.delete(query: .deleteCryptoItemQuery(service: .messagingNonce))
+    }
+    
     public func cryptoMessgingNonce() throws -> DEInt64BasedNonce? {
         let storedData = try self.readNullableData(query: .readCryptoItemQuery(service: .messagingNonce))
         guard let data = storedData else {
@@ -74,11 +127,27 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
         return nonce
     }
     
+    public func setCryptoNonceList(_ list: [DEInt64BasedNonce]) throws {
+        let datas: [Data] = list.map{$0.nonce}
+        let builder = NonceList.getBuilder()
+        builder.nonces = datas
+        let list = try builder.build()
+        let listData = list.data() as NSData
+        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .nonceList, data: listData))
+    }
+    
+    public func cryptoNonceList() throws -> [DEInt64BasedNonce]? {
+        guard let storedData = try self.readNullableData(query: .readCryptoItemQuery(service: .nonceList)) else {
+            return nil
+        }
+        
+        let list = try NonceList.parseFrom(data: storedData)
+        let nonces: [DEInt64BasedNonce] = list.nonces.map{DEInt64BasedNonce.init(data: $0)}
+        return nonces
+    }
+    
     public func resetCryptoStorage() throws {
-        let itemsToDelete: [DEKeychainQuery.Access.CryptoService] = [
-            DEKeychainQuery.Access.CryptoService.sharedSecret,
-            DEKeychainQuery.Access.CryptoService.messagingNonce
-        ]
+        let itemsToDelete = DEKeychainQuery.Access.CryptoService.all
         
         itemsToDelete.forEach { (service) in
             do {
@@ -105,6 +174,7 @@ internal extension DEKeychainQuery.Service {
     
     internal static let cryptoMessagingKey = DEKeychainQuery.Service.init("im.dlg.crypto.messaging")
     internal static let cryptoSharedSecret = DEKeychainQuery.Service.init("im.dlg.crypto.shared_secret")
+    internal static let cryptoMessagingNonceList = DEKeychainQuery.Service.init("im.dlg.crypto.nonce.list")
     
 }
 
@@ -114,15 +184,19 @@ internal extension DEKeychainQuery.Access {
     internal enum CryptoService {
         
         case messagingNonce
-        
         case sharedSecret
+        case nonceList
+        
+        internal static let all: [CryptoService] = [.messagingNonce, .sharedSecret, .nonceList]
         
         var service: DEKeychainQuery.Service {
             switch self {
             case .messagingNonce: return .cryptoMessagingKey
             case .sharedSecret: return .cryptoSharedSecret
+            case .nonceList: return .cryptoMessagingNonceList
             }
         }
+        
     }
     
     private static let cryptoServiceDefaultAccount = "im.dlg.shared"

@@ -24,10 +24,13 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     
     private let decryptor: DECryptoIncomingDataDecrypting
     
+    private let nonceController: DENonceController
+    
     public init(storage: DECryptoStorage,
                 decryptor: DECryptoIncomingDataDecrypting = DECryptoIncomingDataDecryptor.init()) throws {
         self.storage = storage
         self.decryptor = decryptor
+        self.nonceController = DENonceController.init(storage: storage)
     }
     
     public func decodeIncomingMessage(_ data: Data, nonce: DEInt64BasedNonce) throws -> DecodedMessage {
@@ -52,9 +55,9 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     }
     
     private func decrypt(_ data: Data, nonce: DEInt64BasedNonce, shouldStoreNewNonce: Bool = true) throws -> Data {
-        guard try self.isValidNonce(nonce) else {
-            throw DECryptoError.wrongNonce
-        }
+        
+        try self.nonceController.validateNonce(nonce)
+        
         
         guard let secret = try self.storage.cryptoSharedSecret() else {
             throw DECryptoError.noSharedSecretStored
@@ -65,7 +68,7 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
         
         if shouldStoreNewNonce {
             do {
-                try self.storage.setCryptoMessagingNonce(nonce)
+                try self.nonceController.pushNonce(nonce)
             }
             catch {
                 throw DECryptoError.failToStoreNewNonce

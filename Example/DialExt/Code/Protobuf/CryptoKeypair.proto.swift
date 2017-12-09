@@ -10,7 +10,7 @@ import ProtocolBuffers
 public struct CryptoKeypairRoot {
     public static let `default` = CryptoKeypairRoot()
     public var extensionRegistry:ExtensionRegistry
-    
+
     init() {
         extensionRegistry = ExtensionRegistry()
         registerAllExtensions(registry: extensionRegistry)
@@ -21,7 +21,7 @@ public struct CryptoKeypairRoot {
 
 final public class KeyPair : GeneratedMessage {
     public typealias BuilderType = KeyPair.Builder
-    
+
     public static func == (lhs: KeyPair, rhs: KeyPair) -> Bool {
         if lhs === rhs {
             return true
@@ -32,13 +32,13 @@ final public class KeyPair : GeneratedMessage {
         fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
         return fieldCheck
     }
-    
+
     public fileprivate(set) var secretKey:Data! = nil
     public fileprivate(set) var hasSecretKey:Bool = false
-    
+
     public fileprivate(set) var publicKey:Data! = nil
     public fileprivate(set) var hasPublicKey:Bool = false
-    
+
     required public init() {
         super.init()
     }
@@ -57,9 +57,9 @@ final public class KeyPair : GeneratedMessage {
     override public func serializedSize() -> Int32 {
         var serialize_size:Int32 = memoizedSerializedSize
         if serialize_size != -1 {
-            return serialize_size
+         return serialize_size
         }
-        
+
         serialize_size = 0
         if hasSecretKey {
             serialize_size += secretKey.computeDataSize(fieldNumber: 1)
@@ -93,7 +93,7 @@ final public class KeyPair : GeneratedMessage {
         guard isInitialized() else {
             throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
         }
-        
+
         var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
         if hasSecretKey {
             jsonMap["secretKey"] = secretKey.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
@@ -133,10 +133,10 @@ final public class KeyPair : GeneratedMessage {
             return hashCode
         }
     }
-    
-    
+
+
     //Meta information declaration start
-    
+
     override public class func className() -> String {
         return "KeyPair"
     }
@@ -144,13 +144,13 @@ final public class KeyPair : GeneratedMessage {
         return "KeyPair"
     }
     //Meta information declaration end
-    
+
     final public class Builder : GeneratedMessageBuilder {
         fileprivate var builderResult:KeyPair = KeyPair()
         public func getMessage() -> KeyPair {
             return builderResult
         }
-        
+
         required override public init () {
             super.init()
         }
@@ -249,16 +249,16 @@ final public class KeyPair : GeneratedMessage {
             while (true) {
                 let protobufTag = try codedInputStream.readTag()
                 switch protobufTag {
-                case 0:
+                case 0: 
                     self.unknownFields = try unknownFieldsBuilder.build()
                     return self
-                    
+
                 case 10:
                     secretKey = try codedInputStream.readData()
-                    
+
                 case 18:
                     publicKey = try codedInputStream.readData()
-                    
+
                 default:
                     if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
                         unknownFields = try unknownFieldsBuilder.build()
@@ -280,19 +280,241 @@ final public class KeyPair : GeneratedMessage {
         override class public func fromJSONToBuilder(data:Data) throws -> KeyPair.Builder {
             let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
-                throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
             }
             return try KeyPair.Builder.decodeToBuilder(jsonMap:jsDataCast)
         }
     }
-    
+
+}
+
+final public class NonceList : GeneratedMessage {
+    public typealias BuilderType = NonceList.Builder
+
+    public static func == (lhs: NonceList, rhs: NonceList) -> Bool {
+        if lhs === rhs {
+            return true
+        }
+        var fieldCheck:Bool = (lhs.hashValue == rhs.hashValue)
+        fieldCheck = fieldCheck && (lhs.nonces == rhs.nonces)
+        fieldCheck = (fieldCheck && (lhs.unknownFields == rhs.unknownFields))
+        return fieldCheck
+    }
+
+    public fileprivate(set) var nonces:Array<Data> = Array<Data>()
+    required public init() {
+        super.init()
+    }
+    override public func isInitialized() -> Bool {
+        return true
+    }
+    override public func writeTo(codedOutputStream: CodedOutputStream) throws {
+        if !nonces.isEmpty {
+            for oneValuenonces in nonces {
+                try codedOutputStream.writeData(fieldNumber: 1, value:oneValuenonces)
+            }
+        }
+        try unknownFields.writeTo(codedOutputStream: codedOutputStream)
+    }
+    override public func serializedSize() -> Int32 {
+        var serialize_size:Int32 = memoizedSerializedSize
+        if serialize_size != -1 {
+         return serialize_size
+        }
+
+        serialize_size = 0
+        var dataSizeNonces:Int32 = 0
+        for oneValuenonces in nonces {
+            dataSizeNonces += oneValuenonces.computeDataSizeNoTag()
+        }
+        serialize_size += dataSizeNonces
+        serialize_size += 1 * Int32(nonces.count)
+        serialize_size += unknownFields.serializedSize()
+        memoizedSerializedSize = serialize_size
+        return serialize_size
+    }
+    public class func getBuilder() -> NonceList.Builder {
+        return NonceList.classBuilder() as! NonceList.Builder
+    }
+    public func getBuilder() -> NonceList.Builder {
+        return classBuilder() as! NonceList.Builder
+    }
+    override public class func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return NonceList.Builder()
+    }
+    override public func classBuilder() -> ProtocolBuffersMessageBuilder {
+        return NonceList.Builder()
+    }
+    public func toBuilder() throws -> NonceList.Builder {
+        return try NonceList.builderWithPrototype(prototype:self)
+    }
+    public class func builderWithPrototype(prototype:NonceList) throws -> NonceList.Builder {
+        return try NonceList.Builder().mergeFrom(other:prototype)
+    }
+    override public func encode() throws -> Dictionary<String,Any> {
+        guard isInitialized() else {
+            throw ProtocolBuffersError.invalidProtocolBuffer("Uninitialized Message")
+        }
+
+        var jsonMap:Dictionary<String,Any> = Dictionary<String,Any>()
+        if !nonces.isEmpty {
+            var jsonArrayNonces:Array<String> = []
+            for oneValueNonces in nonces {
+                jsonArrayNonces.append(oneValueNonces.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0)))
+            }
+            jsonMap["nonces"] = jsonArrayNonces
+        }
+        return jsonMap
+    }
+    override class public func decode(jsonMap:Dictionary<String,Any>) throws -> NonceList {
+        return try NonceList.Builder.decodeToBuilder(jsonMap:jsonMap).build()
+    }
+    override class public func fromJSON(data:Data) throws -> NonceList {
+        return try NonceList.Builder.fromJSONToBuilder(data:data).build()
+    }
+    override public func getDescription(indent:String) throws -> String {
+        var output = ""
+        var noncesElementIndex:Int = 0
+        for oneValueNonces in nonces  {
+            output += "\(indent) nonces[\(noncesElementIndex)]: \(oneValueNonces)\n"
+            noncesElementIndex += 1
+        }
+        output += unknownFields.getDescription(indent: indent)
+        return output
+    }
+    override public var hashValue:Int {
+        get {
+            var hashCode:Int = 7
+            for oneValueNonces in nonces {
+                hashCode = (hashCode &* 31) &+ oneValueNonces.hashValue
+            }
+            hashCode = (hashCode &* 31) &+  unknownFields.hashValue
+            return hashCode
+        }
+    }
+
+
+    //Meta information declaration start
+
+    override public class func className() -> String {
+        return "NonceList"
+    }
+    override public func className() -> String {
+        return "NonceList"
+    }
+    //Meta information declaration end
+
+    final public class Builder : GeneratedMessageBuilder {
+        fileprivate var builderResult:NonceList = NonceList()
+        public func getMessage() -> NonceList {
+            return builderResult
+        }
+
+        required override public init () {
+            super.init()
+        }
+        public var nonces:Array<Data> {
+            get {
+                return builderResult.nonces
+            }
+            set (array) {
+                builderResult.nonces = array
+            }
+        }
+        @discardableResult
+        public func setNonces(_ value:Array<Data>) -> NonceList.Builder {
+            self.nonces = value
+            return self
+        }
+        @discardableResult
+        public func clearNonces() -> NonceList.Builder {
+            builderResult.nonces.removeAll(keepingCapacity: false)
+            return self
+        }
+        override public var internalGetResult:GeneratedMessage {
+            get {
+                return builderResult
+            }
+        }
+        @discardableResult
+        override public func clear() -> NonceList.Builder {
+            builderResult = NonceList()
+            return self
+        }
+        override public func clone() throws -> NonceList.Builder {
+            return try NonceList.builderWithPrototype(prototype:builderResult)
+        }
+        override public func build() throws -> NonceList {
+            try checkInitialized()
+            return buildPartial()
+        }
+        public func buildPartial() -> NonceList {
+            let returnMe:NonceList = builderResult
+            return returnMe
+        }
+        @discardableResult
+        public func mergeFrom(other:NonceList) throws -> NonceList.Builder {
+            if other == NonceList() {
+                return self
+            }
+            if !other.nonces.isEmpty {
+                builderResult.nonces += other.nonces
+            }
+            try merge(unknownField: other.unknownFields)
+            return self
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream) throws -> NonceList.Builder {
+            return try mergeFrom(codedInputStream: codedInputStream, extensionRegistry:ExtensionRegistry())
+        }
+        @discardableResult
+        override public func mergeFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> NonceList.Builder {
+            let unknownFieldsBuilder:UnknownFieldSet.Builder = try UnknownFieldSet.builderWithUnknownFields(copyFrom:self.unknownFields)
+            while (true) {
+                let protobufTag = try codedInputStream.readTag()
+                switch protobufTag {
+                case 0: 
+                    self.unknownFields = try unknownFieldsBuilder.build()
+                    return self
+
+                case 10:
+                    nonces += [try codedInputStream.readData()]
+
+                default:
+                    if (!(try parse(codedInputStream:codedInputStream, unknownFields:unknownFieldsBuilder, extensionRegistry:extensionRegistry, tag:protobufTag))) {
+                        unknownFields = try unknownFieldsBuilder.build()
+                        return self
+                    }
+                }
+            }
+        }
+        class override public func decodeToBuilder(jsonMap:Dictionary<String,Any>) throws -> NonceList.Builder {
+            let resultDecodedBuilder = NonceList.Builder()
+            if let jsonValueNonces = jsonMap["nonces"] as? Array<String> {
+                var jsonArrayNonces:Array<Data> = []
+                for oneValueNonces in jsonValueNonces {
+                    jsonArrayNonces.append(Data(base64Encoded:oneValueNonces, options: Data.Base64DecodingOptions(rawValue:0))!)
+                }
+                resultDecodedBuilder.nonces = jsonArrayNonces
+            }
+            return resultDecodedBuilder
+        }
+        override class public func fromJSONToBuilder(data:Data) throws -> NonceList.Builder {
+            let jsonData = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions(rawValue: 0))
+            guard let jsDataCast = jsonData as? Dictionary<String,Any> else {
+              throw ProtocolBuffersError.invalidProtocolBuffer("Invalid JSON data")
+            }
+            return try NonceList.Builder.decodeToBuilder(jsonMap:jsDataCast)
+        }
+    }
+
 }
 
 extension KeyPair: GeneratedMessageProtocol {
     public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<KeyPair> {
         var mergedArray = Array<KeyPair>()
         while let value = try parseDelimitedFrom(inputStream: inputStream) {
-            mergedArray.append(value)
+          mergedArray.append(value)
         }
         return mergedArray
     }
@@ -328,14 +550,14 @@ extension KeyPair: GeneratedMessageProtocol {
 extension KeyPair.Builder: GeneratedMessageBuilderProtocol {
     public typealias GeneratedMessageType = KeyPair
     public subscript(key: String) -> Any? {
-        get {
+        get { 
             switch key {
             case "secretKey": return self.secretKey
             case "publicKey": return self.publicKey
             default: return nil
             }
         }
-        set (newSubscriptValue) {
+        set (newSubscriptValue) { 
             switch key {
             case "secretKey":
                 guard let newSubscriptValue = newSubscriptValue as? Data else {
@@ -347,6 +569,63 @@ extension KeyPair.Builder: GeneratedMessageBuilderProtocol {
                     return
                 }
                 self.publicKey = newSubscriptValue
+            default: return
+            }
+        }
+    }
+}
+extension NonceList: GeneratedMessageProtocol {
+    public class func parseArrayDelimitedFrom(inputStream: InputStream) throws -> Array<NonceList> {
+        var mergedArray = Array<NonceList>()
+        while let value = try parseDelimitedFrom(inputStream: inputStream) {
+          mergedArray.append(value)
+        }
+        return mergedArray
+    }
+    public class func parseDelimitedFrom(inputStream: InputStream) throws -> NonceList? {
+        return try NonceList.Builder().mergeDelimitedFrom(inputStream: inputStream)?.build()
+    }
+    public class func parseFrom(data: Data) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(data: data, extensionRegistry:CryptoKeypairRoot.default.extensionRegistry).build()
+    }
+    public class func parseFrom(data: Data, extensionRegistry:ExtensionRegistry) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(data: data, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(inputStream: InputStream) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(inputStream: inputStream).build()
+    }
+    public class func parseFrom(inputStream: InputStream, extensionRegistry:ExtensionRegistry) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(inputStream: inputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(codedInputStream: codedInputStream).build()
+    }
+    public class func parseFrom(codedInputStream: CodedInputStream, extensionRegistry:ExtensionRegistry) throws -> NonceList {
+        return try NonceList.Builder().mergeFrom(codedInputStream: codedInputStream, extensionRegistry:extensionRegistry).build()
+    }
+    public subscript(key: String) -> Any? {
+        switch key {
+        case "nonces": return self.nonces
+        default: return nil
+        }
+    }
+}
+extension NonceList.Builder: GeneratedMessageBuilderProtocol {
+    public typealias GeneratedMessageType = NonceList
+    public subscript(key: String) -> Any? {
+        get { 
+            switch key {
+            case "nonces": return self.nonces
+            default: return nil
+            }
+        }
+        set (newSubscriptValue) { 
+            switch key {
+            case "nonces":
+                guard let newSubscriptValue = newSubscriptValue as? Array<Data> else {
+                    return
+                }
+                self.nonces = newSubscriptValue
             default: return
             }
         }
