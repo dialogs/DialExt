@@ -57,7 +57,7 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     public var onDidChangeRepresentation:((Representation, UpdateReason) -> ())? = nil
     
     /// Settings this variable is thread-unsafe. Set it before start or change it after start only on target queue.
-    public var onFailToSyncRepresentation:((Error?) -> ())? = nil
+    public var onFailToSyncRepresentation:((Error) -> ())? = nil
     
     public private(set) var isBinded: Bool = false
     
@@ -194,4 +194,18 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
         redoRepresent(dueUpdate: true)
     }
     
+}
+
+public extension Error {
+    var isFileNotFoundError: Bool {
+        if let nserror = self as? NSError {
+            if nserror.domain == NSCocoaErrorDomain {
+                let allowedCodes: [Int] = [NSFileNoSuchFileError, NSFileReadNoSuchFileError]
+                if allowedCodes.contains(nserror.code) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
