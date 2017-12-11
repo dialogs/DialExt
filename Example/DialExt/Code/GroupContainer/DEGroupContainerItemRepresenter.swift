@@ -12,7 +12,7 @@ import Foundation
 
 public enum DEGroupContainerItemRepresenterResult<Representation> {
     case success(Representation)
-    case failure(Error?)
+    case failure(Error)
 }
 
 
@@ -101,7 +101,7 @@ public class DEGroupContainerItemRepresenter<Representation> {
                                 result = EncodeResult.success(data)
                             }
                             else {
-                                result = EncodeResult.failure(error)
+                                result = EncodeResult.failure(error!)
                             }
                             
                             self.performOnTargetQueue {

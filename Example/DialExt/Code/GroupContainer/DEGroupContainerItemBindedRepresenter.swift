@@ -141,7 +141,7 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
         }
     }
     
-    private func handleFirstLoadingFailure(error: Error?, isUpdate: Bool) {
+    private func handleFirstLoadingFailure(error: Error, isUpdate: Bool) {
         print("Fail to sync representation: \(String(describing: error))")
         self.signalRepresentationUpdateFailed(error: error, isUpdate: isUpdate)
     }
@@ -176,7 +176,7 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
         self.signalRepresentationUpdate(reason: reason)
     }
     
-    private func signalRepresentationUpdateFailed(error: Error?, isUpdate: Bool) {
+    private func signalRepresentationUpdateFailed(error: Error, isUpdate: Bool) {
         self.targetQueue.async {
             self.onFailToSyncRepresentation?(error)
         }
@@ -198,12 +198,12 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
 
 public extension Error {
     var isFileNotFoundError: Bool {
-        if let nserror = self as? NSError {
-            if nserror.domain == NSCocoaErrorDomain {
-                let allowedCodes: [Int] = [NSFileNoSuchFileError, NSFileReadNoSuchFileError]
-                if allowedCodes.contains(nserror.code) {
-                    return true
-                }
+        
+        let nserror = self as NSError
+        if nserror.domain == NSCocoaErrorDomain {
+            let allowedCodes: [Int] = [NSFileNoSuchFileError, NSFileReadNoSuchFileError]
+            if allowedCodes.contains(nserror.code) {
+                return true
             }
         }
         return false

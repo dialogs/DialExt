@@ -11,7 +11,7 @@ import Foundation
 
 public protocol DEGroupContainerItem: class {
     
-    func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?)
+    func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error) -> ())?)
     
     func writeData(_ data: Data, onFinish: ((Bool, Error?) -> ())?)
     
@@ -45,7 +45,7 @@ public class DEDebugContainerItem: DEGroupContainerItem {
         self.data = data
     }
     
-    public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
+    public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error) -> ())?) {
         self.queue.async {
             let data = self.data
             DispatchQueue.main.async {
@@ -148,7 +148,7 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
     
     // MARK: - Public
     
-    public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error?) -> ())?) {
+    public func readData(_ onSuccess: @escaping ((Data?) -> ()), onFailure: ((Error) -> ())?) {
         let callbackQueue = self.callbackQueue
         self.workQueue.addOperation {
             var resultError: Error? = nil
@@ -178,7 +178,7 @@ public class DEGroupContainerFilePresenter: NSObject, DEGroupContainerItem {
                     onSuccess(data)
                 }
                 else {
-                    onFailure?(resultError)
+                    onFailure?(resultError!)
                 }
             }, on: callbackQueue)
             
