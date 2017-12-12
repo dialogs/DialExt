@@ -26,6 +26,10 @@ public class DENonceController {
                 throw DECryptoError.nonceAlreadyUsedBefore
             }
             
+            guard nonceList.count > 0 else {
+                return
+            }
+            
             guard let minNonce = nonceList.min() else {
                 throw DECryptoError.failToProcessNonceList
             }

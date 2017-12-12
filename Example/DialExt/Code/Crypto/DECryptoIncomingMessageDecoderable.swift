@@ -39,14 +39,6 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
         return DecodedMessage(alertingPush: push)
     }
     
-    private func isValidNonce(_ nonce: DEInt64BasedNonce) throws -> Bool {
-        var lastNonce = DEInt64BasedNonce.init(Int64.min)
-        if let storedNonce = try self.storage.cryptoMessgingNonce() {
-            lastNonce = storedNonce
-        }
-        return nonce.value > lastNonce.value
-    }
-    
     private func isNoResultsKeychainError(_ error: Error) -> Bool {
         if let keychainError = error as? DEKeychainQueryError, keychainError == DEKeychainQueryError.noResults {
             return true
@@ -57,7 +49,6 @@ public class DECryptoIncomingMessageDecoder: DECryptoIncomingMessageDecoderable 
     private func decrypt(_ data: Data, nonce: DEInt64BasedNonce, shouldStoreNewNonce: Bool = true) throws -> Data {
         
         try self.nonceController.validateNonce(nonce)
-        
         
         guard let secret = try self.storage.cryptoSharedSecret() else {
             throw DECryptoError.noSharedSecretStored

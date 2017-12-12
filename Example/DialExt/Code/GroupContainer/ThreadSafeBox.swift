@@ -16,7 +16,7 @@ public class ThreadSafeBox<V> {
         
         set {
             perform {
-                self.unsafeValue = value
+                self.unsafeValue = newValue
             }
         }
         
