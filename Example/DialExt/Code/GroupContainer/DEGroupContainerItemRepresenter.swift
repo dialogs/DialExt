@@ -15,23 +15,6 @@ public enum DEGroupContainerItemRepresenterResult<Representation> {
     case failure(Error)
 }
 
-
-open class DEGroupContainerItemDataEncoder<Representation> {
-    
-    open func decode(data: Data) throws -> Representation {
-        fatalError("Should be implemented in subclass")
-    }
-    
-    open func encode(representation: Representation) throws -> Data {
-        fatalError("Should be implemented in subclass")
-    }
-    
-    public init() {
-        
-    }
-    
-}
-
 /// Binds to container file and autoupdate it's representation.
 public class DEGroupContainerItemRepresenter<Representation> {
     

@@ -21,6 +21,8 @@ public protocol DECryptoStorageReadable {
     func cryptoMessgingNonce() throws -> DEInt64BasedNonce?
     
     func cryptoNonceList() throws -> [DEInt64BasedNonce]?
+    
+    func cryptoLogs() throws -> String?
 }
 
 
@@ -30,6 +32,8 @@ public protocol DECryptoStorageWriteable: DECryptoStorageReadable {
     func setCryptoSharedSecret(_ messaing: DESharedSecret) throws
     
     func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws
+    
+    func setCryptoLogs(_ logs: String) throws
     
     func removeCryptoMessagingNonce() throws
     
@@ -80,6 +84,19 @@ public extension DECryptoStorageWriteable {
         
     }
     
+    func appendLogs(_ line: String, linesLimit: Int = 75) throws {
+        let limit = max(1, linesLimit)
+        
+        var lines: [String] = []
+        if let logs = try self.cryptoLogs() {
+            lines = logs.components(separatedBy: .newlines)
+        }
+        lines.insert(line, at: 0)
+        lines = Array(lines.prefix(limit))
+        let newLogs = lines.joined(separator: "\n")
+        try self.setCryptoLogs(newLogs)
+    }
+    
 }
 
 public typealias DECryptoStorage = DECryptoStorageReadable & DECryptoStorageWriteable
@@ -112,6 +129,23 @@ extension DEGroupedKeychainDataProvider: DECryptoStorageWriteable, DECryptoStora
     public func setCryptoMessagingNonce(_ nonce: DEInt64BasedNonce) throws {
         let data = nonce.nonce as NSData
         try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .messagingNonce, data: data))
+    }
+    
+    public func setCryptoLogs(_ logs: String) throws {
+        guard let data = logs.data(using: .utf8) else {
+            throw DECryptoError.stringEncodingFailed
+        }
+        try self.addOrUpdateData(query: .writeCryptoItemQuery(service: .logs, data: data as NSData))
+    }
+    
+    public func cryptoLogs() throws -> String? {
+        let data = try self.readNullableData(query: .readCryptoItemQuery(service: .logs))
+        if let data = data {
+            if let string = String.init(data: data, encoding: .utf8) {
+                return string
+            }
+        }
+        return nil
     }
     
     public func removeCryptoMessagingNonce() throws {
@@ -175,6 +209,7 @@ internal extension DEKeychainQuery.Service {
     internal static let cryptoMessagingKey = DEKeychainQuery.Service.init("im.dlg.crypto.messaging")
     internal static let cryptoSharedSecret = DEKeychainQuery.Service.init("im.dlg.crypto.shared_secret")
     internal static let cryptoMessagingNonceList = DEKeychainQuery.Service.init("im.dlg.crypto.nonce.list")
+    internal static let cryptoLogs = DEKeychainQuery.Service.init("im.dlg.crypto.logs")
     
 }
 
@@ -186,6 +221,7 @@ internal extension DEKeychainQuery.Access {
         case messagingNonce
         case sharedSecret
         case nonceList
+        case logs
         
         internal static let all: [CryptoService] = [.messagingNonce, .sharedSecret, .nonceList]
         
@@ -194,6 +230,7 @@ internal extension DEKeychainQuery.Access {
             case .messagingNonce: return .cryptoMessagingKey
             case .sharedSecret: return .cryptoSharedSecret
             case .nonceList: return .cryptoMessagingNonceList
+            case .logs: return .cryptoLogs
             }
         }
         

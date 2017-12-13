@@ -50,6 +50,8 @@
 		74208EAB1F38C5710077EE85 /* Dialog.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74208EA91F38C5710077EE85 /* Dialog.proto.swift */; };
 		742CAB331E9B821200965906 /* DEProtobufItemDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742CAB321E9B821200965906 /* DEProtobufItemDataEncoder.swift */; };
 		742CAB351E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742CAB341E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift */; };
+		742D66A01FE1388F000554A3 /* DEGroupContainerItemDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742D669F1FE1388F000554A3 /* DEGroupContainerItemDataEncoder.swift */; };
+		742D66A21FE13AE0000554A3 /* DEGroupLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742D66A11FE13AE0000554A3 /* DEGroupLogger.swift */; };
 		742DC8D71EAA045800ABDA55 /* NSExtensionItem+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742DC8D51EAA045800ABDA55 /* NSExtensionItem+DialExt.swift */; };
 		742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742DC8D61EAA045800ABDA55 /* NSItemProvider+DialExt.swift */; };
 		742FCF6A1E8266C9003D1FBC /* dialog.proto in Resources */ = {isa = PBXBuildFile; fileRef = 742FCF691E8266C9003D1FBC /* dialog.proto */; };
@@ -263,6 +265,8 @@
 		74208EA91F38C5710077EE85 /* Dialog.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.proto.swift; sourceTree = "<group>"; };
 		742CAB321E9B821200965906 /* DEProtobufItemDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEProtobufItemDataEncoder.swift; sourceTree = "<group>"; };
 		742CAB341E9B918900965906 /* DEGroupContainerItemRepresenter+SharedDialogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DEGroupContainerItemRepresenter+SharedDialogs.swift"; sourceTree = "<group>"; };
+		742D669F1FE1388F000554A3 /* DEGroupContainerItemDataEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEGroupContainerItemDataEncoder.swift; sourceTree = "<group>"; };
+		742D66A11FE13AE0000554A3 /* DEGroupLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEGroupLogger.swift; sourceTree = "<group>"; };
 		742DC8D51EAA045800ABDA55 /* NSExtensionItem+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSExtensionItem+DialExt.swift"; sourceTree = "<group>"; };
 		742DC8D61EAA045800ABDA55 /* NSItemProvider+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+DialExt.swift"; sourceTree = "<group>"; };
 		742FCF691E8266C9003D1FBC /* dialog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dialog.proto; sourceTree = "<group>"; };
@@ -544,10 +548,12 @@
 				74065ECE1E8113A900C535B6 /* DEGroupContainer.swift */,
 				74065ECF1E8113A900C535B6 /* DEGroupContainerItem.swift */,
 				74BAF9481E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift */,
+				742D669F1FE1388F000554A3 /* DEGroupContainerItemDataEncoder.swift */,
 				74F7D1FD1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift */,
 				74313A611E9E5EEA002AAF55 /* DEGroupContainerItemBindedRepresenter+Queuer.swift */,
 				74C9A50D1E9F6E79008B3CF6 /* DEGroupContainerItemBindedRepresenterQueuer.swift */,
 				74313A5E1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift */,
+				742D66A11FE13AE0000554A3 /* DEGroupLogger.swift */,
 				74178AA51FD8224D0086A4A2 /* ThreadSafeBox.swift */,
 			);
 			path = GroupContainer;
@@ -1303,6 +1309,7 @@
 				74326E0B1EAE12CF0016A1F1 /* Localization.swift in Sources */,
 				74424F1F1FB306F70014F4F5 /* DEText.swift in Sources */,
 				74065EEF1E8113A900C535B6 /* Dictionary+DialExt.swift in Sources */,
+				742D66A01FE1388F000554A3 /* DEGroupContainerItemDataEncoder.swift in Sources */,
 				74065F011E8113A900C535B6 /* AppSharedDialogListContext+DialExt.swift in Sources */,
 				744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */,
 				74065EF91E8113A900C535B6 /* UIViewAnimationOptions.swift in Sources */,
@@ -1317,6 +1324,7 @@
 				74F7E0BB1EEB05D000DE3891 /* Geometry+DialExt.swift in Sources */,
 				749542331F13B55A008F8BA5 /* DEGroupedKeychainDataProvider.swift in Sources */,
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
+				742D66A21FE13AE0000554A3 /* DEGroupLogger.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
 				7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */,

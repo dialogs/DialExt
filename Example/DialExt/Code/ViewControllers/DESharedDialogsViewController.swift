@@ -319,8 +319,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
             finish(url)
         }
         self.configSynchroznier.representer.onFailToSyncRepresentation = { error in
-            let targetError: Error = error ?? DEUploadError.unknownError
-            fail(targetError)
+            fail(error)
         }
         self.configSynchroznier.representer.targetQueue = .main
         self.configSynchroznier.representer.bind()

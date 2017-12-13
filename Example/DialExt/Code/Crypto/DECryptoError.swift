@@ -23,6 +23,8 @@ public enum DECryptoError: LocalizedError {
     case noSharedSecretStored
     case noKeychainGroupProvided
     case nonceListLimitTooSmall
+    case stringEncodingFailed
+    case stringDecodingFailed
     
     public var errorDescription: String? {
         return localizedDescription
@@ -43,6 +45,8 @@ public enum DECryptoError: LocalizedError {
         case .noSharedSecretStored: return "No shared secret found"
         case .noKeychainGroupProvided: return "No keychain group providen by service subclass"
         case .nonceListLimitTooSmall: return "Nonce list limit too small, should be at least '1'"
+        case .stringDecodingFailed: return "Fail to read string: decoding failed"
+        case .stringEncodingFailed: return "Fail to write string: encoding failed"
         }
     }
 }

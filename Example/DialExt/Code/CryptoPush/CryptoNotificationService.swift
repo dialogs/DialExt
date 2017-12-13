@@ -21,6 +21,8 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     
     open var debugModeTextReplacementEnabled: Bool = false
     
+    open var debugLogsAllowed: Bool = false
+    
     open var insertSecureSymbolIntoTitle: Bool = true
     
     open var insertSpecialSecureSymbolToDecryptFailedTitle: Bool = true
@@ -76,6 +78,10 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     }
     
     override open func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        
+        if self.debugLogsAllowed {
+            DEGroupLogger.setupSharedLogger(keychainGroup: self.keychainGroup)
+        }
         
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)

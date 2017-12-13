@@ -20,8 +20,17 @@ public class DENonceController {
         try self.storage.pushNonceToList(nonce)
     }
     
+    private func log(list: [DEInt64BasedNonce], nonce: DEInt64BasedNonce) {
+        let listDescr = list.map({$0.value.description})
+        let data = Date().description
+        let log = "[\(data)]: got \(nonce.value.description), checking: [\(listDescr)]"
+        DEGroupLog(log)
+    }
+    
     public func validateNonce(_ nonce: DEInt64BasedNonce) throws {
         if let nonceList = try self.storage.cryptoNonceList() {
+            self.log(list: nonceList, nonce: nonce)
+            
             if nonceList.contains(nonce) {
                 throw DECryptoError.nonceAlreadyUsedBefore
             }
