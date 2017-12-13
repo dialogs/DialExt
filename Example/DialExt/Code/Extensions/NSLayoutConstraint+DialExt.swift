@@ -57,6 +57,12 @@ extension NSLayoutConstraint {
         let constraints = horizontalConstraints + verticalConstraints
         return constraints
     }
+    
+    public func isRelates(view1: AnyObject, view2: AnyObject) -> Bool {
+        return (self.firstItem === view1 && self.secondItem === view2) ||
+            (self.firstItem === view2 && self.secondItem === view1)
+    }
+    
 }
 
 public extension Array where Element == NSLayoutConstraint {
