@@ -53,7 +53,6 @@ extension NSLayoutConstraint {
             verticalConstraints.append(contentsOf: constraints)
         }
         
-        
         let constraints = horizontalConstraints + verticalConstraints
         return constraints
     }
@@ -64,6 +63,13 @@ extension NSLayoutConstraint {
         public struct ItemInfo {
             var item: AnyObject?
             var attribute: NSLayoutAttribute?
+            
+            public init(item: AnyObject?, attribute: NSLayoutAttribute? = nil) {
+                self.item = item
+                self.attribute = attribute
+            }
+            
+            public static let empty = ItemInfo.init(item: nil)
         }
         
         var firstItem: ItemInfo
@@ -124,6 +130,19 @@ extension NSLayoutConstraint {
                 return false
             }
             return true
+        }
+        
+        public static let empty = MatchRequest.init(firstItem: .empty,
+                                                    secondItem: .empty,
+                                                    areItemsMayBeRearranged: true,
+                                                    relation: nil,
+                                                    multiplier: nil,
+                                                    constant: nil)
+        
+        public static func create(_ templateModifier: ((inout MatchRequest) -> ())) -> MatchRequest {
+            var request = MatchRequest.empty
+            templateModifier(&request)
+            return request
         }
         
     }
