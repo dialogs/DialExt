@@ -61,8 +61,8 @@ extension NSLayoutConstraint {
     public struct MatchRequest {
         
         public struct ItemInfo {
-            var item: AnyObject?
-            var attribute: NSLayoutAttribute?
+            public var item: AnyObject?
+            public var attribute: NSLayoutAttribute?
             
             public init(item: AnyObject?, attribute: NSLayoutAttribute? = nil) {
                 self.item = item
@@ -72,20 +72,20 @@ extension NSLayoutConstraint {
             public static let empty = ItemInfo.init(item: nil)
         }
         
-        var firstItem: ItemInfo
+        public var firstItem: ItemInfo
         
-        var secondItem: ItemInfo
+        public var secondItem: ItemInfo
         
         /**
          Is First Item in Match request can be second item of constaint (so request's second item should be constraint's first item)
          */
-        var areItemsMayBeRearranged: Bool = true
+        public var areItemsMayBeRearranged: Bool = true
         
-        var relation: NSLayoutRelation?
+        public var relation: NSLayoutRelation?
         
-        var multiplier: CGFloat?
+        public var multiplier: CGFloat?
         
-        var constant: CGFloat?
+        public var constant: CGFloat?
         
         public func testConstraint(_ constraint: NSLayoutConstraint) -> Bool {
             
