@@ -58,9 +58,74 @@ extension NSLayoutConstraint {
         return constraints
     }
     
-    public func isRelates(view1: AnyObject, view2: AnyObject) -> Bool {
-        return (self.firstItem === view1 && self.secondItem === view2) ||
-            (self.firstItem === view2 && self.secondItem === view1)
+    
+    public struct MatchRequest {
+        
+        public struct ItemInfo {
+            var item: AnyObject?
+            var attribute: NSLayoutAttribute?
+        }
+        
+        var firstItem: ItemInfo
+        
+        var secondItem: ItemInfo
+        
+        /**
+         Is First Item in Match request can be second item of constaint (so request's second item should be constraint's first item)
+         */
+        var areItemsMayBeRearranged: Bool = true
+        
+        var relation: NSLayoutRelation?
+        
+        var multiplier: CGFloat?
+        
+        var constant: CGFloat?
+        
+        public func testConstraint(_ constraint: NSLayoutConstraint) -> Bool {
+            
+            var basicItemsSatisfied = self.testConstraint(constraint,
+                                                          firstItem: self.firstItem,
+                                                          secondItem: self.secondItem)
+            if !basicItemsSatisfied && self.areItemsMayBeRearranged {
+                basicItemsSatisfied = self.testConstraint(constraint,
+                                                          firstItem: self.secondItem,
+                                                          secondItem: self.firstItem)
+            }
+            
+            if !basicItemsSatisfied {
+                return false
+            }
+            
+            if let relation = self.relation, constraint.relation != relation {
+                return false
+            }
+            
+            if let multiplier = self.multiplier, constraint.multiplier != multiplier {
+                return false
+            }
+            
+            if let constant = self.constant, constraint.constant != constant {
+                return false
+            }
+            
+            return true
+        }
+        
+        private func testConstraint(_ constraint: NSLayoutConstraint, firstItem: ItemInfo, secondItem: ItemInfo) -> Bool {
+            guard constraint.firstItem === firstItem.item && constraint.secondItem === secondItem.item else {
+                return false
+            }
+            
+            if let firstAttribute = firstItem.attribute, constraint.firstAttribute != firstAttribute {
+                return false
+            }
+            
+            if let secondAttribute = secondItem.attribute, constraint.secondAttribute != secondAttribute {
+                return false
+            }
+            return true
+        }
+        
     }
     
 }
