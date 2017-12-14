@@ -58,9 +58,9 @@ extension NSLayoutConstraint {
     }
     
     
-    public struct MatchRequest {
+    public struct MatchRequest: CustomStringConvertible {
         
-        public struct ItemInfo {
+        public struct ItemInfo: CustomStringConvertible, Equatable {
             public var item: AnyObject?
             public var attribute: NSLayoutAttribute?
             
@@ -70,6 +70,34 @@ extension NSLayoutConstraint {
             }
             
             public static let empty = ItemInfo.init(item: nil)
+            
+            public var description: String {
+                let itemDescription: String
+                if let item = item, let descr = item.description {
+                    itemDescription = descr
+                }
+                else {
+                    itemDescription = "nil"
+                }
+                
+                var entries: [(String, String)] = [("item", itemDescription)]
+                if let attribute = attribute {
+                    entries.append(("attr", attribute.attributeDescription))
+                }
+                let entriesDescr: String = entries.map({ return "\($0.0) : \($0.1)" }).joined(separator: ", ")
+                return "<Item: \(entriesDescr)>"
+            }
+            
+            public static func ==(lhs: ItemInfo, rhs: ItemInfo) -> Bool {
+                return lhs.item === rhs.item && lhs.attribute == rhs.attribute
+            }
+            
+            public var hashValue: Int {
+                if let item = item  {
+                    return ObjectIdentifier(item).hashValue
+                }
+                return 0
+            }
         }
         
         public var firstItem: ItemInfo
@@ -125,7 +153,6 @@ extension NSLayoutConstraint {
             if let firstAttribute = firstItem.attribute, constraint.firstAttribute != firstAttribute {
                 return false
             }
-            
             if let secondAttribute = secondItem.attribute, constraint.secondAttribute != secondAttribute {
                 return false
             }
@@ -145,8 +172,55 @@ extension NSLayoutConstraint {
             return request
         }
         
+        public var description: String {
+            var entries: [(String, String)] = []
+            entries.append(("item1", self.firstItem.description))
+            entries.append(("item2", self.secondItem.description))
+            entries.append(("rearrangable", self.areItemsMayBeRearranged.description))
+            if let relation = self.relation {
+                entries.append(("relation", relation.rawValue.description))
+            }
+            if let multiplier = self.multiplier {
+                entries.append(("multiplier", multiplier.description))
+            }
+            if let constant = self.constant {
+                entries.append(("constant", constant.description))
+            }
+            let descr = entries.map({"\($0.0): \($0.1)"}).joined(separator: ", ")
+            return "<MatchRequest, \(descr)>"
+        }
+        
     }
     
+}
+
+public extension NSLayoutAttribute {
+    var attributeDescription: String {
+        switch self {
+        case .bottom: return "bottom"
+        case .bottomMargin: return "bottomMargin"
+        case .centerX: return "centerX"
+        case .centerXWithinMargins: return "centerXWithinMargins"
+        case .centerY: return "centerY"
+        case .centerYWithinMargins: return "centerYWithinMargins"
+        case .firstBaseline: return "firstBaseline"
+        case .height: return "height"
+        case .lastBaseline: return "lastBaseline"
+        case .leading: return "leading"
+        case .leadingMargin: return "leadingMargin"
+        case .left: return "left"
+        case .leftMargin: return "leftMargin"
+        case .notAnAttribute: return "notAnAttribute"
+        case .right: return "right"
+        case .rightMargin: return "rightMargin"
+        case .top: return "top"
+        case .topMargin: return "topMargin"
+        case .trailing: return "trailing"
+        case .trailingMargin: return "trailingMargin"
+        case .width: return "width"
+        default: return "unknown(\(self.rawValue)"
+        }
+    }
 }
 
 public extension Array where Element == NSLayoutConstraint {
