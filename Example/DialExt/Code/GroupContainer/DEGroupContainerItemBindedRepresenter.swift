@@ -63,6 +63,8 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     
     public let storePolicy: StorePolicy
     
+    public var name: String? = nil
+    
     public var isStoreInProgress: Bool {
         return representationState.hasBackupRepresentation
     }
@@ -142,7 +144,6 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     }
     
     private func handleFirstLoadingFailure(error: Error, isUpdate: Bool) {
-        print("Fail to sync representation: \(String(describing: error))")
         self.signalRepresentationUpdateFailed(error: error, isUpdate: isUpdate)
     }
     
@@ -158,13 +159,22 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     }
     
     private func handleRepresentationStoreFinished(success: Bool) {
-        if (success && self.storePolicy == .onSuccessOnly) {
-            self.representationState.moveBackupRepresentationToCurrent()
+        if success {
+            switch self.storePolicy {
+            case .onSuccessOnly:
+                self.representationState.moveBackupRepresentationToCurrent()
+            case .optimistic:
+                self.representationState.setBackupRepresentation(nil)
+            }
             self.signalRepresentationUpdate(reason: .storeSuccess)
         }
-        
-        if (!success && self.storePolicy == .optimistic) {
-            self.representationState.moveBackupRepresentationToCurrent()
+        else {
+            switch self.storePolicy {
+            case .optimistic:
+                self.representationState.moveBackupRepresentationToCurrent()
+            case .onSuccessOnly:
+                self.representationState.setBackupRepresentation(nil)
+            }
             self.signalRepresentationUpdate(reason: .storeFailure)
         }
     }

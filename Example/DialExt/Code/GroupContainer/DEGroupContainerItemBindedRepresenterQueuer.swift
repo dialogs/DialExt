@@ -47,6 +47,8 @@ public class DEGroupContainerItemBindedRepresenterQueuer<Representation> {
         }
     }
     
+    public var name: String? = nil
+    
     private typealias Item = DEGroupContainerItemBindedRepresenterQueueItem<Representation>
     
     private var nextItem: Item? {
@@ -87,6 +89,7 @@ public class DEGroupContainerItemBindedRepresenterQueuer<Representation> {
     private func processItem(item: Item) {
         queue.async {
             if let representation = item.representation, self.nextItem == item {
+                self.nextItem = nil
                 self.representer.representation = representation
             }
         }

@@ -63,6 +63,10 @@ final public class DESharedDialogsDataLoader {
         
         listRepresenter.onDidChangeRepresentation = { [weak self] list, reason in
             withExtendedLifetime(self, {
+                switch reason {
+                case .storeSuccess: self?.listQueuer.tryPutNextItem()
+                default: break
+                }
                 self?.composer.list = list
             })
         }
@@ -74,6 +78,10 @@ final public class DESharedDialogsDataLoader {
         
         contextRepresenter.onDidChangeRepresentation = { [weak self] context, reason in
             withExtendedLifetime(self, {
+                switch reason {
+                case .storeSuccess: self?.contextQueuer.tryPutNextItem()
+                default: break
+                }
                 self?.composer.context = context
             })
         }
