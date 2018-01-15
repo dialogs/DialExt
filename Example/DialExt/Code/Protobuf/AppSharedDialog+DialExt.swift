@@ -60,4 +60,9 @@ public extension AppSharedDialog {
         
         return letters.joined()
     }
+    
+    public var dialogDescription: String {
+        return "\(self.id!) (\(self.title ?? ""))"
+    }
+    
 }

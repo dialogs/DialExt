@@ -28,8 +28,13 @@ public protocol DESharedDialogsViewControllerExtensionContextProvider {
 
 public class DEDefaultSharedDialogsViewControllerPresenter: DESharedDialogsViewControllerPresenter {
     
+    public var showsReadOnlyDialogs: Bool = false
+    
     public func shouldShowDialog(_ dialog: AppSharedDialog) -> Bool {
-        return true
+        if showsReadOnlyDialogs {
+            return true
+        }
+        return !dialog.isReadOnly
     }
     
     public func isSelectionAllowedForDialog(_ dialog: AppSharedDialog) -> Bool {
@@ -381,7 +386,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         case let .failured(error):
             self.handleDialogLoadingFailure(error: error)
         case .loaded:
-            self.dialogs = self.manager.dataLoader.context!.dialogs.filter({self.isSelectionAllowed(for: $0)})
+            self.dialogs = state.dialogs!.filter {self.shouldShowDialog($0)} 
             if self.dialogs.count > 0 {
                 self.content = .dialogs
             }

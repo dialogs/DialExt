@@ -16,6 +16,14 @@ final public class DESharedDialogsDataLoader {
         case idle
         case failured(Error?)
         case loaded(AppSharedDialogListContext)
+        
+        public var dialogs: [AppSharedDialog]? {
+            switch self {
+            case .loaded(let ctx): return ctx.dialogs
+            default: return nil
+            }
+        }
+        
     }
     
     public var state: DataState {
