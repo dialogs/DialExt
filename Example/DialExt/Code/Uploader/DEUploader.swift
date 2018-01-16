@@ -97,6 +97,7 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
             
             let fail = { (error: Error?) in
                 let resultError = error ?? DEUploadError.unknownError
+                DEErrorLog("Share item uploading failed. \(resultError)")
                 currentTask.completion(false, resultError)
             }
             

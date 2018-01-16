@@ -187,16 +187,19 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         let dataRep = DEUploadDataRepresentation.init(data: encodedImage.data,
                                                       uti: encodedImage.format.uti.rawValue)
         let details = self.getImageDetails(image)
-        let uploadReap = DEUploadImageRepresentation.init(dataRepresentation: dataRep, details: details)
+        let uploadRep = DEUploadImageRepresentation.init(dataRepresentation: dataRep, details: details)
         
-        let preview = self.buildPreviewRepresentation(original: image)
+        let previewImage = image.limited(bySize: .init(width: 90.0, height: 90.0))
+        let preview = self.buildPreviewRepresentation(original: previewImage)
         
         // Guaranteed, otherwise encoding failed
         let fileExtension = encodedImage.format.uti.fileExtension!
         let name = self.generateName(prefix:"image_").appending(".").appending(fileExtension)
         
-        let item = DEUploadPreparedItem.init(content: .image(uploadReap), preview: preview, originalName: name)
-        self.finish(item: item)
+        let item = DEUploadPreparedItem.init(content: .image(uploadRep), preview: preview, originalName: name)
+        DispatchQueue.main.async {
+            self.finish(item: item)
+        }
     }
     
     private func generateName(prefix: String = "") -> String {
@@ -301,7 +304,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     private struct LoadedMedia {
         let name: String?
         let details: LoadedDetails
-        let preview: DEUploadImageRepresentation
+        let preview: DEUploadImageRepresentation?
     }
     
     private func loadMedia(url: URL,
@@ -321,48 +324,40 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         let group = DispatchGroup.init()
         
         group.enter()
-        loadPreview(attachment: attachment, onLoaded: { [weak self] rep in
-            withOptionalExtendedLifetime(self, body: {
-                loadedPreview = rep
-                group.leave()
-            })
+        let originalImageData: Data? = (type == .image) ? data : nil
+        loadPreview(attachment: attachment, originalData: originalImageData, url: url, type: type, onLoaded: { rep in
+            loadedPreview = rep
+            group.leave()
         })
         
         switch type {
         case .image:
             group.enter()
-            self.loadImageDetails(url: url, data: data, onLoaded: { [weak self] details in
-                withOptionalExtendedLifetime(self, body: {
-                    loadedDetails = LoadedDetails.image(details)
-                    group.leave()
-                })
+            self.loadImageDetails(url: url, data: data, onLoaded: { details in
+                loadedDetails = LoadedDetails.image(details)
+                group.leave()
             })
         case .video:
             group.enter()
-            self.loadVideoDetails(url: url, data: data, onLoaded: { [weak self] (details) in
-                withOptionalExtendedLifetime(self, body: {
-                    loadedDetails = LoadedDetails.video(details)
-                    group.leave()
-                })
+            self.loadVideoDetails(url: url, data: data, onLoaded: { (details) in
+                loadedDetails = LoadedDetails.video(details)
+                group.leave()
             })
         case .audio:
             group.enter()
             self.loadAudioDetails(url: url, data: data, onLoaded: { [weak self] (details) in
-                withOptionalExtendedLifetime(self, body: {
-                    loadedDetails = LoadedDetails.audio(details)
-                    group.leave()
-                })
+                loadedDetails = LoadedDetails.audio(details)
+                group.leave()
             })
         default:
             fatalError()
         }
         
         group.notify(queue: .global(qos: .background), execute: {
-            guard let details = loadedDetails, let preview = loadedPreview else {
-                let failedItem = loadedDetails == nil ? "details" : "preview"
-                fatalError("group finished, but \(failedItem) is nil")
+            guard let details = loadedDetails else {
+                fatalError("group finished, but loaded details is nil")
             }
-            let media = LoadedMedia.init(name: proposedName, details: details, preview: preview)
+            let media = LoadedMedia.init(name: proposedName, details: details, preview: loadedPreview)
             completionBlock(media)
         })
     }
@@ -397,7 +392,11 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
                     details: media.details)
     }
     
-    private func finish(attachment: NSItemProvider, name: String?, preview: DEUploadImageRepresentation, data: Data, details: LoadedDetails) {
+    private func finish(attachment: NSItemProvider,
+                        name: String?,
+                        preview: DEUploadImageRepresentation?,
+                        data: Data,
+                        details: LoadedDetails) {
         guard !self.isCancelled else {
             return
         }
@@ -419,8 +418,43 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
     }
     
+    private func generateVideoPreview(url: URL) -> DEUploadImageRepresentation? {
+        let asset = AVURLAsset.init(url: url)
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        let cgImage: CGImage
+        do {
+            cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+        }
+        catch {
+            return nil
+        }
+        
+        let image = UIImage.init(cgImage: cgImage)
+        let previewImage = image.limited(bySize: .init(width: 90.0, height: 90.0))
+        let preview = self.buildPreviewRepresentation(original: previewImage)
+        return preview
+    }
+    
+    private class PreviewSource {
+        var type: DetailedMediaFileType
+        var url: URL
+        var originalData: Data? = nil
+        
+        init(type: DetailedMediaFileType, url: URL, data: Data? = nil) {
+            self.type = type
+            self.url = url
+            self.type = type
+        }
+        
+        
+    }
+    
     /// Callback performed on main thread
-    private func loadPreview(attachment: NSItemProvider, onLoaded: @escaping ((DEUploadImageRepresentation?) -> ()) ) {
+    private func loadPreview(attachment: NSItemProvider,
+                             originalData: Data? = nil,
+                             url: URL,
+                             type: DetailedMediaFileType,
+                             onLoaded: @escaping ((DEUploadImageRepresentation?) -> ()) ) {
         attachment.loadPreviewImage(options: nil, completionHandler: {[weak self] value, error in
             withOptionalExtendedLifetime(self, body: {
                 guard !self!.isCancelled else {
@@ -441,6 +475,19 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
                     let previewRep = self!.buildPreviewRepresentation(original: optimizedImage)
                     DispatchQueue.main.async {
                         onLoaded(previewRep)
+                    }
+                }
+                else if type == .image, let data = originalData, let image = UIImage.init(data: data) {
+                    let optimizedImage = image.limited(bySize: .init(width: 90.0, height: 90.0))
+                    let previewRep = self!.buildPreviewRepresentation(original: optimizedImage)
+                    DispatchQueue.main.async {
+                        onLoaded(previewRep)
+                    }
+                }
+                else if type == .video {
+                    let rep = self!.generateVideoPreview(url: url)
+                    DispatchQueue.main.async {
+                        onLoaded(rep)
                     }
                 }
                 else {

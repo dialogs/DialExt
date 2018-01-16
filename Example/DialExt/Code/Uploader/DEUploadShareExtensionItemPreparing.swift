@@ -47,7 +47,7 @@ public class DEUploadShareExtensionItemPreparer: DEUploadShareExtensionItemPrepa
     
     private let queue: OperationQueue = {
         let queue = OperationQueue.init()
-        queue.qualityOfService = .default
+        queue.qualityOfService = .userInitiated
         queue.name = "im.dlg.extension.item.preparer"
         return queue
     }()
