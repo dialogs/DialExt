@@ -46,6 +46,8 @@ public extension URLQueryItem {
         
         public static let signedAuthId = PreservedName.init(rawValue: "signedAuthId")
         
+        public static let token = PreservedName.init(rawValue: "token")
+        
         public static let peerType = PreservedName.init(rawValue: "peer_type")
         
         public static let peerId = PreservedName.init(rawValue: "peer_id")

@@ -67,7 +67,7 @@ public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
     }
     
     private func buildQueryItems(task: DEUploadPreparedTask) -> [URLQueryItem] {
-        let authItem = URLQueryItem.init(preservedName: .signedAuthId, value: task.auth.httpQueryValue)
+        let authItem = task.auth.makeQueryItem()
         return [authItem]
     }
 }

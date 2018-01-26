@@ -12,7 +12,7 @@ public typealias DEAuthId = Int64
 
 extension DEAuthId {
     
-    fileprivate func authIdToData() -> NSData {
+    func authIdToData() -> NSData {
         let data = NSMutableData.init()
         let archiver = NSKeyedArchiver(forWritingWith: data)
         archiver.encode(self, forKey: "auth_id")
@@ -20,7 +20,7 @@ extension DEAuthId {
         return data.copy() as! NSData
     }
     
-    fileprivate static func authIdFromData(_ data: Data) -> DEAuthId {
+    static func authIdFromData(_ data: Data) -> DEAuthId {
         let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
         let authId = unarchiver.decodeInt64(forKey: "auth_id")
         unarchiver.finishDecoding()
@@ -29,7 +29,7 @@ extension DEAuthId {
 }
 
 extension DEGroupedKeychainDataProvider: DEWriteableUploadAuthProviding {
-    
+
     public func provideAuthId() throws -> DEAuthId {
         let data = try self.readData(query: .readShared(.authIdService))
         let id = DEAuthId.authIdFromData(data)
@@ -41,16 +41,18 @@ extension DEGroupedKeychainDataProvider: DEWriteableUploadAuthProviding {
         return data
     }
     
-    public func writeAuth(_ auth: DEUploadAuth) throws {
-        let idData = auth.authId.authIdToData() as NSData
-        try self.rewrite(addQuery: .writeShared(.authIdService, data: idData))
-        
-        let signedData = auth.signedAuthId as NSData
-        try self.rewrite(addQuery: .writeShared(.signedIdAuthIdService, data: signedData))
+    public func provideToken() throws -> String? {
+        let data = try self.readData(query: .readShared(.tokenService))
+        return String(data: data, encoding: String.Encoding.unicode)
+    }
+    
+    public func writeAuth(_ auth: DEQueryAuth) throws {
+        try auth.write(writer: self)
     }
 }
 
 public extension DEKeychainQuery.Service {
     public static let authIdService =  DEKeychainQuery.Service.init("auth_id")
     public static let signedIdAuthIdService = DEKeychainQuery.Service("signed_auth_id")
+    public static let tokenService = DEKeychainQuery.Service("token")
 }
