@@ -6,7 +6,7 @@ public class DEUploadPreparedTask: Equatable {
     
     public let items: [DEUploadPreparedItem]
     
-    public let auth: DEUploadAuth
+    public let auth: DEQueryAuth
     
     public let uuid: UUID
     
@@ -23,7 +23,7 @@ public class DEUploadPreparedTask: Equatable {
     
     public init(recipients: [DEUploadRecipient],
                 items: [DEUploadPreparedItem],
-                auth: DEUploadAuth,
+                auth: DEQueryAuth,
                 uuid: UUID = UUID(),
                 boundary: String? = nil) {
         

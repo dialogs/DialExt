@@ -14,24 +14,29 @@ public protocol DEUploadAuthProviding {
     
     func provideSignedAuthId() throws -> Data
     
+    func provideToken() throws -> String?
+    
 }
 
 public protocol DEWriteableUploadAuthProviding: DEUploadAuthProviding {
     
-    func writeAuth(_ auth: DEUploadAuth) throws
+    func writeAuth(_ auth: DEQueryAuth) throws
     
 }
 
 extension DEUploadAuthProviding {
     
     func checkIfAuthProviden() -> Bool {
-        return (try? self.provideSignedAuthId()) != nil
+        return (try? self.provideSignedAuthId()) != nil || (try? self.provideToken()) != nil
     }
     
-    func provideAuth() throws -> DEUploadAuth {
-        guard let id =  try? self.provideAuthId(), let signedId = try? self.provideSignedAuthId() else {
-            throw DEUploadError.invalidAuthInfo
+    func provideAuth() throws -> DEQueryAuth {
+        if let id = try? self.provideAuthId(), let signedId = try? self.provideSignedAuthId() {
+            return DEUploadAuth.init(authId: id, signedAuthId: signedId)
+        } else if let providenToken = try? self.provideToken(), let token = providenToken {
+            return DEUploadTokenAuth.init(token: token)
         }
-        return DEUploadAuth.init(authId: id, signedAuthId: signedId)
+        
+        throw DEUploadError.invalidAuthInfo
     }
 }
