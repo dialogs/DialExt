@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DialExt'
-  s.version          = '0.1.10'
+  s.version          = '0.1.11'
   s.summary          = 'A short description of DialExt.'
 
 # This description is used to generate tags and improve search results.
@@ -37,7 +37,10 @@ TODO: Add long description of the pod here.
     'DialExt' => ['Example/DialExt/Resources/**/*']
   }
 
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
+
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+
 end
