@@ -345,7 +345,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             })
         case .audio:
             group.enter()
-            self.loadAudioDetails(url: url, data: data, onLoaded: { [weak self] (details) in
+            self.loadAudioDetails(url: url, data: data, onLoaded: { (details) in
                 loadedDetails = LoadedDetails.audio(details)
                 group.leave()
             })
@@ -409,7 +409,13 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         DispatchQueue.global(qos: .background).async {
             let asset = AVURLAsset.init(url: url)
             let duration = Int(asset.duration.seconds)
-            let size = asset.tracks(withMediaType: AVMediaType.video).first!.naturalSize
+            let size: CGSize
+            if let track = asset.tracks(withMediaType: AVMediaType.video).first {
+                size = track.naturalSize
+            }
+            else {
+                size = CGSize.zero
+            }
             let integerSize = DEUploadIntegerSize.init(size: size)
             let details = DEUploadVideoDetails.init(size: integerSize, durationInSeconds: duration)
             DispatchQueue.main.async {

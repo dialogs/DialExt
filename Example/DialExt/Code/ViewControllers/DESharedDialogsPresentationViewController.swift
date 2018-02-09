@@ -30,6 +30,10 @@ DESharedDialogsViewControllerHidingResponsible {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        if let idx = DELogger.shared.services.index(where: {$0 is DEDebugConsoleLogService }) {
+            DELogger.shared.services.remove(at: idx)
+        }
+        
         let dialogsController = DESharedDialogsViewController.createFromDefaultStoryboard(config: self.config)
         dialogsController.extensionContextProvider = self
         dialogsController.hideResponsible = self

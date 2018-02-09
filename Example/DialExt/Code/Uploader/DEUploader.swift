@@ -95,7 +95,7 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
             
             self.currentTask = nil
             
-            let fail = { (error: Error?) in
+            let fail: ((Error?) -> ()) = { error in
                 let resultError = error ?? DEUploadError.unknownError
                 DEErrorLog("Share item uploading failed. \(resultError)")
                 currentTask.completion(false, resultError)
@@ -116,7 +116,8 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
                 DESLog("Sharing upload failed", level: .error)
                 let message = String.init(data: data, encoding: .utf8) ?? ""
                 DELog("Sharing upload failed, status code: \(response.statusCode), message: \(message)")
-                fail(NSError.httpError(statusCode: response.statusCode, data: data))
+                let targetError = NSError.httpError(statusCode: response.statusCode, data: data)
+                fail(targetError)
                 return
             }
             
@@ -128,18 +129,6 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         self.currentTask?.data = data
     }
- 
-    /*
-     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
- 
-     guard let sender = challenge.sender else {
-     fatalError()
-     }
-     sender.continueWithoutCredential(for: challenge)
-     
-     let credential = URLCredential.init(trust: challenge.protectionSpace.serverTrust!)
-     completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)
-     }
-     */
+    
 }
 
