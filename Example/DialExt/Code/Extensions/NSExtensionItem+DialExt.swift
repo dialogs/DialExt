@@ -58,6 +58,27 @@ public extension NSExtensionItem {
         })
     }
     
+    public func firstAttachmentPassingTest(test: (NSItemProvider) throws -> Bool) rethrows -> NSItemProvider? {
+        guard let attachments = self.attachments, !attachments.isEmpty else {
+            return nil
+        }
+        let foundAttach = try attachments.first(where: { (attach) -> Bool in
+            guard let provider = attach as? NSItemProvider else {
+                return false
+            }
+            return try test(provider)
+        })
+        
+        if let result = foundAttach as? NSItemProvider {
+            return result
+        }
+        return nil
+    }
+    
+    public func firstAttachmentConformingToTypeIdentifier(_ id: String) -> NSItemProvider? {
+        return self.firstAttachmentPassingTest(test: {$0.hasItemConformingToTypeIdentifier(id)})
+    }
+
     public func attachmentsConformingToTypeIdentifier(_ id: String) -> [NSItemProvider] {
         guard let attachments = self.attachments else {
             return []

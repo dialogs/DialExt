@@ -49,6 +49,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     
     private enum IdentificationResult {
         case urlToShareInfo(SharingURL)
+        case vcard(NSItemProvider)
         case remoteUrl(NSItemProvider)
         case plainText(NSItemProvider)
         case itemAttributedText(NSAttributedString)
@@ -56,6 +57,11 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
     }
     
     private func identifyItem(_ item: NSExtensionItem) -> IdentificationResult? {
+        
+        if let vcardProvider = item.firstAttachmentConformingToTypeIdentifier("public.vcard") {
+            return IdentificationResult.vcard(vcardProvider)
+        }
+        
         if let sharingUrl = item.sharingUrl {
             return IdentificationResult.urlToShareInfo(sharingUrl)
         }
@@ -107,6 +113,9 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         case .urlToShareInfo(let urlInfo):
             self.finish(item: .init(content: .url(urlInfo.url)))
             
+        case .vcard(let provider):
+            self.loadVcardAsDocument(attachment: provider)
+            
         case .remoteUrl(let urlExtensionItem):
             self.loadRemoteUrl(attachment: urlExtensionItem)
             
@@ -118,6 +127,21 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             
         case .itemAttributedText(let attributedString):
             self.finish(item: DEUploadPreparedItem.init(content: .text(attributedString.string)))
+        }
+    }
+    
+    private func loadVcardAsDocument(attachment: NSItemProvider) {
+        attachment.loadItem(forTypeIdentifier: "public.vcard", options: nil) { (item, error) in
+            if let item = item, let vcardData = item as? Data {
+                let rep = DEUploadDataRepresentation.init(data: vcardData, uti: "public.vcard")
+                let content = DEUploadPreparedItem.Content.bytes(rep)
+                let item = DEUploadPreparedItem.init(content: content)
+                self.finish(item: item)
+            }
+            else {
+                let targetError: Error = error ?? DEUploadError.unrecognizableExtensionItem
+                self.finishWithFailure(error: error)
+            }
         }
     }
     
