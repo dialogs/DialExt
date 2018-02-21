@@ -52,9 +52,13 @@ final public class DESharedDialogsDataLoader {
     
     public init(contextFile: DEGroupContainerItem, listFile: DEGroupContainerItem) {
         listRepresenter = AppSharedDialogListBindedRepresenter.init(item: listFile)
+        listRepresenter.logOperationDuration = true
+        listRepresenter.name = "Shared.DialogIdsList"
         listQueuer = listRepresenter.createQueuer()
         
         contextRepresenter = AppSharedDialogListContextBindedRepresenter.init(item: contextFile)
+        contextRepresenter.logOperationDuration = true
+        contextRepresenter.name = "Shared.DialogContext"
         contextQueuer = contextRepresenter.createQueuer()
     }
     

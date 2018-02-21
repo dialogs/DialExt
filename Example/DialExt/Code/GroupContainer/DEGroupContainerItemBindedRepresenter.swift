@@ -65,6 +65,8 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     
     public var name: String? = nil
     
+    public var logOperationDuration: Bool = false
+    
     public var isStoreInProgress: Bool {
         return representationState.hasBackupRepresentation
     }
@@ -148,8 +150,16 @@ public class DEGroupContainerItemBindedRepresenter<Representation> {
     }
     
     private func storeRepresentation(_ rep: Representation) {
+        let startedAt = CFAbsoluteTimeGetCurrent()
+        let shouldLog = self.logOperationDuration
+        let name = self.name ?? "<UNNAMED>"
         self.representer.store(representation: rep) { [weak self] (result) in
+            let finishedAt = CFAbsoluteTimeGetCurrent()
             withExtendedLifetime(self, {
+                if shouldLog {
+                    let duration = finishedAt - startedAt
+                    DELog("<Representer \(name) complete storing in \(duration)> sec.")
+                }
                 switch result {
                 case .success(_): self?.handleRepresentationStoreFinished(success: true)
                 case .failure(_): self?.handleRepresentationStoreFinished(success: false)
