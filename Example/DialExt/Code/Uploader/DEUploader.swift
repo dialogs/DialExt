@@ -13,6 +13,8 @@ public protocol DEUploaderable {
     func perform(task: DEUploadPreparedTask,
                  progressCallback: DEUploadProgressCallback?,
                  completion: @escaping DEUploadCompletion) throws
+    
+    func resetUploadUrl(_ url: URL)
 }
 
 
@@ -55,6 +57,10 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
     
     deinit {
         cancel()
+    }
+    
+    public func resetUploadUrl(_ url: URL) {
+        self.requestBuilder.resetApiUrl(url)
     }
     
     public func cancel() {
@@ -113,6 +119,15 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
             }
             
             guard response.statusCode == 200 else {
+                
+                if response.statusCode == 413,
+                    let value = response.allHeaderFields["X-Max-Size"],
+                    let maxSize = value as? String,
+                    let maxSizeBytes = Int64.init(maxSize) {
+                    fail(DEUploadError.fileLengthExceedsKnownMaximum(maximum: maxSizeBytes))
+                    return
+                }
+                
                 DESLog("Sharing upload failed", level: .error)
                 let message = String.init(data: data, encoding: .utf8) ?? ""
                 DELog("Sharing upload failed, status code: \(response.statusCode), message: \(message)")

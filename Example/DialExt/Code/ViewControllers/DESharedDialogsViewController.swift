@@ -158,7 +158,13 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         return !text.isEmpty
     }
     
-    private var endpointUrl: URL! = nil
+    private var endpointUrl: URL! = nil {
+        didSet {
+            if let uploader = self.uploader, let url = endpointUrl {
+                uploader.resetApiURL(url)
+            }
+        }
+    }
     
     @IBOutlet public private(set) var tableView: UITableView!
     
@@ -255,6 +261,8 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         self.uploader.onDidFinish = { [unowned self] success, error in
             self.handleFilesUploadingFinished(success: success, error: error)
         }
+        
+        self.updateBottomPanelVisibility()
     }
     
     private func setEndpointUrlFromConfig() {

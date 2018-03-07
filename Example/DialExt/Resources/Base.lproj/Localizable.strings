@@ -18,3 +18,5 @@
 "SendSharedItems" = "Send";
 
 "New Message" = "New Message";
+
+"SharingUploadLimitExceeded" = "Upload file size limit exceeded. Maximum: %@";

@@ -25,6 +25,7 @@ public protocol DEExtensionItemUploading: class {
     /// Starts uploading task. Returns *false* and does nothing if any task is already performing.
     @discardableResult func upload(task: DEUploadTask) -> Bool
     
+    func resetApiURL(_ url: URL)
     
 }
 
@@ -90,6 +91,10 @@ public class DEExtensionItemUploader: DEExtensionItemUploading {
         self.uploader = fileUploader
         self.preparer = preparer
         self.authProvider = authProvider
+    }
+    
+    public func resetApiURL(_ url: URL) {
+        self.uploader.resetUploadUrl(url)
     }
     
     /// Cancels current task. Callback will not be called. Do nothing if there is no current task.
@@ -206,7 +211,7 @@ public class DEExtensionItemUploader: DEExtensionItemUploading {
 /**
  * Under development.
  */
-public class DEDebueExtensionItemUploader: DEExtensionItemUploading {
+public class DEDebugExtensionItemUploader: DEExtensionItemUploading {
     
     public struct TaskHandleConfig {
         
@@ -233,6 +238,10 @@ public class DEDebueExtensionItemUploader: DEExtensionItemUploading {
     
     public init() {
         
+    }
+    
+    public func resetApiURL(_ url: URL) {
+        // do nothing (it's debug)
     }
     
     /// Starts uploading task. Returns *false* and does nothing if any task is already performing.

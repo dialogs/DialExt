@@ -14,3 +14,5 @@
 "AlertUploadFinished" = "Finished!";
 
 "NoDialogsFoundTitle" = "No se encontró ningún diálogo";
+
+"SharingUploadLimitExceeded" = "Upload file size limit exceeded. Maximum: %@";

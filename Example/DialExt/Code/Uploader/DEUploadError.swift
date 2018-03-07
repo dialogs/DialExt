@@ -8,6 +8,8 @@ public enum DEUploadError: LocalizedError {
     /// Uploading file size is too big
     case fileLengthExceedsMaximum
     
+    case fileLengthExceedsKnownMaximum(maximum: Int64)
+    
     /// Nothing to upload
     case noItemsToUpload
     
@@ -32,7 +34,13 @@ public enum DEUploadError: LocalizedError {
     
     case unknownError
     
+    
+    
     public var errorDescription: String? {
+        return localizedDescription
+    }
+    
+    public var localizedDescription: String {
         switch self {
         case .tooManyItems: return "Items limit exceeded"
         case .noItemsToUpload: return "No items to upload"
@@ -45,6 +53,13 @@ public enum DEUploadError: LocalizedError {
         case .noContactsShared: return "Contacts are unavailable"
         case .unknownError: return "Unknown error"
         case .unencodablImage: return "Fail to encode image (neither png, nor jpg)"
+            
+        case .fileLengthExceedsKnownMaximum(maximum: let maxSize):
+            let formatter = ByteCountFormatter.init()
+            formatter.countStyle = .binary
+            let maxSizeDescr = formatter.string(fromByteCount: maxSize)
+            return DELocalize(DELocalizable.sharingUploadLimitExceeded(maxSize: maxSizeDescr))
+            
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription
         }

@@ -18,3 +18,5 @@
 "SendSharedItems" = "Отпр.";
 
 "New Message" = "Новое сообщение";
+
+"SharingUploadLimitExceeded" = "Размер файла превышен. Максимум: %@";

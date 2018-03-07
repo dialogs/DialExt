@@ -91,6 +91,11 @@ public struct DELocalizable : RawRepresentable, Equatable, Hashable, Comparable 
     
     public static let sendSharedFile = DELocalizable("SendSharedItems")
     
+    public static func sharingUploadLimitExceeded(maxSize: String) -> String {
+        let format = DELocalize("SharingUploadLimitExceeded")!
+        return String.init(format: format, maxSize)
+    }
+    
 }
 
 

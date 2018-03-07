@@ -10,18 +10,25 @@ import Foundation
 
 public protocol DEUploadRequestBuilderable {
     func buildRequest(task: DEUploadPreparedTask) throws -> URLRequest
+    
+    func resetApiUrl(_ url: URL)
+    
 }
 
 public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
     
-    public let apiUrl: URL
+    public private(set) var apiUrl: URL
     
     public init(apiUrl: URL) {
         self.apiUrl = apiUrl
     }
     
+    public func resetApiUrl(_ url: URL) {
+        self.apiUrl = url
+    }
+    
     public func buildRequest(task: DEUploadPreparedTask) throws -> URLRequest {
-        
+    
         var components = URLComponents(url: self.apiUrl, resolvingAgainstBaseURL: false)!
         
         var queryItems: [URLQueryItem] = components.queryItems ?? []

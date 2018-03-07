@@ -97,7 +97,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         if mediaAttachment == nil {
-            mediaAttachment = item.attachmentsConformingToTypeIdentifier(kUTTypeContent as String).first
+            mediaAttachment = item.attachmentsConformingToTypeIdentifier(kUTTypeData as String).first
             mediaType = .file
         }
         
