@@ -1,5 +1,24 @@
 import Foundation
 
+
+public class DEAuthChallengeConfig {
+    
+    public static let shared = DEAuthChallengeConfig.init()
+    
+    /// Override resolver to resolve auth challenges from shared data uploading
+    public var resolver: DEAuthChallengeResolver? = nil
+    
+    public init() {
+        self.resolver = nil
+    }
+}
+
+public protocol DEAuthChallengeResolver {
+    func urlSession(_ session: URLSession,
+                    didReceive challenge: URLAuthenticationChallenge,
+                    completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+}
+
 public typealias DEUploadCompletion = ((Bool, Error?) -> ())
 
 public typealias DEUploadProgressCallback = ((Float) -> ())
@@ -143,6 +162,15 @@ public final class DEUploader: NSObject, DEUploaderable, URLSessionDataDelegate 
     
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         self.currentTask?.data = data
+    }
+    
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if let resolver = DEAuthChallengeConfig.shared.resolver {
+            resolver.urlSession(session, didReceive: challenge, completionHandler: completionHandler)
+        }
+        else {
+            completionHandler(.performDefaultHandling, nil)
+        }
     }
     
 }
