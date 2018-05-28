@@ -23,6 +23,8 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     
     open var debugLogsAllowed: Bool = false
     
+    open var extractRequiredUpdateInfo: Bool = true
+    
     open var insertSecureSymbolIntoTitle: Bool = true
     
     open var insertSpecialSecureSymbolToDecryptFailedTitle: Bool = true
@@ -92,6 +94,26 @@ open class CryptoNotificationService: UNNotificationServiceExtension {
     }
     
     private func defaultWayDecrypt(request: UNNotificationRequest) throws {
+        
+        if self.extractRequiredUpdateInfo,
+            let info = NotificationContentRequiredUpdateExtractor().execute(content: request.content) {
+            
+            let group = DEKeychainDataProvider().shared(groupName: self.keychainGroup)
+            let storage = RequiredUpdateKeychainStorage.init(keychain: group)
+            
+            do {
+                try storage.writeReqUpdateInfo(info)
+            }
+            catch {
+                DEErrorLog("Fail to write required update info. \(error)")
+                DESErrorLog("Fail to write required update info")
+            }
+            
+            // Required update can't have any encrypted info.
+            
+            return
+        }
+        
         let setBodyIfInDebugMode: (String) -> () = { body in
             if self.debugModeTextReplacementEnabled {
                 self.bestAttemptContent.body = body

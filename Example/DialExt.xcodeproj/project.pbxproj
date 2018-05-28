@@ -40,6 +40,10 @@
 		7413AA2C1ED337FC00AD99EC /* UIImage+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413AA2B1ED337FC00AD99EC /* UIImage+DialExt.swift */; };
 		7413AA2E1ED3409000AD99EC /* CGSize+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413AA2D1ED3409000AD99EC /* CGSize+DialExt.swift */; };
 		7413AA321ED3518500AD99EC /* CGSizeDialExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7413AA311ED3518500AD99EC /* CGSizeDialExtTests.swift */; };
+		7416AE5E20BC4A8200EE2F8F /* req_update.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7416AE5D20BC4A8200EE2F8F /* req_update.proto */; };
+		7416AE6320BC4B4700EE2F8F /* ReqUpdate.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7416AE6220BC4B4700EE2F8F /* ReqUpdate.proto.swift */; };
+		7416AE6520BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7416AE6420BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift */; };
+		7416AE6720BC51F400EE2F8F /* NotificationContentRequiredUpdateExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7416AE6620BC51F400EE2F8F /* NotificationContentRequiredUpdateExtractor.swift */; };
 		74170F271E79805B00E88FA8 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74170F261E79805B00E88FA8 /* ShareViewController.swift */; };
 		74170F2A1E79805B00E88FA8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74170F281E79805B00E88FA8 /* MainInterface.storyboard */; };
 		74170F2E1E79805B00E88FA8 /* Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74170F241E79805B00E88FA8 /* Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -255,6 +259,10 @@
 		7413AA2B1ED337FC00AD99EC /* UIImage+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DialExt.swift"; sourceTree = "<group>"; };
 		7413AA2D1ED3409000AD99EC /* CGSize+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+DialExt.swift"; sourceTree = "<group>"; };
 		7413AA311ED3518500AD99EC /* CGSizeDialExtTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeDialExtTests.swift; sourceTree = "<group>"; };
+		7416AE5D20BC4A8200EE2F8F /* req_update.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = req_update.proto; sourceTree = "<group>"; };
+		7416AE6220BC4B4700EE2F8F /* ReqUpdate.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReqUpdate.proto.swift; sourceTree = "<group>"; };
+		7416AE6420BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredUpdateInfoStorage.swift; sourceTree = "<group>"; };
+		7416AE6620BC51F400EE2F8F /* NotificationContentRequiredUpdateExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationContentRequiredUpdateExtractor.swift; sourceTree = "<group>"; };
 		74170F241E79805B00E88FA8 /* Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		74170F261E79805B00E88FA8 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		74170F291E79805B00E88FA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -494,6 +502,7 @@
 		74065EC81E8113A900C535B6 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				7416AE5F20BC4B2300EE2F8F /* RequiredUpdate */,
 				7469FBA21FD07BDE00730787 /* ConfigSynchronizer */,
 				74D017CD1F02B103008C8536 /* CryptoPush */,
 				7447ED961EF92E13004C1F24 /* Crypto */,
@@ -667,6 +676,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		7416AE5F20BC4B2300EE2F8F /* RequiredUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				7416AE6220BC4B4700EE2F8F /* ReqUpdate.proto.swift */,
+				7416AE6420BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift */,
+				7416AE6620BC51F400EE2F8F /* NotificationContentRequiredUpdateExtractor.swift */,
+			);
+			path = RequiredUpdate;
+			sourceTree = "<group>";
+		};
 		74170F251E79805B00E88FA8 /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,6 +700,7 @@
 		742FCF681E8266B2003D1FBC /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				7416AE5D20BC4A8200EE2F8F /* req_update.proto */,
 				7469FBA51FD07EB900730787 /* messenger_config.proto */,
 				749C10CB1F44956A009F7064 /* crypto_keypair.proto */,
 				749C10C21F445EAA009F7064 /* shared_secret.proto */,
@@ -1043,6 +1063,7 @@
 				748BB78E1EBA1A91005CF8BD /* DEPlaceholderViewController.storyboard in Resources */,
 				7494B8E01EFA9A9B00830AAE /* alerting_push.proto in Resources */,
 				7469FBA61FD07EB900730787 /* messenger_config.proto in Resources */,
+				7416AE5E20BC4A8200EE2F8F /* req_update.proto in Resources */,
 				74065F101E8115A700C535B6 /* DESharedDialogsViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1295,6 +1316,7 @@
 				7402B5011ECF22670042627D /* SharingURL.swift in Sources */,
 				7449FAB41FDB5CF200BE67DC /* DENonceController.swift in Sources */,
 				74CD979E1F03F6A700BFF635 /* DELogService.swift in Sources */,
+				7416AE6720BC51F400EE2F8F /* NotificationContentRequiredUpdateExtractor.swift in Sources */,
 				74065EFE1E8113A900C535B6 /* DEAvatarPlaceholderRenderer.swift in Sources */,
 				74065EF51E8113A900C535B6 /* KeyboardDetector.swift in Sources */,
 				74846A3F1EA6039400B80ED6 /* ActionReportHandler.swift in Sources */,
@@ -1326,10 +1348,12 @@
 				74065EFD1E8113A900C535B6 /* DEAvatarImageProvider.swift in Sources */,
 				742D66A21FE13AE0000554A3 /* DEGroupLogger.swift in Sources */,
 				74065EF21E8113A900C535B6 /* DEGroupContainerItem.swift in Sources */,
+				7416AE6320BC4B4700EE2F8F /* ReqUpdate.proto.swift in Sources */,
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
 				7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */,
 				74BAF9491E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift in Sources */,
 				74313A5F1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift in Sources */,
+				7416AE6520BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift in Sources */,
 				749C10D61F44A942009F7064 /* DECryptoManagable.swift in Sources */,
 				742CAB331E9B821200965906 /* DEProtobufItemDataEncoder.swift in Sources */,
 				74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */,

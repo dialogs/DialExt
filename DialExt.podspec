@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DialExt'
-  s.version          = '0.1.16'
-  s.summary          = 'A short description of DialExt.'
+  s.version          = '0.1.17'
+  s.summary          = 'DialExt – small framework for iOS DialogSDK'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?

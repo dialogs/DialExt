@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message ReqUpdate {
+    string minVersion = 1;
+    string appLink = 2;
+}
