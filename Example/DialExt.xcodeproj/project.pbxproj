@@ -78,6 +78,8 @@
 		744EC7361FDEFF0100972D90 /* Error+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744EC7351FDEFF0100972D90 /* Error+DialExt.swift */; };
 		744FDFDD1EA7B9F600610D9B /* Bundle+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */; };
 		744FDFE31EA7C1D100610D9B /* UIStoryboard+DialExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */; };
+		745C490020BC84F000DCEAF1 /* DEVersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C48FF20BC84F000DCEAF1 /* DEVersionComparator.swift */; };
+		745C490420BC897100DCEAF1 /* DEVersionComparatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C490320BC897100DCEAF1 /* DEVersionComparatorTests.swift */; };
 		7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */; };
 		7469FBA11FD07B4200730787 /* Config.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA01FD07B4200730787 /* Config.proto.swift */; };
 		7469FBA41FD07C7300730787 /* ConfigSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */; };
@@ -302,6 +304,8 @@
 		744EC7351FDEFF0100972D90 /* Error+DialExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+DialExt.swift"; sourceTree = "<group>"; };
 		744FDFDC1EA7B9F600610D9B /* Bundle+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+DialExt.swift"; sourceTree = "<group>"; };
 		744FDFE21EA7C1D100610D9B /* UIStoryboard+DialExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+DialExt.swift"; sourceTree = "<group>"; };
+		745C48FF20BC84F000DCEAF1 /* DEVersionComparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEVersionComparator.swift; sourceTree = "<group>"; };
+		745C490320BC897100DCEAF1 /* DEVersionComparatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEVersionComparatorTests.swift; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
 		7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DESharedDialogsDataLoader+DataComposer.swift"; sourceTree = "<group>"; };
 		7469FBA01FD07B4200730787 /* Config.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.proto.swift; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 		74065EC81E8113A900C535B6 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				745C48FE20BC84E200DCEAF1 /* Version */,
 				7416AE5F20BC4B2300EE2F8F /* RequiredUpdate */,
 				7469FBA21FD07BDE00730787 /* ConfigSynchronizer */,
 				74D017CD1F02B103008C8536 /* CryptoPush */,
@@ -765,6 +770,14 @@
 			path = Crypto;
 			sourceTree = "<group>";
 		};
+		745C48FE20BC84E200DCEAF1 /* Version */ = {
+			isa = PBXGroup;
+			children = (
+				745C48FF20BC84F000DCEAF1 /* DEVersionComparator.swift */,
+			);
+			path = Version;
+			sourceTree = "<group>";
+		};
 		7469FBA21FD07BDE00730787 /* ConfigSynchronizer */ = {
 			isa = PBXGroup;
 			children = (
@@ -797,6 +810,7 @@
 				748BC52A1F9B7AE7002CFB8E /* CGRectDialExtTests.swift */,
 				7413AA311ED3518500AD99EC /* CGSizeDialExtTests.swift */,
 				7494B8EB1EFAD23F00830AAE /* DEInt64BasedNonceTests.swift */,
+				745C490320BC897100DCEAF1 /* DEVersionComparatorTests.swift */,
 				7494B8E51EFAAE5200830AAE /* DECryptoIncomingDataDecryptorTests.swift */,
 			);
 			path = DialExtTests;
@@ -1249,6 +1263,7 @@
 				74A5DFB91ED6D01900CE254B /* DEHttpRequestBodyHeaderFieldEntry.swift in Sources */,
 				74424F211FB307000014F4F5 /* Stopwatch.swift in Sources */,
 				7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */,
+				745C490020BC84F000DCEAF1 /* DEVersionComparator.swift in Sources */,
 				74D729A51F3C6F7800F123E7 /* CRC32.swift in Sources */,
 				742DC8D81EAA045800ABDA55 /* NSItemProvider+DialExt.swift in Sources */,
 				749C10CA1F44935F009F7064 /* DECryptoKeyStorage.swift in Sources */,
@@ -1374,6 +1389,7 @@
 				7447EDA71EF96B64004C1F24 /* DataDialExtTests.swift in Sources */,
 				741AC8531ECE5012008A0318 /* DEDialogCellTests.swift in Sources */,
 				749660741EA79AF9000A5D9A /* SwiftMiscTests.swift in Sources */,
+				745C490420BC897100DCEAF1 /* DEVersionComparatorTests.swift in Sources */,
 				74E71EB61F558B8300BE4619 /* Geometry+DialExtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
