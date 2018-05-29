@@ -20,16 +20,20 @@ public final class NotificationContentRequiredUpdateExtractor {
         return self.execute(contentUserInfo: content.userInfo)
     }
     
-    public func execute(contentUserInfo: [AnyHashable:Any]) -> ReqUpdate? {
+    public func execute(contentUserInfo: [AnyHashable : Any]) -> ReqUpdate? {
         
-        guard let minVersionObj = contentUserInfo["req_upd_min_ver"], let minVersion = minVersionObj as? String else {
+        guard let aps = contentUserInfo["aps"] as? [AnyHashable : Any] else {
+            return nil
+        }
+        
+        guard let minVersionObj = aps["req_upd_min_ver"], let minVersion = minVersionObj as? String else {
             return nil
         }
         
         let updateTemplate = ReqUpdate.Builder.init()
         updateTemplate.minVersion = minVersion
         
-        if let linkObj = contentUserInfo["req_upd_link"], let link = linkObj as? String {
+        if let linkObj = aps["req_upd_link"], let link = linkObj as? String {
             updateTemplate.appLink = link
         }
         
