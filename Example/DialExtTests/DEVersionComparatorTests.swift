@@ -47,4 +47,25 @@ class DEVersionComparatorTests: XCTestCase {
         XCTAssertEqual(self.comparator.compare("3.0", version2: "2.0"), ComparisonResult.orderedDescending)
     }
     
+    func testMajorLimitComponent() {
+        XCTAssertEqual(self.comparator.compare("2.0", version2: "2.4", limitComponent: .major),
+                       ComparisonResult.orderedSame)
+        XCTAssertEqual(self.comparator.compare("2.4", version2: "2.0", limitComponent: .major),
+                       ComparisonResult.orderedSame)
+        XCTAssertEqual(self.comparator.compare("2.9", version2: "3.0", limitComponent: .major),
+                       ComparisonResult.orderedAscending)
+        XCTAssertEqual(self.comparator.compare("3.0", version2: "2.4", limitComponent: .major),
+                       ComparisonResult.orderedDescending)
+    }
+    
+    func testMinorLimitComponent() {
+        XCTAssertEqual(self.comparator.compare("2.0.1", version2: "2.0.10", limitComponent: .minor),
+                       ComparisonResult.orderedSame)
+        XCTAssertEqual(self.comparator.compare("2.5.1.1.1", version2: "2.5", limitComponent: .minor),
+                       ComparisonResult.orderedSame)
+        XCTAssertEqual(self.comparator.compare("2.9.1", version2: "2.10.1", limitComponent: .minor),
+                       ComparisonResult.orderedAscending)
+        XCTAssertEqual(self.comparator.compare("3.0.24", version2: "2.9.22", limitComponent: .minor),
+                       ComparisonResult.orderedDescending)
+    }
 }
