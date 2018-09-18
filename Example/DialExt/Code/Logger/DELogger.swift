@@ -16,6 +16,17 @@ public struct DELogPosition {
     public let line: UInt
 }
 
+public func DEErrorLog(_ message: String = "",
+                       _ error: Error,
+                       isFatal: Bool = false,
+                       file: StaticString = #file,
+                       function: StaticString = #function,
+                       line: UInt = #line) {
+    let errorString = String(describing: error) + " - " + error.localizedDescription
+    let result = message + " " + errorString
+    DEErrorLog(result, file: file, function: function, line: line)
+}
+
 public func DELog(_ message: String,
                   subsystem: DELogger.Subsystem = .sdk,
                   tag: String = "",
