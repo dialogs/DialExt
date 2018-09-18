@@ -27,7 +27,7 @@ public func DEErrorLog(_ message: String = "",
     DEErrorLog(result, file: file, function: function, line: line)
 }
 
-public func DELog(_ message: String,
+public func DELog(_ message: String = "",
                   subsystem: DELogger.Subsystem = .sdk,
                   tag: String = "",
                   level: DELogger.Level = .default,
