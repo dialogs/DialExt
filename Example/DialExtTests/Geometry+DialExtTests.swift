@@ -63,6 +63,36 @@ class Geometry_DialExtTests: XCTestCase {
             XCTAssertEqual(task.original, task.expected)
         }
     }
+    
+    func testMidYReset() {
+        let rect1 = CGRect.init(origin: .init(x: 10.0, y: 10.0), size: .init(side: 10.0))
+        let originalRect = CGRect.init(origin: .init(x: 0.0, y: 0.0), size: .init(side: 20.0))
+        
+        var modifiedRect = originalRect
+        modifiedRect.resetMidY(rect: rect1)
+        
+        XCTAssertEqual(modifiedRect.size, originalRect.size)
+        XCTAssertEqual(modifiedRect.origin.x, originalRect.origin.x)
+        
+        XCTAssertEqual(modifiedRect.midY, rect1.midY)
+        
+        XCTAssertEqual(modifiedRect.origin.y, 5.0)
+    }
+    
+    func testMidXReset() {
+        let rect1 = CGRect.init(origin: .init(x: 10.0, y: 10.0), size: .init(side: 10.0))
+        let originalRect = CGRect.init(origin: .init(x: 0.0, y: 0.0), size: .init(side: 20.0))
+        
+        var modifiedRect = originalRect
+        modifiedRect.resetMidX(rect: rect1)
+        
+        XCTAssertEqual(modifiedRect.size, originalRect.size)
+        XCTAssertEqual(modifiedRect.origin.y, originalRect.origin.y)
+        
+        XCTAssertEqual(modifiedRect.midX, rect1.midX)
+        
+        XCTAssertEqual(modifiedRect.origin.x, 5.0)
+    }
 
     
     func testEdgeInsetsSideSum() {

@@ -44,6 +44,26 @@ extension CGRect {
         return self.adjusting(insets: .init(top: self.size.height / 2.0, left: 0.0, bottom: 0.0, right: 0.0))
     }
     
+    public func resettingMidY(rect: CGRect) -> CGRect {
+        var newRect = self
+        newRect.resetMidY(rect: rect)
+        return newRect
+    }
+    
+    mutating public func resetMidY(rect: CGRect) {
+        self.origin.y = rect.origin.y - (self.size.height - rect.size.height) / 2.0
+    }
+    
+    public func resettingMidX(rect: CGRect) -> CGRect {
+        var newRect = self
+        newRect.resetMidX(rect: rect)
+        return newRect
+    }
+    
+    mutating public func resetMidX(rect: CGRect) {
+        self.origin.x = rect.origin.x - (self.size.width - rect.size.width) / 2.0
+    }
+    
     public func verticalPositionedSubrects(count: Int) -> [CGRect] {
         guard count > 1 else {
             return [self]
