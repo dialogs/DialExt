@@ -54,6 +54,37 @@ public func DESErrorLog(_ message: StaticString, isFatal: Bool = false,
            line: line)
 }
 
+public func DESWarnLog(_ message: StaticString,
+                      subsystem: DELogger.Subsystem = .sdk,
+                      tag: String = "",
+                      info: DELoggerInfo? = nil,
+                      logger: DELogger = DELogger.shared,
+                      file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DESLog(message,
+          tag: tag,
+          level: DELogger.Level.warning,
+          logger: logger,
+          file: file,
+          function: function,
+          line: line)
+}
+
+public func DEWarnLog(_ message: String,
+                       subsystem: DELogger.Subsystem = .sdk,
+                       tag: String = "",
+                       info: DELoggerInfo? = nil,
+                       logger: DELogger = DELogger.shared,
+                       file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DELog(message,
+          tag: tag,
+          level: DELogger.Level.warning,
+          info: info,
+          logger: logger,
+          file: file,
+          function: function,
+          line: line)
+}
+
 public func DEErrorLog(_ message: String,
                        isFatal: Bool = false,
                        subsystem: DELogger.Subsystem = .sdk,
