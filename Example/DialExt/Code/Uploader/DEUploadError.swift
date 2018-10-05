@@ -58,7 +58,7 @@ public enum DEUploadError: LocalizedError {
             let formatter = ByteCountFormatter.init()
             formatter.countStyle = .binary
             let maxSizeDescr = formatter.string(fromByteCount: maxSize)
-            return DELocalize(DELocalizable.sharingUploadLimitExceeded(maxSize: maxSizeDescr))
+            return DELocalize(DELocalizable.sharingUploadLimitExceeded(maxSize: maxSizeDescr)) ?? ""
             
         case .fileLengthExceedsMaximum:
             return NSError(domain: NSURLErrorDomain, code: NSURLErrorDataLengthExceedsMaximum, userInfo: nil).localizedDescription

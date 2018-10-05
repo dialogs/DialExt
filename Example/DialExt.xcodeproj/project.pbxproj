@@ -81,7 +81,6 @@
 		745C490020BC84F000DCEAF1 /* DEVersionComparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C48FF20BC84F000DCEAF1 /* DEVersionComparator.swift */; };
 		745C490420BC897100DCEAF1 /* DEVersionComparatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745C490320BC897100DCEAF1 /* DEVersionComparatorTests.swift */; };
 		7460B8701E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */; };
-		7469FBA11FD07B4200730787 /* Config.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA01FD07B4200730787 /* Config.proto.swift */; };
 		7469FBA41FD07C7300730787 /* ConfigSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */; };
 		7469FBA61FD07EB900730787 /* messenger_config.proto in Resources */ = {isa = PBXBuildFile; fileRef = 7469FBA51FD07EB900730787 /* messenger_config.proto */; };
 		748316621E72962500E4ADA8 /* DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748316591E72962500E4ADA8 /* DialExt.framework */; };
@@ -161,6 +160,7 @@
 		74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
+		F2F74961216792AB00985DDA /* MessengerConfig.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7495F216792AB00985DDA /* MessengerConfig.proto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,7 +308,6 @@
 		745C490320BC897100DCEAF1 /* DEVersionComparatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEVersionComparatorTests.swift; sourceTree = "<group>"; };
 		745CBE0E1E78017D00923ACF /* DialExt_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DialExt_Example.entitlements; sourceTree = "<group>"; };
 		7460B86F1E97CE800076FC85 /* DESharedDialogsDataLoader+DataComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DESharedDialogsDataLoader+DataComposer.swift"; sourceTree = "<group>"; };
-		7469FBA01FD07B4200730787 /* Config.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.proto.swift; sourceTree = "<group>"; };
 		7469FBA31FD07C7300730787 /* ConfigSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSynchronizer.swift; sourceTree = "<group>"; };
 		7469FBA51FD07EB900730787 /* messenger_config.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = messenger_config.proto; sourceTree = "<group>"; };
 		748316591E72962500E4ADA8 /* DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +392,7 @@
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
 		E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExtTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2F7495F216792AB00985DDA /* MessengerConfig.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessengerConfig.proto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -628,7 +628,7 @@
 		74065EE11E8113A900C535B6 /* Protobuf */ = {
 			isa = PBXGroup;
 			children = (
-				7469FBA01FD07B4200730787 /* Config.proto.swift */,
+				F2F7495F216792AB00985DDA /* MessengerConfig.proto.swift */,
 				749C10D11F44964D009F7064 /* CryptoKeypair.proto.swift */,
 				749C10C71F448424009F7064 /* SharedSecret.proto.swift */,
 				74208EA81F38C5710077EE85 /* AlertingPush.proto.swift */,
@@ -1250,7 +1250,6 @@
 				74A4C9F61F4B08D700717F0E /* DEUti.swift in Sources */,
 				74E231E41EA4DC33006C243D /* URLComponents+MultipartBody.swift in Sources */,
 				74065F061E8113A900C535B6 /* DESharedDialogsManager.swift in Sources */,
-				7469FBA11FD07B4200730787 /* Config.proto.swift in Sources */,
 				74A5DFB51ED6D01900CE254B /* DEHttpError.swift in Sources */,
 				74326E071EADFAB80016A1F1 /* LimitedValueType.swift in Sources */,
 				74E231E61EA4E6A6006C243D /* String+DialExt.swift in Sources */,
@@ -1306,6 +1305,7 @@
 				74F7D1FE1E9CFE8300D6E9D0 /* DEGroupContainerItemBindedRepresenter.swift in Sources */,
 				7436D6251EDA078200808E41 /* DEUploadPrepareItemListOperation.swift in Sources */,
 				74935E241ED9CA17005331A9 /* DEUploadAuth.swift in Sources */,
+				F2F74961216792AB00985DDA /* MessengerConfig.proto.swift in Sources */,
 				7447EDAF1EF99896004C1F24 /* DECryptoError.swift in Sources */,
 				74401D231EA1205700200770 /* URLComponents+DialExt.swift in Sources */,
 				7436D6231ED9E89B00808E41 /* DEUploadPrepareItemOperation.swift in Sources */,

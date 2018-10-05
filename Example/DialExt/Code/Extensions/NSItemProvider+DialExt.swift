@@ -69,7 +69,7 @@ public extension NSItemProvider {
         
         self.loadItem(forTypeIdentifier: kUTTypeData as String, options: options) { (encodedValue, error) in
             guard let value = encodedValue else {
-                onFailure(error)
+                onFailure(error ?? NSError.unknown())
                 return
             }
             

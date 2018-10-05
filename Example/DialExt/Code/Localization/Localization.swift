@@ -80,7 +80,7 @@ public struct DELocalizable : RawRepresentable, Equatable, Hashable, Comparable 
     
     public static func alertUploadProgress(progress: Float) -> String {
         let percentage = Int(progress * 100.0)
-        return DELocalize(.alertUploadProgress) + "\(percentage) %"
+        return (DELocalize(.alertUploadProgress) ?? "") + "\(percentage) %"
     }
     
     public static let alertUploadTitle = DELocalizable("AlertUploadTitle")

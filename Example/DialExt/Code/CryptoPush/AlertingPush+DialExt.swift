@@ -13,13 +13,13 @@ public extension AlertingPush {
     
     public func supposeTitle() throws -> String {
         switch self.getOneOfAlertTitle() {
-        case let .LocAlertTitle(localizable):
+        case let .locAlertTitle(localizable):
             return try localizable.buildLocalizedString()
             
-        case let .SimpleAlertTitle(text):
+        case let .simpleAlertTitle(text):
             return text
             
-        case .OneOfAlertTitleNotSet:
+        case .oneOfAlertTitleNotSet:
             throw DEEncryptedPushNotificationError.noAlertDataTitle
         }
     }
@@ -27,11 +27,11 @@ public extension AlertingPush {
     
     public func supposeBody() throws -> String {
         switch self.getOneOfAlertBody() {
-        case let .LocAlertBody(localizable): return try localizable.buildLocalizedString()
+        case let .locAlertBody(localizable): return try localizable.buildLocalizedString()
             
-        case let .SimpleAlertBody(text): return text
+        case let .simpleAlertBody(text): return text
             
-        case .OneOfAlertBodyNotSet:
+        case .oneOfAlertBodyNotSet:
             throw DEEncryptedPushNotificationError.noAlertDataBody
         }
     }
