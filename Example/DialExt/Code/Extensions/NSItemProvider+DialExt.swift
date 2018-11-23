@@ -21,7 +21,7 @@ public extension NSItemProvider {
     }
     
     public var mimeRepresentableTypeIdentifiers: [String] {
-        let filtered: [String] = self.registeredTypeIdentifiers.flatMap({
+        let filtered: [String] = self.registeredTypeIdentifiers.compactMap({
             guard let _ = UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
                 return nil
             }

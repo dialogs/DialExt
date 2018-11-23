@@ -53,7 +53,7 @@ internal extension DESharedDialogsDataLoader {
         
         private func createOrderedDialogsContext(originalContext: AppSharedDialogListContext,
                                                  list: AppSharedDialogList) -> AppSharedDialogListContext {
-            let filteredSortedDialogs: [AppSharedDialog] = list.ids.flatMap { (dialogId) in
+            let filteredSortedDialogs: [AppSharedDialog] = list.ids.compactMap { (dialogId) in
                 return originalContext.dialogs.first(where: { $0.id == dialogId})
             }
             

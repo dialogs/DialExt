@@ -56,10 +56,10 @@ public extension String {
     public func de_encoding(_ encoding: ExpandedEncoding) -> Data? {
         switch encoding {
         case .hex:
-            guard self.characters.count % 2 == 0 else { return nil }
-            var data = Data(capacity: self.characters.count/2)
+            guard self.count % 2 == 0 else { return nil }
+            var data = Data(capacity: self.count/2)
             var byteLiteral = ""
-            for (index, character) in self.characters.enumerated() {
+            for (index, character) in self.enumerated() {
                 if index % 2 == 0 {
                     byteLiteral = String(character)
                 } else {

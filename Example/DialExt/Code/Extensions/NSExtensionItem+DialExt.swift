@@ -43,7 +43,7 @@ public extension NSExtensionItem {
         guard let attachments = self.attachments, !attachments.isEmpty else {
             return []
         }
-        return try attachments.flatMap({
+        return try attachments.compactMap({
             guard let item = $0 as? NSItemProvider else {
                 return nil
             }
@@ -83,7 +83,7 @@ public extension NSExtensionItem {
         guard let attachments = self.attachments else {
             return []
         }
-        return attachments.flatMap({
+        return attachments.compactMap({
             guard let item = $0 as? NSItemProvider else {
                 return nil
             }

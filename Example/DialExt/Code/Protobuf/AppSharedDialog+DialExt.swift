@@ -51,7 +51,7 @@ public extension AppSharedDialog {
         let components = title.components(separatedBy: whitespaces)
         let maxCompontents = components.prefix(limit)
         let letters: [String] = maxCompontents.map({
-            guard let letter = $0.characters.first else {
+            guard let letter = $0.first else {
                 return ""
             }
             let letterString = String([letter])

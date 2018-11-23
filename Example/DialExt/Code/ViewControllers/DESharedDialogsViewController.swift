@@ -589,7 +589,7 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         let dialog = self.presentedDialogs[indexPath.row]
         cell.nameLabel.text = dialog.title
         
-        let names: [String] = dialog.uids.flatMap({ id in
+        let names: [String] = dialog.uids.compactMap({ id in
             if let context = self.manager.dataLoader.context,
                 let user = context.users.first(where: {$0.id == id}) {
                 return user.name

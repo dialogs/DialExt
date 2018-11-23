@@ -5,6 +5,11 @@ public protocol DEQueryAuth {
     func write(writer: DEKeychainQueryPerformerable) throws
 }
 
+public enum DEUploadAuthPolicy {
+    case `default`
+    case token
+}
+
 public class DEUploadAuth : DEQueryAuth {
 
     let authId: DEAuthId
@@ -42,7 +47,7 @@ public class DEUploadTokenAuth : DEQueryAuth {
     }
     
     public func write(writer: DEKeychainQueryPerformerable) throws {
-        let data = token.data(using: String.Encoding.unicode)
+        let data = token.data(using: .utf8)
         try writer.rewrite(addQuery: .writeShared(.tokenService, data: data! as NSData))
     }
 }

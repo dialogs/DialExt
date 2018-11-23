@@ -43,7 +43,7 @@ extension DEGroupedKeychainDataProvider: DEWriteableUploadAuthProviding {
     
     public func provideToken() throws -> String? {
         let data = try self.readData(query: .readShared(.tokenService))
-        return String(data: data, encoding: String.Encoding.unicode)
+        return String(data: data, encoding: .utf8)
     }
     
     public func writeAuth(_ auth: DEQueryAuth) throws {

@@ -140,7 +140,7 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             }
             else {
                 let targetError: Error = error ?? DEUploadError.unrecognizableExtensionItem
-                self.finishWithFailure(error: error)
+                self.finishWithFailure(error: targetError)
             }
         }
     }

@@ -30,13 +30,33 @@ extension DEUploadAuthProviding {
         return (try? self.provideSignedAuthId()) != nil || (try? self.provideToken()) != nil
     }
     
-    func provideAuth() throws -> DEQueryAuth {
-        if let id = try? self.provideAuthId(), let signedId = try? self.provideSignedAuthId() {
-            return DEUploadAuth.init(authId: id, signedAuthId: signedId)
-        } else if let providenToken = try? self.provideToken(), let token = providenToken {
-            return DEUploadTokenAuth.init(token: token)
+    func provideAuth(policy: DEUploadAuthPolicy) throws -> DEQueryAuth {
+        switch policy {
+        case .default:
+            do {
+                let id = try self.provideAuthId()
+                let signedId = try self.provideSignedAuthId()
+                return DEUploadAuth.init(authId: id, signedAuthId: signedId)
+            }
+        case .token:
+            do {
+                if let token = try self.provideToken() {
+                    return DEUploadTokenAuth.init(token: token)
+                }
+                throw DEUploadError.invalidAuthInfo
+            }
         }
+    }
+    
+    /// Tries fetch auth using policies one by one: default, token.
+    func provideAuth() throws -> DEQueryAuth {
         
+        if let auth = try? self.provideAuth(policy: .default) {
+            return auth
+        }
+        else if let auth = try? self.provideAuth(policy: .token) {
+            return auth
+        }
         throw DEUploadError.invalidAuthInfo
     }
 }
