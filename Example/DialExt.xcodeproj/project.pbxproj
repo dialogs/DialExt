@@ -160,6 +160,7 @@
 		74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
+		D705523F21B12DDF00D03F0E /* DECertificateKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705523E21B12DDF00D03F0E /* DECertificateKeeper.swift */; };
 		F2F74961216792AB00985DDA /* MessengerConfig.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F7495F216792AB00985DDA /* MessengerConfig.proto.swift */; };
 /* End PBXBuildFile section */
 
@@ -390,6 +391,7 @@
 		9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
 		B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.debug.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
+		D705523E21B12DDF00D03F0E /* DECertificateKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECertificateKeeper.swift; sourceTree = "<group>"; };
 		E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExtTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F7495F216792AB00985DDA /* MessengerConfig.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessengerConfig.proto.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 		74065EC81E8113A900C535B6 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				D705523D21B12DCE00D03F0E /* CertificateKeeper */,
 				745C48FE20BC84E200DCEAF1 /* Version */,
 				7416AE5F20BC4B2300EE2F8F /* RequiredUpdate */,
 				7469FBA21FD07BDE00730787 /* ConfigSynchronizer */,
@@ -674,13 +677,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		7413AA331ED36D4500AD99EC /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		7416AE5F20BC4B2300EE2F8F /* RequiredUpdate */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,7 +797,6 @@
 		748316671E72962500E4ADA8 /* DialExtTests */ = {
 			isa = PBXGroup;
 			children = (
-				7413AA331ED36D4500AD99EC /* Resources */,
 				7483166A1E72962500E4ADA8 /* Info.plist */,
 				749660731EA79AF9000A5D9A /* SwiftMiscTests.swift */,
 				74E71EB51F558B8300BE4619 /* Geometry+DialExtTests.swift */,
@@ -870,6 +865,14 @@
 				F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D705523D21B12DCE00D03F0E /* CertificateKeeper */ = {
+			isa = PBXGroup;
+			children = (
+				D705523E21B12DDF00D03F0E /* DECertificateKeeper.swift */,
+			);
+			path = CertificateKeeper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -972,7 +975,7 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -1326,6 +1329,7 @@
 				74935E2F1ED9CA17005331A9 /* DEUploadShareExtensionItemPreparing.swift in Sources */,
 				74065EF31E8113A900C535B6 /* DEInterappMessenger.swift in Sources */,
 				74065EF61E8113A900C535B6 /* KeyboardEvent.swift in Sources */,
+				D705523F21B12DDF00D03F0E /* DECertificateKeeper.swift in Sources */,
 				749542351F13B859008F8BA5 /* DEKeychainQuery+Shared.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
