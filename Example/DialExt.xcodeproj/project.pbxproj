@@ -161,6 +161,7 @@
 		74FF4BCD1E8A9E2E00370A69 /* DEAuthIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF4BCC1E8A9E2E00370A69 /* DEAuthIdProvider.swift */; };
 		97126523B48340F7C2606824 /* Pods_DialExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */; };
 		C5044BDDA6D85F2E00FD1C92 /* Pods_DialExt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34079C08447EC7E3FC1DE8C8 /* Pods_DialExt_Example.framework */; };
+		D74A944E21B92DAA00062A84 /* UIImage+RepresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A944D21B92DAA00062A84 /* UIImage+RepresentationType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -391,6 +392,7 @@
 		9EC222EB3A0177A488F471B2 /* Pods-DialExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.release.xcconfig"; sourceTree = "<group>"; };
 		B5A91CF6912E733A4A4375F6 /* Pods-DialExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DialExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DialExt/Pods-DialExt.debug.xcconfig"; sourceTree = "<group>"; };
 		BD6FDBAC201F739BC96914ED /* DialExt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DialExt.podspec; path = ../DialExt.podspec; sourceTree = "<group>"; };
+		D74A944D21B92DAA00062A84 /* UIImage+RepresentationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+RepresentationType.swift"; sourceTree = "<group>"; };
 		E4BA73D35DC3C145C1C6343B /* Pods_DialExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18F35983182418FAE914DDE /* Pods_DialExtTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DialExtTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -550,6 +552,7 @@
 				748BB7911EBA1B2A005CF8BD /* UIButton+DialExt.swift */,
 				748BB7931EBA2974005CF8BD /* NSLayoutConstraint+DialExt.swift */,
 				7413AA2B1ED337FC00AD99EC /* UIImage+DialExt.swift */,
+				D74A944D21B92DAA00062A84 /* UIImage+RepresentationType.swift */,
 				7413AA2D1ED3409000AD99EC /* CGSize+DialExt.swift */,
 				748BC5271F9B6FF6002CFB8E /* CGRect+DialExt.swift */,
 			);
@@ -1319,6 +1322,7 @@
 				74E231E21EA4CE09006C243D /* URLQueryItem+PreservedName.swift in Sources */,
 				7494B8DE1EFA89D200830AAE /* DECryptoNonce.swift in Sources */,
 				74BAF9491E952D5900ECB585 /* DEGroupContainerItemRepresenter.swift in Sources */,
+				D74A944E21B92DAA00062A84 /* UIImage+RepresentationType.swift in Sources */,
 				74313A5F1E9E37DB002AAF55 /* ThreadSafeRepresentationState.swift in Sources */,
 				7416AE6520BC4B5C00EE2F8F /* RequiredUpdateInfoStorage.swift in Sources */,
 				749C10D61F44A942009F7064 /* DECryptoManagable.swift in Sources */,

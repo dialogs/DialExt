@@ -21,7 +21,7 @@ public extension NSItemProvider {
     }
     
     public var mimeRepresentableTypeIdentifiers: [String] {
-        let filtered: [String] = self.registeredTypeIdentifiers.flatMap({
+        let filtered: [String] = self.registeredTypeIdentifiers.compactMap({
             guard let _ = UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassMIMEType)?.takeRetainedValue() else {
                 return nil
             }
@@ -55,6 +55,7 @@ public extension NSItemProvider {
     }
     
     public enum ItemType {
+        case data(Data)
         case urlData(url: URL, data: Data)
         case image(UIImage)
     }
@@ -74,6 +75,9 @@ public extension NSItemProvider {
             }
             
             switch value {
+                
+            case let data as Data:
+                onSuccess(.data(data))
                 
             case let image as UIImage:
                 onSuccess(.image(image))
