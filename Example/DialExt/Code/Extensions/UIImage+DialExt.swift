@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 public extension UIImage {
     
     public static let defaultPixelsCountLimit: CGFloat = 1200.0 * 1200.0

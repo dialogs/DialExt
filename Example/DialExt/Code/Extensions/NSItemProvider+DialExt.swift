@@ -55,6 +55,7 @@ public extension NSItemProvider {
     }
     
     public enum ItemType {
+        case data(Data)
         case urlData(url: URL, data: Data)
         case image(UIImage)
     }
@@ -74,6 +75,9 @@ public extension NSItemProvider {
             }
             
             switch value {
+                
+            case let data as Data:
+                onSuccess(.data(data))
                 
             case let image as UIImage:
                 onSuccess(.image(image))

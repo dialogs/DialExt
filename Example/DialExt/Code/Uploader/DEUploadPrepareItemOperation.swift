@@ -154,6 +154,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             switch itemData {
             case .image(let image):
                 self?.prepareItem(image: image, attachment: attachment, type: type)
+            case .data(let data):
+                self?.prepareData(data: data, attachment: attachment, type: type)
             case .urlData(url: let url, data: let data):
                 self?.handleFileDataLoaded(url: url, data: data, attachment: attachment, type: type)
             }
@@ -198,6 +200,69 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             default:
                 DELog("Unexpected item: \(String(describing: content))")
                 self.finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
+            }
+        }
+    }
+    
+    private func prepareData(data: Data, attachment: NSItemProvider, type: DetailedMediaFileType) {
+        switch type {
+        case .image:
+            DispatchQueue.global(qos: .background).async {
+                if let image = UIImage(data: data) {
+                    let uti = data.de_representationType?.utiType ?? (kUTTypeImage as String)
+                    let dataRep = DEUploadDataRepresentation.init(data: data, uti: uti)
+                    let details = self.getImageDetails(image)
+                    let uploadRep = DEUploadImageRepresentation.init(dataRepresentation: dataRep, details: details)
+                    
+                    let previewImage = image.limited(bySize: .init(width: 90.0, height: 90.0))
+                    let preview = self.buildPreviewRepresentation(original: previewImage)
+                    
+                    let item = DEUploadPreparedItem(content: .image(uploadRep), preview: preview, originalName: nil)
+                    DispatchQueue.main.async {
+                        self.finish(item: item)
+                    }
+                }
+                else {
+                    let uti = kUTTypeImage as String
+                    let dataRep = DEUploadDataRepresentation.init(data: data, uti: uti)
+                    let item = DEUploadPreparedItem(content: .bytes(dataRep), preview: nil, originalName: nil)
+                    DispatchQueue.main.async {
+                        self.finish(item: item)
+                    }
+                    DispatchQueue.main.async {
+                        self.finishWithFailure(error: DEUploadError.unrecognizableExtensionItem)
+                    }
+                }
+            }
+            
+        case .video:
+            DispatchQueue.global(qos: .background).async {
+                let uti = kUTTypeVideo as String
+                let dataRep = DEUploadDataRepresentation.init(data: data, uti: uti)
+                let item = DEUploadPreparedItem(content: .bytes(dataRep), preview: nil, originalName: nil)
+                DispatchQueue.main.async {
+                    self.finish(item: item)
+                }
+            }
+            
+        case .audio:
+            DispatchQueue.global(qos: .background).async {
+                let uti = kUTTypeAudio as String
+                let dataRep = DEUploadDataRepresentation.init(data: data, uti: uti)
+                let item = DEUploadPreparedItem(content: .bytes(dataRep), preview: nil, originalName: nil)
+                DispatchQueue.main.async {
+                    self.finish(item: item)
+                }
+            }
+            
+        case .file:
+            DispatchQueue.global(qos: .background).async {
+                let uti = kUTTypeData as String
+                let dataRep = DEUploadDataRepresentation.init(data: data, uti: uti)
+                let item = DEUploadPreparedItem(content: .bytes(dataRep), preview: nil, originalName: nil)
+                DispatchQueue.main.async {
+                    self.finish(item: item)
+                }
             }
         }
     }
@@ -548,6 +613,17 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         let dataRep = DEUploadDataRepresentation.init(data: data, uti: utType)
         let rep = DEUploadImageRepresentation.init(dataRepresentation: dataRep, details: details)
         return rep
+    }
+    
+    private func loadImageFromDataDetails(data: Data, onLoaded: @escaping ((DEUploadImageDetails) -> ())) {
+        DispatchQueue.global(qos: .background).async {
+            let image = UIImage.init(data: data)!
+            let size = DEUploadIntegerSize.init(size: image.pixelSize)
+            let details = DEUploadImageDetails.init(size: size)
+            DispatchQueue.main.async {
+                onLoaded(details)
+            }
+        }
     }
     
     private func loadImageDetails(url: URL, data: Data, onLoaded: @escaping ((DEUploadImageDetails) -> ())) {
