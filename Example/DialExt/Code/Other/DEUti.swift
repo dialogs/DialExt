@@ -9,7 +9,6 @@
 import Foundation
 import MobileCoreServices
 
-
 public struct DEUti: RawRepresentable {
     
     public typealias RawValue = String
@@ -63,5 +62,13 @@ public struct DEUti: RawRepresentable {
     public static let jpeg = DEUti.init(kUTTypeJPEG as String)
     
     public static let plainText = DEUti.init(kUTTypePlainText as String)
+    
+    public static func fileExtension(uti: String) -> String? {
+        if let foundExtensionUnmanaged = UTTypeCopyPreferredTagWithClass(uti as CFString,
+                                                                         kUTTagClassFilenameExtension) {
+            return foundExtensionUnmanaged.takeRetainedValue() as String
+        }
+        return nil
+    }
     
 }
