@@ -34,6 +34,8 @@ public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
         var queryItems: [URLQueryItem] = components.queryItems ?? []
         queryItems.append(contentsOf: self.buildQueryItems(task: task))
         components.queryItems = queryItems
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
         
         let request = NSMutableURLRequest.init(url: components.url!)
         request.setValue("multipart/form-data; boundary=\(task.boundary)", forHTTPHeaderField: "Content-Type")
