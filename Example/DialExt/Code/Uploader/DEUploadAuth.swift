@@ -6,7 +6,7 @@ public protocol DEQueryAuth {
 }
 
 public enum DEUploadAuthPolicy {
-    case `default`
+    case signedAuthId
     case token
 }
 

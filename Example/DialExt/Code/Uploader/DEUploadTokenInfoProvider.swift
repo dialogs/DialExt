@@ -32,7 +32,7 @@ extension DEUploadAuthProviding {
     
     func provideAuth(policy: DEUploadAuthPolicy) throws -> DEQueryAuth {
         switch policy {
-        case .default:
+        case .signedAuthId:
             do {
                 let id = try self.provideAuthId()
                 let signedId = try self.provideSignedAuthId()
@@ -48,15 +48,15 @@ extension DEUploadAuthProviding {
         }
     }
     
-    /// Tries fetch auth using policies one by one: default, token.
+    /// Tries fetch auth using policies one by one: token, signedAuthId.
     func provideAuth() throws -> DEQueryAuth {
         
-        if let auth = try? self.provideAuth(policy: .default) {
+        if let auth = try? self.provideAuth(policy: .token) {
+            return auth
+        } else if let auth = try? self.provideAuth(policy: .signedAuthId) {
             return auth
         }
-        else if let auth = try? self.provideAuth(policy: .token) {
-            return auth
-        }
+        
         throw DEUploadError.invalidAuthInfo
     }
 }
