@@ -55,8 +55,7 @@ extension DEUploadAuthProviding {
         
         if let auth = try? self.provideAuth(policy: self.defaultAuthPolicy) {
             return auth
-        }
-        else if let auth = try? self.provideAuth(policy: .token) {
+        } else if let auth = try? self.provideAuth(policy: .token) {
             return auth
         } else if let auth = try? self.provideAuth(policy: .signedAuthId) {
             return auth
