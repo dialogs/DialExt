@@ -14,13 +14,20 @@ import Foundation
  */
 public class DEGroupedKeychainDataProvider: DEKeychainQueryPerformerable {
     
+    public let defaultAuthPolicy: DEUploadAuthPolicy
+    
     public let groupId: String
     
     public let provider: DEKeychainQueryPerformerable
     
-    public init(groupId: String, keychainProvider: DEKeychainQueryPerformerable) {
+    public init(groupId: String, keychainProvider: DEKeychainQueryPerformerable, defaultAuthPolicy: DEUploadAuthPolicy) {
         self.groupId = groupId
         self.provider = keychainProvider
+        self.defaultAuthPolicy = defaultAuthPolicy
+    }
+    
+    public convenience init(groupId: String, keychainProvider: DEKeychainQueryPerformerable) {
+        self.init(groupId: groupId, keychainProvider: keychainProvider, defaultAuthPolicy: .signedAuthId)
     }
     
     public func perform(query: DEKeychainQuery) -> DEKeychainQueryResult {
