@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DialExt'
-  s.version          = '1.0.0'
+  s.version          = '1.0.5'
   s.summary          = 'DialExt – small framework for iOS DialogSDK'
 
 # This description is used to generate tags and improve search results.
@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.dependency 'ProtocolBuffers-Swift'
   s.dependency 'DLGSodium'
   s.dependency 'TrustKit'
-  
+
   s.resource_bundles = {
     'DialExt' => ['Example/DialExt/Resources/**/*']
   }
