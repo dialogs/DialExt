@@ -10,6 +10,8 @@ import Foundation
 
 public protocol DEUploadAuthProviding {
     
+    var defaultAuthPolicy: DEUploadAuthPolicy { get }
+    
     func provideAuthId() throws -> DEAuthId
     
     func provideSignedAuthId() throws -> Data
@@ -51,7 +53,10 @@ extension DEUploadAuthProviding {
     /// Tries fetch auth using policies one by one: token, signedAuthId.
     func provideAuth() throws -> DEQueryAuth {
         
-        if let auth = try? self.provideAuth(policy: .token) {
+        if let auth = try? self.provideAuth(policy: self.defaultAuthPolicy) {
+            return auth
+        }
+        else if let auth = try? self.provideAuth(policy: .token) {
             return auth
         } else if let auth = try? self.provideAuth(policy: .signedAuthId) {
             return auth

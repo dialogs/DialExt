@@ -222,6 +222,10 @@ public extension DEKeychainQueryPerformerable {
     public func shared(groupName: String) -> DEGroupedKeychainDataProvider {
         return DEGroupedKeychainDataProvider.init(groupId: groupName, keychainProvider: self)
     }
+    
+    public func authDataProvider(groupName: String, defaultAuthPolicy: DEUploadAuthPolicy) -> DEGroupedKeychainDataProvider {
+        return DEGroupedKeychainDataProvider.init(groupId: groupName, keychainProvider: self, defaultAuthPolicy: defaultAuthPolicy)
+    }
 }
 
 public class DEKeychainDataProvider: DEKeychainQueryPerformerable {

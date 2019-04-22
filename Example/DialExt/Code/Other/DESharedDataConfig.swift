@@ -10,6 +10,7 @@ import Foundation
 
 public struct DESharedDataConfig {
     
+    let defaultAuthPolicy: DEUploadAuthPolicy
     /// Provide one of the values from "Capabilities -> Keychain Sharing" by prefixing it with your app id prefix (from dev portal).
     /// So, if keychain group is "my.keychain.group" and app id prefix is "123A4567B8", target value is "123A4567B8.my.keychain.group"
     let keychainGroup: String
@@ -20,10 +21,11 @@ public struct DESharedDataConfig {
     /// Should contain at least one endpoint supporting file uploading.
     let endpointUploadMethodURLs: [URL]
     
-    public init(keychainGroup: String, appGroup: String, uploadURLs: [URL]) {
+    public init(keychainGroup: String, appGroup: String, uploadURLs: [URL], defaultAuthPolicy: DEUploadAuthPolicy = .signedAuthId) {
         self.keychainGroup = keychainGroup
         self.appGroup = appGroup
         self.endpointUploadMethodURLs = uploadURLs
+        self.defaultAuthPolicy = defaultAuthPolicy
     }
     
 }
