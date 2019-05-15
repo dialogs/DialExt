@@ -379,7 +379,22 @@ open class DESharedDialogsViewController: UIViewController, UISearchResultsUpdat
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true) {
-            let task = DEUploadTask(items: items, dialogs: self.selectedDialogs)
+            // split items with multiple attachments to multiple items with single attachment
+            // as we don't support messages with multiple attachments yet
+            var splittedItems: [NSExtensionItem] = []
+
+            for item in items {
+                if let attachments = item.attachments as? [NSItemProvider] {
+                    for attachment in attachments {
+                        if let newItem = item.copy() as? NSExtensionItem {
+                            newItem.attachments = [attachment]
+                            splittedItems.append(newItem)
+                        }
+                    }
+                }
+            }
+
+            let task = DEUploadTask(items: splittedItems, dialogs: self.selectedDialogs)
             self.uploader.upload(task: task)
         }
         self.alert = alert
