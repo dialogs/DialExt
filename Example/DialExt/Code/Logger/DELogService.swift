@@ -58,14 +58,18 @@ public class DEDebugConsoleLogService: DELogService {
             print("\(headersString): \(message)")
 
         case .nslog:
-            NSLog("\(headersString): \(message)")
+            // Print like argument to prevent crashing from unnecessary formatting
+            // https://www.small-apps.com/2016/09/crash-in-nslog-when-used-in-swift-and-how-to-avoid-it/
+            NSLog("%@", "\(headersString): \(message)")
         }
         
         if let info = info, let afterward = info[.afterward] as? String {
             afterward.enumerateLines(invoking: { (line, _) in
                 switch self.outputType {
                 case .nslog:
-                    NSLog("\(line)")
+                    // Print like argument to prevent crashing from unnecessary formatting
+                    // https://www.small-apps.com/2016/09/crash-in-nslog-when-used-in-swift-and-how-to-avoid-it/
+                    NSLog("%@", "\(line)")
                 case .print:
                     print(line)
                 }
