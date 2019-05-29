@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CommonCrypto
 
 public extension Data {
     
@@ -19,6 +19,16 @@ public extension Data {
     
     public static func de_withHexString(_ string: String) -> Data? {
         return string.de_encoding(.hex)
+    }
+    
+    public var digestSHA1: Data {
+        var bytes: [UInt8] = Array(repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+        
+        withUnsafeBytes {
+            _ = CC_SHA1($0, CC_LONG(count), &bytes)
+        }
+        
+        return Data(bytes: bytes)
     }
     
     mutating func appendByZeros(toLength length: Int) {
