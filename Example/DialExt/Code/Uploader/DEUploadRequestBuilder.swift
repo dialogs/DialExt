@@ -43,10 +43,26 @@ public class DEUploadRequestBuilder: DEUploadRequestBuilderable {
         let body = buildBody(task: task)
         request.httpBody = body
         request.setValue(String(describing: body.count), forHTTPHeaderField: "Content-Length")
+        if let digest = buildDigest(task: task) {
+            request.setValue(digest, forHTTPHeaderField: "digest")
+        }
         
         request.httpMethod = "POST"
         
         return request.copy() as! URLRequest
+    }
+    
+    private func buildDigest(task: DEUploadPreparedTask) -> String? {
+        for item in task.items {
+            switch item.content {
+            case let .image(rep): return rep.dataRepresentation.data.digestSHA1.de_hexString
+            case let .video(rep): return rep.dataRepresentation.data.digestSHA1.de_hexString
+            case let .audio(rep): return rep.dataRepresentation.data.digestSHA1.de_hexString
+            case let .bytes(rep): return rep.data.digestSHA1.de_hexString
+            default: break
+            }
+        }
+        return nil
     }
     
     private func buildBody(task: DEUploadPreparedTask) -> Data {
