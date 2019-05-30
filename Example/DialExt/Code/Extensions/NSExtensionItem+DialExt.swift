@@ -30,8 +30,10 @@ public extension NSExtensionItem {
      Does not include remote urls.
      For remote urls check *remoteUrlAttachments* and load it (the result will probably be an URL instance).
      */
+    
     public var sharingUrl: SharingURL? {
         if let attributedText = self.attributedContentText,
+            attributedText.string.isLink(),
             let url = URL.init(string: attributedText.string)  {
             return SharingURL.init(url: url, attributedString: attributedText)
         }
