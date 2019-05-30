@@ -71,7 +71,8 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
         }
         
         if let attachment = item.attachments?.first as? NSItemProvider,
-            attachment.hasItemConformingToTypeIdentifier(DEUti.plainText.rawValue) {
+            attachment.hasItemConformingToTypeIdentifier(DEUti.plainText.rawValue),
+            attachment.hasItemConformingToTypeIdentifier(kUTTypeFileURL as String) == false {
             if let text = item.attributedContentText {
                 return IdentificationResult.itemAttributedText(text)
             }
