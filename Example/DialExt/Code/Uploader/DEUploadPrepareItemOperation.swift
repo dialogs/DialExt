@@ -102,6 +102,11 @@ public class DEUploadPrepareItemOperation: DLGAsyncOperation<DEUploadPreparedIte
             mediaType = .file
         }
         
+        if mediaAttachment == nil {
+            mediaAttachment = item.attachmentsConformingToTypeIdentifier(kUTTypeText as String).first
+            mediaType = .file
+        }
+        
         if let attachment = mediaAttachment, let type = mediaType {
             return IdentificationResult.attachment(item: attachment, type: type)
         }
