@@ -27,7 +27,7 @@ public class DECryptoIncomingDataDecryptor: DECryptoIncomingDataDecrypting {
         guard let decodedData = box.open(authenticatedCipherText: data.toBytes, secretKey: rx.toBytes, nonce: nonceData.toBytes) else {
             throw DECryptoError.failToDecodeMessage
         }
-        return decodedData
+        return decodedData.toData
     }
     
 }

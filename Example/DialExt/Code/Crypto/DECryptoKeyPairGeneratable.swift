@@ -37,7 +37,7 @@ public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
                                                              side: .CLIENT) else {
                                                                 throw DECryptoError.failToGenerateSharedSecret
         }
-        return DESharedSecret.init(rx: sharedSecret.rx, tx: sharedSecret.tx)
+        return DESharedSecret.init(rx: sharedSecret.rx.toData, tx: sharedSecret.tx.toData)
     }
     
     public init() {
