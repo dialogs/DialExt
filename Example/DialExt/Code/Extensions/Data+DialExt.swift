@@ -71,7 +71,7 @@ extension Data {
 extension Collection where Element == UInt8 {
     
     public var toData: Data {
-        return Data(bytes: self)
+        return Data(self)
     }
     
 }
