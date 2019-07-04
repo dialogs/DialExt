@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DialExt'
-  s.version          = '1.0.8'
+  s.version          = '0.7.1'
   s.summary          = 'DialExt – small framework for iOS DialogSDK'
 
 # This description is used to generate tags and improve search results.
