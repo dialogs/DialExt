@@ -28,8 +28,8 @@ public struct DECryptoKeyPair {
     // Sodium KeyExhange compatibility
     
     internal init(keyExchangeKeyPair: KeyExchange.KeyPair) {
-        self.publicKey = keyExchangeKeyPair.publicKey
-        self.secretKey = keyExchangeKeyPair.secretKey
+        self.publicKey = keyExchangeKeyPair.publicKey.toData
+        self.secretKey = keyExchangeKeyPair.secretKey.toData
     }
     
     // KeyPair compatibility

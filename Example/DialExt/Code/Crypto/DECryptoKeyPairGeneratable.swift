@@ -31,7 +31,7 @@ public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
     
     public func generateSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
         let sodium = Sodium.init()
-        guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey,
+        guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey.toBytes,
                                                              secretKey: keyPair.secretKey,
                                                              otherPublicKey: publicKey,
                                                              side: .CLIENT) else {
