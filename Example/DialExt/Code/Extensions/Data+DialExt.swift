@@ -59,3 +59,19 @@ public extension Data {
     }
     
 }
+
+extension Data {
+    
+    public var toBytes: Array<UInt8> {
+        return [UInt8](self)
+    }
+    
+}
+
+extension Collection where Element == UInt8 {
+    
+    public var toData: Data {
+        return Data(self)
+    }
+    
+}

@@ -31,13 +31,13 @@ public class DECryptoKeyPairGenerator: DECryptoKeyPairGeneratable {
     
     public func generateSharedSecret(keyPair: DECryptoKeyPair, publicKey: Data) throws -> DESharedSecret {
         let sodium = Sodium.init()
-        guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey,
-                                                             secretKey: keyPair.secretKey,
-                                                             otherPublicKey: publicKey,
+        guard let sharedSecret = sodium.keyExchange.sessionKeyPair(publicKey: keyPair.publicKey.toBytes,
+                                                             secretKey: keyPair.secretKey.toBytes,
+                                                             otherPublicKey: publicKey.toBytes,
                                                              side: .CLIENT) else {
                                                                 throw DECryptoError.failToGenerateSharedSecret
         }
-        return DESharedSecret.init(rx: sharedSecret.rx, tx: sharedSecret.tx)
+        return DESharedSecret.init(rx: sharedSecret.rx.toData, tx: sharedSecret.tx.toData)
     }
     
     public init() {
